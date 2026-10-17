@@ -17,6 +17,10 @@ danger and the oil that keeps you going, and every step burns a little of it.
 - Hosted on GitHub Pages (D-010).
 - Built-in dev tools, including spawning anything (D-006).
 - Four design pillars (D-013, below).
+- Oil is light only. Running dry leaves an ember and bolder enemies, not
+  the end of the run. The lantern switches on and off (D-014, D-015).
+- Turns pass only when you act. Bump to attack, plus ranged abilities,
+  weapons and area attacks (D-016, D-017).
 
 ## Inspirations
 - **Dungeon Siege.** The owner played it as a kid, and the name brings it

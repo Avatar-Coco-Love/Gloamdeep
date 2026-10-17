@@ -4,25 +4,25 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.3 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.4 · **Stage:** pre-production (no game code yet)
 
 ## Next up
-**Step 3: The lantern and oil rule.** A conversation, with no code. Start
-with Q-004 (what oil does), offer the options with a recommendation, and
-check each one against the pillars (D-013). Then Q-005 (oil running out).
-Read: `OPEN-QUESTIONS.md` (Q-004, Q-005), `VISION.md` (pillars).
+**Step 5: The shape of a run.** A conversation, with no code. Ask Q-008,
+Q-009 and Q-010 together as multiple choice (D-018), checking options
+against the pillars (D-013). Q-014 to Q-017 can be asked alongside if they
+fit. Read: `OPEN-QUESTIONS.md`, `VISION.md` (pillars).
 
 ## Waiting on the owner
 - Nothing right now.
 
 ## Build plan (proposed; re-plan as decisions land)
-Each line is one PR-sized step. Tick it when merged and add the PR number.
+Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
 
 Pre-production (0.0.x): decisions only
 - [x] 1 Inspirations and must-keeps (Q-001, Q-002), PRs #1 and #2
 - [x] 2 Design pillars approved (Q-003), PR #3
-- [ ] 3 The lantern and oil rule (Q-004, Q-005)
-- [ ] 4 Turns, movement and bumping (Q-006, Q-007)
+- [x] 3 The lantern and oil rule (Q-004, Q-005), PR #4
+- [x] 4 Turns, movement and bumping (Q-006, Q-007), PR #4
 - [ ] 5 Shape of a run (Q-008, Q-009, Q-010)
 - [ ] 6 One-page design brief (`docs/DESIGN.md`) from steps 1 to 5, approved
 
@@ -37,10 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #1 (0.0.1), Q-001 answered.** The owner said what they
-  loved about Dungeon Siege: going deeper, exploring, loot, new monsters,
-  mysteries and lore, getting stronger, and the curiosity to keep playing
-  (D-008). Recorded in `VISION.md`.
 - **2026-10-17, PR #2 (0.0.2), Q-002 and Q-011 answered.** Everything in
   style study 1 stays, with the rat and shadow edges to improve (D-009).
   The repo became lowercase `gloamdeep` and GitHub Pages went live (D-010).
@@ -50,3 +46,9 @@ Foundation (0.1.x): one small visible thing per step
   four design pillars as drafted (D-013): the lantern is your world, always
   one floor deeper, curiosity pays off, and stronger, slowly. They are in
   `VISION.md`, and every later idea is checked against them.
+- **2026-10-17, PR #4 (0.0.4), Q-004 to Q-007 answered.** Oil is light
+  only (D-014). Running dry leaves an ember and bolder enemies, not the end
+  of the run; the lantern switches on and off, and other light sources
+  exist (D-015). Turns pass only when you act (D-016). Bump to attack, plus
+  ranged abilities, weapons and area attacks (D-017). The owner asked for
+  a faster pace and multiple-choice questions (D-018).

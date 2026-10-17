@@ -7,12 +7,11 @@ CSS and JavaScript, with everything drawn and synthesized in code.
 
 ## The owner leads. Work in tiny steps.
 
-- The owner wants to take part in every decision, and to go slower and
-  smaller than on their other projects. If you are unsure how big a step
-  should be, make it smaller.
-- A step is **one** of these: a single decision, or a single small visible
-  change ("the hero can move one tile"). Never bundle a new mechanic with a
-  new system.
+- The owner wants to take part in every decision. The pace is a little
+  faster than at kickoff (D-018).
+- A PR may settle **several small decisions** together. Visible changes
+  stay small: one small visible change per step ("the hero can move one
+  tile"). Never bundle a new mechanic with a new system.
 - **Propose before building.** Say what you found, offer 2 or 3 options with
   a recommendation (a quick mock-up or picture where it helps), and wait for
   the owner's choice. This applies to design, art, code structure and bug
@@ -20,7 +19,10 @@ CSS and JavaScript, with everything drawn and synthesized in code.
 - Never invent mechanics, story, names or numbers that are not in
   `docs/DECISIONS.md`. If something is missing, add it to
   `docs/OPEN-QUESTIONS.md` and ask.
-- Ask one or two questions at a time, never a questionnaire.
+- Ask questions as **multiple choice** (the AskUserQuestion tool when it
+  exists): 2 to 4 options, the recommended one first, more than one pick
+  allowed when options can combine, and the owner can always add their own
+  answer. Up to 4 related questions at a time.
 - Write for the owner in plain words. Explain technical terms when they
   first come up.
 

@@ -83,3 +83,37 @@ The owner approved four pillars, the drafted set as written: "The lantern
 is your world", "Always one floor deeper", "Curiosity pays off" and
 "Stronger, slowly". Every later idea is checked against them, and an idea
 that serves none of them is cut. The full wording is in `docs/VISION.md`.
+
+**D-014 · 2026-10-17 · Oil is light, and nothing else** (answers Q-004)
+Oil only sets how far the lantern's light reaches. It is not a resource
+for actions and not the run's health or clock. Oil-powered actions could
+still come later as their own decision. The numbers in style study 1 are
+still art-test values.
+
+**D-015 · 2026-10-17 · Running out of oil, and the lantern's place** (answers Q-005)
+When the oil runs out, the light shrinks to a small ember and enemies grow
+bolder. It does not end the run: there is always a chance to find more
+oil. The owner added:
+- There are other light sources in the game besides the lantern.
+- Outside during the day, the lantern isn't needed.
+- The player can switch the lantern on and off at will.
+- Some places are darker than others, and some are brighter.
+Open details: Q-014 (other light sources), Q-015 (day outside), Q-016
+(the lantern switched off).
+
+**D-016 · 2026-10-17 · Turns happen only when you act** (answers Q-006)
+Classic roguelike turns: nothing moves until the player steps or acts, so
+there is always time to think.
+
+**D-017 · 2026-10-17 · How fighting works** (answers Q-007)
+Walking into an enemy attacks it. On top of that the owner wants abilities
+that work at range, different kinds of weapons, and different area attack
+shapes (attacks that hit a group of tiles, such as a line or a ring).
+Which ones, and when, is Q-017.
+
+**D-018 · 2026-10-17 · A faster working pace**
+The owner wants to move a little faster. One PR may now settle several
+small decisions. Questions are asked as multiple choice, with a
+recommendation, more than one pick allowed where options combine, and
+always room for the owner's own answer. Visible changes still come one
+small step at a time. The rules are in `CLAUDE.md`.

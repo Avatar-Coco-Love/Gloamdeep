@@ -12,7 +12,7 @@
 
 ## Checklist
 - [ ] The owner approved this step's plan before it was built
-- [ ] One step only (one decision or one small visible change)
+- [ ] Small in scope (a few small decisions, or one small visible change)
 - [ ] `CHANGELOG.md` has a new top entry (the version bump)
 - [ ] `docs/PROGRESS.md`: log entry added (oldest moved to the archive), Next up and "Waiting on the owner" updated
 - [ ] `docs/DECISIONS.md` / `docs/OPEN-QUESTIONS.md` updated for anything settled or newly open
