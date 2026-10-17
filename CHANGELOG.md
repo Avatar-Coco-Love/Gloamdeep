@@ -18,6 +18,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.7 (2026-10-17)
+- Every biome has portals, and each leads into a twisted, darker version
+  of that biome with rarer loot.
+- The companion is a dog you rescue in the first cave.
+- Decisions: D-032, D-033. Questions closed: Q-020, Q-021.
+
 ## 0.0.6 (2026-10-17)
 - Light comes from torches, glowing life, thrown light and daylight
   shafts too. Day and night pass with your turns.

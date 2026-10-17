@@ -187,3 +187,13 @@ hidden unless opened, so the owner can test on GitHub Pages.
 **D-031 · 2026-10-17 · A pixel font drawn in code** (answers Q-013)
 All game text uses a small pixel font drawn in code, matching the crisp
 16-pixel look. No font files.
+
+**D-032 · 2026-10-17 · Portals and the depths** (answers Q-020)
+Each biome has one or more portals, so dives open up early and grow harder
+further down. A depth is a darker, stranger, twisted version of the biome
+its portal sits in, with the same kinds of tiles and creatures, warped,
+and rarer loot.
+
+**D-033 · 2026-10-17 · The companion is a dog you rescue** (answers Q-021)
+You find the dog trapped or lost in the first cave and free it, and it
+follows you home.

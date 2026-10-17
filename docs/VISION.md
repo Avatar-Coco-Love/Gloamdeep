@@ -25,7 +25,8 @@ danger and the oil that keeps you going, and every step burns a little of it.
   into deep areas that change on every visit (D-019).
 - Death sends you home and never wipes progress (D-020, D-021).
 - Surface first, then down; caves can open into valleys (D-022).
-- Solo, with an animal companion later (D-023, D-029).
+- Solo, with a rescued dog joining later (D-023, D-029, D-033).
+- Every biome has portals into a twisted version of itself (D-032).
 - Biomes, top to bottom: woods and mountains, old mines and caves, glowing
   fungal caverns, sunken ruins (D-028).
 
