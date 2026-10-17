@@ -4,13 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.6 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.7 · **Stage:** pre-production (no game code yet)
 
 ## Next up
 **Step 6: The one-page design brief.** Draft `docs/DESIGN.md` from D-008
-to D-031, check it against the pillars (D-013), and get it approved. Q-020
-and Q-021 can be asked alongside as multiple choice.
-Read: `DECISIONS.md`, `VISION.md`, `OPEN-QUESTIONS.md`.
+to D-033, check it against the pillars (D-013), and get it approved. No
+questions are open right now.
+Read: `DECISIONS.md`, `VISION.md`.
 
 ## Waiting on the owner
 - Nothing right now.
@@ -37,12 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #4 (0.0.4), Q-004 to Q-007 answered.** Oil is light
-  only (D-014). Running dry leaves an ember and bolder enemies, not the end
-  of the run; the lantern switches on and off, and other light sources
-  exist (D-015). Turns pass only when you act (D-016). Bump to attack, plus
-  ranged abilities, weapons and area attacks (D-017). The owner asked for
-  a faster pace and multiple-choice questions (D-018).
 - **2026-10-17, PR #5 (0.0.5), Q-008 to Q-010 answered.** One persistent
   journey: a world generated once per save, plus portals into deep areas
   that change each visit (D-019). Death sends you home without wiping
@@ -53,3 +47,6 @@ Foundation (0.1.x): one small visible thing per step
   lantern off (D-024 to D-026). Weapons and abilities (D-027). Four biomes
   (D-028), an animal companion (D-029), dev mode via `?dev` (D-030) and a
   pixel font (D-031).
+- **2026-10-17, PR #7 (0.0.7), Q-020 and Q-021 answered.** Every biome
+  has portals into a twisted version of itself (D-032). The companion is a
+  dog you rescue in the first cave (D-033). No questions are open.

@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #4 (0.0.4), Q-004 to Q-007 answered.** Oil is light
+  only (D-014). Running dry leaves an ember and bolder enemies, not the end
+  of the run; the lantern switches on and off, and other light sources
+  exist (D-015). Turns pass only when you act (D-016). Bump to attack, plus
+  ranged abilities, weapons and area attacks (D-017). The owner asked for
+  a faster pace and multiple-choice questions (D-018).
 - **2026-10-17, PR #3 (0.0.3), Q-003 answered.** The owner approved the
   four design pillars as drafted (D-013): the lantern is your world, always
   one floor deeper, curiosity pays off, and stronger, slowly. They are in
