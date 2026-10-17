@@ -21,6 +21,11 @@ danger and the oil that keeps you going, and every step burns a little of it.
   the end of the run. The lantern switches on and off (D-014, D-015).
 - Turns pass only when you act. Bump to attack, plus ranged abilities,
   weapons and area attacks (D-016, D-017).
+- One persistent journey in a world generated once per save, with portals
+  into deep areas that change on every visit (D-019).
+- Death sends you home and never wipes progress (D-020, D-021).
+- Surface first, then down; caves can open into valleys (D-022).
+- Solo, with one companion later (D-023).
 
 ## Inspirations
 - **Dungeon Siege.** The owner played it as a kid, and the name brings it

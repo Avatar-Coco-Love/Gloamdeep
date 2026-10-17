@@ -18,6 +18,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.5 (2026-10-17)
+- The game is one persistent journey. The world is generated once per
+  save, and portals lead into deep areas that change on every visit.
+- Dying sends you home: in the world you can fetch your dropped bag, in a
+  portal you lose that dive's finds. Levels, unlocks and lore always stay.
+- What you keep: lore, unlocks, home base, levels, shortcuts, explored map,
+  stash, deepest depth record.
+- Surface first, then down, with caves that open into valleys or cut
+  through mountains. Solo, with one companion later.
+- Decisions: D-019 to D-023. Questions closed: Q-008 to Q-010. Questions
+  opened: Q-018, Q-019.
+
 ## 0.0.4 (2026-10-17)
 - Oil is light only. Running dry shrinks the light to an ember and makes
   enemies bolder, but the run goes on.

@@ -10,17 +10,6 @@ else entirely.
 
 ---
 
-**Q-008 · The shape of a run**
-Permadeath runs that start fresh, or a persistent journey? Do floors go
-down, biome by biome? What carries over between runs?
-
-**Q-009 · Biomes, outside and inside**
-The owner wanted to see biomes and both outside and inside areas. Which
-biomes, in what order, and how do outside and inside connect?
-
-**Q-010 · Companions?**
-Dungeon Siege had a party. Solo, one companion, or a party?
-
 **Q-012 · How is dev mode opened, and does it ship?**
 For example: a `?dev` address flag, a secret tap pattern, or both.
 Should dev mode be in the public build?
@@ -46,3 +35,12 @@ enemies notice you less in the dark, or both.
 Which kinds come first (D-017)? For example: a melee weapon and one ranged
 ability for the first floors, with area attacks unlocked as you grow
 stronger (pillar 4).
+
+**Q-018 · Which biomes, in what order?**
+The surface first, then down biome by biome, with caves that open into
+valleys or pass through mountains (D-022). Which biomes, and how does each
+portal depth relate to them?
+
+**Q-019 · What kind of companion?**
+One companion can join later (D-023). For example: an animal, a person,
+something strange from the deep. How do they join, and do they fight?
