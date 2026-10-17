@@ -18,6 +18,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.4 (2026-10-17)
+- Oil is light only. Running dry shrinks the light to an ember and makes
+  enemies bolder, but the run goes on.
+- The lantern can be switched on and off, other light sources exist, and
+  outside in the day you don't need it.
+- Turns happen only when you act. Walk into an enemy to attack, with
+  ranged abilities, weapon kinds and area attacks planned too.
+- Faster working pace: several small decisions per PR, multiple-choice
+  questions.
+- Decisions: D-014 to D-018. Questions closed: Q-004 to Q-007. Questions
+  opened: Q-014 to Q-017.
+
 ## 0.0.3 (2026-10-17)
 - The four design pillars are set: the lantern is your world, always one
   floor deeper, curiosity pays off, and stronger, slowly.
