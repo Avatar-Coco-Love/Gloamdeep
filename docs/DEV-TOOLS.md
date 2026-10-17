@@ -9,8 +9,8 @@ tools to be chosen together later.
   draws anything itself, so it can't fall out of step with the real game.
 - **Tools read the content registry** (`TECH.md`). Anything added to the
   game appears in the spawn menu automatically.
-- **Hidden from players.** How dev mode is opened, and whether it ships in
-  the public build, is Q-012.
+- **Hidden from players.** Adding `?dev` to the address opens it. It ships
+  in the public build, hidden unless opened (D-030).
 - **Reproducible.** Show the current seed, and allow loading a seed.
 - Each new game feature arrives with its dev hook in the same PR (for
   example, oil arrives with "set oil").

@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.5 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.6 · **Stage:** pre-production (no game code yet)
 
 ## Next up
 **Step 6: The one-page design brief.** Draft `docs/DESIGN.md` from D-008
-to D-023, check it against the pillars (D-013), and get it approved. The
-open questions (Q-012 to Q-019) can be asked alongside as multiple choice.
+to D-031, check it against the pillars (D-013), and get it approved. Q-020
+and Q-021 can be asked alongside as multiple choice.
 Read: `DECISIONS.md`, `VISION.md`, `OPEN-QUESTIONS.md`.
 
 ## Waiting on the owner
@@ -37,10 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #3 (0.0.3), Q-003 answered.** The owner approved the
-  four design pillars as drafted (D-013): the lantern is your world, always
-  one floor deeper, curiosity pays off, and stronger, slowly. They are in
-  `VISION.md`, and every later idea is checked against them.
 - **2026-10-17, PR #4 (0.0.4), Q-004 to Q-007 answered.** Oil is light
   only (D-014). Running dry leaves an ember and bolder enemies, not the end
   of the run; the lantern switches on and off, and other light sources
@@ -52,3 +48,8 @@ Foundation (0.1.x): one small visible thing per step
   that change each visit (D-019). Death sends you home without wiping
   progress (D-020, D-021). Surface first, then down, with caves opening
   into valleys (D-022). Solo, with one companion later (D-023).
+- **2026-10-17, PR #6 (0.0.6), Q-012 to Q-019 answered.** Other light
+  sources, a day and night cycle by turns, and reasons to switch the
+  lantern off (D-024 to D-026). Weapons and abilities (D-027). Four biomes
+  (D-028), an animal companion (D-029), dev mode via `?dev` (D-030) and a
+  pixel font (D-031).

@@ -90,4 +90,4 @@ drift.
 
 ## Other notes
 - The study's page chrome loads a Google Font. The game itself must not
-  (D-003, Q-013).
+  (D-003). Game text uses a pixel font drawn in code (D-031).

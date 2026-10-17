@@ -18,6 +18,19 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.6 (2026-10-17)
+- Light comes from torches, glowing life, thrown light and daylight
+  shafts too. Day and night pass with your turns.
+- Switching the lantern off saves oil, hides you, reveals some secrets and
+  calms some creatures.
+- One close-up weapon first; each weapon has its own attack shape, and
+  ranged, area and learned abilities unlock as you grow.
+- Four biomes: woods and mountains, old mines, glowing fungal caverns,
+  sunken ruins. The companion is an animal.
+- Dev mode opens with `?dev` and ships hidden. Text uses a pixel font.
+- Decisions: D-024 to D-031. Questions closed: Q-012 to Q-019. Questions
+  opened: Q-020, Q-021.
+
 ## 0.0.5 (2026-10-17)
 - The game is one persistent journey. The world is generated once per
   save, and portals lead into deep areas that change on every visit.

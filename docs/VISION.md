@@ -25,7 +25,9 @@ danger and the oil that keeps you going, and every step burns a little of it.
   into deep areas that change on every visit (D-019).
 - Death sends you home and never wipes progress (D-020, D-021).
 - Surface first, then down; caves can open into valleys (D-022).
-- Solo, with one companion later (D-023).
+- Solo, with an animal companion later (D-023, D-029).
+- Biomes, top to bottom: woods and mountains, old mines and caves, glowing
+  fungal caverns, sunken ruins (D-028).
 
 ## Inspirations
 - **Dungeon Siege.** The owner played it as a kid, and the name brings it
