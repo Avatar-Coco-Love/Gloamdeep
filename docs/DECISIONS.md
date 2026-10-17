@@ -28,7 +28,7 @@ exists in code.
 **D-004 · 2026-10-17 · How we work**
 Slower and in smaller chunks than the owner's other projects, with the owner
 involved in every decision. Claude proposes and the owner decides. The rules
-are in `CLAUDE.md`.
+are in `CLAUDE.md`. *The pace part is superseded by D-018 (2026-10-17).*
 
 **D-005 · 2026-10-17 · Art baseline: style study 1**
 `reference/style-study-1.html` sets the look. The owner said: "That actually
@@ -111,7 +111,7 @@ that work at range, different kinds of weapons, and different area attack
 shapes (attacks that hit a group of tiles, such as a line or a ring).
 Which ones, and when, is Q-017.
 
-**D-018 · 2026-10-17 · A faster working pace**
+**D-018 · 2026-10-17 · A faster working pace** (supersedes the pace in D-004)
 The owner wants to move a little faster. One PR may now settle several
 small decisions. Questions are asked as multiple choice, with a
 recommendation, more than one pick allowed where options combine, and

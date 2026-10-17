@@ -4,16 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.7 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.8 · **Stage:** pre-production (no game code yet)
 
 ## Next up
-**Step 6: The one-page design brief.** Draft `docs/DESIGN.md` from D-008
-to D-033, check it against the pillars (D-013), and get it approved. No
-questions are open right now.
-Read: `DECISIONS.md`, `VISION.md`.
+**Step 6: Approve the design brief.** The owner reads `docs/DESIGN.md`
+(draft in PR #8). Record approval or changes as a decision, then ask
+Q-022 to Q-024 as multiple choice.
+Read: `DESIGN.md`, `OPEN-QUESTIONS.md`.
 
 ## Waiting on the owner
-- Nothing right now.
+- Approve or change the design brief draft (PR #8).
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -37,11 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #5 (0.0.5), Q-008 to Q-010 answered.** One persistent
-  journey: a world generated once per save, plus portals into deep areas
-  that change each visit (D-019). Death sends you home without wiping
-  progress (D-020, D-021). Surface first, then down, with caves opening
-  into valleys (D-022). Solo, with one companion later (D-023).
 - **2026-10-17, PR #6 (0.0.6), Q-012 to Q-019 answered.** Other light
   sources, a day and night cycle by turns, and reasons to switch the
   lantern off (D-024 to D-026). Weapons and abilities (D-027). Four biomes
@@ -50,3 +45,6 @@ Foundation (0.1.x): one small visible thing per step
 - **2026-10-17, PR #7 (0.0.7), Q-020 and Q-021 answered.** Every biome
   has portals into a twisted version of itself (D-032). The companion is a
   dog you rescue in the first cave (D-033). No questions are open.
+- **2026-10-17, PR #8 (0.0.8), design brief drafted.** `docs/DESIGN.md`
+  gathers D-002 to D-033 on one page, waiting for approval. It found three
+  gaps, now Q-022 to Q-024. D-004's pace is marked superseded by D-018.

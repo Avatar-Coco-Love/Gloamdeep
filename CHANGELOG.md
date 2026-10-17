@@ -18,6 +18,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.8 (2026-10-17)
+- Draft of the one-page design brief (`docs/DESIGN.md`), built only from
+  decisions, for the owner to approve.
+- Three gaps the brief found are now open questions: the hero and why
+  they go down, how oil drains, how you get stronger.
+- D-004's slower pace is marked as superseded by D-018.
+- Decisions: none new. Questions opened: Q-022 to Q-024.
+
 ## 0.0.7 (2026-10-17)
 - Every biome has portals, and each leads into a twisted, darker version
   of that biome with rarer loot.
