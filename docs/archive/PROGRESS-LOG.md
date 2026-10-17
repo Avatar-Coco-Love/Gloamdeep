@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #3 (0.0.3), Q-003 answered.** The owner approved the
+  four design pillars as drafted (D-013): the lantern is your world, always
+  one floor deeper, curiosity pays off, and stronger, slowly. They are in
+  `VISION.md`, and every later idea is checked against them.
 - **2026-10-17, PR #2 (0.0.2), Q-002 and Q-011 answered.** Everything in
   style study 1 stays, with the rat and shadow edges to improve (D-009).
   The repo became lowercase `gloamdeep` and GitHub Pages went live (D-010).

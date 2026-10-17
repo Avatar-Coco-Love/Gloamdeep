@@ -147,3 +147,43 @@ biomes, and in what order, is Q-018.
 
 **D-023 · 2026-10-17 · Solo, with one companion later** (answers Q-010)
 You start alone. One companion can join later. What kind is Q-019.
+
+**D-024 · 2026-10-17 · Other light sources** (answers Q-014)
+All four kinds: wall torches and braziers (some already lit, some the
+player can light, and lit ones stay lit), glowing life (mushrooms, moss,
+crystals, creatures), light the player can carry or throw ahead, and
+shafts of daylight through cracks in cave ceilings.
+
+**D-025 · 2026-10-17 · Day and night pass with your turns** (answers Q-015)
+Time moves only as the player takes turns. Outside at night the lantern is
+needed; outside during the day it isn't.
+
+**D-026 · 2026-10-17 · Reasons to switch the lantern off** (answers Q-016)
+All four: no oil burns while it is off; enemies notice you less in the
+dark; some things can only be seen with the lantern off (faint glowing
+marks, hidden paths); and some creatures are drawn to or angered by light
+and stay calm in the dark.
+
+**D-027 · 2026-10-17 · How weapons and abilities arrive** (answers Q-017)
+You start with one close-up weapon, and ranged abilities and area attacks
+unlock as you grow stronger. Each weapon kind has its own attack shape
+(for example a spear reaching two tiles in a line). Abilities are also
+learned skills of their own, kept and usable with any weapon.
+
+**D-028 · 2026-10-17 · The four biomes, top to bottom** (answers Q-018)
+Woods and mountains on the surface, then old mines and caves, then glowing
+fungal caverns, then sunken ruins at the bottom, where the mysteries and
+lore come together. Where portals appear and what the depths look like is
+Q-020.
+
+**D-029 · 2026-10-17 · The companion is an animal** (answers Q-019)
+For example a dog or fox. It can sniff out hidden things, warn of enemies
+in the dark and help in fights. Which animal, and how it joins, is open.
+
+**D-030 · 2026-10-17 · Dev mode: `?dev`, and it ships** (answers Q-012)
+Adding `?dev` to the address opens dev mode. It is in the public build,
+hidden unless opened, so the owner can test on GitHub Pages.
+
+**D-031 · 2026-10-17 · A pixel font drawn in code** (answers Q-013)
+All game text uses a small pixel font drawn in code, matching the crisp
+16-pixel look. No font files.
