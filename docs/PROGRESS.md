@@ -48,3 +48,4 @@ Foundation (0.1.x): one small visible thing per step
 - **2026-10-17, PR #8 (0.0.8), design brief drafted.** `docs/DESIGN.md`
   gathers D-002 to D-033 on one page, waiting for approval. It found three
   gaps, now Q-022 to Q-024. D-004's pace is marked superseded by D-018.
+  The owner swapped the dog for a talking faery guide (D-034).

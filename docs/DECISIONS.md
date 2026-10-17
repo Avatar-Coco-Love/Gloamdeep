@@ -177,6 +177,7 @@ lore come together. Where portals appear and what the depths look like is
 Q-020.
 
 **D-029 · 2026-10-17 · The companion is an animal** (answers Q-019)
+*Superseded by D-034 (2026-10-17).*
 For example a dog or fox. It can sniff out hidden things, warn of enemies
 in the dark and help in fights. Which animal, and how it joins, is open.
 
@@ -195,5 +196,17 @@ its portal sits in, with the same kinds of tiles and creatures, warped,
 and rarer loot.
 
 **D-033 · 2026-10-17 · The companion is a dog you rescue** (answers Q-021)
+*Superseded by D-034 (2026-10-17).*
 You find the dog trapped or lost in the first cave and free it, and it
 follows you home.
+
+**D-034 · 2026-10-17 · The companion is a faery** (supersedes D-029, D-033)
+The owner swapped the dog for a faery friend. It speaks, gives
+information and holds conversations. It is not bound to the grid: it
+flies freely around the hero and flies toward things when there is a
+reason to. You rescue it in the first cave, and it follows you from then
+on. It has only a faint glow, so it can be seen in the dark but the
+lantern stays the real light. It speaks up on its own (hints, warnings,
+remarks on lore and new monsters), and you can tap it to ask about
+topics. All of it is written dialogue that works offline. It never
+fights; it guides.

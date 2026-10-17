@@ -24,7 +24,10 @@ Entry format:
 - Three gaps the brief found are now open questions: the hero and why
   they go down, how oil drains, how you get stronger.
 - D-004's slower pace is marked as superseded by D-018.
-- Decisions: none new. Questions opened: Q-022 to Q-024.
+- The companion is now a faery, not a dog: it flies around you, talks,
+  guides and never fights.
+- Decisions: D-034 (supersedes D-029, D-033). Questions opened: Q-022 to
+  Q-024.
 
 ## 0.0.7 (2026-10-17)
 - Every biome has portals, and each leads into a twisted, darker version

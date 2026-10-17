@@ -60,9 +60,11 @@ Every idea is checked against these. An idea that serves none is cut.
   [D-021]
 
 ## Company
-You start alone. Later you rescue a **dog** trapped in the first cave, and
-it follows you home. It sniffs out hidden things, warns of enemies in the
-dark and helps in fights. [D-023, D-029, D-033]
+You start alone. In the first cave you rescue a **faery**, and it stays
+with you from then on. It flies freely around you, off the grid, and
+darts toward things worth noticing. It speaks up with hints, warnings and
+lore, and you can tap it to ask about things. It glows faintly but lights
+almost nothing, and it never fights: it guides. [D-023, D-034]
 
 ## Look and feel
 Style study 1 is the look, and all of it stays: real light and shadows,
