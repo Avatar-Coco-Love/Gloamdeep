@@ -16,6 +16,7 @@ danger and the oil that keeps you going, and every step burns a little of it.
   it stays (D-009).
 - Hosted on GitHub Pages (D-010).
 - Built-in dev tools, including spawning anything (D-006).
+- Four design pillars (D-013, below).
 
 ## Inspirations
 - **Dungeon Siege.** The owner played it as a kid, and the name brings it
@@ -29,7 +30,21 @@ danger and the oil that keeps you going, and every step burns a little of it.
   brick wall faces, crisp pixels, the palette and the small signs of life.
 
 ## Pillars
-Not set yet (Q-003). Next to draft, from D-008 and D-009.
+**Decided** (D-013). Every later idea is checked against these. An idea
+that serves none of them is cut.
+
+1. **The lantern is your world.** The lantern is the only light you
+   carry. Whatever it shows you, the path, the danger or the treasure, is
+   the game, and the dark beyond it should feel alive. (From D-009.)
+2. **Always one floor deeper.** Going down is the pull. Each descent
+   should feel like a step into somewhere new, and "how far can I get?"
+   should always be on your mind. (From D-008.)
+3. **Curiosity pays off.** Looking around is always worth it. Corners and
+   side rooms hold loot, new monsters and pieces of the mystery. (From
+   D-008.)
+4. **Stronger, slowly.** You get stronger bit by bit and earn it, and you
+   can feel the difference between your first steps and your fiftieth.
+   (From D-008.)
 
 ## Not in scope (so far)
 Nothing has been ruled out yet. Record it here when the owner rules
