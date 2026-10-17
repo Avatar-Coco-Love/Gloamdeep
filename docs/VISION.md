@@ -17,7 +17,10 @@ danger and the oil that keeps you going, and every step burns a little of it.
 
 ## Inspirations
 - **Dungeon Siege.** The owner played it as a kid, and the name brings it
-  to mind. What exactly to take from it is Q-001.
+  to mind. What to take from it (D-008): going deeper, the feeling of
+  exploring, collecting loot, fighting new monsters, uncovering mysteries
+  and lore, getting stronger and progressing slowly, seeing how far you can
+  get, and the curiosity that makes you keep playing.
 - **Style study 1.** The lantern as the only light you carry, and the room
   waking up as you walk through it.
 

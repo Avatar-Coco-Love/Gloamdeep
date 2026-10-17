@@ -9,11 +9,6 @@ may answer something else entirely.
 
 ---
 
-**Q-001 · What did you love about Dungeon Siege?**
-It came up when the name was chosen. Possible threads: the continuous
-descent with no loading screens, loot, the pack mule, a party of companions,
-the feeling of going deeper. The answer feeds the pillars (Q-003).
-
 **Q-002 · Style study 1: what must stay, and what should change?**
 What the study does: the lantern is the real light source (it casts shadows,
 flickers and shrinks as oil drops). It has fog of war. Walls show brick

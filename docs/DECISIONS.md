@@ -46,3 +46,10 @@ An earlier ChatGPT art pack ("Lantern Below", 6 biomes, outside and inside)
 is not part of this project. The only idea carried over is that there will
 be biomes, each with outside and inside areas. That idea is still open
 (Q-009).
+
+**D-008 · 2026-10-17 · What we take from Dungeon Siege** (answers Q-001)
+In the owner's words: "The going deeper and the feeling of exploring,
+collecting loot, fighting new monsters, uncovering mysteries and lore. It
+felt good to get stronger and slowly progress through the game, and see how
+far I could get. There was a desire and curiosity to keep playing." These
+threads feed the pillars (Q-003).

@@ -22,4 +22,5 @@ Entry format:
 - Project kickoff: working rules (`CLAUDE.md`), decision log, open questions,
   vision, art direction, tech and dev-tool notes.
 - Added style study 1 as the frozen art reference (`reference/`).
-- Decisions: D-001 to D-007.
+- Recorded what the owner loved about Dungeon Siege.
+- Decisions: D-001 to D-008. Questions closed: Q-001.

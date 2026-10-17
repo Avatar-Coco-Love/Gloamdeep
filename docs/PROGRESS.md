@@ -7,11 +7,11 @@ go to the top of `archive/PROGRESS-LOG.md`.
 **Version:** 0.0.1 · **Stage:** pre-production (no game code yet)
 
 ## Next up
-**Step 1: Inspirations and must-keeps.** This is a conversation, with no
-code. Ask the owner Q-001 (what they loved about Dungeon Siege), then Q-002
+**Step 1: Inspirations and must-keeps (second half).** This is a
+conversation, with no code. Q-001 is answered (D-008). Ask the owner Q-002
 (which parts of style study 1 must stay and what should change). Record the
-answers in `VISION.md` and `DECISIONS.md`.
-Read: `OPEN-QUESTIONS.md` (Q-001, Q-002), `VISION.md`.
+answer in `VISION.md`, `DECISIONS.md` and `ART-DIRECTION.md`.
+Read: `OPEN-QUESTIONS.md` (Q-002), `ART-DIRECTION.md`.
 
 ## Waiting on the owner
 - Merge PR #1 (kickoff).
@@ -43,3 +43,7 @@ Foundation (0.1.x): one small visible thing per step
   of it: "I really don't want to lose that." Working rules, decision log and
   docs were set up from the planning conversation. ChatGPT's art pack was
   left out on purpose (D-007).
+- **2026-10-17, PR #1 (0.0.1), Q-001 answered.** The owner said what they
+  loved about Dungeon Siege: going deeper, exploring, loot, new monsters,
+  mysteries and lore, getting stronger, and the curiosity to keep playing
+  (D-008). Recorded in `VISION.md`.
