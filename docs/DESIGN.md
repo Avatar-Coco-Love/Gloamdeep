@@ -30,8 +30,8 @@ Every idea is checked against these. An idea that serves none is cut.
   anew on every visit. A dive plays like a roguelite run. [D-019, D-032]
 
 ## Light
-- The lantern is the only light you carry. Oil sets how far its light
-  reaches, and nothing else. [D-014]
+- The lantern is your main light. Oil sets how far its light reaches,
+  and nothing else. [D-014]
 - When the oil runs out the light shrinks to an ember and enemies grow
   bolder, but the journey goes on: there is always a chance to find more.
   [D-015]
