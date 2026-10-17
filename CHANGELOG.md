@@ -18,6 +18,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.2 (2026-10-17)
+- Everything in style study 1 stays. Only the rat sprite and the blocky
+  shadow edges will be improved.
+- The game is hosted on GitHub Pages, at the renamed repo `gloamdeep`.
+- No blue flash when tapping: recorded as a rule for the game.
+- Decisions: D-009 to D-011. Questions closed: Q-002, Q-011.
+
 ## 0.0.1 (2026-10-17)
 - Project kickoff: working rules (`CLAUDE.md`), decision log, open questions,
   vision, art direction, tech and dev-tool notes.

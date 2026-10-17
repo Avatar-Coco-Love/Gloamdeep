@@ -53,3 +53,21 @@ collecting loot, fighting new monsters, uncovering mysteries and lore. It
 felt good to get stronger and slowly progress through the game, and see how
 far I could get. There was a desire and curiosity to keep playing." These
 threads feed the pillars (Q-003).
+
+**D-009 · 2026-10-17 · Everything in style study 1 stays** (answers Q-002)
+The owner chose to keep all of it: the lantern as real light with shadows,
+the stepped and dithered light, fog of war, walls with brick faces, crisp
+16-pixel tiles, the palette, and the small signs of life. Only the two weak
+spots change: the rat sprite gets redrawn, and shadow edges get a little
+smoother. Details are in `docs/ART-DIRECTION.md`.
+
+**D-010 · 2026-10-17 · The game is hosted on GitHub Pages** (answers Q-011)
+The owner renamed the repo to lowercase `gloamdeep` and turned GitHub Pages
+on. The site is https://avatar-coco-love.github.io/gloamdeep/, served from
+`main`, so whatever is merged is what is live. The game appears there once
+an `index.html` exists (build plan step 7).
+
+**D-011 · 2026-10-17 · No blue flash when tapping**
+The owner noticed a blue flash on the screen every time they tap, and
+doesn't like it. (It is the phone browser's tap highlight.) The game must
+turn it off. The rule is in `docs/TECH.md`.

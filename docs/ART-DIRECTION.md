@@ -4,8 +4,9 @@ Rules taken from `reference/style-study-1.html` (D-005). The study is
 frozen. This file is where the rules live and change. Line numbers below
 refer to the study, so read it by range, not whole.
 
-Which features are must-keeps is still open (Q-002). Until then, treat
-everything here as the baseline, and don't drop any of it without asking.
+Everything here is a must-keep (D-009). Don't drop or change any of it
+without asking the owner. The only planned changes are the two fixes under
+"Weak spots to fix" at the end.
 
 ## Grid and scale
 - Tiles are 16 × 16 pixels. The study room is 11 × 13 tiles (176 × 208 px).
@@ -80,8 +81,13 @@ there is light. Water ripples. A hit flash plus a 1-pixel screen shake on
 bump. Respect `prefers-reduced-motion`: stop the bobbing, flicker and
 drift.
 
-## Known weak spots in the study
-- The rat sprite is the weakest piece.
-- Shadow edges step in 4-pixel blocks.
+## Weak spots to fix (D-009)
+- **The rat sprite** is the weakest piece. Redraw it when the rat is first
+  built, and show the owner before it goes in.
+- **Shadow edges** step in 4-pixel blocks. Make them a little smoother at
+  build plan step 12 (lantern light). Propose how, with a side-by-side
+  picture, and keep the dithered bands.
+
+## Other notes
 - The study's page chrome loads a Google Font. The game itself must not
   (D-003, Q-013).
