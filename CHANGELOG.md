@@ -23,7 +23,8 @@ Entry format:
   shadow edges will be improved.
 - The game is hosted on GitHub Pages, at the renamed repo `gloamdeep`.
 - No blue flash when tapping: recorded as a rule for the game.
-- Decisions: D-009 to D-011. Questions closed: Q-002, Q-011.
+- The Pages front page now opens style study 1, so the link is playable.
+- Decisions: D-009 to D-012. Questions closed: Q-002, Q-011.
 
 ## 0.0.1 (2026-10-17)
 - Project kickoff: working rules (`CLAUDE.md`), decision log, open questions,

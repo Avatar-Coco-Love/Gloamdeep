@@ -35,7 +35,7 @@ here and gets confirmed with the owner at build-plan step 7.
 
 ## Proposed layout (confirm at step 7)
 ```
-index.html          page shell and canvas
+index.html          page shell and canvas (for now it opens the study, D-012)
 src/main.js         boot and the main loop
 src/core/           rules, state, rng, registry (no DOM)
 src/render/         drawing, lighting, sprites

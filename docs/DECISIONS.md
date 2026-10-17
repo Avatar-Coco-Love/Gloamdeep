@@ -71,3 +71,9 @@ an `index.html` exists (build plan step 7).
 The owner noticed a blue flash on the screen every time they tap, and
 doesn't like it. (It is the phone browser's tap highlight.) The game must
 turn it off. The rule is in `docs/TECH.md`.
+
+**D-012 · 2026-10-17 · The front page opens the style study for now**
+The owner wanted the Pages link to lead somewhere playable while the game
+is still early. Until build plan step 7, the site's `index.html` sends
+visitors straight to `reference/style-study-1.html`. At step 7 the real
+game takes over `index.html`.
