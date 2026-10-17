@@ -1,0 +1,545 @@
+<title>Gloamdeep Style Study</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: one narrow column, the game "cabinet" first, controls and notes below it. Single dark look by choice. */
+:root {
+  --bg: #0b0a10;
+  --panel: #15131d;
+  --line: #2a2636;
+  --ink: #e9e1cc;
+  --muted: #9790a4;
+  --amber: #ffc65c;
+  --amber-deep: #a8642c;
+  --display: "Pixelify Sans", ui-monospace, "Courier New", monospace;
+  --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+html, body { background: var(--bg); color: var(--ink); }
+body {
+  font-family: var(--body);
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 560px; margin: 0 auto; padding-block: 20px 40px; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--display); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-size: 12px; margin: 0; }
+h1 { font-family: var(--display); font-weight: 600; color: var(--amber); font-size: 34px; line-height: 1; margin: 4px 0 6px; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.cabinet {
+  background: #000; border: 2px solid var(--line); border-radius: 4px;
+  display: grid; place-items: center; padding: 6px; touch-action: manipulation;
+}
+canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edges; cursor: pointer; max-width: 100%; }
+.hud { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.oil { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; }
+.oil-bar { display: grid; grid-template-columns: repeat(10, 12px); gap: 3px; }
+.oil-bar i { height: 14px; background: var(--line); }
+.oil-bar i.on { background: var(--amber); box-shadow: inset 0 -3px 0 var(--amber-deep); }
+.log { flex: 1 1 200px; min-width: 0; color: var(--muted); font-size: 14px; margin: 0; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; }
+button {
+  font-family: var(--display); font-size: 15px; color: var(--ink); background: var(--panel);
+  border: 2px solid var(--line); border-radius: 3px; padding: 8px 12px; min-height: 44px; cursor: pointer;
+}
+button:hover { border-color: var(--muted); }
+button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+button[aria-pressed="false"] { color: var(--muted); }
+.notes { border-top: 2px solid var(--line); padding-top: 12px; }
+.notes h2 { font-family: var(--display); font-size: 18px; font-weight: 600; margin: 0 0 6px; }
+.notes ul { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 4px; }
+.notes b { color: var(--ink); font-weight: 600; }
+kbd { font-family: var(--display); background: var(--panel); border: 1px solid var(--line); padding: 0 4px; border-radius: 2px; }
+</style>
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Style study 1 · Moss crypt</p>
+    <h1>Gloamdeep</h1>
+    <p class="lede">{Tap} a tile to walk there. Your lantern is the only light you carry, and every step burns oil. Oil flasks refill it.</p>
+  </header>
+
+  <div class="cabinet"><canvas id="view" width="176" height="208" aria-label="Crypt room seen from above, lit by your lantern"></canvas></div>
+
+  <div class="hud">
+    <div class="oil"><span>Oil</span><div class="oil-bar" id="oilBar"></div></div>
+    <p class="log" id="log" aria-live="polite">The crypt is cold. Somewhere, water drips.</p>
+  </div>
+
+  <div class="controls">
+    <button id="btnLight" aria-pressed="true">Lighting: on</button>
+    <button id="btnRefill">Refill oil</button>
+    <button id="btnReset">Reset room</button>
+  </div>
+
+  <section class="notes">
+    <h2>What this study tries</h2>
+    <ul>
+      <li><b>The lantern is real light.</b> It casts shadows behind pillars, shrinks as oil runs low, and flickers.</li>
+      <li><b>Fog of war.</b> Rooms start black. Places you have seen stay faintly visible.</li>
+      <li><b>Walls with faces.</b> A slight top-down tilt shows brick fronts and casts shade on the floor.</li>
+      <li><b>16-pixel tiles, enlarged.</b> Every pixel is drawn by code. No image files.</li>
+      <li><b>Small life.</b> Torches sway, dust drifts in the light, monsters bob, and walking into one makes it flash.</li>
+    </ul>
+    <p class="lede" style="margin-top:8px">On a keyboard: arrow keys or <kbd>WASD</kbd> to step, <kbd>L</kbd> to toggle lighting.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+'use strict';
+document.querySelector('.lede').textContent = ('ontouchstart' in window ? 'Tap' : 'Click') + ' a tile to walk there. Your lantern is the only light you carry, and every step burns oil. Oil flasks refill it.';
+
+const T = 16, COLS = 11, ROWS = 13, W = COLS * T, H = ROWS * T;
+const MAP = [
+  '###########',
+  '#...#.....#',
+  '#...#..~~~#',
+  '#.......~~#',
+  '##.###....#',
+  '#.........#',
+  '#..#...#..#',
+  '#.........#',
+  '#.........#',
+  '#..#...#..#',
+  '#.........#',
+  '#.........#',
+  '#####.#####',
+];
+const at = (x, y) => (x < 0 || y < 0 || x >= COLS || y >= ROWS) ? '#' : MAP[y][x];
+const isWall = (x, y) => at(x, y) === '#';
+
+// ---------- deterministic noise ----------
+function hash(x, y, s) {
+  let n = Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(s, 982451653);
+  n = Math.imul(n ^ (n >>> 13), 1274126177);
+  return ((n ^ (n >>> 16)) >>> 0) / 4294967296;
+}
+
+// ---------- palette ----------
+const PAL = {
+  k:'#0e0c16', w:'#efe6cc', t:'#b9ab88', y:'#ffd66b', Y:'#f39a3b', O:'#a8642c', o:'#e9a94a', a:'#e8d5a0',
+  p:'#e8786a', R:'#c4473a', C:'#a6e0e4', c:'#58a8b4', B:'#2f6a7c', b:'#1c3e4e',
+  g:'#6fb04e', L:'#c3eb86', G:'#3c6e3a', S:'#9aa6b4', s:'#6b7686', d:'#4a5262', D:'#2c313d',
+  n:'#6b4a33', N:'#9c6f45', v:'#a58ce0', V:'#4b3a73',
+};
+
+// ---------- sprites (16x16 pixel maps; "m" = left half, mirrored) ----------
+function build(rows, mirror) {
+  const out = [];
+  for (let i = 0; i < 16; i++) {
+    let r = rows[i] || '';
+    if (mirror) { r = (r + '........').slice(0, 8); r = r + r.split('').reverse().join(''); }
+    out.push((r + '................').slice(0, 16));
+  }
+  return out;
+}
+const SPR = {
+  hero: { mirror: true, rows: [
+    '........','......kk','.....kCc','....kCcc','...kCckk','...kckkk','...kckwk','...kcBkk',
+    '...kccBB','..kcccBB','..kccBBB','..kcBBBb','..kcBBbB','..kBBbbB','...kkbkk','....kk..'],
+    extra: [[13,7,'k'],[12,8,'k'],[13,8,'a'],[14,8,'k'],[11,9,'k'],[12,9,'y'],[13,9,'w'],[14,9,'y'],[15,9,'k'],
+            [11,10,'k'],[12,10,'Y'],[13,10,'y'],[14,10,'Y'],[15,10,'k'],[12,11,'k'],[13,11,'O'],[14,11,'k']] },
+  slime: { mirror: true, rows: [
+    '','','','','','','......kk','....kkgg','...kgLLg','..kgLLgg','..kggkgg','.kgggkgg','.kgggggg','.kGgggGg','..kGGGGG','...kkkkk'] },
+  skeleton: { mirror: true, rows: [
+    '','......kk','.....kww','....kwww','....kwpk','....kwww','.....kwk','......kk',
+    '...kwkww','...kwktw','...kwkww','...kk.kt','.....kww','.....kwk','.....kwk','....kww.'] },
+  rat: { mirror: false, rows: [
+    '','','','','','','','',
+    '..........kk.kk.','.......kkkSSkSSk','.....kkSSSSSSSSk','....kSSsSSSSSRSk','kk.kSSssSSSSSSSk',
+    '.pkkSsssssSSSSkk','..pkkkskkkskk...','......k...k.....'] },
+  chest: { mirror: true, rows: [
+    '','','','','','..kkkkkk','.kNNNNNN','.knnnnnn','.kyyyyyy','.kNNNNNk','.knnnnny','.knnnnnn','.kNnnnnn','.kkkkkkk'] },
+  oil: { mirror: true, rows: [
+    '','','......kk','.....kaa','......kk','......ko','.....koo','....kooo','...kwooo','...kwooo','...koooo','...kOooo','....kOOO','.....kkk'] },
+  coffin: { mirror: true, rows: [
+    '','.....kkk','....kdss','...kdsss','...kdsss','...kdssw','...kdsww','...kdssw','...kdssw',
+    '....kdss','....kdss','....kdss','.....kds','.....kkk'] },
+  bones: { mirror: false, rows: [
+    '','','','','','','','',
+    '..........ww....','...ww....wtw....','..wttw.....w....','...ww..wwwwww...','.......t....t...'] },
+};
+function spriteCanvas(def, flash) {
+  const rows = build(def.rows, def.mirror);
+  const cv = document.createElement('canvas'); cv.width = cv.height = 16;
+  const c = cv.getContext('2d');
+  const put = (x, y, ch) => { if (ch === '.' || !PAL[ch]) return; c.fillStyle = flash ? '#ffffff' : PAL[ch]; c.fillRect(x, y, 1, 1); };
+  rows.forEach((r, y) => [...r].forEach((ch, x) => put(x, y, ch)));
+  (def.extra || []).forEach(([x, y, ch]) => put(x, y, ch));
+  return cv;
+}
+const SPRITES = {}, FLASH = {};
+for (const k in SPR) { SPRITES[k] = spriteCanvas(SPR[k]); FLASH[k] = spriteCanvas(SPR[k], true); }
+
+// ---------- static base layer ----------
+const base = document.createElement('canvas'); base.width = W; base.height = H;
+const bctx = base.getContext('2d');
+const px = (c, x, y, col) => { c.fillStyle = col; c.fillRect(x, y, 1, 1); };
+
+function drawFloor(c, tx, ty) {
+  const x0 = tx * T, y0 = ty * T, r = hash(tx, ty, 1);
+  c.fillStyle = '#3a4050'; c.fillRect(x0, y0, T, T);
+  c.fillStyle = '#22262f'; c.fillRect(x0, y0, T, 1); c.fillRect(x0, y0, 1, T);
+  c.fillStyle = '#454c5e'; c.fillRect(x0 + 1, y0 + 1, 13, 1); c.fillRect(x0 + 1, y0 + 2, 1, 9);
+  if (r < 0.4) { // split into two slabs
+    const j = 4 + Math.floor(hash(tx, ty, 2) * 8);
+    c.fillStyle = '#22262f'; c.fillRect(x0, y0 + 8, T, 1); c.fillRect(x0 + j, y0 + 8, 1, 8);
+    c.fillStyle = '#454c5e'; c.fillRect(x0 + 1, y0 + 9, j - 2, 1);
+  }
+  for (let i = 0; i < 9; i++) {
+    const nx = 1 + Math.floor(hash(tx, ty, 10 + i) * 14), ny = 1 + Math.floor(hash(tx, ty, 30 + i) * 14);
+    px(c, x0 + nx, y0 + ny, hash(tx, ty, 50 + i) < 0.5 ? '#434a5b' : '#323744');
+  }
+  if (hash(tx, ty, 3) < 0.16) { // crack
+    let cx = 3 + Math.floor(hash(tx, ty, 4) * 9), cy = 3 + Math.floor(hash(tx, ty, 5) * 5);
+    for (let i = 0; i < 7; i++) { px(c, x0 + cx, y0 + cy, '#262a34'); cx += hash(tx, ty, 60 + i) < 0.5 ? 1 : 0; cy += 1; if (cy > 14) break; }
+  }
+  const nearWall = isWall(tx - 1, ty) || isWall(tx + 1, ty) || isWall(tx, ty - 1) || isWall(tx, ty + 1);
+  if (nearWall && hash(tx, ty, 6) < 0.3) { // moss
+    const mx = 2 + Math.floor(hash(tx, ty, 7) * 9), my = 4 + Math.floor(hash(tx, ty, 8) * 8);
+    [[0,0,'G'],[1,0,'G'],[2,0,'g'],[1,-1,'g'],[3,1,'G'],[0,1,'G'],[2,1,'G'],[4,1,'g']].forEach(([dx, dy, ch]) => px(c, x0 + mx + dx, y0 + my + dy, PAL[ch]));
+  }
+  if (isWall(tx, ty - 1)) { // shade cast by the wall face above
+    c.fillStyle = 'rgba(6,6,12,.45)'; c.fillRect(x0, y0, T, 2);
+    c.fillStyle = 'rgba(6,6,12,.22)'; c.fillRect(x0, y0 + 2, T, 2);
+  }
+  // cobweb in corners boxed in by two walls
+  const web = (ox, oy, sx, sy) => { for (let i = 0; i < 5; i++) { px(c, x0 + ox + sx * i, y0 + oy, '#8d93a0'); px(c, x0 + ox, y0 + oy + sy * i, '#8d93a0'); } for (let i = 1; i < 4; i++) px(c, x0 + ox + sx * i, y0 + oy + sy * (4 - i), '#6b707c'); px(c, x0 + ox + sx, y0 + oy + sy, '#6b707c'); };
+  if (isWall(tx - 1, ty) && isWall(tx, ty - 1) && hash(tx, ty, 9) < 0.7) web(1, 2, 1, 1);
+  if (isWall(tx + 1, ty) && isWall(tx, ty - 1) && hash(tx, ty, 9) < 0.7) web(14, 2, -1, 1);
+}
+function drawWall(c, tx, ty) {
+  const x0 = tx * T, y0 = ty * T, face = !isWall(tx, ty + 1);
+  c.fillStyle = '#1f222c'; c.fillRect(x0, y0, T, T);
+  for (let i = 0; i < 6; i++) px(c, x0 + Math.floor(hash(tx, ty, 70 + i) * 16), y0 + Math.floor(hash(tx, ty, 80 + i) * (face ? 4 : 16)), '#282c38');
+  c.fillStyle = '#56607a';
+  if (!isWall(tx - 1, ty)) c.fillRect(x0, y0, 1, face ? 5 : T);
+  if (!isWall(tx + 1, ty)) c.fillRect(x0 + 15, y0, 1, face ? 5 : T);
+  if (!isWall(tx, ty - 1)) c.fillRect(x0, y0, T, 1);
+  if (!face) return;
+  c.fillStyle = '#6b7790'; c.fillRect(x0, y0 + 4, T, 1); // lip
+  c.fillStyle = '#2b303c'; c.fillRect(x0, y0 + 5, T, 11); // mortar
+  const courses = [[5, 3], [9, 3], [13, 2]];
+  courses.forEach(([cy, ch], i) => {
+    const off = ((i + tx) % 2) ? 4 : 0;
+    for (let bx = -8 + off; bx < 16; bx += 8) {
+      const xa = Math.max(0, bx), xb = Math.min(15, bx + 6);
+      if (xb < xa) continue;
+      const dark = hash(tx * 3 + bx, ty * 5 + i, 90) < 0.25;
+      c.fillStyle = dark ? '#475064' : '#535d72'; c.fillRect(x0 + xa, y0 + cy, xb - xa + 1, ch);
+      c.fillStyle = dark ? '#58627a' : '#69748b'; c.fillRect(x0 + xa, y0 + cy, xb - xa + 1, 1);
+    }
+  });
+  c.fillStyle = '#16181f'; c.fillRect(x0, y0 + 15, T, 1);
+}
+function drawWaterBase(c, tx, ty) {
+  const x0 = tx * T, y0 = ty * T;
+  c.fillStyle = '#173540'; c.fillRect(x0, y0, T, T);
+  if (at(tx, ty - 1) !== '~') { c.fillStyle = '#0d1f26'; c.fillRect(x0, y0, T, 3); c.fillStyle = '#5d6c7c'; c.fillRect(x0, y0, T, 1); }
+  if (at(tx - 1, ty) !== '~') { c.fillStyle = '#0d1f26'; c.fillRect(x0, y0, 2, T); }
+}
+function drawStairs(c, tx, ty) {
+  const x0 = tx * T, y0 = ty * T;
+  c.fillStyle = '#0c0b12'; c.fillRect(x0, y0, T, T);
+  const shades = ['#6a7288', '#535a6e', '#3e4456', '#2c3040', '#1d2030'];
+  const lips = ['#b9a4ec', '#9682cf', '#6f5ea6', '#4b3f78', '#2f2850'];
+  for (let i = 0; i < 5; i++) {
+    const m = 1 + i;
+    c.fillStyle = shades[i]; c.fillRect(x0 + m, y0 + 1 + i * 3, 16 - 2 * m, 3);
+    c.fillStyle = lips[i]; c.fillRect(x0 + m, y0 + 1 + i * 3, 16 - 2 * m, 1);
+  }
+}
+function drawDoorway(c, tx, ty) {
+  drawFloor(c, tx, ty);
+  const x0 = tx * T, y0 = ty * T;
+  for (let i = 0; i < 16; i++) { c.fillStyle = `rgba(4,4,8,${(i / 15) * 0.95})`; c.fillRect(x0, y0 + i, T, 1); }
+}
+function renderBase() {
+  for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+    const ch = at(x, y);
+    if (ch === '#') drawWall(bctx, x, y);
+    else if (ch === '~') drawWaterBase(bctx, x, y);
+    else if (y === ROWS - 1) drawDoorway(bctx, x, y);
+    else drawFloor(bctx, x, y);
+  }
+  drawStairs(bctx, 1, 1);
+}
+renderBase();
+
+// ---------- world state ----------
+const TORCHES = [{ x: 2, y: 0 }, { x: 8, y: 0 }, { x: 4, y: 4 }];
+let state;
+function freshState() {
+  return {
+    hero: { x: 5, y: 11, dx: 5, dy: 11 },
+    oil: 0.75,
+    things: [
+      { kind: 'coffin', x: 3, y: 1, solid: true },
+      { kind: 'skeleton', x: 6, y: 1, solid: true, foe: 'skeleton' },
+      { kind: 'chest', x: 1, y: 7, solid: true },
+      { kind: 'oil', x: 9, y: 7, item: true },
+      { kind: 'oil', x: 2, y: 2, item: true },
+      { kind: 'slime', x: 8, y: 10, solid: true, foe: 'slime' },
+      { kind: 'rat', x: 2, y: 10, solid: true, foe: 'rat' },
+      { kind: 'bones', x: 5, y: 6 },
+      { kind: 'bones', x: 9, y: 4 },
+    ],
+    seen: new Uint8Array(COLS * ROWS),
+    path: [], lightOn: true,
+  };
+}
+state = freshState();
+
+// ---------- canvas + scaling ----------
+const view = document.getElementById('view');
+const vctx = view.getContext('2d');
+const scene = document.createElement('canvas'); scene.width = W; scene.height = H;
+const sctx = scene.getContext('2d');
+vctx.imageSmoothingEnabled = false; sctx.imageSmoothingEnabled = false;
+function fit() {
+  const box = view.parentElement.clientWidth - 16;
+  const s = box >= W * 2 ? Math.floor(box / W) : box / W;
+  view.style.width = Math.floor(W * s) + 'px'; view.style.height = Math.floor(H * s) + 'px';
+}
+addEventListener('resize', fit); fit();
+
+// ---------- lighting ----------
+const CELL = 4, CW = W / CELL, CH = H / CELL;
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + 0.5) / 16);
+const LEV = 5;
+function visibility(L) {
+  const v = L.vis || (L.vis = new Uint8Array(CW * CH));
+  v.fill(0);
+  const ltx = L.x >> 4, lty = L.y >> 4, R = L.r;
+  const cx0 = Math.max(0, Math.floor((L.x - R) / CELL)), cx1 = Math.min(CW - 1, Math.floor((L.x + R) / CELL));
+  const cy0 = Math.max(0, Math.floor((L.y - R) / CELL)), cy1 = Math.min(CH - 1, Math.floor((L.y + R) / CELL));
+  for (let cy = cy0; cy <= cy1; cy++) for (let cx = cx0; cx <= cx1; cx++) {
+    const mx = cx * CELL + 2, my = cy * CELL + 2, dx = mx - L.x, dy = my - L.y, d = Math.hypot(dx, dy);
+    if (d > R) continue;
+    const ttx = mx >> 4, tty = my >> 4, steps = Math.ceil(d / 3);
+    let ok = 1;
+    for (let s = 1; s < steps; s++) {
+      const tx = (L.x + dx * s / steps) >> 4, ty = (L.y + dy * s / steps) >> 4;
+      if (tx === ltx && ty === lty) continue;
+      if (tx === ttx && ty === tty) break;
+      if (isWall(tx, ty)) { ok = 0; break; }
+    }
+    v[cy * CW + cx] = ok;
+  }
+  return v;
+}
+function flick(t, seed, amt) {
+  return 1 + amt * (Math.sin(t * 0.011 + seed) * 0.5 + Math.sin(t * 0.023 + seed * 2.3) * 0.3 + Math.sin(t * 0.047 + seed * 5.1) * 0.2);
+}
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- particles ----------
+const motes = Array.from({ length: 22 }, (_, i) => ({ x: hash(i, 1, 99) * W, y: hash(i, 2, 99) * H, vx: (hash(i, 3, 99) - 0.5) * 0.004, vy: (hash(i, 4, 99) - 0.5) * 0.003 }));
+let embers = [];
+
+// ---------- drawing ----------
+function heroPx() { return { x: state.hero.dx * T, y: state.hero.dy * T }; }
+function drawShadow(c, x, y, w) { c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x + 8 - w / 2, y + 14, w, 2); c.fillRect(x + 9 - w / 2, y + 16, w - 2, 1); }
+let shakeUntil = 0;
+function frame(t) {
+  // scene
+  sctx.drawImage(base, 0, 0);
+  // water ripples
+  for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) if (at(x, y) === '~') {
+    for (let i = 0; i < 2; i++) {
+      const rx = Math.floor((hash(x, y, 200 + i) * 16 + t * 0.006 * (i ? 1 : -0.7)) % 16 + 16) % 16;
+      const ry = 5 + i * 6 + Math.floor(hash(x, y, 210 + i) * 3);
+      sctx.fillStyle = '#2c5864'; sctx.fillRect(x * T + Math.min(rx, 12), y * T + ry, 4, 1);
+    }
+  }
+  // torches (bracket only; flame is emissive)
+  TORCHES.forEach(tr => {
+    const x0 = tr.x * T, y0 = tr.y * T;
+    sctx.fillStyle = PAL.k; sctx.fillRect(x0 + 6, y0 + 8, 4, 1); sctx.fillRect(x0 + 7, y0 + 9, 2, 4);
+    sctx.fillStyle = PAL.n; sctx.fillRect(x0 + 7, y0 + 7, 2, 1); sctx.fillRect(x0 + 7, y0 + 9, 2, 3);
+    sctx.fillStyle = PAL.N; sctx.fillRect(x0 + 7, y0 + 9, 1, 3);
+  });
+  // things sorted by row, hero included
+  const list = state.things.map(o => ({ o, y: o.y })).concat([{ hero: true, y: state.hero.dy }]).sort((a, b) => a.y - b.y);
+  for (const e of list) {
+    if (e.hero) {
+      const { x, y } = heroPx();
+      const walking = state.hero.dx !== state.hero.x || state.hero.dy !== state.hero.y;
+      const bob = reduceMotion ? 0 : (walking ? (Math.floor(t / 90) % 2) : (Math.floor(t / 600) % 2));
+      drawShadow(sctx, Math.round(x), Math.round(y), 8);
+      sctx.drawImage(SPRITES.hero, Math.round(x), Math.round(y) - 2 - bob);
+      continue;
+    }
+    const o = e.o, x = o.x * T, y = o.y * T;
+    let bob = 0;
+    if (o.foe && !reduceMotion) bob = Math.floor(t / (o.kind === 'slime' ? 380 : 520) + o.x) % 2;
+    if (o.kind === 'oil' && !reduceMotion) bob = Math.floor(t / 700 + o.y) % 2;
+    if (o.kind !== 'bones') drawShadow(sctx, x, y, o.kind === 'coffin' || o.kind === 'chest' ? 12 : 8);
+    const img = (o.flash && o.flash > t) ? FLASH[o.kind] : SPRITES[o.kind];
+    sctx.drawImage(img, x, y - (o.kind === 'bones' ? 0 : 2) - bob);
+  }
+  // dust motes
+  sctx.fillStyle = '#cfc6ad';
+  for (const m of motes) {
+    if (!reduceMotion) { m.x = (m.x + m.vx * 16 + W) % W; m.y = (m.y + m.vy * 16 + H) % H; }
+    if (at(Math.floor(m.x) >> 4, Math.floor(m.y) >> 4) === '.') sctx.fillRect(Math.floor(m.x), Math.floor(m.y), 1, 1);
+  }
+
+  // lights
+  const hp = heroPx();
+  const fl = reduceMotion ? 1 : flick(t, 1.7, 0.035);
+  const lanternR = (state.oil > 0 ? (1.6 + 3.6 * state.oil) : 0.9) * T * fl;
+  const lights = [{ x: Math.round(hp.x) + 13, y: Math.round(hp.y) + 8, r: lanternR, cr: 1.45, cg: 1.2, cb: 0.86, lantern: true }];
+  TORCHES.forEach((tr, i) => {
+    const f = reduceMotion ? 1 : flick(t, i * 3.1, 0.09);
+    lights.push({ x: tr.x * T + 8, y: tr.y * T + 13, r: 3 * T * f, cr: 1.2 * f, cg: 0.78 * f, cb: 0.42 * f });
+  });
+  lights.push({ x: 1 * T + 8, y: 1 * T + 10, r: 1.6 * T, cr: 0.5, cg: 0.38, cb: 0.95 });
+  state.things.filter(o => o.kind === 'slime').forEach(o => lights.push({ x: o.x * T + 8, y: o.y * T + 11, r: 1.2 * T, cr: 0.25, cg: 0.55, cb: 0.2 }));
+
+  const img = sctx.getImageData(0, 0, W, H), d = img.data;
+  if (state.lightOn) {
+    lights.forEach(visibility);
+    // remember tiles the lantern reaches
+    const L0 = lights[0];
+    for (let ty = 0; ty < ROWS; ty++) for (let tx = 0; tx < COLS; tx++) {
+      const cx = tx * 4 + 2, cy = ty * 4 + 2;
+      if (L0.vis[cy * CW + cx] && Math.hypot(tx * T + 8 - L0.x, ty * T + 8 - L0.y) < L0.r * 0.95) state.seen[ty * COLS + tx] = 1;
+    }
+    for (let y = 0; y < H; y++) {
+      const tyr = y >> 4, cyr = (y >> 2) * CW;
+      for (let x = 0; x < W; x++) {
+        const seen = state.seen[tyr * COLS + (x >> 4)];
+        let lr = seen ? 0.15 : 0.02, lg = seen ? 0.16 : 0.02, lb = seen ? 0.26 : 0.045;
+        const cell = cyr + (x >> 2), th = BAYER[((y & 3) << 2) | (x & 3)];
+        for (let i = 0; i < lights.length; i++) {
+          const L = lights[i];
+          if (!L.vis[cell]) continue;
+          const dx = x - L.x, dy = y - L.y, dist = Math.sqrt(dx * dx + dy * dy);
+          let f = 1 - dist / L.r;
+          if (f <= 0) continue;
+          f = Math.floor(Math.pow(f, 1.25) * LEV + th) / LEV;
+          lr += f * L.cr; lg += f * L.cg; lb += f * L.cb;
+        }
+        const k = (y * W + x) * 4;
+        d[k] = Math.min(255, d[k] * lr); d[k + 1] = Math.min(255, d[k + 1] * lg); d[k + 2] = Math.min(255, d[k + 2] * lb);
+      }
+    }
+  }
+  const shake = shakeUntil > t ? (Math.floor(t / 30) % 2 ? 1 : -1) : 0;
+  vctx.fillStyle = '#000'; vctx.fillRect(0, 0, W, H);
+  vctx.putImageData(img, shake, 0);
+
+  // emissive: flames and embers
+  TORCHES.forEach((tr, i) => {
+    const x0 = tr.x * T + shake, y0 = tr.y * T, ph = reduceMotion ? 0 : Math.floor(t / 110 + i) % 3;
+    const top = [7, 8, 7][ph];
+    vctx.fillStyle = PAL.Y; vctx.fillRect(x0 + 6, y0 + 4, 4, 3);
+    vctx.fillStyle = PAL.y; vctx.fillRect(x0 + 7, y0 + 3, 2, 4); vctx.fillRect(x0 + top, y0 + 2 - (ph === 1 ? 1 : 0), 1, 2);
+    vctx.fillStyle = '#fff5d6'; vctx.fillRect(x0 + 7, y0 + 5, 2, 2);
+    if (!reduceMotion && Math.random() < 0.05) embers.push({ x: x0 + 7 + Math.random() * 2, y: y0 + 3, life: 1 });
+  });
+  // lantern core
+  vctx.fillStyle = '#fff5d6'; vctx.fillRect(Math.round(hp.x) + 13 + shake, Math.round(hp.y) + 9 - 2, 1, 1);
+  embers = embers.filter(e => (e.life -= 0.02) > 0);
+  embers.forEach(e => { e.y -= 0.25; e.x += Math.sin(e.y * 0.5) * 0.15; vctx.fillStyle = e.life > 0.5 ? PAL.y : PAL.Y; vctx.fillRect(Math.round(e.x), Math.round(e.y), 1, 1); });
+}
+
+// ---------- movement ----------
+const logEl = document.getElementById('log');
+const say = msg => { logEl.textContent = msg; };
+function thingAt(x, y) { return state.things.find(o => o.x === x && o.y === y); }
+function passable(x, y) {
+  const ch = at(x, y);
+  if (ch === '#' || ch === '~') return false;
+  const o = thingAt(x, y);
+  return !(o && o.solid);
+}
+const FOE_LINES = {
+  rat: 'You swing your lantern. The rat squeaks and holds its ground.',
+  slime: 'The slime wobbles. It does not seem to mind.',
+  skeleton: 'The skeleton rattles. Its eyes stay lit.',
+};
+function tryStep(dx, dy) {
+  const h = state.hero;
+  const nx = h.x + dx, ny = h.y + dy;
+  const o = thingAt(nx, ny);
+  if (o && o.foe) { o.flash = performance.now() + 140; shakeUntil = performance.now() + 120; say(FOE_LINES[o.foe]); return false; }
+  if (o && o.kind === 'chest') { say('A chest, locked tight. A later step could open it.'); return false; }
+  if (o && o.kind === 'coffin') { say('The coffin lid will not budge.'); return false; }
+  if (!passable(nx, ny)) return false;
+  h.x = nx; h.y = ny;
+  state.oil = Math.max(0, state.oil - 0.025);
+  if (o && o.kind === 'oil') {
+    state.oil = Math.min(1, state.oil + 0.45);
+    state.things.splice(state.things.indexOf(o), 1);
+    say('You top up the lantern. The light pushes back.');
+  } else if (nx === 1 && ny === 1) say('Stairs lead further down. Not yet built.');
+  else if (ny === ROWS - 1) say('The way back up. Cold air drifts in.');
+  else if (state.oil === 0) say('The lantern gutters to an ember.');
+  else if (state.oil < 0.2) say('The flame is getting low.');
+  renderOil();
+  return true;
+}
+function bfs(tx, ty) {
+  const h = state.hero, prev = new Map(), key = (x, y) => y * COLS + x;
+  const q = [[h.x, h.y]]; prev.set(key(h.x, h.y), null);
+  while (q.length) {
+    const [x, y] = q.shift();
+    if (x === tx && y === ty) break;
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      const nx = x + dx, ny = y + dy, k = key(nx, ny);
+      if (prev.has(k)) continue;
+      if (!(nx === tx && ny === ty) && !passable(nx, ny)) continue;
+      if (at(nx, ny) === '#' || at(nx, ny) === '~') continue;
+      prev.set(k, [x, y]); q.push([nx, ny]);
+    }
+  }
+  if (!prev.has(key(tx, ty))) return [];
+  const path = []; let cur = [tx, ty];
+  while (cur && !(cur[0] === h.x && cur[1] === h.y)) { path.unshift(cur); cur = prev.get(key(cur[0], cur[1])); }
+  return path;
+}
+view.addEventListener('pointerdown', ev => {
+  const r = view.getBoundingClientRect();
+  const tx = Math.floor((ev.clientX - r.left) / r.width * COLS), ty = Math.floor((ev.clientY - r.top) / r.height * ROWS);
+  state.path = bfs(tx, ty);
+});
+addEventListener('keydown', ev => {
+  const k = ev.key.toLowerCase();
+  const dir = { arrowup: [0, -1], w: [0, -1], arrowdown: [0, 1], s: [0, 1], arrowleft: [-1, 0], a: [-1, 0], arrowright: [1, 0], d: [1, 0] }[k];
+  if (dir) { ev.preventDefault(); state.path = []; if (heroSettled()) tryStep(...dir); }
+  if (k === 'l') toggleLight();
+});
+function heroSettled() { const h = state.hero; return Math.abs(h.dx - h.x) < 0.01 && Math.abs(h.dy - h.y) < 0.01; }
+
+// ---------- UI ----------
+const oilBar = document.getElementById('oilBar');
+for (let i = 0; i < 10; i++) oilBar.appendChild(document.createElement('i'));
+function renderOil() { [...oilBar.children].forEach((el, i) => el.classList.toggle('on', state.oil > i / 10 + 0.001)); }
+const btnLight = document.getElementById('btnLight');
+function toggleLight() { state.lightOn = !state.lightOn; btnLight.setAttribute('aria-pressed', state.lightOn); btnLight.textContent = 'Lighting: ' + (state.lightOn ? 'on' : 'off'); }
+btnLight.addEventListener('click', toggleLight);
+document.getElementById('btnRefill').addEventListener('click', () => { state.oil = 1; renderOil(); say('Lantern refilled.'); });
+document.getElementById('btnReset').addEventListener('click', () => { const on = state.lightOn; state = freshState(); state.lightOn = on; renderOil(); say('The crypt is cold. Somewhere, water drips.'); });
+renderOil();
+
+// ---------- loop ----------
+let last = 0;
+function loop(t) {
+  const h = state.hero, sp = 0.18;
+  h.dx += Math.sign(h.x - h.dx) * Math.min(Math.abs(h.x - h.dx), sp);
+  h.dy += Math.sign(h.y - h.dy) * Math.min(Math.abs(h.y - h.dy), sp);
+  if (heroSettled() && state.path.length) {
+    const [nx, ny] = state.path.shift();
+    if (!tryStep(nx - h.x, ny - h.y)) state.path = [];
+  }
+  if (t - last > 33) { frame(t); last = t; }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
+</script>
