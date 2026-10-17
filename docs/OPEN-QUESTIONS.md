@@ -9,11 +9,6 @@ may answer something else entirely.
 
 ---
 
-**Q-003 · Design pillars**
-Three or four short statements that every later idea is checked against.
-Draft them from D-008 and D-009 and propose them for approval. Don't adopt
-them without it.
-
 **Q-004 · What does oil do?**
 Options to offer: light radius only; light plus a resource for actions;
 oil as the run's clock or health. In style study 1 it is only the light

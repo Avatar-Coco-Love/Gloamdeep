@@ -4,13 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.2 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.3 · **Stage:** pre-production (no game code yet)
 
 ## Next up
-**Step 2: Design pillars.** A conversation, with no code. Draft 3 or 4
-short pillars from D-008 (Dungeon Siege) and D-009 (style study 1), offer
-them to the owner, and record only what they approve (Q-003).
-Read: `OPEN-QUESTIONS.md` (Q-003), `VISION.md`.
+**Step 3: The lantern and oil rule.** A conversation, with no code. Start
+with Q-004 (what oil does), offer the options with a recommendation, and
+check each one against the pillars (D-013). Then Q-005 (oil running out).
+Read: `OPEN-QUESTIONS.md` (Q-004, Q-005), `VISION.md` (pillars).
 
 ## Waiting on the owner
 - Nothing right now.
@@ -20,7 +20,7 @@ Each line is one PR-sized step. Tick it when merged and add the PR number.
 
 Pre-production (0.0.x): decisions only
 - [x] 1 Inspirations and must-keeps (Q-001, Q-002), PRs #1 and #2
-- [ ] 2 Design pillars approved (Q-003)
+- [x] 2 Design pillars approved (Q-003), PR #3
 - [ ] 3 The lantern and oil rule (Q-004, Q-005)
 - [ ] 4 Turns, movement and bumping (Q-006, Q-007)
 - [ ] 5 Shape of a run (Q-008, Q-009, Q-010)
@@ -37,11 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #1 (0.0.1), kickoff.** The game was named Gloamdeep
-  (D-001). Style study 1 became the art baseline (D-005), and the owner said
-  of it: "I really don't want to lose that." Working rules, decision log and
-  docs were set up from the planning conversation. ChatGPT's art pack was
-  left out on purpose (D-007).
 - **2026-10-17, PR #1 (0.0.1), Q-001 answered.** The owner said what they
   loved about Dungeon Siege: going deeper, exploring, loot, new monsters,
   mysteries and lore, getting stronger, and the curiosity to keep playing
@@ -51,3 +46,7 @@ Foundation (0.1.x): one small visible thing per step
   The repo became lowercase `gloamdeep` and GitHub Pages went live (D-010).
   The owner dislikes the blue flash on tap, so the game will turn it off
   (D-011). The front page now opens the style study (D-012).
+- **2026-10-17, PR #3 (0.0.3), Q-003 answered.** The owner approved the
+  four design pillars as drafted (D-013): the lantern is your world, always
+  one floor deeper, curiosity pays off, and stronger, slowly. They are in
+  `VISION.md`, and every later idea is checked against them.

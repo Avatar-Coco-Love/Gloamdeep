@@ -18,6 +18,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.3 (2026-10-17)
+- The four design pillars are set: the lantern is your world, always one
+  floor deeper, curiosity pays off, and stronger, slowly.
+- Decisions: D-013. Questions closed: Q-003.
+
 ## 0.0.2 (2026-10-17)
 - Everything in style study 1 stays. Only the rat sprite and the blocky
   shadow edges will be improved.

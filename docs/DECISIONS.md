@@ -77,3 +77,9 @@ The owner wanted the Pages link to lead somewhere playable while the game
 is still early. Until build plan step 7, the site's `index.html` sends
 visitors straight to `reference/style-study-1.html`. At step 7 the real
 game takes over `index.html`.
+
+**D-013 · 2026-10-17 · The four design pillars** (answers Q-003)
+The owner approved four pillars, the drafted set as written: "The lantern
+is your world", "Always one floor deeper", "Curiosity pays off" and
+"Stronger, slowly". Every later idea is checked against them, and an idea
+that serves none of them is cut. The full wording is in `docs/VISION.md`.
