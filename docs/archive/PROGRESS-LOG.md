@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #5 (0.0.5), Q-008 to Q-010 answered.** One persistent
+  journey: a world generated once per save, plus portals into deep areas
+  that change each visit (D-019). Death sends you home without wiping
+  progress (D-020, D-021). Surface first, then down, with caves opening
+  into valleys (D-022). Solo, with one companion later (D-023).
 - **2026-10-17, PR #4 (0.0.4), Q-004 to Q-007 answered.** Oil is light
   only (D-014). Running dry leaves an ember and bolder enemies, not the end
   of the run; the lantern switches on and off, and other light sources

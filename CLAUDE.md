@@ -44,6 +44,7 @@ Read the smallest file that answers the question.
 | `docs/PROGRESS.md` | status, Next up, the last 3 log entries | every conversation |
 | `docs/DECISIONS.md` | every settled decision, D-001, D-002… | grep for an ID or topic |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
+| `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
 | `docs/VISION.md` | the pitch, inspirations, proposed pillars | when proposing a design |
 | `docs/ART-DIRECTION.md` | the visual rules taken from the style study | before any drawing code |
 | `docs/TECH.md` | architecture and code rules | before writing code |
