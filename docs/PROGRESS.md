@@ -4,23 +4,22 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.1 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.2 · **Stage:** pre-production (no game code yet)
 
 ## Next up
-**Step 1: Inspirations and must-keeps (second half).** This is a
-conversation, with no code. Q-001 is answered (D-008). Ask the owner Q-002
-(which parts of style study 1 must stay and what should change). Record the
-answer in `VISION.md`, `DECISIONS.md` and `ART-DIRECTION.md`.
-Read: `OPEN-QUESTIONS.md` (Q-002), `ART-DIRECTION.md`.
+**Step 2: Design pillars.** A conversation, with no code. Draft 3 or 4
+short pillars from D-008 (Dungeon Siege) and D-009 (style study 1), offer
+them to the owner, and record only what they approve (Q-003).
+Read: `OPEN-QUESTIONS.md` (Q-003), `VISION.md`.
 
 ## Waiting on the owner
-- Merge PR #1 (kickoff).
+- Nothing right now.
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is one PR-sized step. Tick it when merged and add the PR number.
 
 Pre-production (0.0.x): decisions only
-- [ ] 1 Inspirations and must-keeps (Q-001, Q-002)
+- [x] 1 Inspirations and must-keeps (Q-001, Q-002), PRs #1 and #2
 - [ ] 2 Design pillars approved (Q-003)
 - [ ] 3 The lantern and oil rule (Q-004, Q-005)
 - [ ] 4 Turns, movement and bumping (Q-006, Q-007)
@@ -28,7 +27,7 @@ Pre-production (0.0.x): decisions only
 - [ ] 6 One-page design brief (`docs/DESIGN.md`) from steps 1 to 5, approved
 
 Foundation (0.1.x): one small visible thing per step
-- [ ] 7 Page, canvas and pixel-perfect scaling, one floor tile on screen
+- [ ] 7 Page (replaces the `index.html` that opens the study, D-012), canvas and pixel-perfect scaling, one floor tile on screen
 - [ ] 8 A room built from data: floor and walls with brick faces
 - [ ] 9 The hero drawn, moving one tile per tap or key
 - [ ] 10 Dev mode switch, plus a first tool (grid and coordinates overlay)
@@ -47,3 +46,8 @@ Foundation (0.1.x): one small visible thing per step
   loved about Dungeon Siege: going deeper, exploring, loot, new monsters,
   mysteries and lore, getting stronger, and the curiosity to keep playing
   (D-008). Recorded in `VISION.md`.
+- **2026-10-17, PR #2 (0.0.2), Q-002 and Q-011 answered.** Everything in
+  style study 1 stays, with the rat and shadow edges to improve (D-009).
+  The repo became lowercase `gloamdeep` and GitHub Pages went live (D-010).
+  The owner dislikes the blue flash on tap, so the game will turn it off
+  (D-011). The front page now opens the style study (D-012).

@@ -15,6 +15,10 @@ here and gets confirmed with the owner at build-plan step 7.
   native resolution small.
 - `localStorage` is wrapped in try/catch, and the game works without it.
 - Respect `prefers-reduced-motion`.
+- No blue flash on tap (D-011). Set `-webkit-tap-highlight-color:
+  transparent` on the page, and don't let taps select text on the game
+  screen. Keep a visible focus outline for keyboard users. Style study 1
+  still shows the flash, because it is frozen.
 
 ## Architecture
 - **State is separate from drawing.** The game rules work on plain data and
@@ -31,7 +35,7 @@ here and gets confirmed with the owner at build-plan step 7.
 
 ## Proposed layout (confirm at step 7)
 ```
-index.html          page shell and canvas
+index.html          page shell and canvas (for now it opens the study, D-012)
 src/main.js         boot and the main loop
 src/core/           rules, state, rng, registry (no DOM)
 src/render/         drawing, lighting, sprites

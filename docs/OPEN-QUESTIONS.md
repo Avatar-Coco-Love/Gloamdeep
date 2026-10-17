@@ -9,17 +9,9 @@ may answer something else entirely.
 
 ---
 
-**Q-002 · Style study 1: what must stay, and what should change?**
-What the study does: the lantern is the real light source (it casts shadows,
-flickers and shrinks as oil drops). It has fog of war. Walls show brick
-fronts (a slight tilt, not strictly top-down). It uses 16-pixel tiles
-enlarged with crisp pixels. Small signs of life: torches, dust in the light,
-bobbing monsters, a hit flash. Known weak spots: the rat sprite, and shadow
-edges that are a bit blocky.
-
 **Q-003 · Design pillars**
 Three or four short statements that every later idea is checked against.
-Draft them from Q-001 and Q-002 and propose them for approval. Don't adopt
+Draft them from D-008 and D-009 and propose them for approval. Don't adopt
 them without it.
 
 **Q-004 · What does oil do?**
@@ -49,10 +41,6 @@ biomes, in what order, and how do outside and inside connect?
 
 **Q-010 · Companions?**
 Dungeon Siege had a party. Solo, one companion, or a party?
-
-**Q-011 · Hosting and visibility**
-Should the game be published on GitHub Pages (that needs a public repo, or
-a paid plan for a private one)? When?
 
 **Q-012 · How is dev mode opened, and does it ship?**
 For example: a `?dev` address flag, a secret tap pattern, or both.

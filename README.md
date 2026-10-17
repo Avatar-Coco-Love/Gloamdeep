@@ -5,7 +5,8 @@ You carry a lantern down through dark places, and every step burns oil.
 
 **Status:** pre-production. There is no playable game yet. The art
 direction comes from `reference/style-study-1.html`. Open it in any
-browser to walk around the first test room.
+browser to walk around the first test room, or play it online at
+https://avatar-coco-love.github.io/gloamdeep/
 
 Everything is drawn and synthesized in code: no image, sound or font files.
 
