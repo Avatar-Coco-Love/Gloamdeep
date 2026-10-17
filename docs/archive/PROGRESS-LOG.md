@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #2 (0.0.2), Q-002 and Q-011 answered.** Everything in
+  style study 1 stays, with the rat and shadow edges to improve (D-009).
+  The repo became lowercase `gloamdeep` and GitHub Pages went live (D-010).
+  The owner dislikes the blue flash on tap, so the game will turn it off
+  (D-011). The front page now opens the style study (D-012).
 - **2026-10-17, PR #1 (0.0.1), Q-001 answered.** The owner said what they
   loved about Dungeon Siege: going deeper, exploring, loot, new monsters,
   mysteries and lore, getting stronger, and the curiosity to keep playing

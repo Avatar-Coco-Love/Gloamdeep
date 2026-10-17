@@ -117,3 +117,33 @@ small decisions. Questions are asked as multiple choice, with a
 recommendation, more than one pick allowed where options combine, and
 always room for the owner's own answer. Visible changes still come one
 small step at a time. The rules are in `CLAUDE.md`.
+
+**D-019 · 2026-10-17 · A persistent journey, with portals into the deep** (answers Q-008)
+The game is one persistent journey, like Dungeon Siege, not a series of
+fresh runs. The main world is generated once per save from a seed (a
+number that sets the randomness) and then stays the same, with hand-made
+landmarks such as the home base and story places placed in it. Portals
+lead into very deep areas that are generated anew on each visit; these
+dives play like a roguelite run.
+
+**D-020 · 2026-10-17 · What happens when you die**
+In the main world: you wake at your home base or last camp, keeping
+levels, unlocks and lore. What you were carrying stays where you fell, and
+you can go back for it. In a portal depth: you are thrown back out, and
+lose what you found on that dive, but keep levels, unlocks and lore.
+
+**D-021 · 2026-10-17 · What you keep as you go**
+Lore and discoveries, unlocks, a home base improved over time, character
+levels, shortcuts you open (doors, ropes, passes), the explored map (shown
+dimly), a stash chest at home, and a record of the deepest depth reached.
+The owner asked Claude to suggest extras; the last four were the
+suggestions they approved.
+
+**D-022 · 2026-10-17 · How outside and inside connect** (answers Q-009)
+Both: the journey starts on the surface and goes down, biome by biome, and
+inside and outside also alternate. A cave can open into a secret valley,
+or be a path through a mountain that comes out the other side. Which
+biomes, and in what order, is Q-018.
+
+**D-023 · 2026-10-17 · Solo, with one companion later** (answers Q-010)
+You start alone. One companion can join later. What kind is Q-019.

@@ -4,13 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.4 · **Stage:** pre-production (no game code yet)
+**Version:** 0.0.5 · **Stage:** pre-production (no game code yet)
 
 ## Next up
-**Step 5: The shape of a run.** A conversation, with no code. Ask Q-008,
-Q-009 and Q-010 together as multiple choice (D-018), checking options
-against the pillars (D-013). Q-014 to Q-017 can be asked alongside if they
-fit. Read: `OPEN-QUESTIONS.md`, `VISION.md` (pillars).
+**Step 6: The one-page design brief.** Draft `docs/DESIGN.md` from D-008
+to D-023, check it against the pillars (D-013), and get it approved. The
+open questions (Q-012 to Q-019) can be asked alongside as multiple choice.
+Read: `DECISIONS.md`, `VISION.md`, `OPEN-QUESTIONS.md`.
 
 ## Waiting on the owner
 - Nothing right now.
@@ -23,7 +23,7 @@ Pre-production (0.0.x): decisions only
 - [x] 2 Design pillars approved (Q-003), PR #3
 - [x] 3 The lantern and oil rule (Q-004, Q-005), PR #4
 - [x] 4 Turns, movement and bumping (Q-006, Q-007), PR #4
-- [ ] 5 Shape of a run (Q-008, Q-009, Q-010)
+- [x] 5 Shape of a run (Q-008, Q-009, Q-010), PR #5
 - [ ] 6 One-page design brief (`docs/DESIGN.md`) from steps 1 to 5, approved
 
 Foundation (0.1.x): one small visible thing per step
@@ -37,11 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #2 (0.0.2), Q-002 and Q-011 answered.** Everything in
-  style study 1 stays, with the rat and shadow edges to improve (D-009).
-  The repo became lowercase `gloamdeep` and GitHub Pages went live (D-010).
-  The owner dislikes the blue flash on tap, so the game will turn it off
-  (D-011). The front page now opens the style study (D-012).
 - **2026-10-17, PR #3 (0.0.3), Q-003 answered.** The owner approved the
   four design pillars as drafted (D-013): the lantern is your world, always
   one floor deeper, curiosity pays off, and stronger, slowly. They are in
@@ -52,3 +47,8 @@ Foundation (0.1.x): one small visible thing per step
   exist (D-015). Turns pass only when you act (D-016). Bump to attack, plus
   ranged abilities, weapons and area attacks (D-017). The owner asked for
   a faster pace and multiple-choice questions (D-018).
+- **2026-10-17, PR #5 (0.0.5), Q-008 to Q-010 answered.** One persistent
+  journey: a world generated once per save, plus portals into deep areas
+  that change each visit (D-019). Death sends you home without wiping
+  progress (D-020, D-021). Surface first, then down, with caves opening
+  into valleys (D-022). Solo, with one companion later (D-023).
