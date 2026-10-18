@@ -1,5 +1,5 @@
 // § panel: the dev panel's tools, in folding sections (D-087). Each section
-// is a <details>; which are open is saved. A new tool adds a section here.
+// is a <details>; the open one is saved. A new tool adds a section here.
 import { ALL } from '../core/registry.js';
 import { roomCode } from '../core/roomcode.js';
 
@@ -18,14 +18,19 @@ const row = (...kids) => { const r = el('div', { className: 'dev-row' }); r.appe
 // sections, `saved()` stores them. Returns flip(name) for the keys, picked()
 // for the spawn tool and sync(state), called each frame.
 export function buildPanel(panel, opts, saved, game) {
-  // § sections: View, Spawn, Room, Oil, Share; only View starts open
+  // § sections: View, Spawn, Room, Oil, Share. One open at a time: opening
+  // one folds the others (D-087). Only View starts open.
+  const sections = [];
   const section = (id, title) => {
-    const d = el('details', { open: opts.open.includes(id) });
+    const d = el('details', { open: opts.open[0] === id });
     d.append(el('summary', { textContent: title }));
     d.addEventListener('toggle', () => {
-      opts.open = opts.open.filter((s) => s !== id).concat(d.open ? [id] : []);
+      if (d.open) for (const other of sections) if (other !== d) other.open = false;
+      if (d.open) opts.open = [id];
+      else if (opts.open[0] === id) opts.open = [];
       saved();
     });
+    sections.push(d);
     const body = el('div', { className: 'dev-body' });
     d.append(body);
     panel.append(d);

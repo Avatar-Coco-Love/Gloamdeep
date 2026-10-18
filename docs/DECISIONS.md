@@ -156,8 +156,9 @@ when it helps make the game better.
 
 **D-087 · 2026-10-18 · The dev panel folds into sections** (0.1.13)
 View, Spawn, Room, Oil and Share, each a heading that folds open or
-shut; the browser remembers which are open, and only View is open at
-first. Switches are buttons, lit when on, and buttons sit two to a row.
+shut. One is open at a time: opening one folds the others (changed after
+the playtest: any number open → one). The browser remembers it, and
+View is open at first. Switches are buttons, lit when on, and buttons sit two to a row.
 A new tool adds a section (`src/dev/panel.js`).
 
 **D-088 · 2026-10-18 · A live stats line** (0.1.13, supersedes part of
