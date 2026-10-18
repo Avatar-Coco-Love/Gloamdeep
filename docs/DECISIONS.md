@@ -135,3 +135,14 @@ faint outline of the hero at 22%, then 8%. It didn't work.)
 D-039 to D-052 (steps 7 to 11) and D-070 to D-076 (the docs audit, which
 `CLAUDE.md` repeats) moved unchanged to
 `archive/DECISIONS-FOUNDATION-1.md`. They stay in force.
+
+**D-084 · 2026-10-18 · Waiting a turn** (step 17, answers Q-029)
+The hero can stand still for one turn. A wait passes a turn like a step:
+oil burns while the lantern is lit, and none while it is off (D-037,
+D-081). Nothing new is drawn for it; only the oil bar shows it.
+
+**D-085 · 2026-10-18 · How to wait** (step 17)
+A tap or click on the hero's own tile waits one turn; a finger held on
+the hero does nothing. On a keyboard, Space waits, and holding it keeps
+waiting, the way held arrows keep walking; one wait can queue behind a
+step (D-043). Space on a focused button still presses that button.

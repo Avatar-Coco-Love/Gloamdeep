@@ -4,16 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.11 · **Stage:** foundation (the first code)
+**Version:** 0.1.12 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 17: the owner picks it** from the ideas after step 16 in the
+**Step 18: the owner picks it** from the ideas after step 17 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Pick step 17: wait a turn (Q-029), a text line (Q-028), stairs and a
-  second room, torches, or the first enemy (rat).
+- Pick step 18: a text line (Q-028), stairs and a second room,
+  torches, or the first enemy (rat).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -37,16 +37,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 14 Oil drains per step, with the oil bar (D-067 split off the flask), PR #17
 - [x] 15 Oil flask pickup, the first item, 0.1.10
 - [x] 16 Lantern on/off switch, 0.1.11
-- Ideas after 16, order open: wait a turn, a text line, stairs and a
-  second room, torches, the first enemy (rat)
+- [x] 17 Wait a turn, 0.1.12
+- Ideas after 17, order open: a text line, stairs and a second room,
+  torches, the first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.9, docs audit.** Conversations pull `main` first;
-  docs name a PR by its version; open-PR decisions change in place
-  after a playtest; merges aren't listed as waiting; the PR body is
-  updated each push; the playtest bundler is `tools/playtest.js`.
-  Stale text fixed in the README and four docs, and the 0.0.x
-  changelog moved to the archive (D-070 to D-076).
 - **2026-10-18, 0.1.10, the oil flask.** The first item: the study's
   bottle, bobbing on its shadow. Walking onto one pours in 45% of a tank,
   even into a full lantern. Flasks only come from the dev spawn list for
@@ -60,3 +55,9 @@ Foundation (0.1.x): one small visible thing per step
   dropped. Older decisions moved to an archive file
   (D-083). Playtest:
   https://claude.ai/artifact/SVaAtJiDT1ufgzVCJM5B2i
+- **2026-10-18, 0.1.12, wait a turn.** Tap or click the hero, or press
+  Space (hold it to keep waiting), and the hero stands still for a
+  turn. Oil burns as for a step while the lantern is lit. Only the oil
+  bar shows it. A finger held on the hero does nothing (D-084, D-085,
+  Q-029 closed). Playtest:
+  https://claude.ai/artifact/8XGRMyr6qHVeyipi2DWBPd

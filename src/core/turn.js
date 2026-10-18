@@ -23,12 +23,17 @@ export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (tileAt(state.room, x, y).solid) return state;
-  const next = { ...state, hero: { x, y }, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil };
+  const next = passTurn({ ...state, hero: { x, y } });
   const found = itemAt(state, x, y);
   if (!found) return next;
   const items = state.items.filter((it) => it !== found);
   return { ...next, items, oil: Math.min(1, next.oil + get(found.id).oil) };
 }
+
+// § wait: stand still for one turn (D-084). It passes a turn like a step,
+// so oil burns while the lantern is lit (D-037).
+export const wait = (state) => passTurn(state);
+const passTurn = (state) => ({ ...state, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil });
 
 // § switch: the lantern on or off, whenever the player likes. It is free:
 // no turn passes and no oil burns (D-015, D-080, D-081).

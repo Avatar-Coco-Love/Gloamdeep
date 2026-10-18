@@ -31,8 +31,3 @@ be in the game. Each biome's darkness is asked when it arrives.
 The owner wants the study's lines later: "The flame is getting low."
 under 20% and "The lantern gutters to an ember." at empty. Where does
 game text show, and when in the build plan?
-
-**Q-029 · Waiting a turn** (before enemies)
-Oil burns even standing still (D-037), but the hero can't stand still
-yet. Should there be a wait action, and how is it done on a phone, with
-a mouse and with keys?
