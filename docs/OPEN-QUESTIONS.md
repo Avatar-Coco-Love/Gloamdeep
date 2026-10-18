@@ -10,4 +10,13 @@ else entirely.
 
 ---
 
-None right now.
+**Q-025 · Turning tapping or swiping off** (when a settings menu exists)
+Tapping and swiping both work at once (D-042). Should the settings menu
+offer a switch: tap only, swipe only, or both? Where does that menu live?
+
+**Q-026 · Walking around walls to a held finger** (pathfinding, later)
+A held finger now steps straight toward the finger and bumps any wall in
+the way (D-044). Should the hero find a way around walls to reach it,
+like style study 1 did for a tapped tile? Should a tap do the same, and
+should the walk stop when something comes into view? When in the build
+plan?

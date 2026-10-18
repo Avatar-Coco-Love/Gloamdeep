@@ -1,0 +1,31 @@
+// § turn: the game state and the turn rules, as plain data (TECH.md,
+// "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
+import { tileAt } from './room.js';
+
+// § directions: four only, no diagonals (D-042)
+export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+
+// The hero starts where style study 1 put them (study line 277).
+export const FIRST_START = { x: 5, y: 11 };
+
+export function makeState(room, start = FIRST_START) {
+  return { room, hero: { x: start.x, y: start.y }, turn: 0 };
+}
+
+// § step: (state, direction) → new state. Walking into something solid
+// changes nothing and passes no turn, so the same state comes back (D-043).
+export function step(state, dir) {
+  const [dx, dy] = DIRS[dir];
+  const x = state.hero.x + dx, y = state.hero.y + dy;
+  if (tileAt(state.room, x, y).solid) return state;
+  return { ...state, hero: { x, y }, turn: state.turn + 1 };
+}
+
+// § toward: the direction from one point to another, along whichever side is
+// farther (a tap steps toward where it lands, D-042). Null when they match.
+export function toward(fromX, fromY, toX, toY) {
+  const dx = toX - fromX, dy = toY - fromY;
+  if (dx === 0 && dy === 0) return null;
+  if (Math.abs(dx) >= Math.abs(dy)) return dx > 0 ? 'right' : 'left';
+  return dy > 0 ? 'down' : 'up';
+}
