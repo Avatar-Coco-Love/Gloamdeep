@@ -20,13 +20,17 @@ Entry format:
 
 ## 0.1.22 (2026-10-18)
 - The second room isn't empty any more. An oil flask lies in the far
-  corner of the lower cave, through the narrow gap: the first oil you
-  can find without the dev tools.
+  corner of the lower cave, through the narrow gap.
 - A rat sits near it, guarding it. Fight it, or switch the lantern off
   and slip past.
 - Both stay as you left them when you go up and back down. A fall or
   "Reset room" puts them back.
-- Decisions: D-138 to D-140.
+- After the playtest, more light on the way down: a flask in the first
+  room's top-right cave, a lit torch beside the stairs up in the second
+  room, and a full tank at the start (and after a fall) instead of 75%.
+- Stairs now sink into the wall beside them: the top step starts at the
+  floor and the steps narrow toward the wall.
+- Decisions: D-138 to D-143.
 
 ## 0.1.21 (2026-10-18)
 - Stairs down in the top-left corner of the first room, where the style

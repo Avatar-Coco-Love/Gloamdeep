@@ -8,9 +8,10 @@ import { resetRoom } from '../src/core/spawn.js';
 
 const down = () => step({ ...makeWorld(), hero: { x: 2, y: 1 } }, 'left');
 
-test('the second room has a flask at 9,11 and a rat at 7,10; the first room has no flask', () => {
+test('the second room has a flask at 9,11, a rat at 7,10 and a torch at 3,0; the first a flask at 9,2', () => {
   const w = makeWorld();
-  assert.deepEqual(w.items, []);
+  assert.ok(itemAt(w, 9, 2));
+  assert.equal(w.elsewhere.second.lights[0].id, 'torch');
   assert.equal(w.elsewhere.second.items[0].id, 'flask');
   const n = down();
   assert.ok(itemAt(n, 9, 11));

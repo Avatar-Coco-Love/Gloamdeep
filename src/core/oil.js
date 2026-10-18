@@ -1,9 +1,10 @@
 // § oil: how much oil the lantern holds, and how far that lets its light
 // reach (D-014). Plain data, no drawing. Oil runs from 0 (empty) to 1 (full).
-// The amounts are style study 1's (lines 278, 394), burning a third slower (D-064, D-069).
+// The amounts are style study 1's (lines 278, 394), burning a third slower (D-064, D-069),
+// starting with a full tank (D-142).
 
 const TILE_SIZE = 16;
-export const OIL = { start: 0.75, burn: 1 / 60 };
+export const OIL = { start: 1, burn: 1 / 60 };
 
 // Each passed turn burns a little, even standing still (D-037). Counted in
 // whole burns so 60 empty a full tank exactly, with no rounding drift.

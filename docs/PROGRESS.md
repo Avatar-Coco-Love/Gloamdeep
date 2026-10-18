@@ -68,8 +68,8 @@ Foundation (0.1.x): one small visible thing per step
   faint violet glow, a fade and a line (D-130 to D-137). Playtest:
   https://claude.ai/artifact/Xr6TssVDe39zh1AFjck47z
 - **2026-10-18, 0.1.22, a flask and a rat in room 2.** The second
-  room's lower cave holds an oil flask at 9,11, the first oil found in
-  play, guarded by a rat at 7,10. Both stay as left between rooms; a
-  fall or "Reset room" puts them back. Rooms can now start with items
-  (D-138 to D-140). Playtest:
+  room's lower cave holds an oil flask at 9,11, guarded by a rat at
+  7,10; rooms can start with items. After the playtest: a flask in room
+  1 (9,2), a torch by room 2's stairs up, a full tank at the start, and
+  stairs that sink into the wall beside them (D-138 to D-143). Playtest:
   https://claude.ai/artifact/TPAxhRK7dncVomJ12ZwVT5

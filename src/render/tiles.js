@@ -2,6 +2,7 @@
 // lines 182–239). Cobwebs are left out (step 8 choice, D-040).
 import { hash } from '../core/noise.js';
 import { isWall, tileAt } from '../core/room.js';
+import { stairsFacing } from '../core/stairs.js';
 import { TILE as T } from './screen.js';
 
 const px = (c, x, y, col) => { c.fillStyle = col; c.fillRect(x, y, 1, 1); };
@@ -70,25 +71,29 @@ export function drawWall(c, room, tx, ty) {
 const COURSES = [[5, 3], [9, 3], [13, 2]]; // [top row, height]
 
 // § stairs: the study's stairs down (drawStairs, lines 244–254): five violet-
-// lipped steps narrowing into a dark pit (D-133). The stairs up are the same
-// steps flipped, narrow at the top and widest and brightest at the bottom.
+// lipped steps narrowing into a dark pit (D-133). They sink toward the wall
+// beside them, the top step at the floor (D-143). The stairs up narrow the
+// same way but brighten toward the wall, rising to the light above.
 const STEP_SHADES = ['#6a7288', '#535a6e', '#3e4456', '#2c3040', '#1d2030'];
 const STEP_LIPS = ['#b9a4ec', '#9682cf', '#6f5ea6', '#4b3f78', '#2f2850'];
-function drawSteps(c, tx, ty, up) {
-  const x0 = tx * T, y0 = ty * T;
+function drawSteps(c, room, tx, ty, up) {
+  const x0 = tx * T, y0 = ty * T, dir = stairsFacing(room, tx, ty);
   c.fillStyle = '#0c0b12'; c.fillRect(x0, y0, T, T);
-  for (let i = 0; i < 5; i++) {
-    const k = up ? 4 - i : i, m = 1 + k; // k: how deep the step is, 0 the top one
-    c.fillStyle = STEP_SHADES[k]; c.fillRect(x0 + m, y0 + 1 + i * 3, 16 - 2 * m, 3);
-    c.fillStyle = STEP_LIPS[k]; c.fillRect(x0 + m, y0 + 1 + i * 3, 16 - 2 * m, 1);
+  for (let i = 0; i < 5; i++) { // i: 0 the step at the floor, 4 the one at the wall
+    const m = 1 + i, k = up ? 4 - i : i, w = 16 - 2 * m;
+    const a = dir === 'up' || dir === 'left' ? 12 - i * 3 : 1 + i * 3; // the step's 3 px band
+    const lip = dir === 'up' || dir === 'left' ? a + 2 : a; // its edge on the floor side
+    const band = (p, size) => (dir === 'up' || dir === 'down' ? c.fillRect(x0 + m, y0 + p, w, size) : c.fillRect(x0 + p, y0 + m, size, w));
+    c.fillStyle = STEP_SHADES[k]; band(a, 3);
+    c.fillStyle = STEP_LIPS[k]; band(lip, 1);
   }
 }
 
 // § room: draw every tile of a room, by registry id (D-048)
 const DRAW = {
   wall: drawWall, floor: drawFloor,
-  stairsDown: (c, room, x, y) => drawSteps(c, x, y, false),
-  stairsUp: (c, room, x, y) => drawSteps(c, x, y, true),
+  stairsDown: (c, room, x, y) => drawSteps(c, room, x, y, false),
+  stairsUp: (c, room, x, y) => drawSteps(c, room, x, y, true),
 };
 export function drawRoom(c, room) {
   for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {

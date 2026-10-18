@@ -1,7 +1,8 @@
 // § stairs: the stairs down, the second room and back up (D-130 to D-136)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tileAt, SECOND_ENEMIES, SECOND_ITEMS } from '../src/core/room.js';
+import { tileAt, makeRoom, SECOND_ENEMIES, SECOND_ITEMS, SECOND_LIGHTS } from '../src/core/room.js';
+import { stairsFacing } from '../src/core/stairs.js';
 import { makeWorld, step, wait, switchLantern, FIRST_START, HERO_HEALTH } from '../src/core/turn.js';
 import { OIL, burnOil } from '../src/core/oil.js';
 import { shownLine } from '../src/core/lines.js';
@@ -31,7 +32,7 @@ test('stepping onto the stairs down: the second room, on its stairs up, one turn
   assert.equal(n.oil, burnOil(OIL.start));
   assert.equal(shownLine(n).text, 'You go down the stairs.');
   assert.deepEqual(n.enemies, SECOND_ENEMIES);
-  assert.deepEqual(n.lights, []);
+  assert.deepEqual(n.lights, SECOND_LIGHTS);
 });
 
 test('standing or waiting on the stairs you arrived on does not take them', () => {
@@ -101,4 +102,13 @@ test('the stairs glow: a rat on the stairs tile is in light with the lantern off
 test('a room code carries the stairs', () => {
   const s = down();
   assert.deepEqual(readRoomCode(roomCode(s)).map, s.room.map);
+});
+
+test('stairs sink toward the wall above first, then left, then right, else down (D-143)', () => {
+  const r = makeRoom(['#####', '#...#', '#...#', '#...#', '#####']);
+  assert.equal(stairsFacing(r, 1, 1), 'up');
+  assert.equal(stairsFacing(r, 1, 2), 'left');
+  assert.equal(stairsFacing(r, 3, 2), 'right');
+  assert.equal(stairsFacing(r, 2, 2), 'down');
+  assert.equal(stairsFacing(makeWorld().room, 1, 1), 'up');
 });
