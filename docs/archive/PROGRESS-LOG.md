@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.9, docs audit.** Conversations pull `main` first;
+  docs name a PR by its version; open-PR decisions change in place
+  after a playtest; merges aren't listed as waiting; the PR body is
+  updated each push; the playtest bundler is `tools/playtest.js`.
+  Stale text fixed in the README and four docs, and the 0.0.x
+  changelog moved to the archive (D-070 to D-076).
 - **2026-10-18, PR #18 (0.1.8), audit next.** Docs only: Next up is a
   docs audit with the problems seen so far; the build plan's order may
   change as we go.

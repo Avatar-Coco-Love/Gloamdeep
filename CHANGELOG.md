@@ -18,6 +18,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.12 (2026-10-18)
+- The hero can wait a turn: tap or click the hero, or press Space
+  (hold it to keep waiting). A wait passes a turn like a step, so oil
+  burns while the lantern is lit. Only the oil bar shows it.
+- Decisions: D-084, D-085. Questions closed: Q-029.
+
 ## 0.1.11 (2026-10-18)
 - The lantern can be switched off and on: a lantern button next to the
   oil bar, or the L key. Switching is free. While off, no oil burns,

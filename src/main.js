@@ -1,7 +1,7 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
 import { makeRoom, FIRST_ROOM } from './core/room.js';
-import { makeState, step, switchLantern, toward, DIRS, FIRST_START } from './core/turn.js';
+import { makeState, step, wait, switchLantern, toward, DIRS, FIRST_START } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
@@ -29,7 +29,7 @@ const base = document.createElement('canvas');
 base.width = W; base.height = H;
 let drawnRoom = null;
 
-// § moving: the hero slides to its new tile (D-043); one step waits in line
+// § moving: the hero slides to its new tile (D-043); one step or wait waits in line
 // so a quick second tap or key is not lost.
 const SLIDE = 0.18; // tiles per frame, as in the study
 const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
@@ -39,6 +39,7 @@ const settled = () => shown.x === state.hero.x && shown.y === state.hero.y;
 
 function tryStep(dir) {
   if (!settled()) { queued = dir; return; }
+  if (dir === 'wait') { state = wait(state); return; } // standing still, one turn (D-084)
   const next = step(state, dir);
   if (next === state) nudgeToward(dir);
   state = next;
@@ -48,11 +49,13 @@ function nudgeToward(dir) {
   const [dx, dy] = DIRS[dir];
   nudge = { dx, dy, until: performance.now() + 90 };
 }
-const stepToward = (px, py) => {
+// A tap on the hero waits a turn; a finger held on the hero does nothing (D-085).
+const stepToward = (px, py, held = false) => {
   const h = state.hero, tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
   if (dev && dev.place(tx, ty)) return; // a picked spawn takes the tap (D-049)
   const dir = toward(h.x, h.y, tx, ty);
   if (dir) tryStep(dir);
+  else if (!held) tryStep('wait');
 };
 
 // § switch: the lantern button and the L key, free at any time (D-080, D-081)
@@ -60,7 +63,7 @@ const switchIt = () => { state = switchLantern(state); };
 const lanternButton = createLanternButton(canvas, { onSwitch: switchIt });
 
 const stage = document.getElementById('stage');
-const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, onLantern: switchIt });
+const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, onLantern: switchIt, onWait: () => tryStep('wait') });
 const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-045)
   get: () => state,
   set: (s) => { state = s; },
@@ -92,7 +95,7 @@ function frame(t) {
     if (queued) { const d = queued; queued = null; tryStep(d); }
     else {
       const p = input.held();
-      if (p && !(dev && dev.armed()) && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p); }
+      if (p && !(dev && dev.armed()) && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p, true); }
     }
   }
   let nx = 0, ny = 0;
