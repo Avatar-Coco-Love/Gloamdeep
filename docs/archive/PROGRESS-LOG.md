@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.12, wait a turn.** Tap or click the hero, or press
+  Space (hold it to keep waiting), and the hero stands still for a
+  turn. Oil burns as for a step while the lantern is lit. Only the oil
+  bar shows it. A finger held on the hero does nothing (D-084, D-085,
+  Q-029 closed). Playtest:
+  https://claude.ai/artifact/8XGRMyr6qHVeyipi2DWBPd
 - **2026-10-18, 0.1.11, the lantern switch.** A lantern button next to
   the oil bar, or the L key, switches the lantern off and on, for free.
   Off, no oil burns and the room is pitch dark except the remembered

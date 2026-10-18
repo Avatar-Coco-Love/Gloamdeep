@@ -1,12 +1,13 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
-import { makeRoom, FIRST_ROOM } from './core/room.js';
+import { makeRoom, FIRST_ROOM, FIRST_LIGHTS } from './core/room.js';
 import { makeState, step, wait, switchLantern, toward, DIRS, FIRST_START } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero, drawItems, LANTERN_AT } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
+import { drawBrackets, torchLights, drawFlames } from './render/torches.js';
 import { LANTERN } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
 import { drawOilBar } from './render/hud.js';
@@ -21,7 +22,7 @@ const canvas = document.getElementById('game');
 const ctx = createScreen(canvas);
 document.getElementById('version').textContent = VERSION;
 
-let state = makeState(makeRoom(FIRST_ROOM));
+let state = makeState(makeRoom(FIRST_ROOM), FIRST_START, FIRST_LIGHTS);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const startRoom = state.room;
@@ -72,7 +73,7 @@ const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, 
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { state = s; },
-  reset: () => resetRoom(state, startRoom, FIRST_START),
+  reset: () => resetRoom(state, startRoom, FIRST_START, FIRST_LIGHTS),
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
 });
@@ -89,6 +90,8 @@ function rememberHere() {
   state = remember(state, { ...lanternAt(state.hero.x, state.hero.y), r: reach(state.oil) });
   rememberedAt = key; rememberedSeen = state.seen;
 }
+
+const lights = [], torchGlow = []; // reused every frame (TECH.md)
 
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
@@ -107,16 +110,21 @@ function frame(t) {
   if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
   if (state.room !== drawnRoom) { drawnRoom = state.room; drawRoom(base.getContext('2d'), drawnRoom); }
   ctx.drawImage(base, 0, 0);
+  drawBrackets(ctx, state.room, state.lights);
   drawItems(ctx, state.items, t, reduceMotion.matches);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
-  // Switched off, there is no light at all: only remembered tiles show, dimly (D-082).
+  // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
   if (!dev.lightOff()) {
     const r = state.lit ? reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035)) : 0;
-    drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev.revealed() ? null : state.seen);
+    lights[0] = { ...LANTERN, x: lx, y: ly, r };
+    lights.length = 1;
+    lights.push(...torchLights(state.room, state.lights, t, reduceMotion.matches, torchGlow));
+    drawLight(ctx, state.room, lights, dev.revealed() ? null : state.seen);
   }
+  drawFlames(ctx, state.room, state.lights, t, reduceMotion.matches);
   if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
   drawOilBar(ctx, state.oil);
   const line = shownLine(state);

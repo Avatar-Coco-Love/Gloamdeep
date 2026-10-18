@@ -75,6 +75,8 @@ The study's lighting code is at lines 309–338, plus the light setup inside
   moonlight, so they may suit outside at night (Q-027).
 - **Emissive layer:** flames and embers are drawn after lighting, so they
   are always bright.
+- **Torch mounts** (D-099): on a brick face as in the study; on a wall
+  side, a short iron arm out over the open tile, the same flame on top.
 
 ## Sprites
 - 16 × 16 pixel maps written as strings, one character per palette colour.

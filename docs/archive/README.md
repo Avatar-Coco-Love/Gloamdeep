@@ -13,3 +13,5 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
 - `DECISIONS-FOUNDATION-1.md`: D-039 to D-052 (steps 7 to 11) and D-070
   to D-076 (the docs audit), moved unchanged from `DECISIONS.md` at
   step 16 (D-083). Still in force.
+- `DECISIONS-FOUNDATION-2.md`: D-053 to D-069 (steps 12 to 14), moved
+  unchanged from `DECISIONS.md` at step 19 (D-103). Still in force.
