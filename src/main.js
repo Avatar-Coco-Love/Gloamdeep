@@ -1,7 +1,7 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
 import { makeRoom, FIRST_ROOM } from './core/room.js';
-import { makeState, step, toward, DIRS, FIRST_START } from './core/turn.js';
+import { makeState, step, switchLantern, toward, DIRS, FIRST_START } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
@@ -12,6 +12,7 @@ import { reach, setOil } from './core/oil.js';
 import { drawOilBar } from './render/hud.js';
 import { remember, forget } from './core/fog.js';
 import { createInput } from './input/input.js';
+import { createLanternButton } from './input/lantern.js';
 import { createDev } from './dev/dev.js';
 
 const canvas = document.getElementById('game');
@@ -54,8 +55,12 @@ const stepToward = (px, py) => {
   if (dir) tryStep(dir);
 };
 
+// § switch: the lantern button and the L key, free at any time (D-080, D-081)
+const switchIt = () => { state = switchLantern(state); };
+const lanternButton = createLanternButton(canvas, { onSwitch: switchIt });
+
 const stage = document.getElementById('stage');
-const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward });
+const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, onLantern: switchIt });
 const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-045)
   get: () => state,
   set: (s) => { state = s; },
@@ -65,10 +70,12 @@ const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-0
 });
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
-// reaches are remembered (D-059). Again after a dev change to the memory or oil.
+// reaches are remembered (D-059). Again after a dev change to the memory or oil,
+// or when the lantern comes back on. Nothing new is remembered while it is off (D-082).
 const lanternAt = (x, y) => ({ x: x * TILE + LANTERN_AT.x, y: y * TILE - 2 + LANTERN_AT.y });
 let rememberedAt = null, rememberedSeen = null;
 function rememberHere() {
+  if (!state.lit) { rememberedAt = null; return; }
   const key = state.hero.x + ',' + state.hero.y + ',' + state.oil;
   if (key === rememberedAt && state.seen === rememberedSeen) return;
   state = remember(state, { ...lanternAt(state.hero.x, state.hero.y), r: reach(state.oil) });
@@ -95,14 +102,16 @@ function frame(t) {
   drawItems(ctx, state.items, t, reduceMotion.matches);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy);
-  // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064)
+  // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
+  // Switched off, there is no light at all: only remembered tiles show, dimly (D-082).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
   if (!(dev && dev.lightOff())) {
-    const r = reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035));
+    const r = state.lit ? reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035)) : 0;
     drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev && dev.revealed() ? null : state.seen);
   }
-  ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); // the flame's core is always bright (study line 446)
+  if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
   drawOilBar(ctx, state.oil);
+  lanternButton.show(state.lit);
   if (dev) dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }

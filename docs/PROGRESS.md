@@ -4,17 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.10 · **Stage:** foundation (the first code)
+**Version:** 0.1.11 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 16: The lantern on/off switch** (D-015, D-026). Propose how it is
-switched on a phone, with a mouse and with keys, and how "off" looks.
-Offer options as multiple choice. `DECISIONS.md` is at 11.7 KB again:
-offer ways to make room before adding decisions.
-Read: `DESIGN.md` ("Light"), `TECH.md`; grep D-015 and D-026.
+**Step 17: the owner picks it** from the ideas after step 16 in the
+build plan below. Propose the picked step as multiple choice.
+Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Nothing.
+- Pick step 17: wait a turn (Q-029), a text line (Q-028), stairs and a
+  second room, torches, or the first enemy (rat).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -37,14 +36,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 13 Fog of war (seen tiles stay dimly visible), PR #16
 - [x] 14 Oil drains per step, with the oil bar (D-067 split off the flask), PR #17
 - [x] 15 Oil flask pickup, the first item, 0.1.10
-- [ ] 16 Lantern on/off switch
+- [x] 16 Lantern on/off switch, 0.1.11
 - Ideas after 16, order open: wait a turn, a text line, stairs and a
   second room, torches, the first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, PR #18 (0.1.8), audit next.** Docs only: Next up is a
-  docs audit with the problems seen so far; the build plan's order may
-  change as we go.
 - **2026-10-18, 0.1.9, docs audit.** Conversations pull `main` first;
   docs name a PR by its version; open-PR decisions change in place
   after a playtest; merges aren't listed as waiting; the PR body is
@@ -57,3 +53,10 @@ Foundation (0.1.x): one small visible thing per step
   now; "Reset room" clears them (D-077 to D-079). Superseded decisions
   moved to the archive. Playtest:
   https://claude.ai/artifact/L4ezEfThPFULMmhFdG8zUM
+- **2026-10-18, 0.1.11, the lantern switch.** A lantern button next to
+  the oil bar, or the L key, switches the lantern off and on, for free.
+  Off, no oil burns and the room is pitch dark except the remembered
+  tiles (D-080 to D-082). A faint outline for the hero was tried and
+  dropped. Older decisions moved to an archive file
+  (D-083). Playtest:
+  https://claude.ai/artifact/SVaAtJiDT1ufgzVCJM5B2i

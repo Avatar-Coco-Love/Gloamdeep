@@ -24,6 +24,14 @@
     position: fixed; right: max(8px, env(safe-area-inset-right)); bottom: max(6px, env(safe-area-inset-bottom));
     font: 11px/1 ui-monospace, "Courier New", monospace; opacity: .7; pointer-events: none;
   }
+  /* The lantern switch (src/input/lantern.js, D-080): placed by script next to the oil bar. */
+  #lantern-button {
+    position: fixed; z-index: 1; top: 8px; left: 8px;
+    width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
+    border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.85); cursor: pointer;
+  }
+  #lantern-button[aria-pressed="true"] { border-color: #a8642c; }
+  #lantern-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
   /* Dev mode (src/dev/dev.js): only created when dev mode is on (D-045). */
   #dev-button, #dev-panel, #dev-readout { position: fixed; z-index: 1; font: 12px/1.2 ui-monospace, "Courier New", monospace; color: #c9c2d6; }
   #dev-button {

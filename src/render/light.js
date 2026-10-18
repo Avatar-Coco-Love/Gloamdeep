@@ -22,7 +22,8 @@ function blend(cells, x, y) {
   return (cells[ya + xa] * (1 - ax) + cells[ya + xb] * ax) * (1 - ay) + (cells[yb + xa] * (1 - ax) + cells[yb + xb] * ax) * ay;
 }
 
-// `light`: { x, y, r, cr, cg, cb } in screen pixels. One light for now (the lantern).
+// `light`: { x, y, r, cr, cg, cb } in screen pixels. One light for now (the lantern);
+// r 0 is no light at all, the lantern switched off (D-082).
 // `memory`: one byte per tile, 1 when remembered; null shows every tile remembered.
 export function drawLight(ctx, room, light, memory) {
   seenCells(room, light.x, light.y, light.r, seen);

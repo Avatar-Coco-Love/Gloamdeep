@@ -10,3 +10,6 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
   unchanged from `CHANGELOG.md` when it passed 8 KB.
 - `DECISIONS-PREPRODUCTION.md`: D-001 to D-038, moved unchanged from
   `DECISIONS.md` at step 8 (D-041). Still in force.
+- `DECISIONS-FOUNDATION-1.md`: D-039 to D-052 (steps 7 to 11) and D-070
+  to D-076 (the docs audit), moved unchanged from `DECISIONS.md` at
+  step 16 (D-083). Still in force.
