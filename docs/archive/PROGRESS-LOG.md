@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #11 (0.1.1), a room built from data.** The study
+  room's shape, written as a text map, with brick wall faces, shade under
+  walls and moss (D-040). A small tile table says what each letter means.
+  The decision log split: D-001 to D-038 moved to the archive (D-041).
 - **2026-10-18, PR #10 (0.1.0), the first code.** The front page is the
   game now: one crypt floor tile on a fixed 176 × 208 canvas, enlarged
   with crisp pixels, plus a small version number. Code folders and two

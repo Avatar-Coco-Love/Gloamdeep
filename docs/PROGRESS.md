@@ -4,17 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.3 · **Stage:** foundation (the first code)
+**Version:** 0.1.4 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 11: Content registry, plus a dev spawn tool for what exists so
-far.** Propose how the registry is laid out (growing `src/core/tiles.js`)
-and how spawning is picked and placed on a phone and a PC. Offer options
-as multiple choice.
-Read: `TECH.md`, `DEV-TOOLS.md`, grep D-006 in the archive.
+**Step 12: Lantern light with shadows.** Propose how the light looks
+and falls (radius, shadows, what stays dark) and how it is drawn on a
+phone. Offer options as multiple choice.
+Read: `ART-DIRECTION.md`, `TECH.md`, grep D-024 and D-037 in the archive.
 
 ## Waiting on the owner
-- Merge PR #13 (step 10, 0.1.3). Playtest (dev mode starts on): https://claude.ai/artifact/UEwhitGYx586wMoA2PEsqx
+- Merge PR #14 (step 11, 0.1.4). Playtest (dev mode starts on): https://claude.ai/artifact/1FuiDxjfKv9aLzNKm96YXM
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -31,17 +30,13 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 7 Page (replaces the `index.html` that opens the study, D-012), canvas and pixel-perfect scaling, one floor tile on screen, PR #10
 - [x] 8 A room built from data: floor and walls with brick faces, PR #11
 - [x] 9 The hero drawn, moving one tile per tap or key, PR #12
-- [ ] 10 Dev mode switch, plus a first tool (grid and coordinates overlay)
-- [ ] 11 Content registry, plus a dev spawn tool for what exists so far
+- [x] 10 Dev mode switch, plus a first tool (grid and coordinates overlay), PR #13
+- [x] 11 Content registry, plus a dev spawn tool for what exists so far, PR #14
 - [ ] 12 Lantern light with shadows
 - [ ] 13 Fog of war (seen tiles stay dimly visible)
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-18, PR #11 (0.1.1), a room built from data.** The study
-  room's shape, written as a text map, with brick wall faces, shade under
-  walls and moss (D-040). A small tile table says what each letter means.
-  The decision log split: D-001 to D-038 moved to the archive (D-041).
 - **2026-10-18, PR #12 (0.1.2), the hero walks.** The study's hero
   (lantern later) steps one tile per key, tap, swipe or held finger, in
   4 directions with a quick slide. Walls stop the hero with a small nudge
@@ -53,3 +48,9 @@ Foundation (0.1.x): one small visible thing per step
   switches, off at first, for a faint tile grid and a coordinates readout
   with a bright outline on the pointed tile; ` toggles them on a PC. The
   playtest dropped "Leave dev mode" (D-045 to D-047).
+- **2026-10-18, PR #14 (0.1.4), the registry and spawning.** One content
+  registry gathers each kind's own file (tiles for now, keyed by id). The
+  wrench panel's Spawn list (None, Wall, Floor) comes from it: pick one,
+  then each tap or click places it, with no turn passed and never a wall
+  on the hero. "Reset room" brings the room back; nothing is kept after a
+  reload (D-048 to D-050).

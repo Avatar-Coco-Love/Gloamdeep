@@ -3,6 +3,8 @@
 // opens a panel of switches; on a PC the ` key shows or hides the overlay.
 // Plain page text, not the pixel font (D-045).
 import { tileAt } from '../core/room.js';
+import { ALL } from '../core/registry.js';
+import { spawn, resetRoom } from '../core/spawn.js';
 import { COLS, ROWS } from '../render/screen.js';
 import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 
@@ -17,7 +19,9 @@ function save(opts) {
 }
 
 // Returns null when dev mode is off, so players get no DEV button at all.
-export function createDev(stage, canvas) {
+// `game` gives tools the state: get() reads it, set(s) replaces it, reset()
+// gives the state with the starting room back.
+export function createDev(stage, canvas, game) {
   const asked = new URLSearchParams(location.search).get('dev'); // '' for ?dev, 'off' for ?dev=off
   if (asked === 'off') { save(null); return null; }
   const saved = load();
@@ -42,6 +46,21 @@ export function createDev(stage, canvas) {
     row.append(boxes[name], ' ' + label);
     panel.append(row);
   }
+
+  // § spawn: pick an entry, then each tap or click puts it there (D-049).
+  // The list comes from the registry. It starts at None and is not saved.
+  let picked = null;
+  panel.append(el('div', { className: 'dev-heading', textContent: 'Spawn' }));
+  for (const entry of [null, ...ALL]) {
+    const row = el('label', {});
+    const radio = el('input', { type: 'radio', name: 'dev-spawn', checked: !entry });
+    radio.addEventListener('change', () => { picked = entry; });
+    row.append(radio, ' ' + (entry ? entry.name : 'None'));
+    panel.append(row);
+  }
+  const reset = el('button', { type: 'button', textContent: 'Reset room' });
+  reset.addEventListener('click', () => game.set(game.reset()));
+  panel.append(reset);
   document.body.append(button, panel, readout);
 
   button.addEventListener('click', () => {
@@ -72,13 +91,22 @@ export function createDev(stage, canvas) {
   // § draw: called each frame after the game is drawn
   let text = '';
   return {
+    armed: () => picked !== null,
+    // Places the picked entry on tile x, y. False when nothing is picked,
+    // so the tap walks instead.
+    place(x, y) {
+      if (!picked) return false;
+      game.set(spawn(game.get(), picked.id, x, y));
+      return true;
+    },
     draw(ctx, state) {
       if (opts.grid) drawGrid(ctx);
       if (opts.coords && pointed) drawPointed(ctx, pointed.x, pointed.y);
       const h = state.hero;
-      let next = '';
+      let next = picked ? `placing ${picked.name}` : '';
       if (opts.coords) {
-        next = `hero ${h.x},${h.y}`;
+        if (next) next += ' · ';
+        next += `hero ${h.x},${h.y}`;
         if (pointed) next += ` · tile ${pointed.x},${pointed.y} ${tileAt(state.room, pointed.x, pointed.y).id}`;
       }
       if (next !== text) { text = next; readout.textContent = text; } // touch the page only on change

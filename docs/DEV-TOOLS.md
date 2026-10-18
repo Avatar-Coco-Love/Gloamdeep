@@ -21,6 +21,8 @@ tools to be chosen together later.
   opens a panel of switches, all off at first; ` on a PC (D-045, D-047).
   Code: `src/dev/dev.js`.
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
+- Spawn: pick from the panel's list, then tap tiles; tiles only so far;
+  "Reset room" (D-048 to D-050). Rules: `src/core/spawn.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage)
@@ -35,6 +37,6 @@ tools to be chosen together later.
 - Lighting on/off (the style study already has this)
 - Speed up or slow down animations
 
-## Next (build plan step 11)
-Spawning, together with the content registry. Built at step 10: the
-switch and the grid and coordinates overlay.
+## Next
+Items, enemies and NPCs join the spawn list as each arrives in the
+registry, each with its dev hook in the same PR.

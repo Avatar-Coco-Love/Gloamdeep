@@ -1,7 +1,7 @@
 // § tiles: tile drawing, taken from style study 1 (drawFloor and drawWall,
 // lines 182–239). Cobwebs are left out (step 8 choice, D-040).
 import { hash } from '../core/noise.js';
-import { isWall } from '../core/room.js';
+import { isWall, tileAt } from '../core/room.js';
 import { TILE as T } from './screen.js';
 
 const px = (c, x, y, col) => { c.fillStyle = col; c.fillRect(x, y, 1, 1); };
@@ -69,9 +69,10 @@ export function drawWall(c, room, tx, ty) {
 }
 const COURSES = [[5, 3], [9, 3], [13, 2]]; // [top row, height]
 
-// § room: draw every tile of a room
+// § room: draw every tile of a room, by registry id (D-048)
+const DRAW = { wall: drawWall, floor: drawFloor };
 export function drawRoom(c, room) {
   for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
-    (isWall(room, x, y) ? drawWall : drawFloor)(c, room, x, y);
+    DRAW[tileAt(room, x, y).id](c, room, x, y);
   }
 }

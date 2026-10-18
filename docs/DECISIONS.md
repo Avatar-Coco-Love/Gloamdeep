@@ -73,3 +73,20 @@ supersedes parts of D-045 and D-046)
 on). Opening the game with `?dev=off` forgets dev mode on that browser.
 Every dev switch starts off. The DEV button shows a small pixel wrench,
 drawn in code, instead of the word.
+
+**D-048 · 2026-10-18 · The content registry's layout** (step 11)
+Each kind of content keeps its own small file in `src/core`, keyed by id
+(`tiles.js` now; items, enemies and NPCs later). `src/core/registry.js`
+gathers them into one list. Tiles also carry the letter a room map
+writes them with.
+
+**D-049 · 2026-10-18 · The dev spawn tool** (step 11, builds on D-006)
+The wrench panel has a Spawn list read from the registry, starting at
+None. Pick an entry, then each tap or click puts it on that tile instead
+of walking, until None is picked again. Only registry entries spawn (for
+now the tiles); the hero is not on the list. A wall can't go on the
+hero's tile. Spawning passes no turn.
+
+**D-050 · 2026-10-18 · Spawned changes don't last** (step 11)
+Spawned tiles are gone after a reload. A "Reset room" button in the
+panel brings back the starting room.
