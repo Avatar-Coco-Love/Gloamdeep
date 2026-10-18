@@ -123,6 +123,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   },
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
+  heal: () => ({ ...state, health: HERO_HEALTH }),
 });
 
 // § memory: once the hero stands still on a tile, the tiles their lantern

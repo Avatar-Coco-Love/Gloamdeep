@@ -158,3 +158,10 @@ hero, a rat on a remembered tile is drawn, shaded by the same dim light
 as the floor, even with no lantern or torch near. On a tile never seen
 it stays hidden in the dark. Noticing is unchanged: a rat still notices
 the hero only in light (D-126).
+
+**D-154 · 2026-10-18 · Refill hearts** (step 29 playtest, owner's pick,
+DEV-TOOLS.md) Two rats in the first two rooms cost a heart or two each
+and nothing heals, so the generated depths were hard to reach. The dev
+panel gets a Hero section with a Refill hearts button: back to full
+health, no turn passed. God mode and jumping a depth up or down come in
+later steps, one at a time. Healing in the game is its own step (Q-033).

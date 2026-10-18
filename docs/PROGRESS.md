@@ -7,15 +7,16 @@ go to the top of `archive/PROGRESS-LOG.md`.
 **Version:** 0.1.25 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 30: the owner picks** (multiple choice): more room tuning
-(D-147, D-152), the rat fleeing, a floor torch, or sounds.
+**Step 30: the owner picks** (multiple choice): healing (Q-033), the
+dev God mode (D-154), more room tuning (D-152), the rat fleeing, a
+floor torch, or sounds.
 Read: `DESIGN.md`.
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
   rat notice?) and Q-032 (which way a walking rat faces).
-- After playing 0.1.25: are the rougher caves right (D-152's first
-  guesses), and does the rat look right in the remembered dark (D-153)?
+- After playing 0.1.25: are the rougher caves right (D-152), and does
+  the rat look right in remembered dark (D-153)?
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -52,7 +53,7 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 26 A flask and a rat in the second room, 0.1.22
 - [x] 27 A depth counter and an endless way down, 0.1.23
 - [x] 28 The first generated room, 0.1.24
-- [x] 29 Rougher caves, and the rat seen in remembered dark, 0.1.25
+- [x] 29 Rougher caves, the rat in remembered dark, 0.1.25
 - Ideas for later: a standing torch on the floor, the rat fleeing, sounds; other places (smaller caves, bigger rooms, more natural caves, dungeons, crypts, D-152)
 
 ## Log (last 3)
@@ -69,8 +70,7 @@ Foundation (0.1.x): one small visible thing per step
   depths, their maps forgotten. Seed in the dev stats (D-147 to D-151).
   Playtest: https://claude.ai/artifact/LNhmWcYaTRaey4TR9TDwkq
 - **2026-10-18, 0.1.25, rougher caves, the rat in remembered dark.**
-  Generated caves' edges are bitten back more, with nooks a tile deep;
-  cut-off tiles go back to wall. A rat on an explored tile now shows
-  dimly in the dark like the flask; it still notices only in light
-  (D-152, D-153). Playtest:
-  https://claude.ai/artifact/C5VP47d6BEjdnESxHwtYo9
+  Generated caves' edges are bitten back more. A rat on an explored tile
+  shows dimly in the dark like the flask; it notices only in light. After
+  the playtest: dev Refill hearts, as nothing heals yet (D-152 to D-154,
+  Q-033). Playtest: https://claude.ai/artifact/C5VP47d6BEjdnESxHwtYo9

@@ -23,7 +23,10 @@ Entry format:
   look less like boxes.
 - A rat on a tile you've explored now shows in the dark, dimly, like the
   oil flask. It still only notices you in light.
-- Decisions: D-152, D-153 (supersedes part of D-106).
+- Dev panel: a new Hero section with Refill hearts, so deeper depths can
+  be tested.
+- Decisions: D-152, D-153 (supersedes part of D-106), D-154. Questions
+  opened: Q-033.
 
 ## 0.1.24 (2026-10-18)
 - The first generated rooms: every depth below the second room is now
