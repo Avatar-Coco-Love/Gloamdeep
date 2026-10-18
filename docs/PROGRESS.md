@@ -4,17 +4,17 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.16 · **Stage:** foundation (the first code)
+**Version:** 0.1.17 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 21: the owner picks it** from the ideas after step 20 in the
+**Step 22: the owner picks it** from the ideas after step 21 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any
-(fighting is Q-030).
+(the rat fighting back is Q-030).
 
 ## Waiting on the owner
-- Pick step 21: fighting the rat (Q-030), stairs and a second room, or
-  more light (lighting an unlit torch, a standing torch on the floor).
+- Pick step 22: the rat fights back (Q-030), stairs and a second room,
+  or more light (lighting an unlit torch, a standing torch on the floor).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -43,16 +43,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 18 A text line, 0.1.14
 - [x] 19 Torches, 0.1.15
 - [x] 20 The first enemy, a rat that holds its ground, 0.1.16
-- Ideas after 20, order open: fighting the rat (Q-030), stairs and a
+- [x] 21 Fighting the rat: two lantern hits kill it, 0.1.17
+- Ideas after 21, order open: the rat fights back (Q-030), stairs and a
   second room, more light (unlit torches to light, floor mounts)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.14, the text line.** A strip under the room where
-  the game speaks, in a pixel font drawn in code. "The flame is getting
-  low." as the oil drops under 20%, "The lantern gutters to an ember."
-  in amber as it runs dry; each once per crossing. A line stays 5
-  turns, then fades (D-094 to D-097, Q-028 closed). Playtest:
-  https://claude.ai/artifact/T2zbFW9vJsdr6RyDRmM1hg
 - **2026-10-18, 0.1.15, torches.** Three wall torches in the first
   room, as in the study (the top-right one a tile left, clear of the oil
   bar): orange light that flickers, a swaying flame and rising embers,
@@ -66,3 +61,9 @@ Foundation (0.1.x): one small visible thing per step
   its ground."; no turn passes. It shows only in real light, never in
   memory. Spawn has an Enemies group (D-104 to D-108, Q-030 opened).
   Playtest: https://claude.ai/artifact/DSjdcNS3Emo2XoRgRVpgWV
+- **2026-10-18, 0.1.17, fighting the rat.** Walking into the rat swings
+  the lantern: the first hit says "The rat squeaks and holds its
+  ground.", the second kills it with "The rat squeaks and falls still."
+  and it flashes and is gone. A hit passes a turn and burns oil. It
+  doesn't fight back yet (D-109 to D-113, Q-030 narrowed). Playtest:
+  https://claude.ai/artifact/NBwf6Tqa3gJRmuuKRtLErp

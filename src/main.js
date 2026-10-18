@@ -42,7 +42,7 @@ const SLIDE = 0.18; // tiles per frame, as in the study
 const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
 const shown = { x: state.hero.x, y: state.hero.y };
 let queued = null, nudge = null, lastHeldStep = 0; // nudge: { dx, dy, until } after bumping a wall
-let hit = null; // { enemy, until, shakeUntil } after walking into an enemy (D-105)
+let hit = null; // { enemy, until, shakeUntil } after attacking an enemy (D-105, D-109)
 const HIT_FLASH_MS = 140, SHAKE_MS = 120; // the study's (study line 470)
 const settled = () => shown.x === state.hero.x && shown.y === state.hero.y;
 
@@ -121,9 +121,10 @@ function frame(t) {
   drawHero(ctx, hx, hy);
   // § enemies: drawn last before the light, which shows them only in real light (D-106)
   const lightOn = !dev.lightOff();
-  const under = lightOn && state.enemies.length // the picture before enemies, for the light
+  const flashing = hit && t < hit.until ? hit.enemy : null;
+  const under = lightOn && (state.enemies.length || flashing) // the picture before enemies, for the light
     ? ctx.getImageData(0, 0, W, H).data : null;
-  drawEnemies(ctx, state.enemies, t, reduceMotion.matches, hit && t < hit.until ? hit.enemy : null);
+  drawEnemies(ctx, state.enemies, t, reduceMotion.matches, flashing);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;

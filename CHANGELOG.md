@@ -18,6 +18,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.17 (2026-10-18)
+- Fighting the rat: walking into it swings the lantern. The first hit
+  says "The rat squeaks and holds its ground.", and the second kills it
+  with "The rat squeaks and falls still."; it flashes and is gone.
+- A hit passes a turn and burns oil, like a step. The rat doesn't fight
+  back yet.
+- Decisions: D-109 to D-113 (D-105 superseded). Q-030 narrowed to the
+  rat fighting back.
+
 ## 0.1.16 (2026-10-18)
 - The first enemy: a rat sits in the first room, where the study had
   it. It's redrawn from the study's rat (the owner picked option A) and

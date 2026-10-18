@@ -5,7 +5,7 @@ import { blankMemory } from './fog.js';
 import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
 import { say, oilLine } from './lines.js';
-import { enemyAt } from './enemies.js';
+import { enemyAt, hitEnemy } from './enemies.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -21,19 +21,28 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = []) 
 // changes nothing and passes no turn, so the same state comes back (D-043).
 // A passed turn burns oil while the lantern is lit (D-037, D-026). A flask on the new tile is then poured in,
 // never above full, and is gone (D-078). The oil lines look at the oil after
-// both (D-096). Walking into an enemy says its line and passes no turn, for
-// now (D-105).
+// both (D-096). Walking into an enemy attacks it (D-017).
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (tileAt(state.room, x, y).solid) return state;
   const foe = enemyAt(state, x, y);
-  if (foe) return say(state, get(foe.id).bump);
+  if (foe) return attack(state, foe);
   const next = passTurn({ ...state, hero: { x, y } });
   const found = itemAt(state, x, y);
   if (!found) return told(state, next);
   const items = state.items.filter((it) => it !== found);
   return told(state, { ...next, items, oil: Math.min(1, next.oil + get(found.id).oil) });
+}
+
+// § attack: the hero swings the lantern at the foe and stays put (D-109).
+// It passes a turn like a step, so oil burns (D-111). The foe's line is
+// said, and an oil line said on the same turn replaces it (D-112).
+export const LANTERN_HIT = 1; // two hits kill the rat (D-110)
+function attack(state, foe) {
+  const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, LANTERN_HIT);
+  const dead = enemies.length < state.enemies.length;
+  return told(state, say(passTurn({ ...state, enemies }), dead ? entry.die : entry.hurt));
 }
 
 // § wait: stand still for one turn (D-084). It passes a turn like a step,

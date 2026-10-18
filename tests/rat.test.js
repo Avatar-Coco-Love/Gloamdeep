@@ -1,4 +1,4 @@
-// § rat: the first enemy sits in the first room and holds its ground (D-104 to D-108)
+// § rat: the first enemy sits in the first room, and two hits kill it (D-104 to D-113)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, FIRST_ENEMIES } from '../src/core/room.js';
@@ -21,14 +21,39 @@ test('the first room has the rat where the study put it', () => {
   assert.equal(enemyAt(start(), 2, 10).id, 'rat');
 });
 
-test('walking into the rat says its line, passes no turn and burns no oil', () => {
+test('the first hit passes a turn, burns oil and says the rat holds its ground', () => {
   const s = nextToRat();
   const n = step(s, 'left');
-  assert.deepEqual(n.hero, { x: 3, y: 10 });
-  assert.equal(n.turn, 0);
-  assert.equal(n.oil, s.oil);
+  assert.deepEqual(n.hero, { x: 3, y: 10 }, 'the hero stays put');
+  assert.equal(n.turn, 1);
+  assert.ok(n.oil < s.oil);
   assert.equal(shownLine(n).text, 'The rat squeaks and holds its ground.');
-  assert.equal(n.enemies, s.enemies, 'the rat is unchanged');
+  assert.equal(enemyAt(n, 2, 10).health, 1);
+});
+
+test('the second hit kills the rat, and it is gone', () => {
+  const n = step(step(nextToRat(), 'left'), 'left');
+  assert.equal(n.turn, 2);
+  assert.equal(enemyAt(n, 2, 10), undefined);
+  assert.equal(shownLine(n).text, 'The rat squeaks and falls still.');
+  assert.deepEqual(step(n, 'left').hero, { x: 2, y: 10 }, 'its tile is free to walk on');
+});
+
+test('with the lantern off, a hit burns no oil', () => {
+  const s = { ...nextToRat(), lit: false };
+  assert.equal(step(s, 'left').oil, s.oil);
+});
+
+test('an oil line said on the same turn replaces the rat line', () => {
+  const n = step({ ...nextToRat(), oil: 0.2 }, 'left');
+  assert.equal(shownLine(n).text, 'The flame is getting low.');
+});
+
+test('each rat keeps its own health', () => {
+  const s = spawn(nextToRat(), 'rat', 4, 10); // one right of the hero
+  const n = step(step(s, 'left'), 'right');
+  assert.equal(enemyAt(n, 2, 10).health, 1);
+  assert.equal(enemyAt(n, 4, 10).health, 1);
 });
 
 test('a rat can be spawned on floor, not on walls, the hero, items or another enemy', () => {
