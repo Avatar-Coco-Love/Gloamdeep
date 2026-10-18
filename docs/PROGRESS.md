@@ -4,18 +4,24 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.7 · **Stage:** foundation (the first code)
+**Version:** 0.1.8 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 15: The oil flask.** Propose how the flask looks and works as the
-first item in the registry (study sprite and +45%?), with its place in
-the dev spawn list. Offer options as multiple choice.
-Read: `DESIGN.md`, `TECH.md` ("One content registry"), `DEV-TOOLS.md`.
+**Docs audit.** The owner noticed stale and outdated things coming up.
+Review every doc and the workflow in `CLAUDE.md`, then propose fixes
+(multiple choice) that make it less error prone. Seen so far: the
+starting clone's `main` was old (pull first); "Waiting on the owner"
+goes stale once a PR is merged; the PR number isn't known until the PR
+exists, so docs need a second commit; the PR body went stale after
+playtest changes; the playtest bundler lives only in a scratchpad and
+is rebuilt each time; a docs-only PR still needs a version bump; same-PR
+playtest tweaks pile up superseded decisions (D-068).
+Read: `CLAUDE.md`, then each doc by size. Step 15 (the oil flask) after.
 
 ## Waiting on the owner
-- Merge PR #17 (step 14, 0.1.7). Playtest (dev mode starts on): https://claude.ai/artifact/UJB5Bkpkbh1co5VRoFLTsk
+- Nothing.
 
-## Build plan (proposed; re-plan as decisions land)
+## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
 
 Pre-production (0.0.x): decisions only
@@ -34,17 +40,12 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 11 Content registry, plus a dev spawn tool for what exists so far, PR #14
 - [x] 12 Lantern light with shadows, PR #15
 - [x] 13 Fog of war (seen tiles stay dimly visible), PR #16
-- [ ] 14 Oil drains per step, with the oil bar (D-067 split off the flask)
+- [x] 14 Oil drains per step, with the oil bar (D-067 split off the flask), PR #17
 - [ ] 15 Oil flask pickup, the first item
+- Ideas after 15, order open: lantern on/off switch, wait a turn,
+  a text line, stairs and a second room, torches, the first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, PR #15 (0.1.5), the lantern lights the room.** The
-  hero holds the study's lantern, and its warm light reaches about 5
-  tiles in dithered bands, with a gentle flicker. Walls cast shadows,
-  whose edges now fade over 4 pixels instead of stepping (picked from a
-  side-by-side picture). Outside the light is almost black until fog of
-  war. Dev panel: "Lighting off". The playtest showed teeth on the
-  left wall, so walls are now lit as whole tiles (D-053 to D-058).
 - **2026-10-18, PR #16 (0.1.6), fog of war.** Tiles the lantern has
   reached are remembered and stay faintly visible; a tile counts once
   the light reaches its middle, and the edge fades over 4 pixels in the
@@ -59,3 +60,6 @@ Foundation (0.1.x): one small visible thing per step
   The study's 10-segment oil bar sits in the top right corner. Dev panel:
   "Refill oil" and "Empty oil". The flask became step 15 (D-064 to D-069,
   Q-028 and Q-029 opened).
+- **2026-10-18, PR #18 (0.1.8), audit next.** Docs only: Next up is a
+  docs audit with the problems seen so far; the build plan's order may
+  change as we go.

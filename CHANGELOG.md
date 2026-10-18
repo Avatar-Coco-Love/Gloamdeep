@@ -18,6 +18,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.8 (2026-10-18)
+- Docs only: the next conversation is a docs audit, with the problems
+  noticed so far. The build plan's order may change as we go.
+- Decisions: none.
+
 ## 0.1.7 (2026-10-18)
 - Oil. The lantern starts three quarters full, and every step burns a
   little: 60 steps empty a full tank (the study's 40 felt too short
