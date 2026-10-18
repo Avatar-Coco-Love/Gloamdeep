@@ -4,25 +4,20 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.8 · **Stage:** foundation (the first code)
+**Version:** 0.1.9 · **Stage:** foundation (the first code)
 
 ## Next up
-**Docs audit.** The owner noticed stale and outdated things coming up.
-Review every doc and the workflow in `CLAUDE.md`, then propose fixes
-(multiple choice) that make it less error prone. Seen so far: the
-starting clone's `main` was old (pull first); "Waiting on the owner"
-goes stale once a PR is merged; the PR number isn't known until the PR
-exists, so docs need a second commit; the PR body went stale after
-playtest changes; the playtest bundler lives only in a scratchpad and
-is rebuilt each time; a docs-only PR still needs a version bump; same-PR
-playtest tweaks pile up superseded decisions (D-068).
-Read: `CLAUDE.md`, then each doc by size. Step 15 (the oil flask) after.
+**Step 15: The oil flask.** Propose how the flask looks and works as the
+first item in the registry (study sprite and +45%?), with its place in
+the dev spawn list. Offer options as multiple choice. `DECISIONS.md` is
+near 12 KB: move the superseded entries to the archive in this PR.
+Read: `DESIGN.md`, `TECH.md` ("One content registry"), `DEV-TOOLS.md`.
 
 ## Waiting on the owner
 - Nothing.
 
 ## Build plan (proposed; the order may change as we go)
-Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
+Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
 
 Pre-production (0.0.x): decisions only
 - [x] 1 Inspirations and must-keeps (Q-001, Q-002), PRs #1 and #2
@@ -46,13 +41,6 @@ Foundation (0.1.x): one small visible thing per step
   a text line, stairs and a second room, torches, the first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, PR #16 (0.1.6), fog of war.** Tiles the lantern has
-  reached are remembered and stay faintly visible; a tile counts once
-  the light reaches its middle, and the edge fades over 4 pixels in the
-  dither. Dev panel: "Reveal room" and "Forget"; "Reset room" forgets
-  too. After the playtest the study's blue felt too bright and like
-  moonlight, so each place now sets its darkness: this cave is pitch
-  black with a faint grey memory (D-059 to D-063, Q-027 opened).
 - **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
   quarters full and 60 steps empty a full tank (the study's 40 felt
   too short, 80 too long).
@@ -63,3 +51,9 @@ Foundation (0.1.x): one small visible thing per step
 - **2026-10-18, PR #18 (0.1.8), audit next.** Docs only: Next up is a
   docs audit with the problems seen so far; the build plan's order may
   change as we go.
+- **2026-10-18, 0.1.9, docs audit.** Conversations pull `main` first;
+  docs name a PR by its version; open-PR decisions change in place
+  after a playtest; merges aren't listed as waiting; the PR body is
+  updated each push; the playtest bundler is `tools/playtest.js`.
+  Stale text fixed in the README and four docs, and the 0.0.x
+  changelog moved to the archive (D-070 to D-076).

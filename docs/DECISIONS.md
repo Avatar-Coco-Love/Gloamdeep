@@ -117,7 +117,7 @@ Until fog of war (step 13), tiles the lantern doesn't reach get the
 study's "never seen" darkness.
 
 **D-055 · 2026-10-18 · The lantern's reach for now** (step 12)
-Superseded by D-064 (2026-10-18): oil sets the reach.
+*Superseded by D-064 (2026-10-18): oil sets the reach.*
 The light reaches as far as the study's lantern with a full tank (5.2
 tiles). Oil takes over the reach at step 14 (D-014).
 
@@ -144,7 +144,7 @@ the light's reach. It is checked when the hero stands still on a tile.
 The memory is part of the game state, one mark per tile.
 
 **D-060 · 2026-10-18 · Remembered tiles fade at the edge** (step 13)
-Partly superseded by D-063 (2026-10-18): the colours. The fading edge stays.
+*Partly superseded by D-063 (2026-10-18): the colours. The fading edge stays.*
 Remembered tiles get the study's cold blue (0.15, 0.16, 0.26), and never
 seen ones stay almost black. Where they meet, the blue fades into black
 over 4 pixels in the dither pattern, like the shadow edges (D-053).
@@ -170,7 +170,7 @@ get their values when they arrive (Q-027).
 
 **D-064 · 2026-10-18 · Oil amounts: the study's** (step 14, supersedes
 D-055, sets D-037's amounts)
-Partly superseded by D-068 (2026-10-18): the burn per turn.
+*Partly superseded by D-068 (2026-10-18): the burn per turn.*
 The tank starts three quarters full, and each passed turn burns 2.5% of
 a full tank (40 turns from full to empty). The light reaches 1.6 tiles
 plus 3.6 per full tank (5.2 when full), and an empty lantern is an
@@ -192,7 +192,7 @@ in the registry, so they come in two steps: oil now, the flask next.
 
 **D-068 · 2026-10-18 · Oil lasts twice as long** (step 14, playtest;
 supersedes the burn in D-064)
-Superseded by D-069 (2026-10-18).
+*Superseded by D-069 (2026-10-18).*
 Each passed turn burns 1.25% of a full tank, so 80 turns empty it. The
 start, the reach and the ember stay as in D-064.
 
@@ -200,3 +200,31 @@ start, the reach and the ember stay as in D-064.
 supersedes D-068)
 80 turns felt too long, so the owner picked the middle: each passed
 turn burns 1/60 of a full tank. The starting three quarters last 45.
+
+**D-070 · 2026-10-18 · Pull main first** (docs audit)
+Every conversation starts by pulling the latest `main`, before reading
+anything, because the starting copy can be old.
+
+**D-071 · 2026-10-18 · Docs name a PR by its version** (docs audit)
+The log and the build plan say "0.1.9", not "PR #19", so no second commit
+is needed once the PR exists. Older entries keep their PR numbers.
+
+**D-072 · 2026-10-18 · Open-PR decisions change in place** (docs audit)
+A decision isn't final until its PR is merged. Playtest tweaks in the
+same PR edit it directly, with a note ("40 → 80 → 60 turns").
+Superseding is only for merged decisions.
+
+**D-073 · 2026-10-18 · The playtest bundler lives in the repo** (docs audit)
+`tools/playtest.js` packs the game into one page for the playtest
+Artifact; `--dev` starts dev mode on. A plain Node script with no
+dependencies. The game itself still has no build step.
+
+**D-074 · 2026-10-18 · Merges aren't "waiting on the owner"** (docs audit)
+That list holds only questions and choices for the owner. Merging the
+open PR is always implied. The playtest link goes in the log entry.
+
+**D-075 · 2026-10-18 · Docs-only PRs bump the version** (docs audit)
+One rule for every PR, so each one has a version to be named by.
+
+**D-076 · 2026-10-18 · The PR body is updated on every push** (docs audit)
+After each push, "What changed" and "Decisions" are rewritten to match.

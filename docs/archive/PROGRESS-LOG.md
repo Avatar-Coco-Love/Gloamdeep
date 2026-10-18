@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #16 (0.1.6), fog of war.** Tiles the lantern has
+  reached are remembered and stay faintly visible; a tile counts once
+  the light reaches its middle, and the edge fades over 4 pixels in the
+  dither. Dev panel: "Reveal room" and "Forget"; "Reset room" forgets
+  too. After the playtest the study's blue felt too bright and like
+  moonlight, so each place now sets its darkness: this cave is pitch
+  black with a faint grey memory (D-059 to D-063, Q-027 opened).
 - **2026-10-18, PR #15 (0.1.5), the lantern lights the room.** The
   hero holds the study's lantern, and its warm light reaches about 5
   tiles in dithered bands, with a gentle flicker. Walls cast shadows,

@@ -64,13 +64,14 @@ The study's lighting code is at lines 309–338, plus the light setup inside
   0.42). Flicker is a sum of three sine waves (about ±3.5% for the lantern,
   ±9% for torches).
 - **Fog of war:** tiles the lantern has reached are remembered and stay
-  faintly visible. Each place sets how they look and how dark never-seen
-  tiles are (D-063). A cave with no lights: never-seen pitch black,
-  remembered a neutral grey (0.095). The study's values (cold blue 0.15,
-  0.16, 0.26 over almost black 0.02, 0.02, 0.045) read as moonlight, so
-  they may suit outside at night (Q-027). A tile is remembered when the light reaches its
-  centre (D-059). The blue fades into black over 4 pixels in the dither
-  (D-060).
+  faintly visible. A tile is remembered when the light reaches its centre
+  (D-059). Remembered tiles fade into the dark over 4 pixels in the
+  dither (D-060).
+- **Each place sets its darkness** (D-063): how dark never-seen tiles are
+  and how remembered ones look. A cave with no lights: never-seen pitch
+  black, remembered a neutral grey (0.095). The study's values (cold blue
+  0.15, 0.16, 0.26 over almost black 0.02, 0.02, 0.045) read as
+  moonlight, so they may suit outside at night (Q-027).
 - **Emissive layer:** flames and embers are drawn after lighting, so they
   are always bright.
 
