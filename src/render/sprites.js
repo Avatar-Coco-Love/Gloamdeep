@@ -36,21 +36,23 @@ function build(rows, mirror) {
   });
 }
 
-// flash: the white silhouette for the hit flash (ART-DIRECTION.md, "Sprites")
-function spriteCanvas(def, flash = false) {
+// flash: the silhouette for a hit flash, white (ART-DIRECTION.md, "Sprites"),
+// or the hostile red when the hero is bitten (D-118)
+function spriteCanvas(def, flash = null) {
   const cv = document.createElement('canvas');
   cv.width = cv.height = 16;
   const c = cv.getContext('2d');
   build(def.rows, def.mirror).forEach((r, y) => [...r].forEach((ch, x) => {
     if (!PAL[ch]) return;
-    c.fillStyle = flash ? '#ffffff' : PAL[ch]; c.fillRect(x, y, 1, 1);
+    c.fillStyle = flash || PAL[ch]; c.fillRect(x, y, 1, 1);
   }));
-  for (const [x, y, ch] of def.extra || []) { c.fillStyle = flash ? '#ffffff' : PAL[ch]; c.fillRect(x, y, 1, 1); }
+  for (const [x, y, ch] of def.extra || []) { c.fillStyle = flash || PAL[ch]; c.fillRect(x, y, 1, 1); }
   return cv;
 }
 
 export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), rat: spriteCanvas(RAT) }; // keyed by registry id
-const FLASHES = { rat: spriteCanvas(RAT, true) };
+const FLASHES = { rat: spriteCanvas(RAT, '#ffffff') };
+const BITTEN = spriteCanvas(HERO, PAL.p);
 
 // § shadow: a small dark oval under a sprite (study line 345)
 export function drawShadow(c, x, y, w) {
@@ -59,10 +61,11 @@ export function drawShadow(c, x, y, w) {
   c.fillRect(x + 9 - w / 2, y + 16, w - 2, 1);
 }
 
-// § hero: drawn 2 pixels up from its tile, on its shadow (ART-DIRECTION.md)
-export function drawHero(c, x, y) {
+// § hero: drawn 2 pixels up from its tile, on its shadow (ART-DIRECTION.md).
+// `bitten`: flashing red just after a bite (D-118).
+export function drawHero(c, x, y, bitten = false) {
   drawShadow(c, x, y, 8);
-  c.drawImage(SPRITES.hero, x, y - 2);
+  c.drawImage(bitten ? BITTEN : SPRITES.hero, x, y - 2);
 }
 
 // § items: each item 2 pixels up from its tile, on its shadow. A flask bobs

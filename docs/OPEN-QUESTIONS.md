@@ -26,8 +26,3 @@ Each place sets its own darkness (D-063). The owner sees the study's cold
 blue as moonlight. Should outside at night use it? Should moon phases
 make some nights darker than others? The owner isn't sure the moon will
 be in the game. Each biome's darkness is asked when it arrives.
-
-**Q-030 · The rat fights back** (when it does)
-The hero can now kill the rat (D-109 to D-113), but it never fights
-back. When it does: does it bite, move or flee? How much health does the
-hero have, how is it shown, and what happens when it runs out?

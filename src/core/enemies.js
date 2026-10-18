@@ -2,8 +2,8 @@
 // tiles, one per tile, in `state.enemies`. registry.js gathers this table.
 // An enemy in the state is { id, x, y }, plus `health` once it has been hit.
 export const ENEMIES = {
-  // It doesn't fight back yet: two lantern hits and it dies (D-109, D-110).
-  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, hurt: 'ratHurt', die: 'ratDie' },
+  // Two lantern hits kill it (D-109, D-110); it bites for 1 when next to the hero (D-114).
+  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite' },
 };
 
 // § lookups: the enemy on tile x, y, or undefined
@@ -16,3 +16,7 @@ export function hitEnemy(enemies, foe, entry, damage) {
   if (health <= 0) return enemies.filter((e) => e !== foe);
   return enemies.map((e) => (e === foe ? { ...foe, health } : e));
 }
+
+// § bites: (enemies, hero) → the enemies next to the hero, four ways (D-042),
+// who bite on their turn. They stay put (D-114).
+export const biters = (enemies, hero) => enemies.filter((e) => Math.abs(e.x - hero.x) + Math.abs(e.y - hero.y) === 1);

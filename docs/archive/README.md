@@ -15,3 +15,6 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
   step 16 (D-083). Still in force.
 - `DECISIONS-FOUNDATION-2.md`: D-053 to D-069 (steps 12 to 14), moved
   unchanged from `DECISIONS.md` at step 19 (D-103). Still in force.
+- `DECISIONS-FOUNDATION-3.md`: D-077 to D-093 (steps 15 to 17 and the
+  0.1.13 dev tools), moved unchanged from `DECISIONS.md` at step 22
+  (D-120). Still in force.

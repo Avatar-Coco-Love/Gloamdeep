@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.15, torches.** Three wall torches in the first
+  room, as in the study (the top-right one a tile left, clear of the oil
+  bar): orange light that flickers, a swaying flame and rising embers,
+  shown even with the lantern off. Lights are their own registry kind;
+  a torch takes the look of where it sits, a brick face or a wall side
+  (D-098 to D-103). Playtest:
+  https://claude.ai/artifact/TTjokfKEau23XoE6QBvsip
 - **2026-10-18, 0.1.14, the text line.** A strip under the room where
   the game speaks, in a pixel font drawn in code. "The flame is getting
   low." as the oil drops under 20%, "The lantern gutters to an ember."
