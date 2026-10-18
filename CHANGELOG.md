@@ -20,8 +20,8 @@ Entry format:
 
 ## 0.1.13 (2026-10-18)
 - Dev tools are on for everyone, on every build: no `?dev` needed.
-- The dev panel folds into sections (View, Spawn, Room, Oil, Share).
-  One is open at a time, and the browser remembers which. Switches are buttons, two to a row.
+- The dev panel has sections (View, Spawn, Room, Oil, Share): a fixed
+  grid of section buttons at the top, the open one's tools below. Switches are buttons, two to a row.
 - A stats line at the bottom left: turn, oil %, lit or dark, hero tile.
 - Spawn entries are chips grouped by kind; tap one again to drop it.
 - PC keys: ` opens the panel; G, C and R switch Grid, Coords, Reveal.

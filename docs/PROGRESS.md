@@ -58,7 +58,7 @@ Foundation (0.1.x): one small visible thing per step
   https://claude.ai/artifact/8XGRMyr6qHVeyipi2DWBPd
 - **2026-10-18, 0.1.13, dev tools for everyone.** The wrench and a
   stats line (turn, oil %, lit, hero tile) show on every build. The
-  panel folds into View, Spawn, Room, Oil and Share, one open at a time; spawn entries are
+  panel has View, Spawn, Room, Oil and Share buttons, one open below; spawn entries are
   chips by kind; an oil slider; PC keys ` G C R. A start-up hook syncs
   `main` (D-086 to D-092). Playtest:
   https://claude.ai/artifact/Ws3G6Ya6NXtCob5cbvnHHw

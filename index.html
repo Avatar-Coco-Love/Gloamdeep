@@ -42,17 +42,15 @@
   #dev-button canvas { width: 24px; height: 24px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
   #dev-panel {
     top: calc(max(8px, env(safe-area-inset-top)) + 52px); left: max(8px, env(safe-area-inset-left));
-    width: min(17em, calc(100% - 16px)); box-sizing: border-box; padding: 2px 6px;
+    width: min(17em, calc(100% - 16px)); box-sizing: border-box; padding: 2px 6px 0;
     border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.92);
     max-height: calc(100% - 100px); overflow-y: auto; /* fits a phone held sideways */
   }
   #dev-panel[hidden] { display: none; }
-  #dev-panel details + details { border-top: 1px solid #3a3446; }
-  #dev-panel summary { min-height: 44px; display: flex; align-items: center; padding: 0 4px; cursor: pointer; opacity: .8; }
-  #dev-panel summary::before { content: "\25b8"; width: 1.2em; }
-  #dev-panel details[open] > summary::before { content: "\25be"; }
-  #dev-panel summary::-webkit-details-marker { display: none; }
-  #dev-panel .dev-body { display: grid; gap: 4px; padding: 0 0 6px; }
+  #dev-panel .dev-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px 0; }
+  #dev-panel .dev-tabs button[aria-expanded="true"] { border-color: #c9c2d6; background: #2a2636; }
+  #dev-panel .dev-body { display: grid; gap: 4px; padding: 6px 0; border-top: 1px solid #3a3446; }
+  #dev-panel .dev-body[hidden] { display: none; }
   #dev-panel .dev-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5em, 1fr)); gap: 4px; }
   #dev-panel .dev-kind { padding: 2px 4px 0; font-size: 11px; opacity: .6; }
   #dev-panel button { min-height: 44px; padding: 0 8px; font: inherit; color: inherit; background: #1a1724; border: 1px solid #3a3446; border-radius: 4px; cursor: pointer; }

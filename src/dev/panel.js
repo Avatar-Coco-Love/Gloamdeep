@@ -1,5 +1,6 @@
-// § panel: the dev panel's tools, in folding sections (D-087). Each section
-// is a <details>; the open one is saved. A new tool adds a section here.
+// § panel: the dev panel's tools, in sections (D-087): a fixed grid of
+// section buttons, the open section below; which one is saved. A new tool
+// adds a section here.
 import { ALL } from '../core/registry.js';
 import { roomCode } from '../core/roomcode.js';
 
@@ -18,22 +19,27 @@ const row = (...kids) => { const r = el('div', { className: 'dev-row' }); r.appe
 // sections, `saved()` stores them. Returns flip(name) for the keys, picked()
 // for the spawn tool and sync(state), called each frame.
 export function buildPanel(panel, opts, saved, game) {
-  // § sections: View, Spawn, Room, Oil, Share. One open at a time: opening
-  // one folds the others (D-087). Only View starts open.
+  // § sections: View, Spawn, Room, Oil, Share. Their buttons sit in a fixed
+  // grid at the top and the open section shows below, so nothing moves under
+  // the finger. One open at a time; tap it again to fold it (D-087).
+  const tabs = el('div', { className: 'dev-tabs' });
+  panel.append(tabs);
   const sections = [];
+  const show = (id) => {
+    for (const s of sections) {
+      s.body.hidden = s.id !== id;
+      s.tab.setAttribute('aria-expanded', String(s.id === id));
+    }
+    opts.open = id ? [id] : [];
+    saved();
+  };
   const section = (id, title) => {
-    const d = el('details', { open: opts.open[0] === id });
-    d.append(el('summary', { textContent: title }));
-    d.addEventListener('toggle', () => {
-      if (d.open) for (const other of sections) if (other !== d) other.open = false;
-      if (d.open) opts.open = [id];
-      else if (opts.open[0] === id) opts.open = [];
-      saved();
-    });
-    sections.push(d);
-    const body = el('div', { className: 'dev-body' });
-    d.append(body);
-    panel.append(d);
+    const body = el('div', { className: 'dev-body', hidden: opts.open[0] !== id });
+    const tab = button(title, () => show(body.hidden ? id : null));
+    tab.setAttribute('aria-expanded', String(!body.hidden));
+    sections.push({ id, tab, body });
+    tabs.append(tab);
+    panel.append(body);
     return body;
   };
 

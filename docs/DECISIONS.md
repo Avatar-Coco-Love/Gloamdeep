@@ -154,11 +154,12 @@ GitHub Pages, playtests and local. No `?dev`, and `?dev=off` does nothing.
 The switches are still remembered per browser. Clutter on screen is fine
 when it helps make the game better.
 
-**D-087 · 2026-10-18 · The dev panel folds into sections** (0.1.13)
-View, Spawn, Room, Oil and Share, each a heading that folds open or
-shut. One is open at a time: opening one folds the others (changed after
-the playtest: any number open → one). The browser remembers it, and
-View is open at first. Switches are buttons, lit when on, and buttons sit two to a row.
+**D-087 · 2026-10-18 · The dev panel has sections** (0.1.13)
+View, Spawn, Room, Oil and Share. Their buttons sit in a fixed 3 + 2
+grid at the top, and the open section shows below, so nothing moves
+under the finger. One is open at a time; tap it again to fold it. The
+browser remembers it, and View is open at first. (Changed after the
+playtest: folding headings, any number open → one open → fixed buttons.) Switches are buttons, lit when on, and buttons sit two to a row.
 A new tool adds a section (`src/dev/panel.js`).
 
 **D-088 · 2026-10-18 · A live stats line** (0.1.13, supersedes part of
