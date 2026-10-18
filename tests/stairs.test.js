@@ -1,7 +1,7 @@
 // § stairs: the stairs down, the second room and back up (D-130 to D-136)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tileAt } from '../src/core/room.js';
+import { tileAt, SECOND_ENEMIES, SECOND_ITEMS } from '../src/core/room.js';
 import { makeWorld, step, wait, switchLantern, FIRST_START, HERO_HEALTH } from '../src/core/turn.js';
 import { OIL, burnOil } from '../src/core/oil.js';
 import { shownLine } from '../src/core/lines.js';
@@ -30,7 +30,7 @@ test('stepping onto the stairs down: the second room, on its stairs up, one turn
   assert.equal(n.turn, 1);
   assert.equal(n.oil, burnOil(OIL.start));
   assert.equal(shownLine(n).text, 'You go down the stairs.');
-  assert.deepEqual(n.enemies, []);
+  assert.deepEqual(n.enemies, SECOND_ENEMIES);
   assert.deepEqual(n.lights, []);
 });
 
@@ -87,7 +87,8 @@ test('falling in the second room wakes the hero at the first room\'s start, ever
   assert.ok(enemyAt(n, 2, 10));
   const second = n.elsewhere.second;
   assert.equal(tileAt(second.room, 3, 3).id, 'floor');
-  assert.deepEqual(second.enemies, []);
+  assert.deepEqual(second.enemies, SECOND_ENEMIES);
+  assert.deepEqual(second.items, SECOND_ITEMS);
   assert.ok(second.seen.every((v) => v === 1)); // the map stays remembered
 });
 

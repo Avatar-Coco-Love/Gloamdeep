@@ -4,18 +4,17 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.21 · **Stage:** foundation (the first code)
+**Version:** 0.1.22 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 26: the owner picks it** from the ideas after step 25 in the
-build plan below. Propose the picked step as multiple choice.
-Read: `DESIGN.md`, and the open question the step touches, if any.
+**Step 27: a depth counter and an endless way down** (B, the owner's
+order A, B, C). Propose it as multiple choice first. Then step 28: the
+first generated room (C).
+Read: `DESIGN.md` ("The journey").
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
   rat notice?) and Q-032 (which way a walking rat faces).
-- Pick step 26: a standing torch on the floor, the rat fleeing, or
-  something for the second room (it is empty).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -49,17 +48,12 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 23 Lighting an unlit torch, 0.1.19
 - [x] 24 The rat moves: it notices in light and chases, 0.1.20
 - [x] 25 Stairs and a second room, 0.1.21
-- Ideas after 25, order open: a standing torch on the floor, the rat
-  fleeing, something in the second room
+- [x] 26 A flask and a rat in the second room, 0.1.22
+- [ ] 27 A depth counter and an endless way down
+- [ ] 28 The first generated room
+- Ideas for later: a standing torch on the floor, the rat fleeing, sounds
 
 ## Log (last 3)
-- **2026-10-18, 0.1.19, an unlit torch.** A fourth torch, unlit, hangs
-  on the small block at 7,9, a charred stub near the start. Walking into
-  its wall from below with the lantern lit lights it for good: "You light
-  the torch.", one turn. With the lantern off the hero bumps and hears
-  "Your lantern is dark." A fall or reset puts it back unlit; the spawn
-  tool has unlit torches (D-121 to D-125). Playtest:
-  https://claude.ai/artifact/SFtxL1voF3Fc6D9NfQ1oRX
 - **2026-10-18, 0.1.20, the rat moves.** A rat on a lit tile (lantern
   or torch) notices the hero and keeps coming until it dies or they
   fall: one tile a turn, the farther way first, else the other way,
@@ -73,3 +67,9 @@ Foundation (0.1.x): one small visible thing per step
   follow or bite as you go; a fall wakes you in room 1, both reset. A
   faint violet glow, a fade and a line (D-130 to D-137). Playtest:
   https://claude.ai/artifact/Xr6TssVDe39zh1AFjck47z
+- **2026-10-18, 0.1.22, a flask and a rat in room 2.** The second
+  room's lower cave holds an oil flask at 9,11, the first oil found in
+  play, guarded by a rat at 7,10. Both stay as left between rooms; a
+  fall or "Reset room" puts them back. Rooms can now start with items
+  (D-138 to D-140). Playtest:
+  https://claude.ai/artifact/TPAxhRK7dncVomJ12ZwVT5

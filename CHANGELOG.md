@@ -18,6 +18,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.22 (2026-10-18)
+- The second room isn't empty any more. An oil flask lies in the far
+  corner of the lower cave, through the narrow gap: the first oil you
+  can find without the dev tools.
+- A rat sits near it, guarding it. Fight it, or switch the lantern off
+  and slip past.
+- Both stay as you left them when you go up and back down. A fall or
+  "Reset room" puts them back.
+- Decisions: D-138 to D-140.
+
 ## 0.1.21 (2026-10-18)
 - Stairs down in the top-left corner of the first room, where the style
   study had them. Step onto them to go down to a second room: two dark

@@ -113,7 +113,7 @@ first room has stairs down at 1,1, where style study 1 put them, the far
 corner from the start. Stepping onto stairs takes them and passes one
 turn, like a step (oil burns). Standing or waiting on them does nothing.
 
-**D-131 · 2026-10-18 · The second room** (step 25, owner's pick) Two
+**D-131 · 2026-10-18 · The second room** (step 25, owner's pick; its "nothing in it yet" superseded by D-138, 2026-10-18) Two
 caves joined by a narrow gap, the same 11 × 13 size and cave darkness as
 the first room, with nothing in it yet. Its stairs up are at 1,1, and the
 stairs down arrive on them.
@@ -151,3 +151,18 @@ is in.
 **D-137 · 2026-10-18 · The decision log makes room again** (step 25, as
 D-120) D-094 to D-113 (steps 18 to 21) moved unchanged to
 `archive/DECISIONS-FOUNDATION-4.md`. They stay in force.
+
+**D-138 · 2026-10-18 · The second room gets a flask and a rat** (step
+26, owner's pick, supersedes the "nothing in it yet" of D-131) The
+second room holds the first oil flask found in play, and a rat to guard
+it. Only things that already exist; no new rules.
+
+**D-139 · 2026-10-18 · Where they are** (step 26, owner's pick) The
+flask lies at 9,11, the far corner of the lower cave, through the gap.
+The rat sits at 7,10, near the flask, and acts as every rat does
+(D-114, D-126 to D-129).
+
+**D-140 · 2026-10-18 · Rooms start with items** (step 26, extends D-132
+and D-136) A room can start with items as it does with lights and
+enemies. A taken flask stays gone while the room is left; a fall or the
+dev "Reset room" puts the room's items back as they began.

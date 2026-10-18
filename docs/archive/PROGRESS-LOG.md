@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.19, an unlit torch.** A fourth torch, unlit, hangs
+  on the small block at 7,9, a charred stub near the start. Walking into
+  its wall from below with the lantern lit lights it for good: "You light
+  the torch.", one turn. With the lantern off the hero bumps and hears
+  "Your lantern is dark." A fall or reset puts it back unlit; the spawn
+  tool has unlit torches (D-121 to D-125). Playtest:
+  https://claude.ai/artifact/SFtxL1voF3Fc6D9NfQ1oRX
 - **2026-10-18, 0.1.18, the rat fights back.** After each passed turn a
   rat next to the hero bites for 1, lit or dark, and stays put. The hero
   has 5 health as pixel hearts top left; a bite flashes them red, shakes

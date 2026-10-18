@@ -31,7 +31,7 @@ export const FIRST_LIGHTS = [{ id: 'torch', x: 2, y: 0 }, { id: 'torch', x: 7, y
 export const FIRST_ENEMIES = [{ id: 'rat', x: 2, y: 10 }];
 
 // § second room: two caves joined by a gap, the stairs up at 1,1 where the
-// hero arrives (D-131). Nothing in it yet.
+// hero arrives (D-131).
 export const SECOND_ROOM = [
   '###########',
   '#<....#####',
@@ -48,12 +48,17 @@ export const SECOND_ROOM = [
   '###########',
 ];
 
+// § second contents: a flask in the far corner of the lower cave, and a rat
+// guarding it (D-138 to D-140)
+export const SECOND_ITEMS = [{ id: 'flask', x: 9, y: 11 }];
+export const SECOND_ENEMIES = [{ id: 'rat', x: 7, y: 10 }];
+
 // § places: every room, with where the hero starts in it, what is in it at
 // first, and which place its stairs lead to (D-130 to D-132). A stair down
 // arrives on the next place's stair up, and back.
 export const PLACES = {
   first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, down: 'second' },
-  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: [], enemies: [], up: 'first' },
+  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: [], enemies: SECOND_ENEMIES, items: SECOND_ITEMS, up: 'first' },
 };
 
 // § darkness: each place sets how dark never-seen tiles are and how
