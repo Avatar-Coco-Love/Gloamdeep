@@ -17,6 +17,10 @@ tools to be chosen together later.
 
 ## Decided
 - Spawn any registry entry (item, enemy, NPC, tile) at a chosen tile (D-006).
+- The switch: `?dev` once, remembered until `?dev=off`; a wrench button
+  opens a panel of switches, all off at first; ` on a PC (D-045, D-047).
+  Code: `src/dev/dev.js`.
+- Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage)
@@ -24,13 +28,13 @@ tools to be chosen together later.
 - Reveal the whole map / clear fog of war
 - Jump to any room or floor
 - Step enemies one turn at a time
-- Show the grid, coordinates and collision overlay
+- Collision overlay (the grid and coordinates part is built, D-046)
 - Show light radius and line-of-sight overlay
 - Save and load test situations
 - Seed display and load
 - Lighting on/off (the style study already has this)
 - Speed up or slow down animations
 
-## First step (build plan step 10)
-The dev mode switch, plus one tool: the grid and coordinates overlay.
-Spawning follows at step 11, together with the registry.
+## Next (build plan step 11)
+Spawning, together with the content registry. Built at step 10: the
+switch and the grid and coordinates overlay.
