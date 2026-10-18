@@ -17,7 +17,8 @@ CSS and JavaScript, with everything drawn and synthesized in code.
   the owner's choice. This applies to design, art, code structure and bug
   fixes.
 - Never invent mechanics, story, names or numbers that are not in
-  `docs/DECISIONS.md`. If something is missing, add it to
+  `docs/DECISIONS.md` or its pre-production archive (D-041). If something
+  is missing, add it to
   `docs/OPEN-QUESTIONS.md` and ask.
 - Ask questions as **multiple choice** (the AskUserQuestion tool when it
   exists): 2 to 4 options, the recommended one first, more than one pick
@@ -42,7 +43,8 @@ Read the smallest file that answers the question.
 | File | What it holds | When to read it |
 | --- | --- | --- |
 | `docs/PROGRESS.md` | status, Next up, the last 3 log entries | every conversation |
-| `docs/DECISIONS.md` | every settled decision, D-001, D-002… | grep for an ID or topic |
+| `docs/DECISIONS.md` | settled decisions from D-039 on | grep for an ID or topic |
+| `docs/archive/DECISIONS-PREPRODUCTION.md` | D-001 to D-038, still in force | grep only, never read whole |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
 | `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
 | `docs/VISION.md` | the pitch, inspirations, proposed pillars | when proposing a design |
@@ -68,7 +70,8 @@ Read the smallest file that answers the question.
 - **Changing a decision**: never edit an old decision silently. Add a new
   one ("supersedes D-005"), and mark the old one
   `Superseded by D-0xx (date)`. When `DECISIONS.md` passes 12 KB, move the
-  superseded entries to `docs/archive/DECISIONS-SUPERSEDED.md`.
+  superseded entries to `docs/archive/DECISIONS-SUPERSEDED.md`, and the
+  rest of a finished stage to its own archive file (as D-041 did).
 - Once code exists, the `VERSION` constant in the code must match the top
   `CHANGELOG.md` entry.
 

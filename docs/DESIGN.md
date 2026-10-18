@@ -1,7 +1,8 @@
 # Design brief
 
 One page that says what Gloamdeep is. Everything here comes from
-`DECISIONS.md` (IDs in brackets). Where this page and a decision disagree,
+the decisions (IDs in brackets; D-001 to D-038 are in
+`archive/DECISIONS-PREPRODUCTION.md`). Where this page and a decision disagree,
 the decision wins. Anything not decided yet is listed at the bottom.
 
 ## In one line
