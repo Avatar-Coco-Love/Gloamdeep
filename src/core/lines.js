@@ -11,6 +11,8 @@ export const LINES = {
   fall: { text: 'You fall, and wake again.', warn: false }, // (D-119)
   torchLit: { text: 'You light the torch.', warn: false }, // (D-124)
   lanternDark: { text: 'Your lantern is dark.', warn: false }, // (D-124)
+  stairsDown: { text: 'You go down the stairs.', warn: false }, // (D-135)
+  stairsUp: { text: 'You go up the stairs.', warn: false }, // (D-135)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
 const OIL_LOW = 0.2; // "under 20%", as in the study

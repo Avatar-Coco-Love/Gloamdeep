@@ -1,4 +1,4 @@
-// § sight: which tiles are lit now, by the lantern or a burning torch. Plain
+// § sight: which tiles are lit now, by the lantern, a burning torch or a glow (D-134). Plain
 // data, no drawing. An enemy on a lit tile is seen, and sees the hero back
 // (D-106, D-126). A tile counts as lit by the rule that remembers it (D-059):
 // the light reaches its centre, inside 95% of its reach. Torches count at
@@ -8,6 +8,7 @@ import { reach } from './oil.js';
 import { get } from './registry.js';
 import { mountAt } from './mount.js';
 import { LIGHT_AT } from './lights.js';
+import { glowsIn } from './stairs.js';
 
 const TILE_SIZE = 16;
 const NEAR = 0.95;
@@ -24,7 +25,7 @@ export function lightsNow(state) {
     const [ax, ay] = LIGHT_AT[m];
     out.push({ x: l.x * TILE_SIZE + ax, y: l.y * TILE_SIZE + ay, r: r * TILE_SIZE });
   }
-  return out;
+  return out.concat(glowsIn(state.room));
 }
 
 // § lit: (state, x, y) → true when any light shining now reaches tile x, y

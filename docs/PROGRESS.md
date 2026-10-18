@@ -4,18 +4,18 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.20 · **Stage:** foundation (the first code)
+**Version:** 0.1.21 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 25: the owner picks it** from the ideas after step 24 in the
+**Step 26: the owner picks it** from the ideas after step 25 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
   rat notice?) and Q-032 (which way a walking rat faces).
-- Pick step 25: stairs and a second room, a standing torch on the
-  floor, or the rat fleeing.
+- Pick step 26: a standing torch on the floor, the rat fleeing, or
+  something for the second room (it is empty).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -48,17 +48,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 22 The rat fights back: bites, hearts and falling, 0.1.18
 - [x] 23 Lighting an unlit torch, 0.1.19
 - [x] 24 The rat moves: it notices in light and chases, 0.1.20
-- Ideas after 24, order open: stairs and a second room, a standing
-  torch on the floor, the rat fleeing
+- [x] 25 Stairs and a second room, 0.1.21
+- Ideas after 25, order open: a standing torch on the floor, the rat
+  fleeing, something in the second room
 
 ## Log (last 3)
-- **2026-10-18, 0.1.18, the rat fights back.** After each passed turn a
-  rat next to the hero bites for 1, lit or dark, and stays put. The hero
-  has 5 health as pixel hearts top left; a bite flashes them red, shakes
-  the room and says "The rat bites you." (it beats other lines). At 0
-  they fall and wake at the start: room as it began, full health, 75%
-  oil, map kept (D-114 to D-120, Q-030 closed). Playtest:
-  https://claude.ai/artifact/5iy2XRbjCkvWkQWRjmWEDU
 - **2026-10-18, 0.1.19, an unlit torch.** A fourth torch, unlit, hangs
   on the small block at 7,9, a charred stub near the start. Walking into
   its wall from below with the lantern lit lights it for good: "You light
@@ -73,3 +67,9 @@ Foundation (0.1.x): one small visible thing per step
   one that steps next to the hero bites a turn later (D-126 to D-129,
   Q-031 and Q-032 opened). Playtest:
   https://claude.ai/artifact/Uq4RbG9JV7S1S5nhkShLMU
+- **2026-10-18, 0.1.21, stairs and a second room.** Stairs down at 1,1
+  (the study's) lead to a second room, two empty caves and a gap; you
+  arrive on stairs up and can go back. Rooms stay as left; rats don't
+  follow or bite as you go; a fall wakes you in room 1, both reset. A
+  faint violet glow, a fade and a line (D-130 to D-137). Playtest:
+  https://claude.ai/artifact/Xr6TssVDe39zh1AFjck47z

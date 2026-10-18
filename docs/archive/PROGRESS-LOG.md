@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.18, the rat fights back.** After each passed turn a
+  rat next to the hero bites for 1, lit or dark, and stays put. The hero
+  has 5 health as pixel hearts top left; a bite flashes them red, shakes
+  the room and says "The rat bites you." (it beats other lines). At 0
+  they fall and wake at the start: room as it began, full health, 75%
+  oil, map kept (D-114 to D-120, Q-030 closed). Playtest:
+  https://claude.ai/artifact/5iy2XRbjCkvWkQWRjmWEDU
 - **2026-10-18, 0.1.17, fighting the rat.** Walking into the rat swings
   the lantern: the first hit says "The rat squeaks and holds its
   ground.", the second kills it with "The rat squeaks and falls still."
