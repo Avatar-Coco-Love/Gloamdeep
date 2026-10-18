@@ -21,8 +21,9 @@ Entry format:
 ## 0.1.11 (2026-10-18)
 - The lantern can be switched off and on: a lantern button next to the
   oil bar, or the L key. Switching is free. While off, no oil burns,
-  the room goes pitch dark apart from the tiles you remember, and
-  nothing new is remembered.
+  the room goes pitch dark apart from the tiles you remember, the hero
+  is a faint outline so you never lose them, and nothing new is
+  remembered.
 - Older decisions moved to `docs/archive/DECISIONS-FOUNDATION-1.md` to
   make room in `DECISIONS.md`.
 - Decisions: D-080 to D-083.

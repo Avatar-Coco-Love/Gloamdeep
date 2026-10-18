@@ -126,8 +126,12 @@ burn no oil (D-026, D-037); a flask still pours in.
 
 **D-082 · 2026-10-18 · Off is pitch dark, memory only** (step 16)
 No light at all and no bright flame core. Remembered tiles keep their dim
-grey, and the hero shows only as dimly as the tile under them. Nothing new
-is remembered until the lantern is back on.
+grey. The hero is a faint outline, their own pixels at 22% of their
+colour, so they can't get lost even on never-seen tiles; it lights
+nothing. Nothing new is remembered until the lantern is back on.
+(Changed after the playtest: the hero was only as dim as their tile,
+and vanished on never-seen tiles; the owner picked the outline over an
+eye glint, a wick ember or tile corners.)
 
 **D-083 · 2026-10-18 · The decision log makes room** (step 16, as D-041)
 D-039 to D-052 (steps 7 to 11) and D-070 to D-076 (the docs audit, which

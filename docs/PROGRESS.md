@@ -56,6 +56,6 @@ Foundation (0.1.x): one small visible thing per step
 - **2026-10-18, 0.1.11, the lantern switch.** A lantern button next to
   the oil bar, or the L key, switches the lantern off and on, for free.
   Off, no oil burns and the room is pitch dark except the remembered
-  tiles (D-080 to D-082). Older decisions moved to an archive file
+  tiles, with the hero a faint outline (D-080 to D-082). Older decisions moved to an archive file
   (D-083). Playtest:
   https://claude.ai/artifact/SVaAtJiDT1ufgzVCJM5B2i
