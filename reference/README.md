@@ -9,7 +9,8 @@ number (`style-study-2.html`), and the rules taken from it go into
   had its name. The owner loved it, and it is the art baseline (D-005).
   On 2026-10-17 its title and heading were renamed to Gloamdeep. Nothing
   else changed.
-- **How to view it:** open the file in any browser, or online at
+- **How to view it:** open the file in any browser, or online at (the
+  front page is the game since 0.1.0, so use this address, D-039)
   https://avatar-coco-love.github.io/gloamdeep/reference/style-study-1.html. Tap or click a tile to
   walk, or use the arrow keys / WASD. **L** turns lighting on and off.
 - **It is not game code.** It is one throwaway file built to show the look.

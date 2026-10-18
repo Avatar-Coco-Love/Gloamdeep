@@ -1,7 +1,7 @@
 # Tech
 
-These rules are settled (D-003). The file and folder layout is proposed
-here and gets confirmed with the owner at build-plan step 7.
+These rules are settled (D-003). The file and folder layout was confirmed
+at build plan step 7 (D-039).
 
 ## Hard rules
 - Vanilla HTML, CSS and JavaScript. No frameworks, no build step. Opening
@@ -33,11 +33,12 @@ here and gets confirmed with the owner at build-plan step 7.
 - **Turn rules are pure functions:** `(state, action) → new state`. That
   makes them easy to test and to undo in dev mode.
 
-## Proposed layout (confirm at step 7)
+## Layout (D-039)
 ```
-index.html          page shell and canvas (for now it opens the study, D-012)
+index.html          page shell and canvas
+package.json        only for `npm test` (no dependencies)
 src/main.js         boot and the main loop
-src/core/           rules, state, rng, registry (no DOM)
+src/core/           rules, state, rng, registry, noise (no DOM)
 src/render/         drawing, lighting, sprites
 src/input/          tap, mouse, keyboard
 src/dev/            dev mode (see DEV-TOOLS.md)

@@ -4,17 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.0.9 · **Stage:** pre-production (no game code yet)
+**Version:** 0.1.0 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 7: The first code.** Propose the file layout (`TECH.md`) and the
-page: canvas, pixel-perfect scaling and one floor tile on screen, which
-replaces the `index.html` that opens the study (D-012). Offer options as
-multiple choice and wait for the owner's pick before building.
-Read: `TECH.md`, `ART-DIRECTION.md`.
+**Step 8: A room built from data.** Propose how a room is written down
+(a text map like the study's, or another form) and how floor and walls with
+brick faces are drawn. Offer options as multiple choice and wait.
+Read: `TECH.md`, `ART-DIRECTION.md` (walls, study lines 177–271).
 
 ## Waiting on the owner
-- Nothing right now.
+- Merge PR for step 7 (0.1.0). Playtest: https://claude.ai/artifact/MPi9qMXBmDaBHKRhgZKdZE
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -28,7 +27,7 @@ Pre-production (0.0.x): decisions only
 - [x] 6 One-page design brief (`docs/DESIGN.md`) from steps 1 to 5, approved, PRs #8 and #9
 
 Foundation (0.1.x): one small visible thing per step
-- [ ] 7 Page (replaces the `index.html` that opens the study, D-012), canvas and pixel-perfect scaling, one floor tile on screen
+- [x] 7 Page (replaces the `index.html` that opens the study, D-012), canvas and pixel-perfect scaling, one floor tile on screen, PR #10
 - [ ] 8 A room built from data: floor and walls with brick faces
 - [ ] 9 The hero drawn, moving one tile per tap or key
 - [ ] 10 Dev mode switch, plus a first tool (grid and coordinates overlay)
@@ -38,9 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #7 (0.0.7), Q-020 and Q-021 answered.** Every biome
-  has portals into a twisted version of itself (D-032). The companion is a
-  dog you rescue in the first cave (D-033). No questions are open.
 - **2026-10-17, PR #8 (0.0.8), design brief drafted.** `docs/DESIGN.md`
   gathers D-002 to D-033 on one page, waiting for approval. It found three
   gaps, now Q-022 to Q-024. D-004's pace is marked superseded by D-018.
@@ -50,3 +46,7 @@ Foundation (0.1.x): one small visible thing per step
   uncovered slowly (D-036). Oil burns per lit turn (D-037). Growth comes
   from levels, gear, home upgrades and discoveries (D-038). Pre-production
   is done.
+- **2026-10-18, PR #10 (0.1.0), the first code.** The front page is the
+  game now: one crypt floor tile on a fixed 176 × 208 canvas, enlarged
+  with crisp pixels, plus a small version number. Code folders and two
+  tests set up (D-039).

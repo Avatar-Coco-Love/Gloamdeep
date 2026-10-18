@@ -220,3 +220,10 @@ With it off, nothing burns (D-026). Amounts are still to be tuned.
 All four ways: levels from experience (fighting and discovering), gear
 and loot, home base upgrades, and small lasting boosts from uncovering
 lore and secrets. Growth is slow, per pillar 4.
+
+**D-039 · 2026-10-18 · The first page and code layout** (step 7)
+Code uses the TECH.md folders from day one (`src/core`, `src/render`,
+`src/input`, `src/dev`, `tests`). The canvas is fixed at 176 × 208 (11 × 13
+tiles) on every screen, with dark bars where it doesn't fill. `index.html`
+is the game now (as D-012 planned); the study is reached by its address
+only. A small version number sits in a corner.
