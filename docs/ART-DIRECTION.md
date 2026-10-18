@@ -65,7 +65,9 @@ The study's lighting code is at lines 309–338, plus the light setup inside
   ±9% for torches).
 - **Fog of war:** tiles the lantern has reached are remembered and get a
   cold blue ambient light (0.15, 0.16, 0.26). Unseen tiles stay almost black
-  (0.02, 0.02, 0.045).
+  (0.02, 0.02, 0.045). A tile is remembered when the light reaches its
+  centre (D-059). The blue fades into black over 4 pixels in the dither
+  (D-060).
 - **Emissive layer:** flames and embers are drawn after lighting, so they
   are always bright.
 

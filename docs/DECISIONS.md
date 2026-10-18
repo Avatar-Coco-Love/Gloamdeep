@@ -135,3 +135,24 @@ The study's rule lit wall blocks one by one, so long walls seen at a
 slant showed dark teeth. Now each wall block aims its ray at the wall
 tile's point nearest the lantern, so a seen wall is lit as a whole tile,
 still fading with distance. Floor shadows don't change.
+
+**D-059 · 2026-10-18 · When a tile counts as seen** (step 13, ends D-054)
+The study's rule, picked from a side-by-side picture: a tile is
+remembered once the lantern's light reaches its centre, inside 95% of
+the light's reach. It is checked when the hero stands still on a tile.
+The memory is part of the game state, one mark per tile.
+
+**D-060 · 2026-10-18 · Remembered tiles fade at the edge** (step 13)
+Remembered tiles get the study's cold blue (0.15, 0.16, 0.26), and never
+seen ones stay almost black. Where they meet, the blue fades into black
+over 4 pixels in the dither pattern, like the shadow edges (D-053).
+
+**D-061 · 2026-10-18 · Dev: Reveal room and Forget** (step 13, builds on
+D-047)
+The wrench panel gets a "Reveal room" switch, off at first, that shows
+every tile as remembered while it is on, and keeps the real memory. A
+"Forget" button wipes the memory.
+
+**D-062 · 2026-10-18 · Reset room forgets too** (step 13, builds on D-050)
+The dev "Reset room" button also gives a blank memory, as if you had
+just arrived.

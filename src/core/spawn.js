@@ -3,6 +3,7 @@
 // can change, the same state comes back.
 import { get } from './registry.js';
 import { tileAt, withTile } from './room.js';
+import { blankMemory } from './fog.js';
 
 export function spawn(state, id, x, y) {
   const entry = get(id), room = state.room;
@@ -17,8 +18,8 @@ export function spawn(state, id, x, y) {
 }
 
 // § reset: the starting room comes back (D-050). If the hero now stands in a
-// wall, they go back to their starting tile.
+// wall, they go back to their starting tile. The memory is forgotten too (D-062).
 export function resetRoom(state, room, start) {
   const hero = tileAt(room, state.hero.x, state.hero.y).solid ? { x: start.x, y: start.y } : state.hero;
-  return { ...state, room, hero };
+  return { ...state, room, hero, seen: blankMemory(room) };
 }

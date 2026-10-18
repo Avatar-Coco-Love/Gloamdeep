@@ -18,6 +18,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.6 (2026-10-18)
+- Fog of war. Every tile the lantern has reached is remembered and stays
+  faintly visible in the study's cold blue. Tiles you have never seen
+  stay almost black.
+- A tile counts as seen when the light reaches its middle. Where the
+  blue meets the black, it fades over 4 pixels in the dither pattern,
+  like the shadow edges.
+- Dev mode: a "Reveal room" switch shows the whole room as remembered,
+  and a "Forget" button wipes the memory. "Reset room" forgets too.
+- Decisions: D-059 to D-062.
+
 ## 0.1.5 (2026-10-18)
 - The lantern lights the room. The hero holds it out to the right, and
   its warm light falls about 5 tiles in the study's dithered bands, with

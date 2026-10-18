@@ -1,6 +1,7 @@
 // § turn: the game state and the turn rules, as plain data (TECH.md,
 // "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
 import { tileAt } from './room.js';
+import { blankMemory } from './fog.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -9,7 +10,7 @@ export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 export const FIRST_START = { x: 5, y: 11 };
 
 export function makeState(room, start = FIRST_START) {
-  return { room, hero: { x: start.x, y: start.y }, turn: 0 };
+  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room) };
 }
 
 // § step: (state, direction) → new state. Walking into something solid

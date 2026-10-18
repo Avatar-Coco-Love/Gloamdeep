@@ -4,16 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.5 · **Stage:** foundation (the first code)
+**Version:** 0.1.6 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 13: Fog of war.** Propose how remembered tiles look and when a
-tile counts as seen (the study's cold blue, D-054 ends here), and its
-dev hook. Offer options as multiple choice.
-Read: `ART-DIRECTION.md` ("Light"), `src/render/light.js`.
+**Step 14: Oil.** Propose how oil drains per step and how the oil flask
+pickup looks and works (D-014, D-055), with its dev hook ("set oil").
+Offer options as multiple choice.
+Read: `DESIGN.md`, then grep the decisions for "oil".
 
 ## Waiting on the owner
-- Merge PR #15 (step 12, 0.1.5). Playtest (dev mode starts on): https://claude.ai/artifact/TxtsHTdhF3fDqaLra2faNG
+- Merge PR #16 (step 13, 0.1.6). Playtest (dev mode starts on): https://claude.ai/artifact/98y8GKHJPN8fxcMXZgv8y6
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -33,15 +33,10 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 10 Dev mode switch, plus a first tool (grid and coordinates overlay), PR #13
 - [x] 11 Content registry, plus a dev spawn tool for what exists so far, PR #14
 - [x] 12 Lantern light with shadows, PR #15
-- [ ] 13 Fog of war (seen tiles stay dimly visible)
+- [x] 13 Fog of war (seen tiles stay dimly visible), PR #16
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-18, PR #13 (0.1.3), dev mode.** `?dev` turns it on and
-  the browser remembers it (`?dev=off` forgets). A wrench button opens
-  switches, off at first, for a faint tile grid and a coordinates readout
-  with a bright outline on the pointed tile; ` toggles them on a PC. The
-  playtest dropped "Leave dev mode" (D-045 to D-047).
 - **2026-10-18, PR #14 (0.1.4), the registry and spawning.** One content
   registry gathers each kind's own file (tiles for now, keyed by id). The
   wrench panel's Spawn list (None, Wall, Floor) comes from it: pick one,
@@ -57,3 +52,9 @@ Foundation (0.1.x): one small visible thing per step
   side-by-side picture). Outside the light is almost black until fog of
   war. Dev panel: "Lighting off". The playtest showed teeth on the
   left wall, so walls are now lit as whole tiles (D-053 to D-058).
+- **2026-10-18, PR #16 (0.1.6), fog of war.** Tiles the lantern has
+  reached are remembered and stay faintly visible in the study's cold
+  blue; a tile counts once the light reaches its middle. The blue fades
+  into the black over 4 pixels in the dither, like the shadows (picked
+  from a picture). Dev panel: "Reveal room" switch and "Forget" button;
+  "Reset room" forgets too (D-059 to D-062).
