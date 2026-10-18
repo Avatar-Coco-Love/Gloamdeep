@@ -18,6 +18,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.1 (2026-10-18)
+- The screen now shows a whole room, built from a text map (one letter
+  per tile: `#` wall, `.` floor) in the shape of the style study's room.
+- Walls have brick front faces, dark caps and light edges. Floor below a
+  wall is shaded, and some floor beside walls has moss.
+- A small tile table says what each letter means; step 11 grows it into
+  the content registry. One new test file for rooms.
+- The decision log was split: D-001 to D-038 moved, unchanged, to
+  `docs/archive/DECISIONS-PREPRODUCTION.md`.
+- Decisions: D-040, D-041.
+
 ## 0.1.0 (2026-10-18)
 - The first code. The front page is now the game, not the style study.
 - It shows one crypt floor tile in the middle of a dark 11 × 13 tile

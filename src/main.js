@@ -1,12 +1,11 @@
-// § boot: set up the screen and draw step 7's single floor tile
+// § boot: set up the screen and draw step 8's room
 import { VERSION } from './core/version.js';
-import { createScreen, W, H, COLS, ROWS } from './render/screen.js';
-import { drawFloor } from './render/tiles.js';
+import { makeRoom, FIRST_ROOM } from './core/room.js';
+import { createScreen } from './render/screen.js';
+import { drawRoom } from './render/tiles.js';
 
 const ctx = createScreen(document.getElementById('game'));
 document.getElementById('version').textContent = VERSION;
 
-// § draw: darkness everywhere, one floor tile in the middle
-ctx.fillStyle = '#0e0c16';
-ctx.fillRect(0, 0, W, H);
-drawFloor(ctx, Math.floor(COLS / 2), Math.floor(ROWS / 2));
+// § draw: the first room, built from its text map
+drawRoom(ctx, makeRoom(FIRST_ROOM));
