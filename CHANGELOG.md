@@ -18,6 +18,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.10 (2026-10-18)
+- The oil flask, the first item. It is the style study's bottle, bobbing
+  on its shadow. Walk onto it and it pours 45% of a tank into the
+  lantern (never above full), then it is gone.
+- Dev panel: "Oil flask" is in the spawn list; "Reset room" clears
+  spawned flasks; the coordinates readout names an item on a tile.
+- The fully superseded decisions (D-055, D-068) moved to the archive.
+- Decisions: D-077 to D-079.
+
 ## 0.1.9 (2026-10-18)
 - Docs audit. Each conversation now pulls the latest `main` first; docs
   name a PR by its version, not its number; decisions in an open PR are

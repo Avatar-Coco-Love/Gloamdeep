@@ -4,14 +4,14 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.9 · **Stage:** foundation (the first code)
+**Version:** 0.1.10 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 15: The oil flask.** Propose how the flask looks and works as the
-first item in the registry (study sprite and +45%?), with its place in
-the dev spawn list. Offer options as multiple choice. `DECISIONS.md` is
-near 12 KB: move the superseded entries to the archive in this PR.
-Read: `DESIGN.md`, `TECH.md` ("One content registry"), `DEV-TOOLS.md`.
+**Step 16: The lantern on/off switch** (D-015, D-026). Propose how it is
+switched on a phone, with a mouse and with keys, and how "off" looks.
+Offer options as multiple choice. `DECISIONS.md` is at 11.7 KB again:
+offer ways to make room before adding decisions.
+Read: `DESIGN.md` ("Light"), `TECH.md`; grep D-015 and D-026.
 
 ## Waiting on the owner
 - Nothing.
@@ -36,18 +36,12 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 12 Lantern light with shadows, PR #15
 - [x] 13 Fog of war (seen tiles stay dimly visible), PR #16
 - [x] 14 Oil drains per step, with the oil bar (D-067 split off the flask), PR #17
-- [ ] 15 Oil flask pickup, the first item
-- Ideas after 15, order open: lantern on/off switch, wait a turn,
-  a text line, stairs and a second room, torches, the first enemy (rat)
+- [x] 15 Oil flask pickup, the first item, 0.1.10
+- [ ] 16 Lantern on/off switch
+- Ideas after 16, order open: wait a turn, a text line, stairs and a
+  second room, torches, the first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
-  quarters full and 60 steps empty a full tank (the study's 40 felt
-  too short, 80 too long).
-  The light shrinks with the oil, from 5.2 tiles to 1.6, then an ember.
-  The study's 10-segment oil bar sits in the top right corner. Dev panel:
-  "Refill oil" and "Empty oil". The flask became step 15 (D-064 to D-069,
-  Q-028 and Q-029 opened).
 - **2026-10-18, PR #18 (0.1.8), audit next.** Docs only: Next up is a
   docs audit with the problems seen so far; the build plan's order may
   change as we go.
@@ -57,3 +51,9 @@ Foundation (0.1.x): one small visible thing per step
   updated each push; the playtest bundler is `tools/playtest.js`.
   Stale text fixed in the README and four docs, and the 0.0.x
   changelog moved to the archive (D-070 to D-076).
+- **2026-10-18, 0.1.10, the oil flask.** The first item: the study's
+  bottle, bobbing on its shadow. Walking onto one pours in 45% of a tank,
+  even into a full lantern. Flasks only come from the dev spawn list for
+  now; "Reset room" clears them (D-077 to D-079). Superseded decisions
+  moved to the archive. Playtest:
+  https://claude.ai/artifact/L4ezEfThPFULMmhFdG8zUM

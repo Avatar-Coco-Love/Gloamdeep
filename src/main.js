@@ -5,7 +5,7 @@ import { makeState, step, toward, DIRS, FIRST_START } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
-import { drawHero, LANTERN_AT } from './render/sprites.js';
+import { drawHero, drawItems, LANTERN_AT } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { LANTERN } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
@@ -92,6 +92,7 @@ function frame(t) {
   if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
   if (state.room !== drawnRoom) { drawnRoom = state.room; drawRoom(base.getContext('2d'), drawnRoom); }
   ctx.drawImage(base, 0, 0);
+  drawItems(ctx, state.items, t, reduceMotion.matches);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064)

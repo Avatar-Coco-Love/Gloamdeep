@@ -15,3 +15,11 @@ test('tiles are found by id and by map letter', () => {
   assert.equal(byLetter('.').id, 'floor');
   assert.equal(get('nothing'), undefined);
 });
+
+test('the oil flask is an item worth 45% of a tank', () => {
+  const flask = get('flask');
+  assert.equal(flask.kind, 'item');
+  assert.equal(flask.name, 'Oil flask');
+  assert.equal(flask.oil, 0.45);
+  assert.deepEqual(byKind('item'), [flask]);
+});
