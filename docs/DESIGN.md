@@ -9,6 +9,12 @@ A grid-based, turn-based survival micro-RPG for phones and any browser:
 carry a lantern down through the gloam, from the woods to the sunken ruins
 far below. [D-002, D-003, D-028]
 
+## The hero and the reason [D-036]
+You are a **lamplighter**, whose trade is tending lights. Why you go down
+is revealed slowly: the gloam is spreading up from below and lights are
+failing, there are tales of treasure and secrets, and something calls from
+below. Not everything is revealed early.
+
 ## The pillars [D-013]
 Every idea is checked against these. An idea that serves none is cut.
 1. **The lantern is your world.**
@@ -31,7 +37,8 @@ Every idea is checked against these. An idea that serves none is cut.
 
 ## Light
 - The lantern is your main light. Oil sets how far its light reaches,
-  and nothing else. [D-014]
+  and nothing else. Every turn it is lit burns a little oil, even
+  standing still. [D-014, D-037]
 - When the oil runs out the light shrinks to an ember and enemies grow
   bolder, but the journey goes on: there is always a chance to find more.
   [D-015]
@@ -50,6 +57,11 @@ Every idea is checked against these. An idea that serves none is cut.
 - Walk into an enemy to attack it. You start with one close-up weapon.
   Each weapon kind has its own attack shape. Ranged abilities, area
   attacks and learned skills unlock as you grow stronger. [D-017, D-027]
+
+## Getting stronger [D-038]
+Slowly, in four ways: levels from experience (fighting and discovering),
+gear and loot, home base upgrades, and small lasting boosts from
+uncovering lore and secrets.
 
 ## Death and what you keep
 - Die in the world: you wake at home or your last camp, and your bag stays
@@ -79,6 +91,4 @@ phone first, hosted on GitHub Pages. Dev tools ship hidden, opened with
 D-030]
 
 ## Not decided yet
-- Who the hero is, and why they go down (Q-022).
-- How oil drains: per step, per turn, only while lit (Q-023).
-- How you get stronger: levels, gear, or both, and how fast (Q-024).
+Nothing on this page is open right now.

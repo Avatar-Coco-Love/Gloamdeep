@@ -176,11 +176,6 @@ fungal caverns, then sunken ruins at the bottom, where the mysteries and
 lore come together. Where portals appear and what the depths look like is
 Q-020.
 
-**D-029 · 2026-10-17 · The companion is an animal** (answers Q-019)
-*Superseded by D-034 (2026-10-17).*
-For example a dog or fox. It can sniff out hidden things, warn of enemies
-in the dark and help in fights. Which animal, and how it joins, is open.
-
 **D-030 · 2026-10-17 · Dev mode: `?dev`, and it ships** (answers Q-012)
 Adding `?dev` to the address opens dev mode. It is in the public build,
 hidden unless opened, so the owner can test on GitHub Pages.
@@ -195,11 +190,6 @@ further down. A depth is a darker, stranger, twisted version of the biome
 its portal sits in, with the same kinds of tiles and creatures, warped,
 and rarer loot.
 
-**D-033 · 2026-10-17 · The companion is a dog you rescue** (answers Q-021)
-*Superseded by D-034 (2026-10-17).*
-You find the dog trapped or lost in the first cave and free it, and it
-follows you home.
-
 **D-034 · 2026-10-17 · The companion is a faery** (supersedes D-029, D-033)
 The owner swapped the dog for a faery friend. It speaks, gives
 information and holds conversations. It is not bound to the grid: it
@@ -210,3 +200,23 @@ lantern stays the real light. It speaks up on its own (hints, warnings,
 remarks on lore and new monsters), and you can tap it to ask about
 topics. All of it is written dialogue that works offline. It never
 fights; it guides.
+
+**D-035 · 2026-10-17 · The design brief is approved**
+The owner approved `docs/DESIGN.md` by merging PR #8. It is the one-page
+summary of the game and is kept in step with this log.
+
+**D-036 · 2026-10-17 · The hero is a lamplighter** (answers Q-022)
+The hero's trade is tending lights. Why they go down is a combination,
+revealed slowly: the gloam is spreading up from below and lights are
+failing, there are tales of treasure and secrets, and something calls from
+below. In the owner's words, "not everything is revealed early, and some
+things must be uncovered."
+
+**D-037 · 2026-10-17 · Oil burns per turn while lit** (answers Q-023)
+Every turn with the lantern on burns a little oil, even standing still.
+With it off, nothing burns (D-026). Amounts are still to be tuned.
+
+**D-038 · 2026-10-17 · How you get stronger** (answers Q-024)
+All four ways: levels from experience (fighting and discovering), gear
+and loot, home base upgrades, and small lasting boosts from uncovering
+lore and secrets. Growth is slow, per pillar 4.

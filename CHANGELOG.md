@@ -18,6 +18,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.0.9 (2026-10-17)
+- The design brief is approved, and now covers the hero, oil and growth.
+- The hero is a lamplighter. Why they go down (the spreading gloam,
+  treasure, a call from below) is uncovered slowly.
+- Oil burns every turn the lantern is lit.
+- You grow stronger through levels, gear, home upgrades and discoveries.
+- The replaced dog decisions moved to the archive to keep the log small.
+- Decisions: D-035 to D-038. Questions closed: Q-022 to Q-024.
+
 ## 0.0.8 (2026-10-17)
 - Draft of the one-page design brief (`docs/DESIGN.md`), built only from
   decisions, for the owner to approve.

@@ -5,7 +5,8 @@ settled. Everything else is a draft for the owner to approve.
 
 ## Pitch (draft)
 Carry a lantern down through the gloam. Light is how you see the way, the
-danger and the oil that keeps you going, and every step burns a little of it.
+danger and the oil that keeps you going, and every lit turn burns a little
+of it.
 
 ## Decided
 - Name: Gloamdeep (D-001).
@@ -27,6 +28,7 @@ danger and the oil that keeps you going, and every step burns a little of it.
 - Surface first, then down; caves can open into valleys (D-022).
 - Solo, with a rescued faery guide joining early (D-023, D-034).
 - Every biome has portals into a twisted version of itself (D-032).
+- The hero is a lamplighter; why they go down is uncovered slowly (D-036).
 - Biomes, top to bottom: woods and mountains, old mines and caves, glowing
   fungal caverns, sunken ruins (D-028).
 

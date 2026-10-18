@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #6 (0.0.6), Q-012 to Q-019 answered.** Other light
+  sources, a day and night cycle by turns, and reasons to switch the
+  lantern off (D-024 to D-026). Weapons and abilities (D-027). Four biomes
+  (D-028), an animal companion (D-029), dev mode via `?dev` (D-030) and a
+  pixel font (D-031).
 - **2026-10-17, PR #5 (0.0.5), Q-008 to Q-010 answered.** One persistent
   journey: a world generated once per save, plus portals into deep areas
   that change each visit (D-019). Death sends you home without wiping
