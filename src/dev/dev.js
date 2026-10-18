@@ -6,7 +6,7 @@ import { tileAt } from '../core/room.js';
 import { get } from '../core/registry.js';
 import { itemAt } from '../core/turn.js';
 import { spawn } from '../core/spawn.js';
-import { COLS, ROWS } from '../render/screen.js';
+import { COLS, ROWS, TILE } from '../render/screen.js';
 import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 import { buildPanel, el } from './panel.js';
 
@@ -61,7 +61,7 @@ export function createDev(stage, canvas, game) {
   const point = (ev) => {
     const r = canvas.getBoundingClientRect();
     const tx = Math.floor((ev.clientX - r.left) / r.width * COLS);
-    const ty = Math.floor((ev.clientY - r.top) / r.height * ROWS);
+    const ty = Math.floor((ev.clientY - r.top) / r.height * canvas.height / TILE); // the text strip is no tile
     pointed = tx >= 0 && ty >= 0 && tx < COLS && ty < ROWS ? { x: tx, y: ty } : null;
   };
   stage.addEventListener('pointerdown', point);

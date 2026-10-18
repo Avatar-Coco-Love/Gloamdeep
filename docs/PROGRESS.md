@@ -4,16 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.13 · **Stage:** foundation (the first code)
+**Version:** 0.1.14 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 18: the owner picks it** from the ideas after step 17 in the
+**Step 19: the owner picks it** from the ideas after step 18 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Pick step 18: a text line (Q-028), stairs and a second room,
-  torches, or the first enemy (rat).
+- Pick step 19: stairs and a second room, torches, or the first enemy
+  (rat).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -39,17 +39,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 16 Lantern on/off switch, 0.1.11
 - [x] 17 Wait a turn, 0.1.12
 - [x] Dev tools for everyone, a tidier panel, 0.1.13 (between steps)
-- Ideas after 17, order open: a text line, stairs and a second room,
-  torches, the first enemy (rat)
+- [x] 18 A text line, 0.1.14
+- Ideas after 18, order open: stairs and a second room, torches, the
+  first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.11, the lantern switch.** A lantern button next to
-  the oil bar, or the L key, switches the lantern off and on, for free.
-  Off, no oil burns and the room is pitch dark except the remembered
-  tiles (D-080 to D-082). A faint outline for the hero was tried and
-  dropped. Older decisions moved to an archive file
-  (D-083). Playtest:
-  https://claude.ai/artifact/SVaAtJiDT1ufgzVCJM5B2i
 - **2026-10-18, 0.1.12, wait a turn.** Tap or click the hero, or press
   Space (hold it to keep waiting), and the hero stands still for a
   turn. Oil burns as for a step while the lantern is lit. Only the oil
@@ -62,3 +56,9 @@ Foundation (0.1.x): one small visible thing per step
   chips by kind; an oil slider; PC keys ` G C R. A start-up hook syncs
   `main` (D-086 to D-093). Playtest:
   https://claude.ai/artifact/Ws3G6Ya6NXtCob5cbvnHHw
+- **2026-10-18, 0.1.14, the text line.** A strip under the room where
+  the game speaks, in a pixel font drawn in code. "The flame is getting
+  low." as the oil drops under 20%, "The lantern gutters to an ember."
+  in amber as it runs dry; each once per crossing. A line stays 5
+  turns, then fades (D-094 to D-097, Q-028 closed). Playtest:
+  https://claude.ai/artifact/T2zbFW9vJsdr6RyDRmM1hg

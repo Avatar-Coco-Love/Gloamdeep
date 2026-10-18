@@ -18,6 +18,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.14 (2026-10-18)
+- A text line: a strip under the room where the game speaks, in a pixel
+  font drawn in code. A line stays 5 turns, then fades.
+- The first lines: "The flame is getting low." as the oil drops under
+  20%, and "The lantern gutters to an ember." (in amber) as it runs dry.
+  Each is said once, and again only after the oil goes back above it.
+- Screen readers hear the same words.
+- Decisions: D-094 to D-097. Questions closed: Q-028.
+
 ## 0.1.13 (2026-10-18)
 - Dev tools are on for everyone, on every build: no `?dev` needed.
 - The dev panel has sections (View, Spawn, Room, Oil, Share): a fixed
