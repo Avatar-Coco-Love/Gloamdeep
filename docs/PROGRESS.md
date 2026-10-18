@@ -7,10 +7,9 @@ go to the top of `archive/PROGRESS-LOG.md`.
 **Version:** 0.1.24 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 29: to be chosen by the owner.** Offer as multiple choice: tune
-the generated rooms after playing 0.1.24 (sizes in D-147), the rat
-fleeing, a standing torch on the floor, or sounds.
-Read: `DESIGN.md`, then the decisions the pick touches.
+**Step 29: the owner picks** (multiple choice): tune the generated
+rooms (D-147), the rat fleeing, a floor torch, or sounds.
+Read: `DESIGN.md`.
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
