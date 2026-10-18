@@ -4,17 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.1 · **Stage:** foundation (the first code)
+**Version:** 0.1.2 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 9: The hero drawn, moving one tile per tap or key.** Propose how the
-hero sprite is drawn (the study's hero, lines 129–176), how a tap, click or
-key picks the direction, and what walking into a wall does (not decided
-yet). One step is one turn (D-016). Offer options as multiple choice.
-Read: `TECH.md`, `ART-DIRECTION.md` ("Sprites"), grep D-016 in the archive.
+**Step 10: Dev mode switch, plus a first tool (grid and coordinates
+overlay).** Propose how dev mode is turned on (on a phone and a PC) and
+how the overlay looks. Offer options as multiple choice.
+Read: `DEV-TOOLS.md`, `TECH.md`, grep D-030 in the archive.
 
 ## Waiting on the owner
-- Merge PR #11 for step 8 (0.1.1). Playtest: https://claude.ai/artifact/MPi9qMXBmDaBHKRhgZKdZE
+- Merge the step 9 PR (0.1.2). Playtest: https://claude.ai/artifact/MPi9qMXBmDaBHKRhgZKdZE
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -38,11 +37,6 @@ Foundation (0.1.x): one small visible thing per step
 - [ ] 14 Oil drains per step, oil flask pickup
 
 ## Log (last 3)
-- **2026-10-17, PR #9 (0.0.9), brief approved, Q-022 to Q-024 answered.**
-  The brief is approved (D-035). The hero is a lamplighter, with reasons
-  uncovered slowly (D-036). Oil burns per lit turn (D-037). Growth comes
-  from levels, gear, home upgrades and discoveries (D-038). Pre-production
-  is done.
 - **2026-10-18, PR #10 (0.1.0), the first code.** The front page is the
   game now: one crypt floor tile on a fixed 176 × 208 canvas, enlarged
   with crisp pixels, plus a small version number. Code folders and two
@@ -51,3 +45,7 @@ Foundation (0.1.x): one small visible thing per step
   room's shape, written as a text map, with brick wall faces, shade under
   walls and moss (D-040). A small tile table says what each letter means.
   The decision log split: D-001 to D-038 moved to the archive (D-041).
+- **2026-10-18, PR #12 (0.1.2), the hero walks.** The study's hero
+  (lantern later) steps one tile per key, tap, swipe or held finger, in
+  4 directions with a quick slide. Walls stop the hero with a small nudge
+  and no turn passes (D-042, D-043). Opened Q-025 (a tap/swipe switch).

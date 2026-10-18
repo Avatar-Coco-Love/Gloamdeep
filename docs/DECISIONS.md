@@ -32,3 +32,16 @@ the floor below them and moss beside them. No cobwebs.
 When this file passed 12 KB, D-001 to D-038 (pre-production) moved
 unchanged to `archive/DECISIONS-PREPRODUCTION.md`. They stay in force.
 This file starts again from D-039.
+
+**D-042 · 2026-10-18 · The hero and how to steer** (step 9)
+The hero is the style study's sprite without the lantern; the lantern
+arrives with its light at step 12. The hero starts where the study put
+them. Steps go 4 ways only (no diagonals). Keys (arrows, WASD), a tap
+(one step toward the tap, along the farther side), a swipe and a held
+finger all work together. A switch to turn tapping or swiping off waits
+for a settings menu (Q-025).
+
+**D-043 · 2026-10-18 · Stepping and bumping walls** (step 9)
+A step is a quick slide, about 0.1 s (instant with reduced motion). One
+extra step can wait in line. Walking into a wall makes a 1-pixel nudge
+and passes no turn.

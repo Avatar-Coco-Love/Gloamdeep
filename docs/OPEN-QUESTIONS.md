@@ -10,4 +10,6 @@ else entirely.
 
 ---
 
-None right now.
+**Q-025 · Turning tapping or swiping off** (when a settings menu exists)
+Tapping and swiping both work at once (D-042). Should the settings menu
+offer a switch: tap only, swipe only, or both? Where does that menu live?

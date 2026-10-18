@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #9 (0.0.9), brief approved, Q-022 to Q-024 answered.**
+  The brief is approved (D-035). The hero is a lamplighter, with reasons
+  uncovered slowly (D-036). Oil burns per lit turn (D-037). Growth comes
+  from levels, gear, home upgrades and discoveries (D-038). Pre-production
+  is done.
 - **2026-10-17, PR #8 (0.0.8), design brief drafted.** `docs/DESIGN.md`
   gathers D-002 to D-033 on one page, waiting for approval. It found three
   gaps, now Q-022 to Q-024. D-004's pace is marked superseded by D-018.
