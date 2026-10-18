@@ -1,7 +1,8 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
 import { makeRoom, FIRST_ROOM } from './core/room.js';
-import { makeState, step, toward, DIRS } from './core/turn.js';
+import { makeState, step, toward, DIRS, FIRST_START } from './core/turn.js';
+import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero } from './render/sprites.js';
@@ -15,10 +16,12 @@ document.getElementById('version').textContent = VERSION;
 let state = makeState(makeRoom(FIRST_ROOM));
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-// The room never changes, so it is drawn once onto a hidden canvas.
+const startRoom = state.room;
+
+// The room is drawn onto a hidden canvas, again only when it changes (a dev spawn).
 const base = document.createElement('canvas');
 base.width = W; base.height = H;
-drawRoom(base.getContext('2d'), state.room);
+let drawnRoom = null;
 
 // § moving: the hero slides to its new tile (D-043); one step waits in line
 // so a quick second tap or key is not lost.
@@ -40,14 +43,19 @@ function nudgeToward(dir) {
   nudge = { dx, dy, until: performance.now() + 90 };
 }
 const stepToward = (px, py) => {
-  const h = state.hero;
-  const dir = toward(h.x, h.y, Math.floor(px / TILE), Math.floor(py / TILE));
+  const h = state.hero, tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
+  if (dev && dev.place(tx, ty)) return; // a picked spawn takes the tap (D-049)
+  const dir = toward(h.x, h.y, tx, ty);
   if (dir) tryStep(dir);
 };
 
 const stage = document.getElementById('stage');
 const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward });
-const dev = createDev(stage, canvas); // null unless dev mode is on (D-030, D-045)
+const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-045)
+  get: () => state,
+  set: (s) => { state = s; },
+  reset: () => resetRoom(state, startRoom, FIRST_START),
+});
 
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
@@ -58,11 +66,12 @@ function frame(t) {
     if (queued) { const d = queued; queued = null; tryStep(d); }
     else {
       const p = input.held();
-      if (p && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p); }
+      if (p && !(dev && dev.armed()) && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p); }
     }
   }
   let nx = 0, ny = 0;
   if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
+  if (state.room !== drawnRoom) { drawnRoom = state.room; drawRoom(base.getContext('2d'), drawnRoom); }
   ctx.drawImage(base, 0, 0);
   drawHero(ctx, Math.round(shown.x * TILE) + nx, Math.round(shown.y * TILE) + ny);
   if (dev) dev.draw(ctx, state);

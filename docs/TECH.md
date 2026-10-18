@@ -38,7 +38,8 @@ at build plan step 7 (D-039).
 index.html          page shell and canvas
 package.json        only for `npm test` (no dependencies)
 src/main.js         boot and the main loop
-src/core/           rules, state, rng, registry, noise (no DOM)
+src/core/           rules, state, rng, registry, noise (no DOM);
+                    one file per content kind, gathered by registry.js (D-048)
 src/render/         drawing, lighting, sprites
 src/input/          tap, mouse, keyboard
 src/dev/            dev mode (see DEV-TOOLS.md)

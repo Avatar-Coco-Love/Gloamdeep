@@ -18,6 +18,27 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.4 (2026-10-18)
+- The game now keeps one list of everything in it, the content registry.
+  For now it holds the two tiles, Wall and Floor. Items, enemies and
+  NPCs will each get their own small file in it later.
+- Dev mode can spawn: the wrench panel has a Spawn list (None, Wall,
+  Floor), read from the registry. Pick one, then each tap or click puts
+  it on that tile, and the hero doesn't walk. Keys and swipes still walk.
+  Pick None to walk by tapping again. It starts at None each time.
+- A wall can't go on the hero's tile. Spawning never uses up a turn.
+- "Reset room" brings back the starting room. Spawned tiles are also gone
+  after a reload. If the hero is standing where a wall comes back, they
+  go back to the starting tile.
+- While something is picked, the bottom readout says so ("placing Wall").
+- "Copy room" puts the room on the clipboard as one line of text, to
+  paste to Claude (for example `GD:0.1.4:11x13:hero5,11:11#/#3.#5.#/…`):
+  the version, the size, the hero's tile, then the rows split by `/`,
+  with a number for a run of the same tile. No spaces or line breaks, so
+  chat apps can't break it up. The button says "Copied!". If the browser
+  blocks copying, a box opens with the code selected, to copy by hand.
+- Decisions: D-048, D-049, D-050, D-051, D-052.
+
 ## 0.1.3 (2026-10-18)
 - Dev mode is here. Open the game with `?dev` once and that browser
   remembers it. `?dev=off` makes it forget.
