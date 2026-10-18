@@ -26,8 +26,3 @@ Each place sets its own darkness (D-063). The owner sees the study's cold
 blue as moonlight. Should outside at night use it? Should moon phases
 make some nights darker than others? The owner isn't sure the moon will
 be in the game. Each biome's darkness is asked when it arrives.
-
-**Q-028 · Short oil messages** (when there is a text line)
-The owner wants the study's lines later: "The flame is getting low."
-under 20% and "The lantern gutters to an ember." at empty. Where does
-game text show, and when in the build plan?

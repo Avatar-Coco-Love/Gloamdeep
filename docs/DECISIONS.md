@@ -195,3 +195,24 @@ unusual things), a stone-grey tray for the open section's tools, lantern
 gold for a switch or chip that is on, and a soft red for buttons that
 undo (Reset room, Forget, Empty). Keys show as small key caps; the stats
 line sits on a dark strip.
+
+**D-094 · 2026-10-18 · The text line** (step 18, answers Q-028)
+Game text shows on one line in a strip under the room, so no tile is
+ever covered; the picture grows to 176 × 221. The letters are the pixel
+font (D-031), 7 pixels tall with 2 below for g, j, p, q, y, centred.
+
+**D-095 · 2026-10-18 · How long a line stays** (step 18)
+A line stays 5 turns (steps or waits), then fades in about half a
+second; with reduced motion it just goes. A new line replaces it at
+once.
+
+**D-096 · 2026-10-18 · The oil lines** (step 18, answers Q-028)
+"The flame is getting low." as the oil drops under 20%, and "The
+lantern gutters to an ember." as it runs dry (style study 1's words).
+Each is said once, as the oil crosses its mark on the way down, and
+again only after the oil has gone back above it. A flask found on the
+same step counts first.
+
+**D-097 · 2026-10-18 · Text colours** (step 18)
+Ordinary lines use the study's muted grey (`#9790a4`); warnings, like
+the lantern guttering, use the oil bar's amber (`#ffc65c`).

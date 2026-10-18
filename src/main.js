@@ -10,6 +10,8 @@ import { drawLight, flicker } from './render/light.js';
 import { LANTERN } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
 import { drawOilBar } from './render/hud.js';
+import { createTextLine } from './render/textline.js';
+import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
@@ -23,6 +25,9 @@ let state = makeState(makeRoom(FIRST_ROOM));
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const startRoom = state.room;
+const textLine = createTextLine();
+const spoken = document.getElementById('line'); // the same words for screen readers
+let spokenLine = null;
 
 // The room is drawn onto a hidden canvas, again only when it changes (a dev spawn).
 const base = document.createElement('canvas');
@@ -114,6 +119,9 @@ function frame(t) {
   }
   if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
   drawOilBar(ctx, state.oil);
+  const line = shownLine(state);
+  textLine.draw(ctx, line, t, reduceMotion.matches);
+  if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }
   lanternButton.show(state.lit);
   dev.draw(ctx, state);
   requestAnimationFrame(frame);

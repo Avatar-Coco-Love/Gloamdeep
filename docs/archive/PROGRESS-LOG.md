@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.11, the lantern switch.** A lantern button next to
+  the oil bar, or the L key, switches the lantern off and on, for free.
+  Off, no oil burns and the room is pitch dark except the remembered
+  tiles (D-080 to D-082). A faint outline for the hero was tried and
+  dropped. Older decisions moved to an archive file
+  (D-083). Playtest:
+  https://claude.ai/artifact/SVaAtJiDT1ufgzVCJM5B2i
 - **2026-10-18, 0.1.10, the oil flask.** The first item: the study's
   bottle, bobbing on its shadow. Walking onto one pours in 45% of a tank,
   even into a full lantern. Flasks only come from the dev spawn list for

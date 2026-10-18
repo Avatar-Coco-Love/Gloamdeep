@@ -10,6 +10,7 @@ without asking the owner. The only planned changes are the two fixes under
 
 ## Grid and scale
 - Tiles are 16 × 16 pixels. The study room is 11 × 13 tiles (176 × 208 px).
+  A 13-pixel text strip sits under it, so the picture is 176 × 221 (D-094).
 - Draw at native size on a small canvas, then enlarge it with CSS
   `image-rendering: pixelated`. Use whole-number zoom (2×, 3×) when it
   fits, and fractional zoom only on very narrow screens. Turn image
@@ -96,4 +97,7 @@ drift.
 
 ## Other notes
 - The study's page chrome loads a Google Font. The game itself must not
-  (D-003). Game text uses a pixel font drawn in code (D-031).
+  (D-003). Game text uses a pixel font drawn in code (D-031): letters 7
+  pixels tall, 2 more below for descenders, 1 pixel apart, in
+  `src/render/font.js`. Grey `#9790a4` for lines, amber `#ffc65c` for
+  warnings (D-094, D-097).
