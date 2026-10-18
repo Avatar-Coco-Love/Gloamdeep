@@ -32,7 +32,7 @@
   }
   #lantern-button[aria-pressed="true"] { border-color: #a8642c; }
   #lantern-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
-  /* Dev mode (src/dev/dev.js): only created when dev mode is on (D-045). */
+  /* Dev tools (src/dev/dev.js, panel.js): on for everyone (D-086). */
   #dev-button, #dev-panel, #dev-readout { position: fixed; z-index: 1; font: 12px/1.2 ui-monospace, "Courier New", monospace; color: #c9c2d6; }
   #dev-button {
     top: max(8px, env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left));
@@ -42,19 +42,29 @@
   #dev-button canvas { width: 24px; height: 24px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
   #dev-panel {
     top: calc(max(8px, env(safe-area-inset-top)) + 52px); left: max(8px, env(safe-area-inset-left));
-    display: grid; gap: 4px; padding: 6px; border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.92);
-    max-height: calc(100% - 76px); overflow-y: auto; /* fits a phone held sideways */
+    width: min(17em, calc(100% - 16px)); box-sizing: border-box; padding: 2px 6px;
+    border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.92);
+    max-height: calc(100% - 100px); overflow-y: auto; /* fits a phone held sideways */
   }
   #dev-panel[hidden] { display: none; }
-  #dev-panel label { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 6px; cursor: pointer; }
-  #dev-panel input { width: 20px; height: 20px; margin: 0; accent-color: #ffc65c; }
-  #dev-panel .dev-heading { padding: 6px 6px 0; border-top: 1px solid #3a3446; opacity: .7; }
-  #dev-panel textarea { width: 15em; font: 11px/1.2 ui-monospace, "Courier New", monospace; color: inherit; background: #0b0a10; border: 1px solid #3a3446; -webkit-user-select: text; user-select: text; resize: none; word-break: break-all; }
+  #dev-panel details + details { border-top: 1px solid #3a3446; }
+  #dev-panel summary { min-height: 44px; display: flex; align-items: center; padding: 0 4px; cursor: pointer; opacity: .8; }
+  #dev-panel summary::before { content: "\25b8"; width: 1.2em; }
+  #dev-panel details[open] > summary::before { content: "\25be"; }
+  #dev-panel summary::-webkit-details-marker { display: none; }
+  #dev-panel .dev-body { display: grid; gap: 4px; padding: 0 0 6px; }
+  #dev-panel .dev-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5em, 1fr)); gap: 4px; }
+  #dev-panel .dev-kind { padding: 2px 4px 0; font-size: 11px; opacity: .6; }
+  #dev-panel button { min-height: 44px; padding: 0 8px; font: inherit; color: inherit; background: #1a1724; border: 1px solid #3a3446; border-radius: 4px; cursor: pointer; }
+  #dev-panel button[aria-pressed="true"] { border-color: #ffc65c; color: #ffc65c; background: #2a2316; }
+  #dev-panel .dev-slider { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 4px; }
+  #dev-panel .dev-slider input { flex: 1; min-width: 0; height: 32px; margin: 0; accent-color: #ffc65c; }
+  #dev-panel .dev-amount { width: 3.5em; text-align: right; }
+  #dev-panel textarea { box-sizing: border-box; width: 100%; font: 11px/1.2 ui-monospace, "Courier New", monospace; color: inherit; background: #0b0a10; border: 1px solid #3a3446; -webkit-user-select: text; user-select: text; resize: none; word-break: break-all; }
   #dev-panel textarea[hidden] { display: none; }
-  #dev-panel button { min-height: 44px; padding: 0 10px; font: inherit; color: inherit; background: #1a1724; border: 1px solid #3a3446; border-radius: 4px; cursor: pointer; }
   #dev-readout {
     left: max(8px, env(safe-area-inset-left)); bottom: max(6px, env(safe-area-inset-bottom));
-    font-size: 11px; line-height: 1; opacity: .85; pointer-events: none;
+    max-width: calc(100% - 72px); font-size: 11px; line-height: 1.3; white-space: pre-line; opacity: .85; pointer-events: none;
   }
 </style>
 </head>

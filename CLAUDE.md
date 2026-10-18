@@ -30,7 +30,8 @@ CSS and JavaScript, with everything drawn and synthesized in code.
 ## Start of every conversation
 
 1. Pull the latest `main` first (`git fetch origin main`); the starting
-   copy can be old (D-070). If any PR is still open, tell the owner and ask
+   copy can be old (D-070). A start-up hook does this already when it
+   runs (D-092); there is no need to tell the owner about it. If any PR is still open, tell the owner and ask
    whether to merge it, update it or close it. If this conversation's
    branch had a PR merged, restart the branch from `origin/main`.
 2. Read `docs/PROGRESS.md` on the fresh `main`. It says where things
@@ -101,7 +102,7 @@ Read the smallest file that answers the question.
 - Fill in `.github/pull_request_template.md`.
 - Every PR that changes something visible gets a private playtest Artifact
   (the owner can't play a PR before it is merged). Build it with
-  `node tools/playtest.js --dev <scratchpad>/playtest.html` (D-073), and
+  `node tools/playtest.js <scratchpad>/playtest.html` (D-073), and
   put the link in the PR body and the `docs/PROGRESS.md` log entry.
   Republish to the same link after each push.
 - After every push, update the PR body so "What changed" and "Decisions"
@@ -116,6 +117,6 @@ Read the smallest file that answers the question.
 - Phone first. Everything works with touch, mouse and keyboard.
 - Game state is kept separate from drawing. All content (items, enemies,
   NPCs, tiles) lives in one data registry. Randomness goes through a seeded
-  RNG. Dev tools work by editing the state and read from the registry
-  (`docs/DEV-TOOLS.md`).
+  RNG. Dev tools are on for everyone (D-086); they work by editing the
+  state and read from the registry (`docs/DEV-TOOLS.md`).
 - Wrap every `localStorage` access in try/catch.

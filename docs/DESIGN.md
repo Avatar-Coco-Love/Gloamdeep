@@ -87,9 +87,8 @@ in code. Details in `ART-DIRECTION.md`. [D-005, D-009, D-031]
 
 ## Built how
 Plain HTML, CSS and JavaScript, everything drawn and synthesized in code,
-phone first, hosted on GitHub Pages. Dev tools ship hidden, opened with
-`?dev`. Details in `TECH.md` and `DEV-TOOLS.md`. [D-003, D-006, D-010,
-D-030]
+phone first, hosted on GitHub Pages. Dev tools are on for everyone.
+Details in `TECH.md` and `DEV-TOOLS.md`. [D-003, D-006, D-010, D-086]
 
 ## Not decided yet
 Nothing on this page is open right now.

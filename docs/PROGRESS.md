@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.12 · **Stage:** foundation (the first code)
+**Version:** 0.1.13 · **Stage:** foundation (the first code)
 
 ## Next up
 **Step 18: the owner picks it** from the ideas after step 17 in the
@@ -38,16 +38,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 15 Oil flask pickup, the first item, 0.1.10
 - [x] 16 Lantern on/off switch, 0.1.11
 - [x] 17 Wait a turn, 0.1.12
+- [x] Dev tools for everyone, a tidier panel, 0.1.13 (between steps)
 - Ideas after 17, order open: a text line, stairs and a second room,
   torches, the first enemy (rat)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.10, the oil flask.** The first item: the study's
-  bottle, bobbing on its shadow. Walking onto one pours in 45% of a tank,
-  even into a full lantern. Flasks only come from the dev spawn list for
-  now; "Reset room" clears them (D-077 to D-079). Superseded decisions
-  moved to the archive. Playtest:
-  https://claude.ai/artifact/L4ezEfThPFULMmhFdG8zUM
 - **2026-10-18, 0.1.11, the lantern switch.** A lantern button next to
   the oil bar, or the L key, switches the lantern off and on, for free.
   Off, no oil burns and the room is pitch dark except the remembered
@@ -61,3 +56,9 @@ Foundation (0.1.x): one small visible thing per step
   bar shows it. A finger held on the hero does nothing (D-084, D-085,
   Q-029 closed). Playtest:
   https://claude.ai/artifact/8XGRMyr6qHVeyipi2DWBPd
+- **2026-10-18, 0.1.13, dev tools for everyone.** The wrench and a
+  stats line (turn, oil %, lit, hero tile) show on every build. The
+  panel folds into View, Spawn, Room, Oil and Share; spawn entries are
+  chips by kind; an oil slider; PC keys ` G C R. A start-up hook syncs
+  `main` (D-086 to D-092). Playtest:
+  https://claude.ai/artifact/Ws3G6Ya6NXtCob5cbvnHHw

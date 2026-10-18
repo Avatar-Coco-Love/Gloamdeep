@@ -174,6 +174,7 @@ lore come together. Where portals appear and what the depths look like is
 Q-020.
 
 **D-030 · 2026-10-17 · Dev mode: `?dev`, and it ships** (answers Q-012)
+*Superseded by D-086 (2026-10-18): dev tools are on for everyone, no `?dev`.*
 Adding `?dev` to the address opens dev mode. It is in the public build,
 hidden unless opened, so the owner can test on GitHub Pages.
 

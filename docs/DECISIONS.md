@@ -146,3 +146,43 @@ A tap or click on the hero's own tile waits one turn; a finger held on
 the hero does nothing. On a keyboard, Space waits, and holding it keeps
 waiting, the way held arrows keep walking; one wait can queue behind a
 step (D-043). Space on a focused button still presses that button.
+
+**D-086 · 2026-10-18 · Dev tools are on for everyone** (0.1.13,
+supersedes D-030 and parts of D-045 and D-047)
+The wrench and the stats line show on every build, for every player:
+GitHub Pages, playtests and local. No `?dev`, and `?dev=off` does nothing.
+The switches are still remembered per browser. Clutter on screen is fine
+when it helps make the game better.
+
+**D-087 · 2026-10-18 · The dev panel folds into sections** (0.1.13)
+View, Spawn, Room, Oil and Share, each a heading that folds open or
+shut; the browser remembers which are open, and only View is open at
+first. Switches are buttons, lit when on, and buttons sit two to a row.
+A new tool adds a section (`src/dev/panel.js`).
+
+**D-088 · 2026-10-18 · A live stats line** (0.1.13, supersedes part of
+D-046)
+The bottom-left readout always shows the turn, the oil in %, lit or
+dark, and the hero's tile. A second line shows the spawn pick and, with
+Coords on, the pointed tile. It grows as enemies and floors arrive.
+
+**D-089 · 2026-10-18 · Spawn chips by kind** (0.1.13, supersedes part
+of D-049)
+Each registry entry is a chip, grouped under its kind (tiles, items,
+later enemies and NPCs). Tap a chip to pick it, tap it again to drop
+the pick. There is no None entry.
+
+**D-090 · 2026-10-18 · Dev keys on a PC** (0.1.13, supersedes part of
+D-045)
+` opens or shuts the panel; G, C and R switch Grid, Coords and Reveal.
+The key shows on each switch.
+
+**D-091 · 2026-10-18 · Set oil to any amount** (0.1.13, builds on D-066)
+The Oil section has a slider from 0 to 100% beside Refill and Empty. It
+follows the real oil and passes no turn.
+
+**D-092 · 2026-10-18 · Main syncs itself at the start** (0.1.13, builds
+on D-070)
+A start-up hook (`.claude/settings.json`) fetches `main` and
+fast-forwards it when a conversation starts, so the stale-copy notice
+stops. It never discards work.

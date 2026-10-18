@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { git fetch -q origin main:main 2>/dev/null || { git fetch -q origin main && git merge -q --ff-only origin/main; }; } && echo \"main synced: $(git log -1 --format='%h %s' main)\" || echo 'main sync failed: run git fetch origin main by hand (D-070)'"
+          }
+        ]
+      }
+    ]
+  }
+}
