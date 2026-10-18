@@ -1,5 +1,6 @@
 // § hud: things drawn over the game after the light, so they are always bright.
 import { W } from './screen.js';
+import { drawText, textWidth } from './font.js';
 
 // § oil bar: style study 1's 10 amber segments (study lines 37–40, 522), drawn
 // in pixels in the top right corner, away from the dev wrench (D-065). A
@@ -43,6 +44,19 @@ export function drawHearts(c, health, max) {
       c.fillRect(x0 + x, by + 2 + y, 1, 1);
     }));
   }
+}
+
+// § depth: how deep the hero is, "DEPTH 1" for the first room, in the top
+// middle between the hearts and the oil bar, in a box like theirs and the
+// text line's grey (D-146).
+export function drawDepth(c, depth) {
+  const text = `DEPTH ${depth}`, w = textWidth(text) + 6, h = 7 + 4;
+  const bx = Math.floor((W - w) / 2), by = BOX_Y;
+  c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
+  c.fillStyle = '#2a2636';
+  c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
+  c.fillRect(bx, by, 1, h); c.fillRect(bx + w - 1, by, 1, h);
+  drawText(c, text, bx + 3, by + 2, '#9790a4'); // the study's --muted
 }
 
 // § lantern icon: the hero's lantern pixels (sprites.js) for the switch button,

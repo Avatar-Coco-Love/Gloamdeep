@@ -4,6 +4,7 @@ import { makeWorld, step, wait, switchLantern, toward, DIRS, HERO_HEALTH } from 
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { glowsIn } from './core/stairs.js';
+import { beginPlace, depthOf } from './core/room.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero, drawItems, drawEnemies } from './render/sprites.js';
@@ -11,7 +12,7 @@ import { drawLight, flicker } from './render/light.js';
 import { drawBrackets, torchLights, drawFlames } from './render/torches.js';
 import { LANTERN, LANTERN_AT } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
-import { drawOilBar, drawHearts } from './render/hud.js';
+import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
@@ -115,7 +116,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { state = s; },
   reset: () => { // the room the hero is in, as it began
-    const p = state.home.places[state.place];
+    const p = state.home.places[state.place] || beginPlace(state.place);
     return resetRoom(state, p.room, p.start, p.lights, p.enemies, p.items);
   },
   forget: () => forget(state),
@@ -194,6 +195,7 @@ function frame(t) {
   }
   drawOilBar(ctx, s.oil);
   drawHearts(ctx, s.health, HERO_HEALTH);
+  drawDepth(ctx, depthOf(s.place));
   const line = shownLine(state);
   textLine.draw(ctx, line, t, reduceMotion.matches);
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }

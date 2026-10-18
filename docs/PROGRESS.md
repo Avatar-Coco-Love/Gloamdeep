@@ -4,13 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.22 · **Stage:** foundation (the first code)
+**Version:** 0.1.23 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 27: a depth counter and an endless way down** (B, the owner's
-order A, B, C). Propose it as multiple choice first. Then step 28: the
-first generated room (C).
-Read: `DESIGN.md` ("The journey").
+**Step 28: the first generated room** (C, the owner's order A, B, C),
+replacing the copies below the second room (D-144). Propose it as
+multiple choice first.
+Read: `DESIGN.md` ("The journey"), `TECH.md`.
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
@@ -49,18 +49,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 24 The rat moves: it notices in light and chases, 0.1.20
 - [x] 25 Stairs and a second room, 0.1.21
 - [x] 26 A flask and a rat in the second room, 0.1.22
-- [ ] 27 A depth counter and an endless way down
+- [x] 27 A depth counter and an endless way down, 0.1.23
 - [ ] 28 The first generated room
 - Ideas for later: a standing torch on the floor, the rat fleeing, sounds
 
 ## Log (last 3)
-- **2026-10-18, 0.1.20, the rat moves.** A rat on a lit tile (lantern
-  or torch) notices the hero and keeps coming until it dies or they
-  fall: one tile a turn, the farther way first, else the other way,
-  else it waits; no going around walls. It slides like the hero, and
-  one that steps next to the hero bites a turn later (D-126 to D-129,
-  Q-031 and Q-032 opened). Playtest:
-  https://claude.ai/artifact/Uq4RbG9JV7S1S5nhkShLMU
 - **2026-10-18, 0.1.21, stairs and a second room.** Stairs down at 1,1
   (the study's) lead to a second room, two empty caves and a gap; you
   arrive on stairs up and can go back. Rooms stay as left; rats don't
@@ -73,3 +66,9 @@ Foundation (0.1.x): one small visible thing per step
   1 (9,2), a torch by room 2's stairs up, a full tank at the start, and
   stairs that sink into the wall beside them (D-138 to D-143). Playtest:
   https://claude.ai/artifact/TPAxhRK7dncVomJ12ZwVT5
+- **2026-10-18, 0.1.23, a depth counter and an endless way down.**
+  "DEPTH 1" in a box at the top middle. The second room's stairs down
+  at 1,11 lead to a fresh copy of it at depth 3, and so on forever; each
+  depth stays as left, a fall resets them all, maps kept (D-144 to
+  D-146). Playtest:
+  https://claude.ai/artifact/TNgfvgptV1a4Mv3YreMPFb

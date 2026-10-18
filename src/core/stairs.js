@@ -1,24 +1,32 @@
 // § stairs: going from room to room (D-130 to D-132). Plain data, no drawing.
 // The room the hero is in lives at the top of the state as before; every
 // other room waits in `state.elsewhere`, by place id, just as it was left
-// (D-019): its tiles, lights, enemies, items and memory.
-import { PLACES, tileAt, isWall } from './room.js';
+// (D-019): its tiles, lights, enemies, items and memory. A depth never
+// visited begins fresh as its plan says (D-144).
+import { placeBeside, beginPlace, tileAt, isWall } from './room.js';
+import { blankMemory } from './fog.js';
 import { say } from './lines.js';
 
 // § take: (state) → the state in the room the stairs under the hero lead to,
 // standing on its matching stair, with the stairs' line said. Null when the
-// hero isn't on stairs, or they lead nowhere (a stair placed by the dev
-// spawn tool in a room with no place that way).
+// hero isn't on stairs, or they lead nowhere (stairs up placed by the dev
+// spawn tool in the first room, or stairs with no match where they lead).
 export function takeStairs(state) {
   const { hero } = state, entry = tileAt(state.room, hero.x, hero.y);
-  const to = entry.leads && PLACES[state.place]?.[entry.leads];
-  const there = to && state.elsewhere[to];
+  const to = entry.leads && placeBeside(state.place, entry.leads);
+  const there = to && (state.elsewhere[to] || fresh(to));
   const spot = there && find(there.room, entry.arrive);
   if (!spot) return null;
   const here = { room: state.room, lights: state.lights, enemies: state.enemies, items: state.items, seen: state.seen };
   const elsewhere = { ...state.elsewhere, [state.place]: here };
   delete elsewhere[to];
   return say({ ...state, ...there, place: to, elsewhere, hero: spot }, entry.line);
+}
+
+// A place never visited, as it begins, with nothing remembered
+function fresh(id) {
+  const { room, lights, enemies, items } = beginPlace(id);
+  return { room, lights, enemies, items, seen: blankMemory(room) };
 }
 
 // The first tile of kind `id` in the room, row by row, or null

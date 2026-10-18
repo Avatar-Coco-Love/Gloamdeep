@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.20, the rat moves.** A rat on a lit tile (lantern
+  or torch) notices the hero and keeps coming until it dies or they
+  fall: one tile a turn, the farther way first, else the other way,
+  else it waits; no going around walls. It slides like the hero, and
+  one that steps next to the hero bites a turn later (D-126 to D-129,
+  Q-031 and Q-032 opened). Playtest:
+  https://claude.ai/artifact/Uq4RbG9JV7S1S5nhkShLMU
 - **2026-10-18, 0.1.19, an unlit torch.** A fourth torch, unlit, hangs
   on the small block at 7,9, a charred stub near the start. Walking into
   its wall from below with the lantern lit lights it for good: "You light

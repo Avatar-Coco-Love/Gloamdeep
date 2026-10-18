@@ -18,6 +18,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.23 (2026-10-18)
+- A depth counter in the top middle, between the hearts and the oil bar:
+  "DEPTH 1" in the first room, "DEPTH 2" in the second.
+- The second room has stairs down now, in the far left of the lower cave.
+  Below it is a fresh copy of the second room, with its own flask, rat
+  and torch, one depth deeper, and so on with no end. Each depth stays as
+  you left it. Real new rooms come in step 28.
+- A fall still wakes you in the first room with every depth back as it
+  began, maps remembered.
+- Dev stats say "depth 2" instead of "second room".
+- Decisions: D-144 to D-146.
+
 ## 0.1.22 (2026-10-18)
 - The second room isn't empty any more. An oil flask lies in the far
   corner of the lower cave, through the narrow gap.
