@@ -3,6 +3,7 @@
 import { tileAt } from './room.js';
 import { blankMemory } from './fog.js';
 import { OIL, burnOil } from './oil.js';
+import { get } from './registry.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -11,18 +12,26 @@ export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 export const FIRST_START = { x: 5, y: 11 };
 
 export function makeState(room, start = FIRST_START) {
-  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start };
+  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start, items: [] };
 }
 
 // § step: (state, direction) → new state. Walking into something solid
 // changes nothing and passes no turn, so the same state comes back (D-043).
-// A passed turn burns oil (D-037).
+// A passed turn burns oil (D-037). A flask on the new tile is then poured in,
+// never above full, and is gone (D-078).
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (tileAt(state.room, x, y).solid) return state;
-  return { ...state, hero: { x, y }, turn: state.turn + 1, oil: burnOil(state.oil) };
+  const next = { ...state, hero: { x, y }, turn: state.turn + 1, oil: burnOil(state.oil) };
+  const found = itemAt(state, x, y);
+  if (!found) return next;
+  const items = state.items.filter((it) => it !== found);
+  return { ...next, items, oil: Math.min(1, next.oil + get(found.id).oil) };
 }
+
+// § items: the item lying on tile x, y, or undefined
+export const itemAt = (state, x, y) => state.items.find((it) => it.x === x && it.y === y);
 
 // § toward: the direction from one point to another, along whichever side is
 // farther (a tap steps toward where it lands, D-042). Null when they match.

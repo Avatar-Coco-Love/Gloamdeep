@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
+  quarters full and 60 steps empty a full tank (the study's 40 felt
+  too short, 80 too long).
+  The light shrinks with the oil, from 5.2 tiles to 1.6, then an ember.
+  The study's 10-segment oil bar sits in the top right corner. Dev panel:
+  "Refill oil" and "Empty oil". The flask became step 15 (D-064 to D-069,
+  Q-028 and Q-029 opened).
 - **2026-10-18, PR #16 (0.1.6), fog of war.** Tiles the lantern has
   reached are remembered and stay faintly visible; a tile counts once
   the light reaches its middle, and the edge fades over 4 pixels in the

@@ -12,3 +12,14 @@ in the dark and help in fights. Which animal, and how it joins, is open.
 *Superseded by D-034 (2026-10-17).*
 You find the dog trapped or lost in the first cave and free it, and it
 follows you home.
+
+**D-055 · 2026-10-18 · The lantern's reach for now** (step 12)
+*Superseded by D-064 (2026-10-18): oil sets the reach.*
+The light reaches as far as the study's lantern with a full tank (5.2
+tiles). Oil takes over the reach at step 14 (D-014).
+
+**D-068 · 2026-10-18 · Oil lasts twice as long** (step 14, playtest;
+supersedes the burn in D-064)
+*Superseded by D-069 (2026-10-18).*
+Each passed turn burns 1.25% of a full tank, so 80 turns empty it. The
+start, the reach and the ember stay as in D-064.

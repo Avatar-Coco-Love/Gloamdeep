@@ -3,7 +3,7 @@
 // lines 121–176, ART-DIRECTION.md "Sprites").
 const PAL = {
   k: '#0e0c16', w: '#efe6cc', C: '#a6e0e4', c: '#58a8b4', B: '#2f6a7c', b: '#1c3e4e',
-  y: '#ffd66b', Y: '#f39a3b', O: '#a8642c', a: '#e8d5a0',
+  y: '#ffd66b', Y: '#f39a3b', O: '#a8642c', o: '#e9a94a', a: '#e8d5a0',
 };
 
 // § hero: the study's hero, with the lantern held out to its right (D-042, D-056).
@@ -13,6 +13,11 @@ const HERO = { mirror: true, rows: [
   '...kccBB', '..kcccBB', '..kccBBB', '..kcBBBb', '..kcBBbB', '..kBBbbB', '...kkbkk', '....kk..'],
   extra: [[13, 7, 'k'], [12, 8, 'k'], [13, 8, 'a'], [14, 8, 'k'], [11, 9, 'k'], [12, 9, 'y'], [13, 9, 'w'], [14, 9, 'y'], [15, 9, 'k'],
     [11, 10, 'k'], [12, 10, 'Y'], [13, 10, 'y'], [14, 10, 'Y'], [15, 10, 'k'], [12, 11, 'k'], [13, 11, 'O'], [14, 11, 'k']] };
+// § flask: the study's oil flask, a cork over a bottle of amber oil (study line 156, D-077)
+const FLASK = { mirror: true, rows: [
+  '', '', '......kk', '.....kaa', '......kk', '......ko', '.....koo', '....kooo', '...kwooo', '...kwooo',
+  '...koooo', '...kOooo', '....kOOO', '.....kkk'] };
+
 // Where the lantern's flame sits in the sprite: the light's centre and its bright core.
 export const LANTERN_AT = { x: 13, y: 9 };
 
@@ -36,7 +41,7 @@ function spriteCanvas(def) {
   return cv;
 }
 
-export const SPRITES = { hero: spriteCanvas(HERO) };
+export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK) }; // keyed by registry id
 
 // § shadow: a small dark oval under a sprite (study line 345)
 export function drawShadow(c, x, y, w) {
@@ -49,4 +54,15 @@ export function drawShadow(c, x, y, w) {
 export function drawHero(c, x, y) {
   drawShadow(c, x, y, 8);
   c.drawImage(SPRITES.hero, x, y - 2);
+}
+
+// § items: each item 2 pixels up from its tile, on its shadow. A flask bobs
+// 1 pixel every 0.7 s, each row in its own beat; still with reduced motion (study line 379, D-077).
+export function drawItems(c, items, t, still) {
+  for (const it of items) {
+    const x = it.x * 16, y = it.y * 16;
+    const bob = still ? 0 : Math.floor(t / 700 + it.y) % 2;
+    drawShadow(c, x, y, 8);
+    c.drawImage(SPRITES[it.id], x, y - 2 - bob);
+  }
 }

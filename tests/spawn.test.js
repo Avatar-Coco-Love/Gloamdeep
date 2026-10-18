@@ -37,3 +37,24 @@ test('reset brings the room back, and the hero leaves a wall', () => {
   const kept = resetRoom({ ...s, hero: { x: 2, y: 2 } }, s.room, FIRST_START);
   assert.deepEqual(kept.hero, { x: 2, y: 2 });
 });
+
+test('a flask spawns on floor, one per tile, never on a wall or the hero', () => {
+  const s = start();
+  const n = spawn(s, 'flask', 2, 2);
+  assert.deepEqual(n.items, [{ id: 'flask', x: 2, y: 2 }]);
+  assert.equal(n.turn, 0);
+  assert.deepEqual(s.items, [], 'the old state is not changed');
+  assert.equal(spawn(n, 'flask', 2, 2), n);
+  assert.equal(spawn(s, 'flask', 0, 0), s);
+  assert.equal(spawn(s, 'flask', FIRST_START.x, FIRST_START.y), s);
+});
+
+test('a wall cannot cover a flask', () => {
+  const n = spawn(start(), 'flask', 2, 2);
+  assert.equal(spawn(n, 'wall', 2, 2), n);
+});
+
+test('reset clears spawned flasks', () => {
+  const s = start();
+  assert.deepEqual(resetRoom(spawn(s, 'flask', 2, 2), s.room, FIRST_START).items, []);
+});

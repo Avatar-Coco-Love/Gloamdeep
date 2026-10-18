@@ -4,7 +4,6 @@ Every settled decision, oldest first. IDs are permanent. To change a
 decision, add a new one that supersedes it and mark the old one (see
 `CLAUDE.md`, "Keeping track"). Superseded entries move to
 `archive/DECISIONS-SUPERSEDED.md` once this file passes 12 KB.
-
 **D-001 to D-038** (pre-production) are in
 `archive/DECISIONS-PREPRODUCTION.md`, still in force (D-041). Grep there
 for an ID or topic.
@@ -116,11 +115,6 @@ the study.
 Until fog of war (step 13), tiles the lantern doesn't reach get the
 study's "never seen" darkness.
 
-**D-055 · 2026-10-18 · The lantern's reach for now** (step 12)
-*Superseded by D-064 (2026-10-18): oil sets the reach.*
-The light reaches as far as the study's lantern with a full tank (5.2
-tiles). Oil takes over the reach at step 14 (D-014).
-
 **D-056 · 2026-10-18 · The lantern in hand, with flicker** (step 12, ends
 D-042's "lantern later")
 The study's lantern pixels go back on the hero, and its flame is the
@@ -190,12 +184,6 @@ passed. "Reset room" leaves the oil as it is.
 Draining oil is a new rule and the flask is the first item, a new kind
 in the registry, so they come in two steps: oil now, the flask next.
 
-**D-068 · 2026-10-18 · Oil lasts twice as long** (step 14, playtest;
-supersedes the burn in D-064)
-*Superseded by D-069 (2026-10-18).*
-Each passed turn burns 1.25% of a full tank, so 80 turns empty it. The
-start, the reach and the ember stay as in D-064.
-
 **D-069 · 2026-10-18 · A full tank lasts 60 turns** (step 14, playtest;
 supersedes D-068)
 80 turns felt too long, so the owner picked the middle: each passed
@@ -228,3 +216,17 @@ One rule for every PR, so each one has a version to be named by.
 
 **D-076 · 2026-10-18 · The PR body is updated on every push** (docs audit)
 After each push, "What changed" and "Decisions" are rewritten to match.
+
+**D-077 · 2026-10-18 · The oil flask, the first item** (step 15, D-067)
+Items get their own registry file (`items.js`). The flask is the
+study's sprite on a shadow, bobbing 1 pixel every 0.7 s.
+
+**D-078 · 2026-10-18 · A flask gives 45% of a tank** (step 15)
+The study's amount. Walking onto a flask burns the step, then pours it
+in and it is gone, even with a full lantern (the extra is lost).
+
+**D-079 · 2026-10-18 · Flasks come from the dev spawn list** (step 15,
+builds on D-049)
+"Oil flask" joins the list: on floor only, never on the hero or another
+item, and no wall over it. The room starts with none; "Reset room"
+clears them. The coordinates readout names an item on the pointed tile.

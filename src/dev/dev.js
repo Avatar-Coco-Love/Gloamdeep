@@ -3,7 +3,8 @@
 // opens a panel of switches; on a PC the ` key shows or hides the overlay.
 // Plain page text, not the pixel font (D-045).
 import { tileAt } from '../core/room.js';
-import { ALL } from '../core/registry.js';
+import { ALL, get } from '../core/registry.js';
+import { itemAt } from '../core/turn.js';
 import { spawn } from '../core/spawn.js';
 import { roomCode } from '../core/roomcode.js';
 import { COLS, ROWS } from '../render/screen.js';
@@ -144,7 +145,11 @@ export function createDev(stage, canvas, game) {
       if (opts.coords) {
         if (next) next += ' · ';
         next += `hero ${h.x},${h.y}`;
-        if (pointed) next += ` · tile ${pointed.x},${pointed.y} ${tileAt(state.room, pointed.x, pointed.y).id}`;
+        if (pointed) {
+          next += ` · tile ${pointed.x},${pointed.y} ${tileAt(state.room, pointed.x, pointed.y).id}`;
+          const it = itemAt(state, pointed.x, pointed.y);
+          if (it) next += `, ${get(it.id).name}`;
+        }
       }
       if (next !== text) { text = next; readout.textContent = text; } // touch the page only on change
     },
