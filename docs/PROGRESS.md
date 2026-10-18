@@ -14,7 +14,7 @@ as multiple choice.
 Read: `TECH.md`, `DEV-TOOLS.md`, grep D-006 in the archive.
 
 ## Waiting on the owner
-- Merge the step 10 PR (0.1.3). Playtest (dev mode starts on): https://claude.ai/artifact/UEwhitGYx586wMoA2PEsqx
+- Merge PR #13 (step 10, 0.1.3). Playtest (dev mode starts on): https://claude.ai/artifact/UEwhitGYx586wMoA2PEsqx
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -48,7 +48,7 @@ Foundation (0.1.x): one small visible thing per step
   and no turn passes. Held walking slowed to 4 steps a second after the
   playtest (D-042 to D-044). Opened Q-025 (a tap/swipe switch)
   and Q-026 (walking around walls to a held finger).
-- **2026-10-18, step 10 PR (0.1.3), dev mode.** `?dev` turns it on and
+- **2026-10-18, PR #13 (0.1.3), dev mode.** `?dev` turns it on and
   the browser remembers it. A DEV button opens switches for a faint tile
   grid and a coordinates readout with a bright outline on the pointed
   tile; ` toggles them on a PC (D-045, D-046).
