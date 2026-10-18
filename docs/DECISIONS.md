@@ -45,3 +45,8 @@ for a settings menu (Q-025).
 A step is a quick slide, about 0.1 s (instant with reduced motion). One
 extra step can wait in line. Walking into a wall makes a 1-pixel nudge
 and passes no turn.
+
+**D-044 · 2026-10-18 · Held walking is calmer** (step 9 playtest)
+Holding a finger raced the hero after it (about 10 steps a second). Now a
+held finger walks about 4 steps a second and still steers toward the
+finger. Taps, swipes and keys keep their quick pace.

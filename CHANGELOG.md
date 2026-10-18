@@ -23,11 +23,12 @@ Entry format:
   lantern for now, standing on a small shadow near the bottom doorway.
 - The hero steps one tile at a time, in 4 directions, with a quick slide:
   arrow keys or WASD, a tap toward a side, a swipe, or holding a finger
-  or the mouse down to keep walking.
+  or the mouse down to keep walking (about 4 steps a second, still
+  steered by the finger).
 - Walking into a wall gives a tiny nudge and passes no turn.
 - Turn rules live in `src/core/turn.js`, with tests. Input has its own
   folder, `src/input`.
-- Decisions: D-042, D-043. Questions opened: Q-025.
+- Decisions: D-042, D-043, D-044. Questions opened: Q-025.
 
 ## 0.1.1 (2026-10-18)
 - The screen now shows a whole room, built from a text map (one letter

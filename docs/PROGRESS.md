@@ -48,4 +48,5 @@ Foundation (0.1.x): one small visible thing per step
 - **2026-10-18, PR #12 (0.1.2), the hero walks.** The study's hero
   (lantern later) steps one tile per key, tap, swipe or held finger, in
   4 directions with a quick slide. Walls stop the hero with a small nudge
-  and no turn passes (D-042, D-043). Opened Q-025 (a tap/swipe switch).
+  and no turn passes. Held walking slowed to 4 steps a second after the
+  playtest (D-042 to D-044). Opened Q-025 (a tap/swipe switch).

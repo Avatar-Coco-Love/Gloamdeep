@@ -22,8 +22,9 @@ drawRoom(base.getContext('2d'), state.room);
 // § moving: the hero slides to its new tile (D-043); one step waits in line
 // so a quick second tap or key is not lost.
 const SLIDE = 0.18; // tiles per frame, as in the study
+const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
 const shown = { x: state.hero.x, y: state.hero.y };
-let queued = null, nudge = null; // nudge: { dx, dy, until } after bumping a wall
+let queued = null, nudge = null, lastHeldStep = 0; // nudge: { dx, dy, until } after bumping a wall
 const settled = () => shown.x === state.hero.x && shown.y === state.hero.y;
 
 function tryStep(dir) {
@@ -52,7 +53,10 @@ function frame(t) {
   shown.y = approach(shown.y, state.hero.y);
   if (settled()) {
     if (queued) { const d = queued; queued = null; tryStep(d); }
-    else { const p = input.held(); if (p) stepToward(...p); }
+    else {
+      const p = input.held();
+      if (p && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p); }
+    }
   }
   let nx = 0, ny = 0;
   if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
