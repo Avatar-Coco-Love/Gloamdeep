@@ -18,6 +18,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.5 (2026-10-18)
+- The lantern lights the room. The hero holds it out to the right, and
+  its warm light falls about 5 tiles in the study's dithered bands, with
+  a gentle flicker (off when the device asks for reduced motion).
+- Walls cast shadows. Shadow edges now fade into the dither over 4
+  pixels instead of stepping in 4-pixel blocks, at the same cost.
+- Outside the light the room is almost black, until fog of war (step 13).
+- Dev mode: a "Lighting off" switch in the wrench panel shows the whole room.
+- Decisions: D-053 to D-057.
+
 ## 0.1.4 (2026-10-18)
 - The game now keeps one list of everything in it, the content registry.
   For now it holds the two tiles, Wall and Floor. Items, enemies and

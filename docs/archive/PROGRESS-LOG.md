@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #12 (0.1.2), the hero walks.** The study's hero
+  (lantern later) steps one tile per key, tap, swipe or held finger, in
+  4 directions with a quick slide. Walls stop the hero with a small nudge
+  and no turn passes. Held walking slowed to 4 steps a second after the
+  playtest (D-042 to D-044). Opened Q-025 (a tap/swipe switch)
+  and Q-026 (walking around walls to a held finger).
 - **2026-10-18, PR #11 (0.1.1), a room built from data.** The study
   room's shape, written as a text map, with brick wall faces, shade under
   walls and moss (D-040). A small tile table says what each letter means.

@@ -84,9 +84,8 @@ drift.
 ## Weak spots to fix (D-009)
 - **The rat sprite** is the weakest piece. Redraw it when the rat is first
   built, and show the owner before it goes in.
-- **Shadow edges** step in 4-pixel blocks. Make them a little smoother at
-  build plan step 12 (lantern light). Propose how, with a side-by-side
-  picture, and keep the dithered bands.
+- **Shadow edges** stepped in 4-pixel blocks. Fixed at step 12: edges blend
+  over one cell into the dithered bands (D-053). Code: `src/render/light.js`.
 
 ## Other notes
 - The study's page chrome loads a Google Font. The game itself must not

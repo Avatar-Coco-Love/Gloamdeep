@@ -5,7 +5,9 @@ import { makeState, step, toward, DIRS, FIRST_START } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
-import { drawHero } from './render/sprites.js';
+import { drawHero, LANTERN_AT } from './render/sprites.js';
+import { drawLight, flicker } from './render/light.js';
+import { LANTERN } from './core/light.js';
 import { createInput } from './input/input.js';
 import { createDev } from './dev/dev.js';
 
@@ -73,7 +75,15 @@ function frame(t) {
   if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
   if (state.room !== drawnRoom) { drawnRoom = state.room; drawRoom(base.getContext('2d'), drawnRoom); }
   ctx.drawImage(base, 0, 0);
-  drawHero(ctx, Math.round(shown.x * TILE) + nx, Math.round(shown.y * TILE) + ny);
+  const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
+  drawHero(ctx, hx, hy);
+  // § light: the lantern's flame is the light's centre (D-053 to D-056)
+  const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
+  if (!(dev && dev.lightOff())) {
+    const r = LANTERN.r * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035));
+    drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r });
+  }
+  ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); // the flame's core is always bright (study line 446)
   if (dev) dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }

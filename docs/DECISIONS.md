@@ -105,3 +105,27 @@ Pasted text maps came out broken in most apps, so the copied code is one
 line with no spaces: `GD:` version, size, hero's tile, then the rows
 split by `/`, with a number before a tile for a run of it (`#3.#5.#`).
 `src/core/roomcode.js` also reads a code back into its room.
+
+**D-053 · 2026-10-18 · Blended shadow edges** (step 12, the D-009 fix)
+Option C from the side-by-side picture: light is still checked in 4 × 4
+pixel cells, but each pixel mixes the four nearest cells, so a shadow
+edge fades into the dithered bands over one cell. The bands stay as in
+the study.
+
+**D-054 · 2026-10-18 · Outside the light is almost black** (step 12)
+Until fog of war (step 13), tiles the lantern doesn't reach get the
+study's "never seen" darkness.
+
+**D-055 · 2026-10-18 · The lantern's reach for now** (step 12)
+The light reaches as far as the study's lantern with a full tank (5.2
+tiles). Oil takes over the reach at step 14 (D-014).
+
+**D-056 · 2026-10-18 · The lantern in hand, with flicker** (step 12, ends
+D-042's "lantern later")
+The study's lantern pixels go back on the hero, and its flame is the
+light's centre, with a bright core drawn over the darkness. The light
+flickers by about ±3.5%, not at all with reduced motion.
+
+**D-057 · 2026-10-18 · Dev switch: lighting off** (step 12, builds on D-047)
+The wrench panel has a "Lighting off" switch, off at first, that shows
+the whole room unlit. It is a dev tool, not the lantern switch (D-026).
