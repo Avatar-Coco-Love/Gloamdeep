@@ -18,6 +18,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.11 (2026-10-18)
+- The lantern can be switched off and on: a lantern button next to the
+  oil bar, or the L key. Switching is free. While off, no oil burns,
+  the room goes pitch dark apart from the tiles you remember, and
+  nothing new is remembered.
+- Older decisions moved to `docs/archive/DECISIONS-FOUNDATION-1.md` to
+  make room in `DECISIONS.md`.
+- Decisions: D-080 to D-083.
+
 ## 0.1.10 (2026-10-18)
 - The oil flask, the first item. It is the style study's bottle, bobbing
   on its shadow. Walk onto it and it pours 45% of a tank into the

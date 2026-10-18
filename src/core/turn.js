@@ -12,23 +12,27 @@ export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 export const FIRST_START = { x: 5, y: 11 };
 
 export function makeState(room, start = FIRST_START) {
-  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start, items: [] };
+  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, items: [] };
 }
 
 // § step: (state, direction) → new state. Walking into something solid
 // changes nothing and passes no turn, so the same state comes back (D-043).
-// A passed turn burns oil (D-037). A flask on the new tile is then poured in,
+// A passed turn burns oil while the lantern is lit (D-037, D-026). A flask on the new tile is then poured in,
 // never above full, and is gone (D-078).
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (tileAt(state.room, x, y).solid) return state;
-  const next = { ...state, hero: { x, y }, turn: state.turn + 1, oil: burnOil(state.oil) };
+  const next = { ...state, hero: { x, y }, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil };
   const found = itemAt(state, x, y);
   if (!found) return next;
   const items = state.items.filter((it) => it !== found);
   return { ...next, items, oil: Math.min(1, next.oil + get(found.id).oil) };
 }
+
+// § switch: the lantern on or off, whenever the player likes. It is free:
+// no turn passes and no oil burns (D-015, D-080, D-081).
+export const switchLantern = (state) => ({ ...state, lit: !state.lit });
 
 // § items: the item lying on tile x, y, or undefined
 export const itemAt = (state, x, y) => state.items.find((it) => it.x === x && it.y === y);

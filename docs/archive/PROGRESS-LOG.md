@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #18 (0.1.8), audit next.** Docs only: Next up is a
+  docs audit with the problems seen so far; the build plan's order may
+  change as we go.
 - **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
   quarters full and 60 steps empty a full tank (the study's 40 felt
   too short, 80 too long).
