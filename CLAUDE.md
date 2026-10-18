@@ -29,12 +29,13 @@ CSS and JavaScript, with everything drawn and synthesized in code.
 
 ## Start of every conversation
 
-1. Read `docs/PROGRESS.md`. It says where things stand, what is "Next up"
-   and what is waiting on the owner.
-2. Read only the documents that the Next up item names.
-3. Check the branch. If its PR was merged, restart the branch from `main`
-   before doing anything. If any PR is still open, tell the owner first and
-   ask whether to merge it, update it or close it.
+1. Pull the latest `main` first (`git fetch origin main`); the starting
+   copy can be old (D-070). If any PR is still open, tell the owner and ask
+   whether to merge it, update it or close it. If this conversation's
+   branch had a PR merged, restart the branch from `origin/main`.
+2. Read `docs/PROGRESS.md` on the fresh `main`. It says where things
+   stand, what is "Next up" and what is waiting on the owner.
+3. Read only the documents that the Next up item names.
 
 ## Where things live
 
@@ -47,7 +48,7 @@ Read the smallest file that answers the question.
 | `docs/archive/DECISIONS-PREPRODUCTION.md` | D-001 to D-038, still in force | grep only, never read whole |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
 | `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
-| `docs/VISION.md` | the pitch, inspirations, proposed pillars | when proposing a design |
+| `docs/VISION.md` | the pitch, inspirations, the pillars | when proposing a design |
 | `docs/ART-DIRECTION.md` | the visual rules taken from the style study | before any drawing code |
 | `docs/TECH.md` | architecture and code rules | before writing code |
 | `docs/DEV-TOOLS.md` | the dev mode plan and tool list | when touching dev mode |
@@ -62,12 +63,21 @@ Read the smallest file that answers the question.
 - **docs/PROGRESS.md**: add a log entry, set "Next up" and update "Waiting
   on the owner". Keep only 3 log entries there. Move the oldest to the top
   of `docs/archive/PROGRESS-LOG.md`.
+- **Name a PR by its version** (0.1.9) in the docs, never by its number,
+  which isn't known until the PR exists (D-071). Docs-only PRs bump the
+  version too (D-075).
+- **"Waiting on the owner"** holds only questions and choices for the
+  owner. Merging the open PR is always implied, so it is never listed
+  (D-074).
 - **Decisions**: when the owner settles something, add `D-xxx` to
   `docs/DECISIONS.md` with the date and the owner's choice in a sentence.
   If it answers a question, delete the `Q-xxx` entry from
   `docs/OPEN-QUESTIONS.md` and cite it in the decision ("answers Q-004").
   IDs are never reused or renumbered.
-- **Changing a decision**: never edit an old decision silently. Add a new
+- **Decisions in the open PR** aren't final until it is merged. Playtest
+  tweaks edit them in place, with a note of what changed ("changed after
+  the playtest: 40 → 80 → 60 turns") (D-072).
+- **Changing a merged decision**: never edit it silently. Add a new
   one ("supersedes D-005"), and mark the old one
   `Superseded by D-0xx (date)`. When `DECISIONS.md` passes 12 KB, move the
   superseded entries to `docs/archive/DECISIONS-SUPERSEDED.md`, and the
@@ -77,8 +87,8 @@ Read the smallest file that answers the question.
 
 ## Keeping context small
 
-- No doc over 8 KB, except `docs/DECISIONS.md` (12 KB). Archive or split when a
-  doc gets close. Nothing is deleted. Old material moves to `docs/archive/`.
+- No doc over 8 KB, except `docs/DECISIONS.md` (12 KB) and the grep-only
+  files in `docs/archive/`. Archive or split when a doc gets close. Nothing is deleted. Old material moves to `docs/archive/`.
 - Keep code files small. Mark sections with `// § name` so a file can be
   read by line range (`grep -n "§"`).
 - Test output: one line per test or check, never full logs or page dumps.
@@ -89,15 +99,19 @@ Read the smallest file that answers the question.
 - Never push to `main`. One PR per conversation. Merging is the owner's call.
 - Fill in `.github/pull_request_template.md`.
 - Every PR that changes something visible gets a private playtest Artifact
-  (the owner can't play a PR before it is merged). Put the link in the PR
-  body and in `docs/PROGRESS.md`. Republish to the same link after each push.
+  (the owner can't play a PR before it is merged). Build it with
+  `node tools/playtest.js --dev <scratchpad>/playtest.html` (D-073), and
+  put the link in the PR body and the `docs/PROGRESS.md` log entry.
+  Republish to the same link after each push.
+- After every push, update the PR body so "What changed" and "Decisions"
+  match the branch (D-076).
 - End every conversation with a handoff of at most 5 lines: the PR link,
   what changed, what is waiting on the owner, and the proposed next step.
 
 ## Hard technical rules (details in `docs/TECH.md`)
 
 - No external assets: no image, audio or font files, no CDNs, no frameworks,
-  no build step. Visuals use Canvas 2D. Sound uses the Web Audio API.
+  no build step (`tools/` is only for playtests). Visuals use Canvas 2D. Sound uses the Web Audio API.
 - Phone first. Everything works with touch, mouse and keyboard.
 - Game state is kept separate from drawing. All content (items, enemies,
   NPCs, tiles) lives in one data registry. Randomness goes through a seeded

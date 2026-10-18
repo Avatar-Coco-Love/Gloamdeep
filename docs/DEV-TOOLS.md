@@ -13,7 +13,7 @@ tools to be chosen together later.
   in the public build, hidden unless opened (D-030).
 - **Reproducible.** Show the current seed, and allow loading a seed.
 - Each new game feature arrives with its dev hook in the same PR (for
-  example, oil arrives with "set oil").
+  example, oil arrived with "Refill oil" and "Empty oil").
 
 ## Decided
 - Spawn any registry entry (item, enemy, NPC, tile) at a chosen tile (D-006).

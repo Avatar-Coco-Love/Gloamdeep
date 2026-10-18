@@ -30,6 +30,7 @@ at build plan step 7 (D-039).
   hand-written list.
 - **Seeded RNG.** All randomness comes from one seeded generator, so a
   seed reproduces a run exactly ("load seed 4127 and watch the bug happen").
+  Nothing is random yet; the generator arrives with the first random thing.
 - **Turn rules are pure functions:** `(state, action) → new state`. That
   makes them easy to test and to undo in dev mode.
 
@@ -44,6 +45,8 @@ src/render/         drawing, lighting, sprites
 src/input/          tap, mouse, keyboard
 src/dev/            dev mode (see DEV-TOOLS.md)
 tests/              node --test, for core/ only
+tools/playtest.js   packs the game into one page for playtests (D-073);
+                    not part of the game, which has no build step
 ```
 ES modules (`<script type="module">`). Tests use Node's built-in test
 runner, with no dependencies.
