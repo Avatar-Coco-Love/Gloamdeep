@@ -1,16 +1,16 @@
 // § depth: the depth counter and the endless way down (D-144 to D-146)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tileAt, depthOf, placeAt, placeBeside, SECOND_ENEMIES, SECOND_ITEMS } from '../src/core/room.js';
-import { makeWorld, step, wait, FIRST_START } from '../src/core/turn.js';
+import { tileAt, depthOf, placeAt, placeBeside } from '../src/core/room.js';
+import { makeWorld, step, wait, FIRST_START, DIRS } from '../src/core/turn.js';
+import { generateRoom } from '../src/core/cave.js';
+import { seedFor, nextSeed } from '../src/core/rng.js';
 import { shownLine } from '../src/core/lines.js';
-import { spawn } from '../src/core/spawn.js';
-import { itemAt } from '../src/core/turn.js';
 
 // Room 2's stairs down are at 1,11; 2,11 is the tile beside them. Its stairs up at 1,1.
 const at = (s, x, y) => ({ ...s, hero: { x, y } });
 const down = (s) => step(at(s, 2, 11), 'left');
-const second = () => step(at(makeWorld(), 2, 1), 'left');
+const second = () => step(at(makeWorld('first', 4127), 2, 1), 'left');
 
 test('the first room is depth 1, the second depth 2, then depth3, depth4…', () => {
   assert.equal(depthOf('first'), 1);
@@ -26,43 +26,82 @@ test('the second room has stairs down at 1,11', () => {
   assert.equal(tileAt(makeWorld().elsewhere.second.room, 1, 11).id, 'stairsDown');
 });
 
-test('down from the second room: a fresh copy of it, depth 3, on its stairs up', () => {
+test('down from the second room: a generated room, depth 3, on its stairs up', () => {
   const s = { ...second(), enemies: [], items: [] }; // its rat and flask gone
   const n = down(s);
   assert.equal(n.place, 'depth3');
   assert.equal(depthOf(n.place), 3);
-  assert.deepEqual(n.hero, { x: 1, y: 1 });
+  assert.equal(tileAt(n.room, n.hero.x, n.hero.y).id, 'stairsUp');
   assert.equal(shownLine(n).text, 'You go down the stairs.');
-  assert.deepEqual(n.enemies, SECOND_ENEMIES);
-  assert.deepEqual(n.items, SECOND_ITEMS);
+  assert.deepEqual(n.room.map, generateRoom(seedFor(n.seed, 3)).map);
+  assert.equal(n.enemies.length, 1);
+  assert.equal(n.items.length, 1);
   assert.ok(n.seen.every((v) => v === 0));
   assert.deepEqual(n.elsewhere.second.enemies, []); // depth 2 stays as left
 });
 
-test('the way down never ends', () => {
+// From anywhere in a generated room: onto the tile beside its stairs down, then onto them
+function deeper(s) {
+  const at2 = find(s.room, 'stairsDown');
+  for (const [dir, [dx, dy]] of Object.entries(DIRS)) {
+    const x = at2.x - dx, y = at2.y - dy;
+    if (!tileAt(s.room, x, y).solid) return step({ ...s, hero: { x, y }, enemies: [], items: [] }, dir);
+  }
+  throw new Error('no way onto the stairs');
+}
+const find = (room, id) => {
+  for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) if (tileAt(room, x, y).id === id) return { x, y };
+  return null;
+};
+
+test('the way down never ends, each depth its own room', () => {
   let s = second();
-  for (let d = 3; d <= 12; d++) { s = down({ ...s, enemies: [] }); assert.equal(depthOf(s.place), d); }
+  const maps = new Set();
+  for (let d = 3; d <= 12; d++) { s = deeper(s); assert.equal(depthOf(s.place), d); maps.add(s.room.map.join()); }
+  assert.ok(maps.size >= 9);
 });
 
 test('up from depth 3 arrives on depth 2\'s stairs down, and depth 3 stays as left', () => {
   const s3 = down({ ...second(), enemies: [] });
-  const up = step(step({ ...s3, items: [], enemies: [] }, 'right'), 'left');
+  const map = s3.room.map, up = deeperUp(s3);
   assert.equal(up.place, 'second');
   assert.deepEqual(up.hero, { x: 1, y: 11 });
   const again = down({ ...up, enemies: [] });
   assert.equal(again.place, 'depth3');
-  assert.equal(itemAt(again, 9, 11), undefined);
+  assert.deepEqual(again.room.map, map);
+  assert.deepEqual(again.items, []);
 });
+// Off the stairs up and back on, with the room's flask and rat cleared
+function deeperUp(s) {
+  const at2 = s.hero;
+  for (const [dir, [dx, dy]] of Object.entries(DIRS)) {
+    const x = at2.x + dx, y = at2.y + dy;
+    if (tileAt(s.room, x, y).solid) continue;
+    const back = { up: 'down', down: 'up', left: 'right', right: 'left' }[dir];
+    return step(step({ ...s, items: [], enemies: [] }, dir), back);
+  }
+  throw new Error('stuck on the stairs');
+}
 
-test('a fall at depth 3 wakes the hero in the first room; depth 3 begins again, its map remembered', () => {
+test('a fall at depth 3 wakes the hero in the first room with a new seed; depth 3 is new and unmapped', () => {
   let s = down({ ...second(), enemies: [] });
-  s = spawn(s, 'wall', 3, 3);
-  s = { ...s, seen: s.seen.map(() => 1), health: 1, items: [], enemies: [{ id: 'rat', x: 1, y: 2 }] };
-  const n = wait(s);
+  const seed = s.seed;
+  s = { ...s, seen: s.seen.map(() => 1), health: 1, items: [], enemies: [] };
+  const h = s.hero, spot = Object.values(DIRS).map(([dx, dy]) => ({ x: h.x + dx, y: h.y + dy })).find((t) => !tileAt(s.room, t.x, t.y).solid);
+  const n = wait({ ...s, enemies: [{ id: 'rat', ...spot }] });
   assert.equal(n.place, 'first');
   assert.deepEqual(n.hero, FIRST_START);
-  const d3 = n.elsewhere.depth3;
-  assert.equal(tileAt(d3.room, 3, 3).id, 'floor');
-  assert.deepEqual(d3.items, SECOND_ITEMS);
-  assert.ok(d3.seen.every((v) => v === 1));
+  assert.notEqual(n.seed, seed);
+  assert.equal(n.seed, nextSeed(seed));
+  assert.equal(n.elsewhere.depth3, undefined); // it begins again when reached
+  const again = down({ ...step(at(n, 2, 1), 'left'), enemies: [] });
+  assert.ok(again.seen.every((v) => v === 0));
+  assert.deepEqual(again.room.map, generateRoom(seedFor(n.seed, 3)).map);
+});
+
+test('the first two rooms\' maps stay remembered after a fall', () => {
+  const s = { ...second(), health: 1 };
+  const lit = { ...s, seen: s.seen.map(() => 1), enemies: [{ id: 'rat', x: 1, y: 2 }], items: [] };
+  const n = wait(lit);
+  assert.ok(n.elsewhere.second.seen.every((v) => v === 1));
 });

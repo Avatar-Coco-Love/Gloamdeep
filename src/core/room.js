@@ -2,6 +2,8 @@
 // tile (D-040). Letters are looked up in the registry. Plain data, no drawing.
 import { OUTSIDE } from './tiles.js';
 import { byLetter } from './registry.js';
+import { generateRoom } from './cave.js';
+import { seedFor } from './rng.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
 // its water as floor, and the study's stairs down at 1,1 (D-130). The doorway
@@ -66,12 +68,17 @@ export const PLACES = {
 };
 
 // § depth: the place at each depth, and back. Below the second room every
-// depth is a fresh copy of it, with ids depth3, depth4… until rooms are
-// generated (D-144).
+// depth is generated, with ids depth3, depth4…, from the game's seed (D-147,
+// D-148); the second room is the fallback if a seed ever gives no room.
 const DEEPER = 'second';
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? Number(id.slice('depth'.length));
-export const placeFor = (id) => PLACES[id] || PLACES[DEEPER];
+export const isGenerated = (id) => !PLACES[id];
+export function placeFor(id, seed = 1) {
+  if (PLACES[id]) return PLACES[id];
+  const depth = depthOf(id);
+  return { ...(generateRoom(seedFor(seed, depth)) || PLACES[DEEPER]), depth };
+}
 
 // The place one depth up or down from `id` (a stair's `leads`), or null above the first
 export function placeBeside(id, way) {
@@ -79,9 +86,9 @@ export function placeBeside(id, way) {
   return depth >= 1 ? placeAt(depth) : null;
 }
 
-// § begin: any place as it begins, from its plan
-export function beginPlace(id) {
-  const p = placeFor(id);
+// § begin: any place as it begins, from its plan and the game's seed
+export function beginPlace(id, seed) {
+  const p = placeFor(id, seed);
   return { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
 }
 

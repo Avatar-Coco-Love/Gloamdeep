@@ -18,6 +18,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.24 (2026-10-18)
+- The first generated rooms: every depth below the second room is now
+  made by the game, 2 to 4 rough caves joined by narrow gaps, each depth
+  different. Each still has a torch by the stairs up, and a flask with a
+  rat guarding it, the rat waiting in the dark.
+- A new game picks a seed (the number behind a layout) each time the
+  page opens. Going up and down, each depth stays as you left it. A fall
+  rolls a new seed: the depths below room 2 are all new, their maps
+  forgotten.
+- Dev stats end with the seed, so a room can be reported and made again.
+- Decisions: D-147 to D-151. D-114 to D-129 moved to the archive.
+
 ## 0.1.23 (2026-10-18)
 - A depth counter in the top middle, between the hearts and the oil bar:
   "DEPTH 1" in the first room, "DEPTH 2" in the second.

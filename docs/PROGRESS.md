@@ -4,17 +4,19 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.23 · **Stage:** foundation (the first code)
+**Version:** 0.1.24 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 28: the first generated room** (C, the owner's order A, B, C),
-replacing the copies below the second room (D-144). Propose it as
-multiple choice first.
-Read: `DESIGN.md` ("The journey"), `TECH.md`.
+**Step 29: to be chosen by the owner.** Offer as multiple choice: tune
+the generated rooms after playing 0.1.24 (sizes in D-147), the rat
+fleeing, a standing torch on the floor, or sounds.
+Read: `DESIGN.md`, then the decisions the pick touches.
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
   rat notice?) and Q-032 (which way a walking rat faces).
+- After playing 0.1.24: are the generated rooms the right size and
+  shape (D-147's first guesses)?
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -50,16 +52,10 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 25 Stairs and a second room, 0.1.21
 - [x] 26 A flask and a rat in the second room, 0.1.22
 - [x] 27 A depth counter and an endless way down, 0.1.23
-- [ ] 28 The first generated room
+- [x] 28 The first generated room, 0.1.24
 - Ideas for later: a standing torch on the floor, the rat fleeing, sounds
 
 ## Log (last 3)
-- **2026-10-18, 0.1.21, stairs and a second room.** Stairs down at 1,1
-  (the study's) lead to a second room, two empty caves and a gap; you
-  arrive on stairs up and can go back. Rooms stay as left; rats don't
-  follow or bite as you go; a fall wakes you in room 1, both reset. A
-  faint violet glow, a fade and a line (D-130 to D-137). Playtest:
-  https://claude.ai/artifact/Xr6TssVDe39zh1AFjck47z
 - **2026-10-18, 0.1.22, a flask and a rat in room 2.** The second
   room's lower cave holds an oil flask at 9,11, guarded by a rat at
   7,10; rooms can start with items. After the playtest: a flask in room
@@ -72,3 +68,9 @@ Foundation (0.1.x): one small visible thing per step
   depth stays as left, a fall resets them all, maps kept (D-144 to
   D-146). Playtest:
   https://claude.ai/artifact/TNgfvgptV1a4Mv3YreMPFb
+- **2026-10-18, 0.1.24, the first generated rooms.** Below the second
+  room every depth is made from the game's seed: 2 to 4 rough caves
+  joined by gaps, a torch by the stairs up, a flask and a rat guarding
+  it in the dark. A depth stays as left; a fall rolls a new seed and new
+  depths, their maps forgotten. Seed in the dev stats (D-147 to D-151).
+  Playtest: https://claude.ai/artifact/LNhmWcYaTRaey4TR9TDwkq

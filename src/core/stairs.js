@@ -2,7 +2,7 @@
 // The room the hero is in lives at the top of the state as before; every
 // other room waits in `state.elsewhere`, by place id, just as it was left
 // (D-019): its tiles, lights, enemies, items and memory. A depth never
-// visited begins fresh as its plan says (D-144).
+// visited begins fresh, generated from the game's seed (D-147, D-148).
 import { placeBeside, beginPlace, tileAt, isWall } from './room.js';
 import { blankMemory } from './fog.js';
 import { say } from './lines.js';
@@ -14,7 +14,7 @@ import { say } from './lines.js';
 export function takeStairs(state) {
   const { hero } = state, entry = tileAt(state.room, hero.x, hero.y);
   const to = entry.leads && placeBeside(state.place, entry.leads);
-  const there = to && (state.elsewhere[to] || fresh(to));
+  const there = to && (state.elsewhere[to] || fresh(to, state.seed));
   const spot = there && find(there.room, entry.arrive);
   if (!spot) return null;
   const here = { room: state.room, lights: state.lights, enemies: state.enemies, items: state.items, seen: state.seen };
@@ -23,9 +23,9 @@ export function takeStairs(state) {
   return say({ ...state, ...there, place: to, elsewhere, hero: spot }, entry.line);
 }
 
-// A place never visited, as it begins, with nothing remembered
-function fresh(id) {
-  const { room, lights, enemies, items } = beginPlace(id);
+// A place never visited, as it begins from the game's seed, with nothing remembered
+function fresh(id, seed) {
+  const { room, lights, enemies, items } = beginPlace(id, seed);
   return { room, lights, enemies, items, seen: blankMemory(room) };
 }
 
