@@ -56,9 +56,9 @@ export function drawHero(c, x, y) {
   c.drawImage(SPRITES.hero, x, y - 2);
 }
 
-// § faint hero: with the lantern off, the hero's own pixels at about a fifth of
+// § faint hero: with the lantern off, the hero's own pixels at 8% of
 // their colour, drawn over the darkness so they are never lost (D-082). It lights nothing.
-export const FAINT = 0.22;
+export const FAINT = 0.08;
 export function drawFaintHero(c, x, y) {
   c.globalAlpha = FAINT;
   c.drawImage(SPRITES.hero, x, y - 2);
