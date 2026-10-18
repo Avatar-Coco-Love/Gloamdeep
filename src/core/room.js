@@ -34,7 +34,7 @@ export const FIRST_ITEMS = [{ id: 'flask', x: 9, y: 2 }];
 export const FIRST_ENEMIES = [{ id: 'rat', x: 2, y: 10 }];
 
 // § second room: two caves joined by a gap, the stairs up at 1,1 where the
-// hero arrives (D-131).
+// hero arrives (D-131), and stairs down at 1,11, the lower cave's far left (D-145).
 export const SECOND_ROOM = [
   '###########',
   '#<....#####',
@@ -47,7 +47,7 @@ export const SECOND_ROOM = [
   '#####.#####',
   '#.........#',
   '#.........#',
-  '#.........#',
+  '#>........#',
   '###########',
 ];
 
@@ -58,12 +58,32 @@ export const SECOND_ITEMS = [{ id: 'flask', x: 9, y: 11 }];
 export const SECOND_ENEMIES = [{ id: 'rat', x: 7, y: 10 }];
 
 // § places: every room, with where the hero starts in it, what is in it at
-// first, and which place its stairs lead to (D-130 to D-132). A stair down
-// arrives on the next place's stair up, and back.
+// first, and how deep it is (D-130, D-144). Stairs down lead one depth
+// deeper and arrive on the stairs up there, and back.
 export const PLACES = {
-  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, down: 'second' },
-  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, up: 'first' },
+  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1 },
+  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2 },
 };
+
+// § depth: the place at each depth, and back. Below the second room every
+// depth is a fresh copy of it, with ids depth3, depth4… until rooms are
+// generated (D-144).
+const DEEPER = 'second';
+export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
+export const depthOf = (id) => PLACES[id]?.depth ?? Number(id.slice('depth'.length));
+export const placeFor = (id) => PLACES[id] || PLACES[DEEPER];
+
+// The place one depth up or down from `id` (a stair's `leads`), or null above the first
+export function placeBeside(id, way) {
+  const depth = depthOf(id) + (way === 'down' ? 1 : -1);
+  return depth >= 1 ? placeAt(depth) : null;
+}
+
+// § begin: any place as it begins, from its plan
+export function beginPlace(id) {
+  const p = placeFor(id);
+  return { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
+}
 
 // § darkness: each place sets how dark never-seen tiles are and how
 // remembered ones look, as light multipliers (D-063). The first room is a

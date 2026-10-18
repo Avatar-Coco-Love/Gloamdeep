@@ -184,3 +184,18 @@ wall above first, then left, then right, else down. Stairs down darken
 into the pit as before; stairs up narrow the same way but brighten
 toward the wall, rising to the light above.
 
+**D-144 · 2026-10-18 · An endless way down, for now** (step 27, owner's
+pick, D-013 pillar 2) Below the second room is a fresh copy of it, with
+its own flask, rat and torch, one depth deeper, and below that another,
+with no end. Each depth stays as left (D-132), and a fall puts every
+depth back as it began, maps remembered (D-136). Step 28's generated
+rooms replace the copies.
+
+**D-145 · 2026-10-18 · The second room's stairs down** (step 27, owner's
+pick) At 1,11, the lower cave's far left, through the gap and away from
+the flask, so it's a choice: the flask past the rat, or straight down.
+
+**D-146 · 2026-10-18 · The depth counter** (step 27, owner's pick)
+Always shown in the top middle, between the hearts and the oil bar, in a
+box like theirs: "DEPTH 1" in the first room, "DEPTH 2" in the second,
+in the text line's grey. It changes as the stairs' fade turns.

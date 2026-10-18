@@ -2,7 +2,7 @@
 // A wrench button opens the panel (panel.js); a stats line sits at the bottom
 // left (D-088); on a PC, keys work the panel (D-090). Plain page text, not the
 // pixel font (D-045).
-import { tileAt } from '../core/room.js';
+import { tileAt, depthOf } from '../core/room.js';
 import { get } from '../core/registry.js';
 import { itemAt } from '../core/turn.js';
 import { spawn } from '../core/spawn.js';
@@ -88,7 +88,7 @@ export function createDev(stage, canvas, game) {
       tools.sync(state);
       // § stats: always on; a second line for the pick and the pointed tile (D-088)
       const h = state.hero, picked = tools.picked();
-      let next = `turn ${state.turn} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · hero ${h.x},${h.y} · ${state.place} room`;
+      let next = `turn ${state.turn} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · hero ${h.x},${h.y} · depth ${depthOf(state.place)}`;
       const more = [];
       if (picked) more.push(`placing ${picked.name}`);
       if (opts.coords && pointed) {

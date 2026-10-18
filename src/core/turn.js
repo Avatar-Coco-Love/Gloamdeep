@@ -1,6 +1,6 @@
 // § turn: the game state and the turn rules, as plain data (TECH.md,
 // "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
-import { tileAt, makeRoom, PLACES } from './room.js';
+import { tileAt, beginPlace, PLACES } from './room.js';
 import { blankMemory } from './fog.js';
 import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
@@ -29,18 +29,21 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = [], 
 
 // § world: every place, the hero in the first one. The others wait in
 // `elsewhere` as they begin (stairs.js); `home.places` keeps them all as
-// they began, for a fall (D-136) and the dev reset.
-export function makeWorld(places = PLACES, first = 'first') {
+// they began, for a fall (D-136) and the dev reset. Deeper copies begin
+// only when first reached (stairs.js, D-144).
+export function makeWorld(first = 'first') {
   const begun = {};
-  for (const [id, p] of Object.entries(places)) begun[id] = { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
+  for (const id of Object.keys(PLACES)) begun[id] = beginPlace(id);
   const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies, here.items);
   return { ...state, place: first, elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
 }
 
-// The places other than `here` as they began, with the memory in `seen` kept (D-021)
+// The places other than `here` as they began, with the memory in `seen` kept
+// (D-021); a deeper copy the hero has been to begins again too (D-144).
 function away(begun, here, seen) {
   const out = {};
-  for (const [id, p] of Object.entries(begun)) {
+  for (const id of new Set([...Object.keys(begun), ...Object.keys(seen)])) {
+    const p = begun[id] || beginPlace(id);
     if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: p.items || [], seen: seen[id] || blankMemory(p.room) };
   }
   return out;
