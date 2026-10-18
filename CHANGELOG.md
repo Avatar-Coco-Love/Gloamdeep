@@ -18,6 +18,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.7 (2026-10-18)
+- Oil. The lantern starts three quarters full, and every step burns a
+  little: 40 steps empty a full tank. As the oil drops, the light
+  shrinks from about 5 tiles down to under 2, and an empty lantern is
+  a small ember.
+- An oil bar of 10 amber segments, as in the study, sits in the top
+  right corner of the game screen.
+- Dev mode: "Refill oil" and "Empty oil" buttons.
+- The oil flask moves to its own next step.
+- Decisions: D-064 to D-067. Questions opened: Q-028, Q-029.
+
 ## 0.1.6 (2026-10-18)
 - Fog of war. Every tile the lantern has reached is remembered and stays
   faintly visible. A tile counts as seen when the light reaches its

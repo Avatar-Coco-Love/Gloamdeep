@@ -117,6 +117,7 @@ Until fog of war (step 13), tiles the lantern doesn't reach get the
 study's "never seen" darkness.
 
 **D-055 · 2026-10-18 · The lantern's reach for now** (step 12)
+Superseded by D-064 (2026-10-18): oil sets the reach.
 The light reaches as far as the study's lantern with a full tank (5.2
 tiles). Oil takes over the reach at step 14 (D-014).
 
@@ -166,3 +167,24 @@ remembered tiles look. The first room is a cave with no lights:
 never-seen is pitch black, and remembered tiles get a neutral grey at
 half the study's strength (0.095), picked from a picture. Other places
 get their values when they arrive (Q-027).
+
+**D-064 · 2026-10-18 · Oil amounts: the study's** (step 14, supersedes
+D-055, sets D-037's amounts)
+The tank starts three quarters full, and each passed turn burns 2.5% of
+a full tank (40 turns from full to empty). The light reaches 1.6 tiles
+plus 3.6 per full tank (5.2 when full), and an empty lantern is an
+ember reaching 0.9 tiles. Bumping a wall passes no turn, so burns none.
+
+**D-065 · 2026-10-18 · The oil bar** (step 14)
+The study's 10 amber segments, drawn in pixels in the top right corner
+of the game screen, always bright. A segment is lit while the oil is
+above its share. Short oil messages come later (Q-028).
+
+**D-066 · 2026-10-18 · Dev: Refill oil and Empty oil** (step 14, builds
+on D-047)
+Two wrench panel buttons give a full or an empty tank, with no turn
+passed. "Reset room" leaves the oil as it is.
+
+**D-067 · 2026-10-18 · The flask is its own step** (step 14, D-018)
+Draining oil is a new rule and the flask is the first item, a new kind
+in the registry, so they come in two steps: oil now, the flask next.

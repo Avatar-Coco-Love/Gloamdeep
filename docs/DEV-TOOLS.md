@@ -26,12 +26,14 @@ tools to be chosen together later.
 - Lighting off: a panel switch that shows the room unlit (D-057).
 - Reveal room (a switch) and Forget (a button) for fog of war; Reset room
   forgets too (D-061, D-062). Rules: `src/core/fog.js`.
+- Refill oil and Empty oil: two buttons, no turn passed (D-066).
+  Rules: `src/core/oil.js`.
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage)
-- Set, refill or empty oil
+- Set any amount of oil (refill and empty are built, D-066)
 - Reveal the whole floor (when there are floors)
 - Jump to any room or floor
 - Step enemies one turn at a time

@@ -9,8 +9,8 @@ import { tileAt } from './room.js';
 export const CELL = 4;
 const TILE_SIZE = 16;
 
-// The study lantern at full oil (study line 394); oil comes at step 14 (D-055).
-export const LANTERN = { r: (1.6 + 3.6) * TILE_SIZE, cr: 1.45, cg: 1.2, cb: 0.86 };
+// The study lantern's colour (study line 394). Oil sets its reach (src/core/oil.js).
+export const LANTERN = { cr: 1.45, cg: 1.2, cb: 0.86 };
 
 const blocks = (room, tx, ty) => tileAt(room, tx, ty).blocksLight;
 

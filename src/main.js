@@ -8,6 +8,8 @@ import { drawRoom } from './render/tiles.js';
 import { drawHero, LANTERN_AT } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { LANTERN } from './core/light.js';
+import { reach, setOil } from './core/oil.js';
+import { drawOilBar } from './render/hud.js';
 import { remember, forget } from './core/fog.js';
 import { createInput } from './input/input.js';
 import { createDev } from './dev/dev.js';
@@ -59,16 +61,17 @@ const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-0
   set: (s) => { state = s; },
   reset: () => resetRoom(state, startRoom, FIRST_START),
   forget: () => forget(state),
+  setOil: (oil) => setOil(state, oil),
 });
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
-// reaches are remembered (D-059). Again after a dev change to the memory.
+// reaches are remembered (D-059). Again after a dev change to the memory or oil.
 const lanternAt = (x, y) => ({ x: x * TILE + LANTERN_AT.x, y: y * TILE - 2 + LANTERN_AT.y });
 let rememberedAt = null, rememberedSeen = null;
 function rememberHere() {
-  const key = state.hero.x + ',' + state.hero.y;
+  const key = state.hero.x + ',' + state.hero.y + ',' + state.oil;
   if (key === rememberedAt && state.seen === rememberedSeen) return;
-  state = remember(state, { ...lanternAt(state.hero.x, state.hero.y), r: LANTERN.r });
+  state = remember(state, { ...lanternAt(state.hero.x, state.hero.y), r: reach(state.oil) });
   rememberedAt = key; rememberedSeen = state.seen;
 }
 
@@ -91,13 +94,14 @@ function frame(t) {
   ctx.drawImage(base, 0, 0);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy);
-  // § light: the lantern's flame is the light's centre (D-053 to D-056)
+  // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064)
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
   if (!(dev && dev.lightOff())) {
-    const r = LANTERN.r * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035));
+    const r = reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035));
     drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev && dev.revealed() ? null : state.seen);
   }
   ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); // the flame's core is always bright (study line 446)
+  drawOilBar(ctx, state.oil);
   if (dev) dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }

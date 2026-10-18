@@ -3,12 +3,12 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM } from '../src/core/room.js';
 import { makeState } from '../src/core/turn.js';
-import { LANTERN } from '../src/core/light.js';
+import { reach } from '../src/core/oil.js';
 import { remember, forget } from '../src/core/fog.js';
 import { resetRoom } from '../src/core/spawn.js';
 
 const room = makeRoom(FIRST_ROOM);
-const at = (tx, ty) => ({ x: tx * 16 + 8, y: ty * 16 + 8, r: LANTERN.r });
+const at = (tx, ty) => ({ x: tx * 16 + 8, y: ty * 16 + 8, r: reach(1) });
 const has = (s, tx, ty) => s.seen[ty * room.cols + tx] === 1;
 
 test('a new game remembers nothing', () => {

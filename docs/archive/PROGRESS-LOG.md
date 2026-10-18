@@ -2,6 +2,14 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #14 (0.1.4), the registry and spawning.** One content
+  registry gathers each kind's own file (tiles for now, keyed by id). The
+  wrench panel's Spawn list (None, Wall, Floor) comes from it: pick one,
+  then each tap or click places it, with no turn passed and never a wall
+  on the hero. "Reset room" brings the room back; nothing is kept after a
+  reload (D-048 to D-050). "Copy room" puts the room on the clipboard
+  as one line of code to hand to Claude, with a box to copy from if the
+  browser blocks it (D-051, D-052).
 - **2026-10-18, PR #13 (0.1.3), dev mode.** `?dev` turns it on and
   the browser remembers it (`?dev=off` forgets). A wrench button opens
   switches, off at first, for a faint tile grid and a coordinates readout
