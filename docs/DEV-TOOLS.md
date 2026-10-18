@@ -29,10 +29,12 @@ tools to be chosen together later.
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 - Spawn: chips grouped by registry kind; tap one, then tap tiles; tap it
   again to drop it (D-048 to D-050, D-079, D-089). Torches, lit or unlit (D-123), go only where
-  they can sit (D-100, D-102). Rules: `src/core/spawn.js`.
+  they can sit (D-100, D-102). Stairs can be spawned; they lead only where
+  the room's place has a room that way (D-130). Rules: `src/core/spawn.js`.
 - Lighting off: a panel switch that shows the room unlit (D-057).
 - Reveal room (a switch) and Forget (a button) for fog of war; Reset room
-  forgets too (D-061, D-062). Rules: `src/core/fog.js`.
+  forgets too (D-061, D-062), and resets only the room the hero is in
+  (D-136). Rules: `src/core/fog.js`.
 - Refill, Empty and a slider for any amount, no turn passed (D-066,
   D-091).
   Rules: `src/core/oil.js`.

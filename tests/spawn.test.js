@@ -24,7 +24,7 @@ test('nothing changes on the hero, outside the room, for the same tile or an unk
   assert.equal(spawn(s, 'wall', FIRST_START.x, FIRST_START.y), s);
   assert.equal(spawn(s, 'wall', -1, 0), s);
   assert.equal(spawn(s, 'wall', 11, 0), s);
-  assert.equal(spawn(s, 'floor', 1, 1), s);
+  assert.equal(spawn(s, 'floor', 2, 1), s);
   assert.equal(spawn(s, 'nothing', 1, 1), s);
 });
 

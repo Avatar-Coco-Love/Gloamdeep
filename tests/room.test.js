@@ -12,7 +12,7 @@ test('the first room is 11 × 13 and every letter is a known tile', () => {
 test('walls, floor, and outside the map counts as wall', () => {
   const room = makeRoom(FIRST_ROOM);
   assert.ok(isWall(room, 0, 0));
-  assert.equal(tileAt(room, 1, 1).id, 'floor');
+  assert.equal(tileAt(room, 2, 1).id, 'floor');
   assert.ok(isWall(room, -1, 5) && isWall(room, 11, 5) && isWall(room, 5, 13));
 });
 

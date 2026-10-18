@@ -1,6 +1,6 @@
 // § turn: the game state and the turn rules, as plain data (TECH.md,
 // "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
-import { tileAt } from './room.js';
+import { tileAt, makeRoom, PLACES } from './room.js';
 import { blankMemory } from './fog.js';
 import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
@@ -9,20 +9,41 @@ import { enemyAt, hitEnemy, biters } from './enemies.js';
 import { lightAt, openSide } from './lights.js';
 import { mountAt } from './mount.js';
 import { litAt } from './sight.js';
+import { takeStairs } from './stairs.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 
 // The hero starts where style study 1 put them (study line 277).
-export const FIRST_START = { x: 5, y: 11 };
+export const FIRST_START = PLACES.first.start;
 
 // The hero's health: 5, and a rat's bite takes 1 (D-115).
 export const HERO_HEALTH = 5;
 
 // `home` is where the hero wakes after a fall: the room as it started (D-119).
+// One room on its own, as tests use it; makeWorld adds the other places.
 export function makeState(room, start = FIRST_START, lights = [], enemies = []) {
-  const home = { room, hero: { x: start.x, y: start.y }, lights, enemies };
-  return { room, hero: home.hero, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items: [], lights, enemies, line: null, home };
+  const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies };
+  return { room, hero: home.hero, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items: [], lights, enemies, line: null, place: 'first', elsewhere: {}, home };
+}
+
+// § world: every place, the hero in the first one. The others wait in
+// `elsewhere` as they begin (stairs.js); `home.places` keeps them all as
+// they began, for a fall (D-136) and the dev reset.
+export function makeWorld(places = PLACES, first = 'first') {
+  const begun = {};
+  for (const [id, p] of Object.entries(places)) begun[id] = { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies };
+  const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies);
+  return { ...state, place: first, elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
+}
+
+// The places other than `here` as they began, with the memory in `seen` kept (D-021)
+function away(begun, here, seen) {
+  const out = {};
+  for (const [id, p] of Object.entries(begun)) {
+    if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: [], seen: seen[id] || blankMemory(p.room) };
+  }
+  return out;
 }
 
 // § step: (state, direction) → new state. Walking into something solid
@@ -30,18 +51,19 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = []) 
 // A passed turn burns oil while the lantern is lit (D-037, D-026). A flask on the new tile is then poured in,
 // never above full, and is gone (D-078). The oil lines look at the oil after
 // both (D-096). Walking into an enemy attacks it (D-017), and into an unlit
-// torch's wall lights it (D-121). Every passed turn ends with the enemies' turn (D-114).
+// torch's wall lights it (D-121). Stepping onto stairs takes them, before the
+// enemies left behind can act (D-132). Every passed turn ends with the
+// enemies' turn (D-114), in the room the hero ends it in.
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (tileAt(state.room, x, y).solid) return lightTorch(state, x, y);
   const foe = enemyAt(state, x, y);
   if (foe) return attack(state, foe);
-  const next = passTurn({ ...state, hero: { x, y } });
+  let next = passTurn({ ...state, hero: { x, y } });
   const found = itemAt(state, x, y);
-  if (!found) return endTurn(state, next);
-  const items = state.items.filter((it) => it !== found);
-  return endTurn(state, { ...next, items, oil: Math.min(1, next.oil + get(found.id).oil) });
+  if (found) next = { ...next, items: state.items.filter((it) => it !== found), oil: Math.min(1, next.oil + get(found.id).oil) };
+  return endTurn(state, takeStairs(next) || next);
 }
 
 // § enemies' turn: after the hero's, every enemy next to the hero bites, lit
@@ -88,11 +110,15 @@ function chaseStep(state, e) {
   return null;
 }
 
-// § fall: back to the room as it started, the hero on their starting tile
-// with full health and the starting oil. The map stays remembered (D-119, D-021).
+// § fall: back to the start of the first room, every room as it began, with
+// full health and the starting oil. The map stays remembered (D-119, D-136, D-021).
 function fall(state) {
-  const { room, hero, lights, enemies } = state.home;
-  return say({ ...state, room, hero, lights, enemies, items: [], health: HERO_HEALTH, oil: OIL.start }, 'fall');
+  const { place, hero } = state.home, begun = state.home.places || { [place]: state.home };
+  const seen = { [state.place]: state.seen };
+  for (const [id, p] of Object.entries(state.elsewhere)) seen[id] = p.seen;
+  const { room, lights, enemies } = begun[place];
+  const woke = { room, hero, lights, enemies, items: [], seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
+  return say({ ...state, ...woke, health: HERO_HEALTH, oil: OIL.start }, 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109).

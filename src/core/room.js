@@ -4,10 +4,11 @@ import { OUTSIDE } from './tiles.js';
 import { byLetter } from './registry.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
-// its water as floor. Stairs and the doorway come in later steps.
+// its water as floor, and the study's stairs down at 1,1 (D-130). The doorway
+// comes in a later step.
 export const FIRST_ROOM = [
   '###########',
-  '#...#.....#',
+  '#>..#.....#',
   '#...#.....#',
   '#.........#',
   '##.###....#',
@@ -28,6 +29,32 @@ export const FIRST_LIGHTS = [{ id: 'torch', x: 2, y: 0 }, { id: 'torch', x: 7, y
 
 // § first enemies: the study's rat, where it sat (study line 286, D-106)
 export const FIRST_ENEMIES = [{ id: 'rat', x: 2, y: 10 }];
+
+// § second room: two caves joined by a gap, the stairs up at 1,1 where the
+// hero arrives (D-131). Nothing in it yet.
+export const SECOND_ROOM = [
+  '###########',
+  '#<....#####',
+  '#.....#####',
+  '#.....#####',
+  '#.........#',
+  '###.......#',
+  '###.......#',
+  '#####.#####',
+  '#####.#####',
+  '#.........#',
+  '#.........#',
+  '#.........#',
+  '###########',
+];
+
+// § places: every room, with where the hero starts in it, what is in it at
+// first, and which place its stairs lead to (D-130 to D-132). A stair down
+// arrives on the next place's stair up, and back.
+export const PLACES = {
+  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, down: 'second' },
+  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: [], enemies: [], up: 'first' },
+};
 
 // § darkness: each place sets how dark never-seen tiles are and how
 // remembered ones look, as light multipliers (D-063). The first room is a
