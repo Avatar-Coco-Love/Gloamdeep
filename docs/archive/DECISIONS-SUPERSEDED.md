@@ -23,3 +23,10 @@ supersedes the burn in D-064)
 *Superseded by D-069 (2026-10-18).*
 Each passed turn burns 1.25% of a full tank, so 80 turns empty it. The
 start, the reach and the ember stay as in D-064.
+
+**D-105 · 2026-10-18 · Walking into the rat** (step 20)
+*Superseded by D-109 (2026-10-18).*
+For now the rat only sits there. Walking into it flashes it white for
+0.14 s, shakes the room a pixel side to side for 0.12 s (none with
+reduced motion), and says its line. Like bumping a wall, it passes no
+turn and burns no oil. Fighting comes in a later step (Q-030).

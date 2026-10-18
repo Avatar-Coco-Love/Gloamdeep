@@ -1,7 +1,7 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
 import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, FIRST_ENEMIES } from './core/room.js';
-import { makeState, step, wait, switchLantern, toward, DIRS, FIRST_START } from './core/turn.js';
+import { makeState, step, wait, switchLantern, toward, DIRS, FIRST_START, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
@@ -11,7 +11,7 @@ import { drawLight, flicker } from './render/light.js';
 import { drawBrackets, torchLights, drawFlames } from './render/torches.js';
 import { LANTERN } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
-import { drawOilBar } from './render/hud.js';
+import { drawOilBar, drawHearts } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
@@ -43,18 +43,27 @@ const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
 const shown = { x: state.hero.x, y: state.hero.y };
 let queued = null, nudge = null, lastHeldStep = 0; // nudge: { dx, dy, until } after bumping a wall
 let hit = null; // { enemy, until, shakeUntil } after attacking an enemy (D-105, D-109)
+let bitten = null; // { until, shakeUntil } after a bite: the hero flashes red (D-118)
 const HIT_FLASH_MS = 140, SHAKE_MS = 120; // the study's (study line 470)
 const settled = () => shown.x === state.hero.x && shown.y === state.hero.y;
+const flashFor = () => { const now = performance.now(); return { until: now + HIT_FLASH_MS, shakeUntil: now + SHAKE_MS }; };
 
 function tryStep(dir) {
   if (!settled()) { queued = dir; return; }
-  if (dir === 'wait') { state = wait(state); return; } // standing still, one turn (D-084)
-  const next = step(state, dir);
-  const [dx, dy] = DIRS[dir], foe = enemyAt(state, state.hero.x + dx, state.hero.y + dy);
-  if (foe) { const now = performance.now(); hit = { enemy: foe, until: now + HIT_FLASH_MS, shakeUntil: now + SHAKE_MS }; }
-  else if (next === state) nudgeToward(dir);
-  state = next;
-  if (reduceMotion.matches) { shown.x = state.hero.x; shown.y = state.hero.y; }
+  const before = state;
+  if (dir === 'wait') state = wait(state); // standing still, one turn (D-084)
+  else {
+    const next = step(state, dir);
+    const [dx, dy] = DIRS[dir], foe = enemyAt(state, state.hero.x + dx, state.hero.y + dy);
+    if (foe) hit = { enemy: foe, ...flashFor() };
+    else if (next === state) nudgeToward(dir);
+    state = next;
+  }
+  // A fall wakes the hero at the start: they appear there, with no slide (D-119).
+  const fell = state.line !== before.line && state.line?.id === 'fall';
+  if (fell || state.health < before.health) bitten = flashFor();
+  if (fell) hit = null;
+  if (fell || reduceMotion.matches) { shown.x = state.hero.x; shown.y = state.hero.y; }
 }
 function nudgeToward(dir) {
   const [dx, dy] = DIRS[dir];
@@ -118,7 +127,7 @@ function frame(t) {
   drawBrackets(ctx, state.room, state.lights);
   drawItems(ctx, state.items, t, reduceMotion.matches);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
-  drawHero(ctx, hx, hy);
+  drawHero(ctx, hx, hy, !!bitten && t < bitten.until);
   // § enemies: drawn last before the light, which shows them only in real light (D-106)
   const lightOn = !dev.lightOff();
   const flashing = hit && t < hit.until ? hit.enemy : null;
@@ -138,12 +147,14 @@ function frame(t) {
   drawFlames(ctx, state.room, state.lights, t, reduceMotion.matches);
   if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
   // § shake: the room jumps a pixel left and right after a hit; none with reduced motion (study line 432, D-105)
-  if (hit && t < hit.shakeUntil && !reduceMotion.matches) {
+  // A bite shakes it the same way (D-118).
+  if (((hit && t < hit.shakeUntil) || (bitten && t < bitten.shakeUntil)) && !reduceMotion.matches) {
     const sx = Math.floor(t / 30) % 2 ? 1 : -1;
     ctx.drawImage(canvas, 0, 0, W, H, sx, 0, W, H);
     ctx.fillStyle = '#0e0c16'; ctx.fillRect(sx > 0 ? 0 : W - 1, 0, 1, H);
   }
   drawOilBar(ctx, state.oil);
+  drawHearts(ctx, state.health, HERO_HEALTH);
   const line = shownLine(state);
   textLine.draw(ctx, line, t, reduceMotion.matches);
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }

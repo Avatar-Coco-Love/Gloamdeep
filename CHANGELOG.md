@@ -18,6 +18,20 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.18 (2026-10-18)
+- The rat fights back: after each step, wait or hit, a rat next to the
+  hero bites for 1. It stays on its tile, and bites in the dark too.
+- The hero has 5 health, shown as pixel hearts in the top left. A bite
+  flashes the hero red, shakes the room and says "The rat bites you.",
+  which replaces any other line that turn.
+- At 0 health the hero falls and wakes on the starting tile: the room as
+  it began, full health, oil back to 75%, the map still remembered. It
+  says "You fall, and wake again."
+- The dev stats line shows health.
+- Decisions D-077 to D-093 moved to an archive file, unchanged.
+- Decisions: D-114 to D-120 (part of D-109 superseded). Questions
+  closed: Q-030.
+
 ## 0.1.17 (2026-10-18)
 - Fighting the rat: walking into it swings the lantern. The first hit
   says "The rat squeaks and holds its ground.", and the second kills it

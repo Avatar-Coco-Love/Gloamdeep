@@ -4,17 +4,17 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.17 · **Stage:** foundation (the first code)
+**Version:** 0.1.18 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 22: the owner picks it** from the ideas after step 21 in the
+**Step 23: the owner picks it** from the ideas after step 22 in the
 build plan below. Propose the picked step as multiple choice.
-Read: `DESIGN.md`, and the open question the step touches, if any
-(the rat fighting back is Q-030).
+Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Pick step 22: the rat fights back (Q-030), stairs and a second room,
-  or more light (lighting an unlit torch, a standing torch on the floor).
+- Pick step 23: stairs and a second room, more light (lighting an unlit
+  torch, a standing torch on the floor), or the rat moving (chasing or
+  fleeing, and noticing the hero less in the dark, D-026).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -44,17 +44,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 19 Torches, 0.1.15
 - [x] 20 The first enemy, a rat that holds its ground, 0.1.16
 - [x] 21 Fighting the rat: two lantern hits kill it, 0.1.17
-- Ideas after 21, order open: the rat fights back (Q-030), stairs and a
-  second room, more light (unlit torches to light, floor mounts)
+- [x] 22 The rat fights back: bites, hearts and falling, 0.1.18
+- Ideas after 22, order open: stairs and a second room, more light
+  (unlit torches to light, floor mounts), the rat moving
 
 ## Log (last 3)
-- **2026-10-18, 0.1.15, torches.** Three wall torches in the first
-  room, as in the study (the top-right one a tile left, clear of the oil
-  bar): orange light that flickers, a swaying flame and rising embers,
-  shown even with the lantern off. Lights are their own registry kind;
-  a torch takes the look of where it sits, a brick face or a wall side
-  (D-098 to D-103). Playtest:
-  https://claude.ai/artifact/TTjokfKEau23XoE6QBvsip
 - **2026-10-18, 0.1.16, the rat.** The first enemy, redrawn from the
   study's rat (option A), sits at 2,10 and bobs. Walking into it flashes
   it white, shakes the room a pixel and says "The rat squeaks and holds
@@ -67,3 +61,10 @@ Foundation (0.1.x): one small visible thing per step
   and it flashes and is gone. A hit passes a turn and burns oil. It
   doesn't fight back yet (D-109 to D-113, Q-030 narrowed). Playtest:
   https://claude.ai/artifact/NBwf6Tqa3gJRmuuKRtLErp
+- **2026-10-18, 0.1.18, the rat fights back.** After each passed turn a
+  rat next to the hero bites for 1, lit or dark, and stays put. The hero
+  has 5 health as pixel hearts top left; a bite flashes them red, shakes
+  the room and says "The rat bites you." (it beats other lines). At 0
+  they fall and wake at the start: room as it began, full health, 75%
+  oil, map kept (D-114 to D-120, Q-030 closed). Playtest:
+  https://claude.ai/artifact/5iy2XRbjCkvWkQWRjmWEDU

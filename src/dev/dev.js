@@ -88,7 +88,7 @@ export function createDev(stage, canvas, game) {
       tools.sync(state);
       // § stats: always on; a second line for the pick and the pointed tile (D-088)
       const h = state.hero, picked = tools.picked();
-      let next = `turn ${state.turn} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · hero ${h.x},${h.y}`;
+      let next = `turn ${state.turn} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · hero ${h.x},${h.y}`;
       const more = [];
       if (picked) more.push(`placing ${picked.name}`);
       if (opts.coords && pointed) {

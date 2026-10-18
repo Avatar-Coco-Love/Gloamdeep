@@ -1,4 +1,5 @@
-// § rat: the first enemy sits in the first room, and two hits kill it (D-104 to D-113)
+// § rat: the first enemy sits in the first room, and two hits kill it (D-104 to D-113).
+// Its bite is in bite.test.js.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, FIRST_ENEMIES } from '../src/core/room.js';
@@ -21,13 +22,12 @@ test('the first room has the rat where the study put it', () => {
   assert.equal(enemyAt(start(), 2, 10).id, 'rat');
 });
 
-test('the first hit passes a turn, burns oil and says the rat holds its ground', () => {
+test('the first hit passes a turn, burns oil and hurts the rat', () => {
   const s = nextToRat();
   const n = step(s, 'left');
   assert.deepEqual(n.hero, { x: 3, y: 10 }, 'the hero stays put');
   assert.equal(n.turn, 1);
   assert.ok(n.oil < s.oil);
-  assert.equal(shownLine(n).text, 'The rat squeaks and holds its ground.');
   assert.equal(enemyAt(n, 2, 10).health, 1);
 });
 
@@ -44,8 +44,8 @@ test('with the lantern off, a hit burns no oil', () => {
   assert.equal(step(s, 'left').oil, s.oil);
 });
 
-test('an oil line said on the same turn replaces the rat line', () => {
-  const n = step({ ...nextToRat(), oil: 0.2 }, 'left');
+test('an oil line said on the same turn as the kill replaces the kill line', () => {
+  const n = step({ ...nextToRat(), oil: 0.2, enemies: [{ id: 'rat', x: 2, y: 10, health: 1 }] }, 'left');
   assert.equal(shownLine(n).text, 'The flame is getting low.');
 });
 

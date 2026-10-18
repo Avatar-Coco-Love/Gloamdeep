@@ -24,6 +24,27 @@ export function drawOilBar(c, oil) {
   }
 }
 
+// § hearts: the hero's health as small pixel hearts in the top left, in a
+// box like the oil bar's (D-116). A full heart is the hostile red with the
+// study's deeper red (PAL p, R) under it; an empty one is an empty oil segment's colour.
+const HEART = ['.x.x.', 'xxxxx', '.xxx.', '..x..'], HEART_W = 5;
+export function drawHearts(c, health, max) {
+  const w = max * HEART_W + (max - 1) * GAP + 4, h = HEART.length + 4, bx = 2, by = BOX_Y;
+  c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
+  c.fillStyle = '#2a2636';
+  c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
+  c.fillRect(bx, by, 1, h); c.fillRect(bx + w - 1, by, 1, h);
+  for (let i = 0; i < max; i++) {
+    const x0 = bx + 2 + i * (HEART_W + GAP), full = i < health;
+    HEART.forEach((row, y) => [...row].forEach((ch, x) => {
+      if (ch !== 'x') return;
+      const low = y === HEART.length - 1 || HEART[y + 1][x] !== 'x'; // the heart's lower edge
+      c.fillStyle = !full ? '#2a2636' : low ? '#c4473a' : '#e8786a';
+      c.fillRect(x0 + x, by + 2 + y, 1, 1);
+    }));
+  }
+}
+
 // § lantern icon: the hero's lantern pixels (sprites.js) for the switch button,
 // a 5 × 5 map. The flame is lit, or the empty oil segments' colour when off (D-080).
 const LANTERN_ICON = ['..k..', '.kak.', 'kywyk', 'kYyYk', '.kOk.'];

@@ -7,6 +7,8 @@ export const LINES = {
   oilEmpty: { text: 'The lantern gutters to an ember.', warn: true }, // a warning, in amber (D-097)
   ratHurt: { text: 'The rat squeaks and holds its ground.', warn: false }, // the study's line, cut to fit (D-107)
   ratDie: { text: 'The rat squeaks and falls still.', warn: false }, // (D-112)
+  ratBite: { text: 'The rat bites you.', warn: false }, // (D-117)
+  fall: { text: 'You fall, and wake again.', warn: false }, // (D-119)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
 const OIL_LOW = 0.2; // "under 20%", as in the study

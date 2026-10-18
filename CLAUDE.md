@@ -17,7 +17,7 @@ CSS and JavaScript, with everything drawn and synthesized in code.
   the owner's choice. This applies to design, art, code structure and bug
   fixes.
 - Never invent mechanics, story, names or numbers that are not in
-  `docs/DECISIONS.md` or its archive files (D-041, D-083, D-103). If something
+  `docs/DECISIONS.md` or its archive files (D-041, D-083, D-103, D-120). If something
   is missing, add it to
   `docs/OPEN-QUESTIONS.md` and ask.
 - Ask questions as **multiple choice** (the AskUserQuestion tool when it
@@ -45,10 +45,11 @@ Read the smallest file that answers the question.
 | File | What it holds | When to read it |
 | --- | --- | --- |
 | `docs/PROGRESS.md` | status, Next up, the last 3 log entries | every conversation |
-| `docs/DECISIONS.md` | settled decisions from D-077 on | grep for an ID or topic |
+| `docs/DECISIONS.md` | settled decisions from D-094 on | grep for an ID or topic |
 | `docs/archive/DECISIONS-PREPRODUCTION.md` | D-001 to D-038, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-FOUNDATION-1.md` | D-039 to D-052, D-070 to D-076, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-FOUNDATION-2.md` | D-053 to D-069, still in force | grep only, never read whole |
+| `docs/archive/DECISIONS-FOUNDATION-3.md` | D-077 to D-093, still in force | grep only, never read whole |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
 | `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
 | `docs/VISION.md` | the pitch, inspirations, the pillars | when proposing a design |
