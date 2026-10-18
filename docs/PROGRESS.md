@@ -13,7 +13,7 @@ the dev spawn list. Offer options as multiple choice.
 Read: `DESIGN.md`, `TECH.md` ("One content registry"), `DEV-TOOLS.md`.
 
 ## Waiting on the owner
-- Merge the step 14 PR (0.1.7). Playtest (dev mode starts on): https://claude.ai/artifact/UJB5Bkpkbh1co5VRoFLTsk
+- Merge PR #17 (step 14, 0.1.7). Playtest (dev mode starts on): https://claude.ai/artifact/UJB5Bkpkbh1co5VRoFLTsk
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -52,7 +52,7 @@ Foundation (0.1.x): one small visible thing per step
   too. After the playtest the study's blue felt too bright and like
   moonlight, so each place now sets its darkness: this cave is pitch
   black with a faint grey memory (D-059 to D-063, Q-027 opened).
-- **2026-10-18, step 14 (0.1.7), oil.** The lantern starts three
+- **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
   quarters full and each step burns 2.5% (40 steps empty a full tank).
   The light shrinks with the oil, from 5.2 tiles to 1.6, then an ember.
   The study's 10-segment oil bar sits in the top right corner. Dev panel:
