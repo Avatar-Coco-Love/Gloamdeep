@@ -49,6 +49,7 @@ Foundation (0.1.x): one small visible thing per step
   playtest (D-042 to D-044). Opened Q-025 (a tap/swipe switch)
   and Q-026 (walking around walls to a held finger).
 - **2026-10-18, PR #13 (0.1.3), dev mode.** `?dev` turns it on and
-  the browser remembers it. A DEV button opens switches for a faint tile
-  grid and a coordinates readout with a bright outline on the pointed
-  tile; ` toggles them on a PC (D-045, D-046).
+  the browser remembers it (`?dev=off` forgets). A wrench button opens
+  switches, off at first, for a faint tile grid and a coordinates readout
+  with a bright outline on the pointed tile; ` toggles them on a PC. The
+  playtest dropped "Leave dev mode" (D-045 to D-047).

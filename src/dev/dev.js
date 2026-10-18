@@ -1,10 +1,10 @@
 // § dev: dev mode (DEV-TOOLS.md). `?dev` in the address turns it on, and the
-// browser remembers it until "Leave dev mode" (D-030, D-045). A DEV button
+// browser remembers it until `?dev=off` (D-030, D-045, D-047). A wrench button
 // opens a panel of switches; on a PC the ` key shows or hides the overlay.
 // Plain page text, not the pixel font (D-045).
 import { tileAt } from '../core/room.js';
 import { COLS, ROWS } from '../render/screen.js';
-import { drawGrid, drawPointed } from '../render/overlay.js';
+import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 
 const KEY = 'gloamdeep-dev'; // localStorage: the switches, saved while dev mode is on
 
@@ -18,15 +18,20 @@ function save(opts) {
 
 // Returns null when dev mode is off, so players get no DEV button at all.
 export function createDev(stage, canvas) {
-  const asked = new URLSearchParams(location.search).has('dev');
+  const asked = new URLSearchParams(location.search).get('dev'); // '' for ?dev, 'off' for ?dev=off
+  if (asked === 'off') { save(null); return null; }
   const saved = load();
-  if (!asked && !saved) return null;
-  const opts = { grid: true, coords: true, ...saved };
+  if (asked === null && !saved) return null;
+  const opts = { grid: false, coords: false, ...saved }; // every switch starts off (D-047)
   save(opts);
 
-  // § panel: the DEV button and its switches
-  const button = el('button', { id: 'dev-button', type: 'button', textContent: 'DEV' });
+  // § panel: the wrench button and its switches
+  const button = el('button', { id: 'dev-button', type: 'button', title: 'Dev tools' });
+  button.setAttribute('aria-label', 'Dev tools');
   button.setAttribute('aria-expanded', 'false');
+  const icon = el('canvas', { width: 12, height: 12 });
+  drawWrench(icon.getContext('2d'));
+  button.append(icon);
   const panel = el('div', { id: 'dev-panel', hidden: true });
   const readout = el('div', { id: 'dev-readout' });
   const boxes = {};
@@ -37,19 +42,11 @@ export function createDev(stage, canvas) {
     row.append(boxes[name], ' ' + label);
     panel.append(row);
   }
-  const leave = el('button', { type: 'button', textContent: 'Leave dev mode' });
-  panel.append(leave);
   document.body.append(button, panel, readout);
 
   button.addEventListener('click', () => {
     panel.hidden = !panel.hidden;
     button.setAttribute('aria-expanded', String(!panel.hidden));
-  });
-  leave.addEventListener('click', () => {
-    save(null);
-    const url = new URL(location.href);
-    url.searchParams.delete('dev');
-    location.replace(url);
   });
 
   // § key: ` shows or hides the whole overlay

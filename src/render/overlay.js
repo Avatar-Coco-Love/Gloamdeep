@@ -21,3 +21,23 @@ export function drawPointed(c, tx, ty) {
   c.fillRect(x, y + 1, 1, TILE - 2);
   c.fillRect(x + TILE - 1, y + 1, 1, TILE - 2);
 }
+
+// § wrench: the dev button's icon, a 12 × 12 pixel map (D-047)
+const WRENCH = [
+  '..##....##..',
+  '..##....##..',
+  '..###..###..',
+  '...######...',
+  '....####....',
+  '.....##.....',
+  '.....##.....',
+  '.....##.....',
+  '.....##.....',
+  '....####....',
+  '....#..#....',
+  '....####....',
+];
+export function drawWrench(c) {
+  c.fillStyle = POINTED;
+  WRENCH.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === '#') c.fillRect(x, y, 1, 1); }));
+}

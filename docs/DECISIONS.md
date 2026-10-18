@@ -52,6 +52,7 @@ held finger walks about 4 steps a second and still steers toward the
 finger. Taps, swipes and keys keep their quick pace.
 
 **D-045 · 2026-10-18 · The dev mode switch** (step 10, builds on D-030)
+*Partly superseded by D-047 (2026-10-18): no "Leave dev mode", a wrench icon.*
 Opening the game with `?dev` turns dev mode on, and that browser remembers
 it (saved in localStorage) until "Leave dev mode" in the dev panel. In dev
 mode a DEV button (top-left, 44 px) opens a small panel of switches. On a
@@ -59,8 +60,16 @@ PC the ` (backtick) key shows or hides the overlay. Dev text (panel,
 readout) is plain page text; the pixel font (D-031) is for game text.
 
 **D-046 · 2026-10-18 · The grid and coordinates overlay** (step 10)
+*Partly superseded by D-047 (2026-10-18): switches start off.*
 Grid: a faint 1-pixel line on every tile edge. Coordinates: a readout at
 the bottom left gives the hero's tile and the tile under the mouse or
 finger, with that tile's kind ("hero 5,11 · tile 3,4 wall"), and the
 pointed tile gets a bright outline. Tiles count from 0,0 at the top left.
 Both switches start on.
+
+**D-047 · 2026-10-18 · Dev mode after the first playtest** (step 10,
+supersedes parts of D-045 and D-046)
+"Leave dev mode" is gone (in the playtest it only turned everything back
+on). Opening the game with `?dev=off` forgets dev mode on that browser.
+Every dev switch starts off. The DEV button shows a small pixel wrench,
+drawn in code, instead of the word.

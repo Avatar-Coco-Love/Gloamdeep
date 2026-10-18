@@ -20,15 +20,16 @@ Entry format:
 
 ## 0.1.3 (2026-10-18)
 - Dev mode is here. Open the game with `?dev` once and that browser
-  remembers it, until "Leave dev mode" in the dev panel.
-- A small DEV button in the top-left corner opens the panel, with two
-  switches: Grid and Coordinates. On a PC the ` key shows or hides both.
+  remembers it. `?dev=off` makes it forget.
+- A small wrench button in the top-left corner opens the dev panel, with
+  two switches: Grid and Coordinates. Both start off. On a PC the ` key
+  shows or hides both.
 - Grid: a faint line on every tile edge.
 - Coordinates: a readout at the bottom gives the hero's tile and the tile
   under the mouse or finger (for example "hero 5,11 · tile 3,4 wall"),
   and that tile gets a bright outline. Tiles count from 0,0 at the top left.
 - Players without `?dev` see nothing new.
-- Decisions: D-045, D-046.
+- Decisions: D-045, D-046, D-047.
 
 ## 0.1.2 (2026-10-18)
 - The hero is on screen: the style study's hooded figure, without the

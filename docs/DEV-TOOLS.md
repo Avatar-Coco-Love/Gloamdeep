@@ -17,8 +17,9 @@ tools to be chosen together later.
 
 ## Decided
 - Spawn any registry entry (item, enemy, NPC, tile) at a chosen tile (D-006).
-- The switch: `?dev` once, remembered until "Leave dev mode"; a DEV button
-  opens a panel of switches; ` on a PC (D-045). Code: `src/dev/dev.js`.
+- The switch: `?dev` once, remembered until `?dev=off`; a wrench button
+  opens a panel of switches, all off at first; ` on a PC (D-045, D-047).
+  Code: `src/dev/dev.js`.
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
