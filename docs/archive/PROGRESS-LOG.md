@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.13, dev tools for everyone.** The wrench and a
+  stats line (turn, oil %, lit, hero tile) show on every build. The
+  panel has View, Spawn, Room, Oil and Share buttons, one open below; spawn entries are
+  chips by kind; an oil slider; PC keys ` G C R. A start-up hook syncs
+  `main` (D-086 to D-093). Playtest:
+  https://claude.ai/artifact/Ws3G6Ya6NXtCob5cbvnHHw
 - **2026-10-18, 0.1.12, wait a turn.** Tap or click the hero, or press
   Space (hold it to keep waiting), and the hero stands still for a
   turn. Oil burns as for a step while the lantern is lit. Only the oil

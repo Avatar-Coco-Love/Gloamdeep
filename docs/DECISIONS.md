@@ -170,3 +170,34 @@ torches back and removes spawned ones.
 **D-103 · 2026-10-18 · The decision log makes room again** (step 19, as
 D-083) D-053 to D-069 (steps 12 to 14) moved unchanged to
 `archive/DECISIONS-FOUNDATION-2.md`. They stay in force.
+
+**D-104 · 2026-10-18 · The rat, the first enemy** (step 20, D-009)
+Enemies are their own kind in the registry, with their own list in the
+game state, like items and lights. The rat is redrawn from the study's
+(option A, owner approved the picture): side on, facing right, grey with
+a pink hostile eye, ear, nose, feet and tail, and a shaded belly. It
+bobs a pixel about every half second, as the study's did (0.52 s), still
+with reduced motion.
+
+**D-105 · 2026-10-18 · Walking into the rat** (step 20)
+For now the rat only sits there. Walking into it flashes it white for
+0.14 s, shakes the room a pixel side to side for 0.12 s (none with
+reduced motion), and says its line. Like bumping a wall, it passes no
+turn and burns no oil. Fighting comes in a later step (Q-030).
+
+**D-106 · 2026-10-18 · The rat is seen only in light** (step 20)
+Lantern or torch light shows the rat, shaded like the floor around it.
+Memory never does: on a remembered tile out of the light, the floor
+shows without it, and with the lantern off and no torch near it can't
+be seen at all. The first room's rat sits where the study's did, at 2,10.
+
+**D-107 · 2026-10-18 · The rat's line** (step 20)
+"The rat squeaks and holds its ground." The study's line began "You
+swing your lantern.", but the whole of it doesn't fit the text line, so
+it was cut to fit (owner's pick).
+
+**D-108 · 2026-10-18 · Spawning enemies** (step 20)
+The spawn tool has an Enemies group. An enemy goes on floor, off the
+hero, one thing per tile: not on an item or another enemy, and no wall
+or item goes on it. "Reset room" brings the starting rat back and
+removes spawned ones.

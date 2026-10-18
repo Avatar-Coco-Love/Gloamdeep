@@ -92,8 +92,8 @@ bump. Respect `prefers-reduced-motion`: stop the bobbing, flicker and
 drift.
 
 ## Weak spots to fix (D-009)
-- **The rat sprite** is the weakest piece. Redraw it when the rat is first
-  built, and show the owner before it goes in.
+- **The rat sprite** was the weakest piece. Redrawn at step 20 (option A,
+  approved by the owner, D-104). Code: `src/render/sprites.js`.
 - **Shadow edges** stepped in 4-pixel blocks. Fixed at step 12: edges blend
   over one cell into the dithered bands (D-053). Code: `src/render/light.js`.
 

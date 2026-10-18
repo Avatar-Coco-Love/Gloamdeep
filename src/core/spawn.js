@@ -7,6 +7,7 @@ import { blankMemory } from './fog.js';
 import { itemAt } from './turn.js';
 import { lightAt } from './lights.js';
 import { mountAt } from './mount.js';
+import { enemyAt } from './enemies.js';
 
 export function spawn(state, id, x, y) {
   const entry = get(id), room = state.room;
@@ -15,16 +16,17 @@ export function spawn(state, id, x, y) {
     if (tileAt(room, x, y) === entry) return state;
     const onHero = state.hero.x === x && state.hero.y === y;
     if (onHero && entry.solid) return state; // a wall can't go on the hero (D-049)
-    if (entry.solid && itemAt(state, x, y)) return state; // nor on an item (D-079)
+    if (entry.solid && (itemAt(state, x, y) || enemyAt(state, x, y))) return state; // nor on an item or enemy (D-079, D-108)
     const next = withTile(room, x, y, entry);
     // every light must still have somewhere to sit; it turns to fit if it can (D-099, D-102)
     if (state.lights.some((l) => !mountAt(next, l.x, l.y))) return state;
     return { ...state, room: next };
   }
-  if (entry.kind === 'item') { // on floor, off the hero, one per tile (D-079)
+  if (entry.kind === 'item' || entry.kind === 'enemy') { // on floor, off the hero, one thing per tile (D-079, D-108)
     const onHero = state.hero.x === x && state.hero.y === y;
-    if (onHero || tileAt(room, x, y).solid || itemAt(state, x, y)) return state;
-    return { ...state, items: [...state.items, { id, x, y }] };
+    if (onHero || tileAt(room, x, y).solid || itemAt(state, x, y) || enemyAt(state, x, y)) return state;
+    const list = entry.kind === 'item' ? 'items' : 'enemies';
+    return { ...state, [list]: [...state[list], { id, x, y }] };
   }
   if (entry.kind === 'light') { // where it can sit, one per tile (D-100)
     if (!mountAt(room, x, y) || lightAt(state, x, y)) return state;
@@ -35,8 +37,9 @@ export function spawn(state, id, x, y) {
 
 // § reset: the starting room comes back (D-050). If the hero now stands in a
 // wall, they go back to their starting tile. The memory is forgotten too (D-062),
-// spawned items are gone (D-079), and the starting lights come back (D-102).
-export function resetRoom(state, room, start, lights = []) {
+// spawned items are gone (D-079), and the starting lights and enemies come
+// back (D-102, D-108).
+export function resetRoom(state, room, start, lights = [], enemies = []) {
   const hero = tileAt(room, state.hero.x, state.hero.y).solid ? { x: start.x, y: start.y } : state.hero;
-  return { ...state, room, hero, seen: blankMemory(room), items: [], lights };
+  return { ...state, room, hero, seen: blankMemory(room), items: [], lights, enemies };
 }

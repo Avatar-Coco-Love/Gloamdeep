@@ -1,10 +1,11 @@
 // § lines: what the text line says, and when (D-094 to D-097). Plain data,
 // no drawing. A line is said on a turn and shows for LINE_TURNS turns.
-// The words are style study 1's (study lines 482–483, Q-028).
+// The words are style study 1's (study lines 462, 482–483, Q-028).
 
 export const LINES = {
   oilLow: { text: 'The flame is getting low.', warn: false },
   oilEmpty: { text: 'The lantern gutters to an ember.', warn: true }, // a warning, in amber (D-097)
+  ratBump: { text: 'The rat squeaks and holds its ground.', warn: false }, // the study's line, cut to fit (D-107)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
 const OIL_LOW = 0.2; // "under 20%", as in the study

@@ -4,8 +4,9 @@
 import { TILES } from './tiles.js';
 import { ITEMS } from './items.js';
 import { LIGHTS } from './lights.js';
+import { ENEMIES } from './enemies.js';
 
-const KINDS = [TILES, ITEMS, LIGHTS]; // later: enemies, NPCs, each from its own file
+const KINDS = [TILES, ITEMS, LIGHTS, ENEMIES]; // later: NPCs, from its own file
 
 export const ALL = KINDS.flatMap((table) => Object.values(table));
 const BY_ID = new Map(ALL.map((e) => [e.id, e]));

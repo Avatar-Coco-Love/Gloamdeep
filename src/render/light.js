@@ -24,8 +24,11 @@ function blend(cells, x, y) {
 // `lights`: [{ x, y, r, cr, cg, cb }] in screen pixels: the lantern and any
 // torches (D-101). r 0 is no light at all, the lantern switched off (D-082).
 // `memory`: one byte per tile, 1 when remembered; null shows every tile remembered.
+// `under`: the picture's pixels before enemies were drawn, or null. Where
+// only memory's dim light falls, those show instead, so an enemy is seen
+// only in real light, never in memory (D-106).
 const seenBy = []; // one cell buffer per light, reused every frame
-export function drawLight(ctx, room, lights, memory) {
+export function drawLight(ctx, room, lights, memory, under = null) {
   const lit = [];
   for (const L of lights) {
     if (L.r <= 0) continue;
@@ -41,7 +44,7 @@ export function drawLight(ctx, room, lights, memory) {
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const th = BAYER[((y & 3) << 2) | (x & 3)];
     const amb = blend(known, x, y) > th ? remembered : unseen;
-    let lr = amb[0], lg = amb[1], lb = amb[2];
+    let lr = 0, lg = 0, lb = 0;
     for (let i = 0; i < lit.length; i++) {
       const { L, cells } = lit[i], dx = x - L.x, dy = y - L.y;
       let f = 1 - Math.sqrt(dx * dx + dy * dy) / L.r;
@@ -51,8 +54,10 @@ export function drawLight(ctx, room, lights, memory) {
       f = Math.floor(Math.pow(f, 1.25) * s * BANDS + th) / BANDS;
       lr += f * L.cr; lg += f * L.cg; lb += f * L.cb;
     }
-    const k = (y * W + x) * 4;
-    d[k] = Math.min(255, d[k] * lr); d[k + 1] = Math.min(255, d[k + 1] * lg); d[k + 2] = Math.min(255, d[k + 2] * lb);
+    const k = (y * W + x) * 4, u = under || d;
+    d[k] = Math.min(255, u[k] * amb[0] + d[k] * lr);
+    d[k + 1] = Math.min(255, u[k + 1] * amb[1] + d[k + 1] * lg);
+    d[k + 2] = Math.min(255, u[k + 2] * amb[2] + d[k + 2] * lb);
   }
   ctx.putImageData(img, 0, 0);
 }
