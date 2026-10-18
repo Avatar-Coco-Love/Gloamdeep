@@ -9,6 +9,8 @@ export const LINES = {
   ratDie: { text: 'The rat squeaks and falls still.', warn: false }, // (D-112)
   ratBite: { text: 'The rat bites you.', warn: false }, // (D-117)
   fall: { text: 'You fall, and wake again.', warn: false }, // (D-119)
+  torchLit: { text: 'You light the torch.', warn: false }, // (D-124)
+  lanternDark: { text: 'Your lantern is dark.', warn: false }, // (D-124)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
 const OIL_LOW = 0.2; // "under 20%", as in the study

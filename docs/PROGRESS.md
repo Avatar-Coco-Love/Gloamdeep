@@ -4,17 +4,17 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.18 · **Stage:** foundation (the first code)
+**Version:** 0.1.19 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 23: the owner picks it** from the ideas after step 22 in the
+**Step 24: the owner picks it** from the ideas after step 23 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Pick step 23: stairs and a second room, more light (lighting an unlit
-  torch, a standing torch on the floor), or the rat moving (chasing or
-  fleeing, and noticing the hero less in the dark, D-026).
+- Pick step 24: stairs and a second room, a standing torch on the floor,
+  or the rat moving (chasing or fleeing, and noticing the hero less in
+  the dark, D-026).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -45,16 +45,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 20 The first enemy, a rat that holds its ground, 0.1.16
 - [x] 21 Fighting the rat: two lantern hits kill it, 0.1.17
 - [x] 22 The rat fights back: bites, hearts and falling, 0.1.18
-- Ideas after 22, order open: stairs and a second room, more light
-  (unlit torches to light, floor mounts), the rat moving
+- [x] 23 Lighting an unlit torch, 0.1.19
+- Ideas after 23, order open: stairs and a second room, a standing
+  torch on the floor, the rat moving
 
 ## Log (last 3)
-- **2026-10-18, 0.1.16, the rat.** The first enemy, redrawn from the
-  study's rat (option A), sits at 2,10 and bobs. Walking into it flashes
-  it white, shakes the room a pixel and says "The rat squeaks and holds
-  its ground."; no turn passes. It shows only in real light, never in
-  memory. Spawn has an Enemies group (D-104 to D-108, Q-030 opened).
-  Playtest: https://claude.ai/artifact/DSjdcNS3Emo2XoRgRVpgWV
 - **2026-10-18, 0.1.17, fighting the rat.** Walking into the rat swings
   the lantern: the first hit says "The rat squeaks and holds its
   ground.", the second kills it with "The rat squeaks and falls still."
@@ -68,3 +63,10 @@ Foundation (0.1.x): one small visible thing per step
   they fall and wake at the start: room as it began, full health, 75%
   oil, map kept (D-114 to D-120, Q-030 closed). Playtest:
   https://claude.ai/artifact/5iy2XRbjCkvWkQWRjmWEDU
+- **2026-10-18, 0.1.19, an unlit torch.** A fourth torch, unlit, hangs
+  on the small block at 7,9, a charred stub near the start. Walking into
+  its wall from below with the lantern lit lights it for good: "You light
+  the torch.", one turn. With the lantern off the hero bumps and hears
+  "Your lantern is dark." A fall or reset puts it back unlit; the spawn
+  tool has unlit torches (D-121 to D-125). Playtest:
+  https://claude.ai/artifact/SFtxL1voF3Fc6D9NfQ1oRX

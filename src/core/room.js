@@ -22,8 +22,9 @@ export const FIRST_ROOM = [
 ];
 
 // § first lights: the study's three wall torches (study line 273), the
-// top-right one a tile left, clear of the oil bar (D-101).
-export const FIRST_LIGHTS = [{ id: 'torch', x: 2, y: 0 }, { id: 'torch', x: 7, y: 0 }, { id: 'torch', x: 4, y: 4 }];
+// top-right one a tile left, clear of the oil bar (D-101), and an unlit one
+// on the block's face near the start (D-123).
+export const FIRST_LIGHTS = [{ id: 'torch', x: 2, y: 0 }, { id: 'torch', x: 7, y: 0 }, { id: 'torch', x: 4, y: 4 }, { id: 'unlitTorch', x: 7, y: 9 }];
 
 // § first enemies: the study's rat, where it sat (study line 286, D-106)
 export const FIRST_ENEMIES = [{ id: 'rat', x: 2, y: 10 }];
