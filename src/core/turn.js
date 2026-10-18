@@ -2,6 +2,7 @@
 // "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
 import { tileAt } from './room.js';
 import { blankMemory } from './fog.js';
+import { OIL, burnOil } from './oil.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -10,16 +11,17 @@ export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 export const FIRST_START = { x: 5, y: 11 };
 
 export function makeState(room, start = FIRST_START) {
-  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room) };
+  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start };
 }
 
 // § step: (state, direction) → new state. Walking into something solid
 // changes nothing and passes no turn, so the same state comes back (D-043).
+// A passed turn burns oil (D-037).
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (tileAt(state.room, x, y).solid) return state;
-  return { ...state, hero: { x, y }, turn: state.turn + 1 };
+  return { ...state, hero: { x, y }, turn: state.turn + 1, oil: burnOil(state.oil) };
 }
 
 // § toward: the direction from one point to another, along whichever side is

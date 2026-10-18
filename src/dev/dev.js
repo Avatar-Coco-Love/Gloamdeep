@@ -21,7 +21,8 @@ function save(opts) {
 
 // Returns null when dev mode is off, so players get no DEV button at all.
 // `game` gives tools the state: get() reads it, set(s) replaces it, reset()
-// gives the state with the starting room back, forget() with a blank memory.
+// gives the state with the starting room back, forget() with a blank memory,
+// setOil(amount) with that much oil.
 export function createDev(stage, canvas, game) {
   const asked = new URLSearchParams(location.search).get('dev'); // '' for ?dev, 'off' for ?dev=off
   if (asked === 'off') { save(null); return null; }
@@ -64,6 +65,14 @@ export function createDev(stage, canvas, game) {
   const forgetBtn = el('button', { type: 'button', textContent: 'Forget' }); // a blank memory (D-061)
   forgetBtn.addEventListener('click', () => game.set(game.forget()));
   panel.append(reset, forgetBtn);
+
+  // § oil: a full tank or an empty one, with no turn passed (D-066)
+  panel.append(el('div', { className: 'dev-heading', textContent: 'Oil' }));
+  for (const [label, amount] of [['Refill oil', 1], ['Empty oil', 0]]) {
+    const btn = el('button', { type: 'button', textContent: label });
+    btn.addEventListener('click', () => game.set(game.setOil(amount)));
+    panel.append(btn);
+  }
 
   // § copy: the room code to the clipboard, to hand to Claude (D-051, D-052). If the
   // browser blocks it, a box shows the code, selected, to copy by hand.

@@ -4,16 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.6 · **Stage:** foundation (the first code)
+**Version:** 0.1.7 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 14: Oil.** Propose how oil drains per step and how the oil flask
-pickup looks and works (D-014, D-055), with its dev hook ("set oil").
-Offer options as multiple choice.
-Read: `DESIGN.md`, then grep the decisions for "oil".
+**Step 15: The oil flask.** Propose how the flask looks and works as the
+first item in the registry (study sprite and +45%?), with its place in
+the dev spawn list. Offer options as multiple choice.
+Read: `DESIGN.md`, `TECH.md` ("One content registry"), `DEV-TOOLS.md`.
 
 ## Waiting on the owner
-- Merge PR #16 (step 13, 0.1.6). Playtest (dev mode starts on): https://claude.ai/artifact/98y8GKHJPN8fxcMXZgv8y6
+- Merge PR #17 (step 14, 0.1.7). Playtest (dev mode starts on): https://claude.ai/artifact/UJB5Bkpkbh1co5VRoFLTsk
 
 ## Build plan (proposed; re-plan as decisions land)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add the PR number.
@@ -34,17 +34,10 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 11 Content registry, plus a dev spawn tool for what exists so far, PR #14
 - [x] 12 Lantern light with shadows, PR #15
 - [x] 13 Fog of war (seen tiles stay dimly visible), PR #16
-- [ ] 14 Oil drains per step, oil flask pickup
+- [ ] 14 Oil drains per step, with the oil bar (D-067 split off the flask)
+- [ ] 15 Oil flask pickup, the first item
 
 ## Log (last 3)
-- **2026-10-18, PR #14 (0.1.4), the registry and spawning.** One content
-  registry gathers each kind's own file (tiles for now, keyed by id). The
-  wrench panel's Spawn list (None, Wall, Floor) comes from it: pick one,
-  then each tap or click places it, with no turn passed and never a wall
-  on the hero. "Reset room" brings the room back; nothing is kept after a
-  reload (D-048 to D-050). "Copy room" puts the room on the clipboard
-  as one line of code to hand to Claude, with a box to copy from if the
-  browser blocks it (D-051, D-052).
 - **2026-10-18, PR #15 (0.1.5), the lantern lights the room.** The
   hero holds the study's lantern, and its warm light reaches about 5
   tiles in dithered bands, with a gentle flicker. Walls cast shadows,
@@ -59,3 +52,10 @@ Foundation (0.1.x): one small visible thing per step
   too. After the playtest the study's blue felt too bright and like
   moonlight, so each place now sets its darkness: this cave is pitch
   black with a faint grey memory (D-059 to D-063, Q-027 opened).
+- **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
+  quarters full and 60 steps empty a full tank (the study's 40 felt
+  too short, 80 too long).
+  The light shrinks with the oil, from 5.2 tiles to 1.6, then an ember.
+  The study's 10-segment oil bar sits in the top right corner. Dev panel:
+  "Refill oil" and "Empty oil". The flask became step 15 (D-064 to D-069,
+  Q-028 and Q-029 opened).
