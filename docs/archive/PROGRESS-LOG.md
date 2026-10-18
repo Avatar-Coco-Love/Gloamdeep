@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-17, PR #7 (0.0.7), Q-020 and Q-021 answered.** Every biome
+  has portals into a twisted version of itself (D-032). The companion is a
+  dog you rescue in the first cave (D-033). No questions are open.
 - **2026-10-17, PR #6 (0.0.6), Q-012 to Q-019 answered.** Other light
   sources, a day and night cycle by turns, and reasons to switch the
   lantern off (D-024 to D-026). Weapons and abilities (D-027). Four biomes

@@ -18,6 +18,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.0 (2026-10-18)
+- The first code. The front page is now the game, not the style study.
+- It shows one crypt floor tile in the middle of a dark 11 × 13 tile
+  screen, enlarged with crisp pixels to fit any phone or PC screen.
+- A small version number sits in the bottom-right corner.
+- Code folders are set up, with two tests (`npm test`).
+- Decisions: D-039.
+
 ## 0.0.9 (2026-10-17)
 - The design brief is approved, and now covers the hero, oil and growth.
 - The hero is a lamplighter. Why they go down (the spreading gloam,
