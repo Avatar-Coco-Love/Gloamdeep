@@ -25,6 +25,9 @@ export const FIRST_ROOM = [
 // top-right one a tile left, clear of the oil bar (D-101).
 export const FIRST_LIGHTS = [{ id: 'torch', x: 2, y: 0 }, { id: 'torch', x: 7, y: 0 }, { id: 'torch', x: 4, y: 4 }];
 
+// § first enemies: the study's rat, where it sat (study line 286, D-106)
+export const FIRST_ENEMIES = [{ id: 'rat', x: 2, y: 10 }];
+
 // § darkness: each place sets how dark never-seen tiles are and how
 // remembered ones look, as light multipliers (D-063). The first room is a
 // cave: pitch black outside the light, with memory a faint grey.

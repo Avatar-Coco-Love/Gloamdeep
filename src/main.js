@@ -1,11 +1,12 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
-import { makeRoom, FIRST_ROOM, FIRST_LIGHTS } from './core/room.js';
+import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, FIRST_ENEMIES } from './core/room.js';
 import { makeState, step, wait, switchLantern, toward, DIRS, FIRST_START } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
+import { enemyAt } from './core/enemies.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
-import { drawHero, drawItems, LANTERN_AT } from './render/sprites.js';
+import { drawHero, drawItems, drawEnemies, LANTERN_AT } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { drawBrackets, torchLights, drawFlames } from './render/torches.js';
 import { LANTERN } from './core/light.js';
@@ -22,7 +23,7 @@ const canvas = document.getElementById('game');
 const ctx = createScreen(canvas);
 document.getElementById('version').textContent = VERSION;
 
-let state = makeState(makeRoom(FIRST_ROOM), FIRST_START, FIRST_LIGHTS);
+let state = makeState(makeRoom(FIRST_ROOM), FIRST_START, FIRST_LIGHTS, FIRST_ENEMIES);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const startRoom = state.room;
@@ -41,13 +42,17 @@ const SLIDE = 0.18; // tiles per frame, as in the study
 const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
 const shown = { x: state.hero.x, y: state.hero.y };
 let queued = null, nudge = null, lastHeldStep = 0; // nudge: { dx, dy, until } after bumping a wall
+let hit = null; // { enemy, until, shakeUntil } after walking into an enemy (D-105)
+const HIT_FLASH_MS = 140, SHAKE_MS = 120; // the study's (study line 470)
 const settled = () => shown.x === state.hero.x && shown.y === state.hero.y;
 
 function tryStep(dir) {
   if (!settled()) { queued = dir; return; }
   if (dir === 'wait') { state = wait(state); return; } // standing still, one turn (D-084)
   const next = step(state, dir);
-  if (next === state) nudgeToward(dir);
+  const [dx, dy] = DIRS[dir], foe = enemyAt(state, state.hero.x + dx, state.hero.y + dy);
+  if (foe) { const now = performance.now(); hit = { enemy: foe, until: now + HIT_FLASH_MS, shakeUntil: now + SHAKE_MS }; }
+  else if (next === state) nudgeToward(dir);
   state = next;
   if (reduceMotion.matches) { shown.x = state.hero.x; shown.y = state.hero.y; }
 }
@@ -73,7 +78,7 @@ const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, 
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { state = s; },
-  reset: () => resetRoom(state, startRoom, FIRST_START, FIRST_LIGHTS),
+  reset: () => resetRoom(state, startRoom, FIRST_START, FIRST_LIGHTS, FIRST_ENEMIES),
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
 });
@@ -114,18 +119,29 @@ function frame(t) {
   drawItems(ctx, state.items, t, reduceMotion.matches);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy);
+  // § enemies: drawn last before the light, which shows them only in real light (D-106)
+  const lightOn = !dev.lightOff();
+  const under = lightOn && state.enemies.length // the picture before enemies, for the light
+    ? ctx.getImageData(0, 0, W, H).data : null;
+  drawEnemies(ctx, state.enemies, t, reduceMotion.matches, hit && t < hit.until ? hit.enemy : null);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
-  if (!dev.lightOff()) {
+  if (lightOn) {
     const r = state.lit ? reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035)) : 0;
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
     lights.push(...torchLights(state.room, state.lights, t, reduceMotion.matches, torchGlow));
-    drawLight(ctx, state.room, lights, dev.revealed() ? null : state.seen);
+    drawLight(ctx, state.room, lights, dev.revealed() ? null : state.seen, under);
   }
   drawFlames(ctx, state.room, state.lights, t, reduceMotion.matches);
   if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
+  // § shake: the room jumps a pixel left and right after a hit; none with reduced motion (study line 432, D-105)
+  if (hit && t < hit.shakeUntil && !reduceMotion.matches) {
+    const sx = Math.floor(t / 30) % 2 ? 1 : -1;
+    ctx.drawImage(canvas, 0, 0, W, H, sx, 0, W, H);
+    ctx.fillStyle = '#0e0c16'; ctx.fillRect(sx > 0 ? 0 : W - 1, 0, 1, H);
+  }
   drawOilBar(ctx, state.oil);
   const line = shownLine(state);
   textLine.draw(ctx, line, t, reduceMotion.matches);

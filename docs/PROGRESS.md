@@ -4,15 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.15 · **Stage:** foundation (the first code)
+**Version:** 0.1.16 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 20: the owner picks it** from the ideas after step 19 in the
+**Step 21: the owner picks it** from the ideas after step 20 in the
 build plan below. Propose the picked step as multiple choice.
-Read: `DESIGN.md`, and the open question the step touches, if any.
+Read: `DESIGN.md`, and the open question the step touches, if any
+(fighting is Q-030).
 
 ## Waiting on the owner
-- Pick step 20: stairs and a second room, the first enemy (rat), or
+- Pick step 21: fighting the rat (Q-030), stairs and a second room, or
   more light (lighting an unlit torch, a standing torch on the floor).
 
 ## Build plan (proposed; the order may change as we go)
@@ -41,16 +42,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] Dev tools for everyone, a tidier panel, 0.1.13 (between steps)
 - [x] 18 A text line, 0.1.14
 - [x] 19 Torches, 0.1.15
-- Ideas after 19, order open: stairs and a second room, the first enemy
-  (rat), more light (unlit torches to light, floor mounts)
+- [x] 20 The first enemy, a rat that holds its ground, 0.1.16
+- Ideas after 20, order open: fighting the rat (Q-030), stairs and a
+  second room, more light (unlit torches to light, floor mounts)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.13, dev tools for everyone.** The wrench and a
-  stats line (turn, oil %, lit, hero tile) show on every build. The
-  panel has View, Spawn, Room, Oil and Share buttons, one open below; spawn entries are
-  chips by kind; an oil slider; PC keys ` G C R. A start-up hook syncs
-  `main` (D-086 to D-093). Playtest:
-  https://claude.ai/artifact/Ws3G6Ya6NXtCob5cbvnHHw
 - **2026-10-18, 0.1.14, the text line.** A strip under the room where
   the game speaks, in a pixel font drawn in code. "The flame is getting
   low." as the oil drops under 20%, "The lantern gutters to an ember."
@@ -64,3 +60,9 @@ Foundation (0.1.x): one small visible thing per step
   a torch takes the look of where it sits, a brick face or a wall side
   (D-098 to D-103). Playtest:
   https://claude.ai/artifact/TTjokfKEau23XoE6QBvsip
+- **2026-10-18, 0.1.16, the rat.** The first enemy, redrawn from the
+  study's rat (option A), sits at 2,10 and bobs. Walking into it flashes
+  it white, shakes the room a pixel and says "The rat squeaks and holds
+  its ground."; no turn passes. It shows only in real light, never in
+  memory. Spawn has an Enemies group (D-104 to D-108, Q-030 opened).
+  Playtest: https://claude.ai/artifact/DSjdcNS3Emo2XoRgRVpgWV

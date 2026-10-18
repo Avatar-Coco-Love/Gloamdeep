@@ -18,6 +18,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.16 (2026-10-18)
+- The first enemy: a rat sits in the first room, where the study had
+  it. It's redrawn from the study's rat (the owner picked option A) and
+  bobs while idle.
+- Walking into it flashes it white, shakes the room a pixel and says
+  "The rat squeaks and holds its ground." It doesn't fight back or get
+  hurt yet, and no turn passes.
+- It shows only in lantern or torch light, never in the remembered map.
+- The dev Spawn tool has an Enemies group.
+- Decisions: D-104 to D-108. Questions opened: Q-030.
+
 ## 0.1.15 (2026-10-18)
 - Torches: the first light sources besides the lantern. Three hang in
   the first room, where the study had them (the top-right one a tile

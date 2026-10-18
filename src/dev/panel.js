@@ -66,7 +66,7 @@ export function buildPanel(panel, opts, saved, game) {
   let picked = null;
   const chips = [];
   for (const kind of new Set(ALL.map((e) => e.kind))) {
-    spawn.append(el('div', { className: 'dev-kind', textContent: kind + 's' }));
+    spawn.append(el('div', { className: 'dev-kind', textContent: kind === 'enemy' ? 'enemies' : kind + 's' }));
     spawn.append(row(...ALL.filter((e) => e.kind === kind).map((entry) => {
       const chip = button(entry.name, () => {
         picked = picked === entry ? null : entry;

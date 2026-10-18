@@ -4,6 +4,7 @@
 const PAL = {
   k: '#0e0c16', w: '#efe6cc', C: '#a6e0e4', c: '#58a8b4', B: '#2f6a7c', b: '#1c3e4e',
   y: '#ffd66b', Y: '#f39a3b', O: '#a8642c', o: '#e9a94a', a: '#e8d5a0',
+  S: '#9aa6b4', s: '#6b7686', d: '#4a5262', p: '#e8786a',
 };
 
 // § hero: the study's hero, with the lantern held out to its right (D-042, D-056).
@@ -18,6 +19,12 @@ const FLASK = { mirror: true, rows: [
   '', '', '......kk', '.....kaa', '......kk', '......ko', '.....koo', '....kooo', '...kwooo', '...kwooo',
   '...koooo', '...kOooo', '....kOOO', '.....kkk'] };
 
+// § rat: redrawn from the study's (D-009), side on and facing right: a pink
+// hostile eye (ART-DIRECTION.md palette), ear, nose, feet and tail (D-104)
+const RAT = { mirror: false, rows: [
+  '', '', '', '', '', '', '', '..........kk....', '.........kpdk...', '.....kkkkkSSSk..',
+  '...kkSSSSSSSSpSk', '..kSSSSSSSSSSSSk', 'p.ksSSSSSSSSSSkp', '.pksdsssssssdkw.', '..pkkddkkkkddk..', '....kpk...kpk...'] };
+
 // Where the lantern's flame sits in the sprite: the light's centre and its bright core.
 export const LANTERN_AT = { x: 13, y: 9 };
 
@@ -29,19 +36,21 @@ function build(rows, mirror) {
   });
 }
 
-function spriteCanvas(def) {
+// flash: the white silhouette for the hit flash (ART-DIRECTION.md, "Sprites")
+function spriteCanvas(def, flash = false) {
   const cv = document.createElement('canvas');
   cv.width = cv.height = 16;
   const c = cv.getContext('2d');
   build(def.rows, def.mirror).forEach((r, y) => [...r].forEach((ch, x) => {
     if (!PAL[ch]) return;
-    c.fillStyle = PAL[ch]; c.fillRect(x, y, 1, 1);
+    c.fillStyle = flash ? '#ffffff' : PAL[ch]; c.fillRect(x, y, 1, 1);
   }));
-  for (const [x, y, ch] of def.extra || []) { c.fillStyle = PAL[ch]; c.fillRect(x, y, 1, 1); }
+  for (const [x, y, ch] of def.extra || []) { c.fillStyle = flash ? '#ffffff' : PAL[ch]; c.fillRect(x, y, 1, 1); }
   return cv;
 }
 
-export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK) }; // keyed by registry id
+export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), rat: spriteCanvas(RAT) }; // keyed by registry id
+const FLASHES = { rat: spriteCanvas(RAT, true) };
 
 // § shadow: a small dark oval under a sprite (study line 345)
 export function drawShadow(c, x, y, w) {
@@ -64,5 +73,17 @@ export function drawItems(c, items, t, still) {
     const bob = still ? 0 : Math.floor(t / 700 + it.y) % 2;
     drawShadow(c, x, y, 8);
     c.drawImage(SPRITES[it.id], x, y - 2 - bob);
+  }
+}
+
+// § enemies: like items, 2 pixels up on a shadow. The rat bobs 1 pixel every
+// 0.52 s, each column in its own beat; still with reduced motion (study line 378).
+// `hit`: the enemy flashing white just now, or null (D-105).
+export function drawEnemies(c, enemies, t, still, hit) {
+  for (const e of enemies) {
+    const x = e.x * 16, y = e.y * 16;
+    const bob = still ? 0 : Math.floor(t / 520 + e.x) % 2;
+    drawShadow(c, x, y, 8);
+    c.drawImage((e === hit ? FLASHES : SPRITES)[e.id], x, y - 2 - bob);
   }
 }
