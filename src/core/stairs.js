@@ -2,7 +2,7 @@
 // The room the hero is in lives at the top of the state as before; every
 // other room waits in `state.elsewhere`, by place id, just as it was left
 // (D-019): its tiles, lights, enemies, items and memory.
-import { PLACES, tileAt } from './room.js';
+import { PLACES, tileAt, isWall } from './room.js';
 import { say } from './lines.js';
 
 // § take: (state) → the state in the room the stairs under the hero lead to,
@@ -27,6 +27,16 @@ function find(room, id) {
     if (tileAt(room, x, y).id === id) return { x, y };
   }
   return null;
+}
+
+// § facing: which way the steps sink, toward a wall beside the stairs, so the
+// top step starts at the floor (D-143): the wall above first, then left,
+// then right, else down.
+export function stairsFacing(room, x, y) {
+  if (isWall(room, x, y - 1)) return 'up';
+  if (isWall(room, x - 1, y)) return 'left';
+  if (isWall(room, x + 1, y)) return 'right';
+  return 'down';
 }
 
 // § glows: every glowing tile in a room as a light, { x, y, r, cr, cg, cb }

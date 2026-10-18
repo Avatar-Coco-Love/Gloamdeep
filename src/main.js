@@ -116,7 +116,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   set: (s) => { state = s; },
   reset: () => { // the room the hero is in, as it began
     const p = state.home.places[state.place];
-    return resetRoom(state, p.room, p.start, p.lights, p.enemies);
+    return resetRoom(state, p.room, p.start, p.lights, p.enemies, p.items);
   },
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),

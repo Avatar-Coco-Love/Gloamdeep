@@ -37,9 +37,9 @@ export function spawn(state, id, x, y) {
 
 // § reset: the starting room comes back (D-050). If the hero now stands in a
 // wall, they go back to their starting tile. The memory is forgotten too (D-062),
-// spawned items are gone (D-079), and the starting lights and enemies come
-// back (D-102, D-108).
-export function resetRoom(state, room, start, lights = [], enemies = []) {
+// spawned items are gone (D-079), and the starting lights, enemies and items
+// come back (D-102, D-108, D-140).
+export function resetRoom(state, room, start, lights = [], enemies = [], items = []) {
   const hero = tileAt(room, state.hero.x, state.hero.y).solid ? { x: start.x, y: start.y } : state.hero;
-  return { ...state, room, hero, seen: blankMemory(room), items: [], lights, enemies };
+  return { ...state, room, hero, seen: blankMemory(room), items, lights, enemies };
 }

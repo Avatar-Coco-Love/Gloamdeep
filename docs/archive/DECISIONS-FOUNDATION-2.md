@@ -68,6 +68,7 @@ get their values when they arrive (Q-027).
 **D-064 · 2026-10-18 · Oil amounts: the study's** (step 14, supersedes
 D-055, sets D-037's amounts)
 *Partly superseded by D-068 (2026-10-18): the burn per turn.*
+*Partly superseded by D-142 (2026-10-18): the tank starts full.*
 The tank starts three quarters full, and each passed turn burns 2.5% of
 a full tank (40 turns from full to empty). The light reaches 1.6 tiles
 plus 3.6 per full tank (5.2 when full), and an empty lantern is an

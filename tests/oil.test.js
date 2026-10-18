@@ -7,14 +7,14 @@ import { OIL, burnOil, reach, setOil } from '../src/core/oil.js';
 
 const room = makeRoom(FIRST_ROOM);
 
-test('a new game starts with the tank three quarters full', () => {
-  assert.equal(makeState(room).oil, 0.75);
+test('a new game starts with a full tank (D-142)', () => {
+  assert.equal(makeState(room).oil, 1);
 });
 
 test('a step burns oil, a bump into a wall does not', () => {
   const s = makeState(room);
-  assert.equal(step(s, 'up').oil, 0.75 - OIL.burn);
-  assert.equal(step(makeState(room, { x: 1, y: 1 }), 'up').oil, 0.75);
+  assert.equal(step(s, 'up').oil, burnOil(OIL.start));
+  assert.equal(step(makeState(room, { x: 1, y: 1 }), 'up').oil, OIL.start);
 });
 
 test('60 turns empty a full tank exactly, and it never goes below empty', () => {
@@ -36,5 +36,5 @@ test('the dev buttons set the oil, kept between empty and full', () => {
   assert.equal(setOil(s, 1).oil, 1);
   assert.equal(setOil(s, 0).oil, 0);
   assert.equal(setOil(s, 2).oil, 1);
-  assert.equal(s.oil, 0.75, 'the old state is not changed');
+  assert.equal(s.oil, OIL.start, 'the old state is not changed');
 });

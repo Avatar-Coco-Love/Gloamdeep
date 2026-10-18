@@ -22,9 +22,9 @@ export const HERO_HEALTH = 5;
 
 // `home` is where the hero wakes after a fall: the room as it started (D-119).
 // One room on its own, as tests use it; makeWorld adds the other places.
-export function makeState(room, start = FIRST_START, lights = [], enemies = []) {
-  const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies };
-  return { room, hero: home.hero, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items: [], lights, enemies, line: null, place: 'first', elsewhere: {}, home };
+export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = []) {
+  const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
+  return { room, hero: home.hero, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -32,8 +32,8 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = []) 
 // they began, for a fall (D-136) and the dev reset.
 export function makeWorld(places = PLACES, first = 'first') {
   const begun = {};
-  for (const [id, p] of Object.entries(places)) begun[id] = { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies };
-  const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies);
+  for (const [id, p] of Object.entries(places)) begun[id] = { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
+  const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies, here.items);
   return { ...state, place: first, elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
 }
 
@@ -41,7 +41,7 @@ export function makeWorld(places = PLACES, first = 'first') {
 function away(begun, here, seen) {
   const out = {};
   for (const [id, p] of Object.entries(begun)) {
-    if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: [], seen: seen[id] || blankMemory(p.room) };
+    if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: p.items || [], seen: seen[id] || blankMemory(p.room) };
   }
   return out;
 }
@@ -116,8 +116,8 @@ function fall(state) {
   const { place, hero } = state.home, begun = state.home.places || { [place]: state.home };
   const seen = { [state.place]: state.seen };
   for (const [id, p] of Object.entries(state.elsewhere)) seen[id] = p.seen;
-  const { room, lights, enemies } = begun[place];
-  const woke = { room, hero, lights, enemies, items: [], seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
+  const { room, lights, enemies, items = [] } = begun[place];
+  const woke = { room, hero, lights, enemies, items, seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
   return say({ ...state, ...woke, health: HERO_HEALTH, oil: OIL.start }, 'fall');
 }
 
