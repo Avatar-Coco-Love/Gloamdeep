@@ -158,3 +158,31 @@ The turn still counts. The line is "You fall, and wake again."
 D-103) D-077 to D-093 (steps 15 to 17 and the 0.1.13 dev tools) moved
 unchanged to `archive/DECISIONS-FOUNDATION-3.md`. They stay in force.
 D-105 moved to `archive/DECISIONS-SUPERSEDED.md`.
+
+**D-121 · 2026-10-18 · Lighting an unlit torch** (step 23, D-015) The
+hero lights an unlit torch by walking into its wall from the tile it
+faces: below a face torch, beside a side one. It stays lit for good.
+In the registry it is its own light, "Unlit torch", with no light, which
+becomes a torch when lit.
+
+**D-122 · 2026-10-18 · What lighting costs** (step 23) It passes a turn
+like a step or a hit, so the lantern burns its usual oil and a rat next
+to the hero bites; no extra oil. It needs the lantern lit: off, nothing
+lights and no turn passes.
+
+**D-123 · 2026-10-18 · The first room's unlit torch** (step 23) A fourth
+torch, unlit, on the face of the small block at 7,9, two tiles from the
+start. A fall (D-119) and "Reset room" put it back unlit, like the rat.
+The spawn tool's Lights group has "Unlit torch", with the torch's rules
+for where it can sit (D-100).
+
+**D-124 · 2026-10-18 · The torch lines** (step 23) Lighting says "You
+light the torch."; an oil line or a bite on the same turn replaces it,
+as for a hit (D-112, D-117). Walking into it with the lantern off says
+"Your lantern is dark." and the hero bumps as at a wall.
+
+**D-125 · 2026-10-18 · How an unlit torch looks** (step 23, owner
+picked option A from the picture) The torch's bracket with a charred
+stub where the flame would be, and one grey ash pixel. It is still and
+gives no light, so it shows only in other light and in memory, like the
+wall.

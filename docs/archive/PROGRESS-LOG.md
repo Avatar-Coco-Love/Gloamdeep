@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.16, the rat.** The first enemy, redrawn from the
+  study's rat (option A), sits at 2,10 and bobs. Walking into it flashes
+  it white, shakes the room a pixel and says "The rat squeaks and holds
+  its ground."; no turn passes. It shows only in real light, never in
+  memory. Spawn has an Enemies group (D-104 to D-108, Q-030 opened).
+  Playtest: https://claude.ai/artifact/DSjdcNS3Emo2XoRgRVpgWV
 - **2026-10-18, 0.1.15, torches.** Three wall torches in the first
   room, as in the study (the top-right one a tile left, clear of the oil
   bar): orange light that flickers, a swaying flame and rising embers,

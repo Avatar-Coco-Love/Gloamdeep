@@ -56,7 +56,7 @@ function tryStep(dir) {
     const next = step(state, dir);
     const [dx, dy] = DIRS[dir], foe = enemyAt(state, state.hero.x + dx, state.hero.y + dy);
     if (foe) hit = { enemy: foe, ...flashFor() };
-    else if (next === state) nudgeToward(dir);
+    else if (next.turn === state.turn) nudgeToward(dir); // a bump, or a torch the dark lantern can't light (D-122)
     state = next;
   }
   // A fall wakes the hero at the start: they appear there, with no slide (D-119).

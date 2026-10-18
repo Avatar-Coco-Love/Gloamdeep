@@ -11,6 +11,7 @@ import { TILE as T } from './screen.js';
 
 const K = '#0e0c16', N = '#6b4a33', NL = '#9c6f45'; // outline, wood, wood highlight
 const FLAME_Y = '#f39a3b', FLAME_y = '#ffd66b', CORE = '#fff5d6';
+const CHAR = '#2b2228', ASH = '#5a5260'; // an unlit torch's burnt head (D-125)
 
 // [x, y, w, h, colour] in the torch's tile, drawn in order. 'face' is the
 // study's bracket; 'right' is the side one, 'left' its mirror (D-099).
@@ -23,12 +24,19 @@ BRACKET.left = BRACKET.right.map(([x, y, w, h, c]) => [16 - x - w, y, w, h, c]);
 const FLAME_DX = { face: 0, right: 10, left: -10 };
 const LIGHT_AT = { face: [8, 13], right: [18, 10], left: [-2, 10] };
 
-const mounted = (room, lights) => lights.map((l) => ({ l, m: mountAt(room, l.x, l.y) })).filter((e) => e.m);
+// The charred stub where the flame would be, option A in the picture (D-125).
+const STUB = [[6, 5, 4, 2, K], [7, 4, 2, 1, K], [7, 5, 2, 2, CHAR], [7, 4, 1, 1, ASH]];
 
-// § brackets: before the light
+const mounted = (room, lights) => lights.map((l) => ({ l, m: mountAt(room, l.x, l.y) })).filter((e) => e.m);
+// Only lit ones glow and burn; an unlit torch has no reach (D-121).
+const burning = (room, lights) => mounted(room, lights).filter(({ l }) => get(l.id).reach > 0);
+
+// § brackets: before the light, so it falls on them; an unlit torch's stub too
 export function drawBrackets(c, room, lights) {
+  const fill = (l, dx, [x, y, w, h, col]) => { c.fillStyle = col; c.fillRect(l.x * T + dx + x, l.y * T + y, w, h); };
   for (const { l, m } of mounted(room, lights)) {
-    for (const [x, y, w, h, col] of BRACKET[m]) { c.fillStyle = col; c.fillRect(l.x * T + x, l.y * T + y, w, h); }
+    for (const r of BRACKET[m]) fill(l, 0, r);
+    if (!get(l.id).reach) for (const r of STUB) fill(l, FLAME_DX[m], r);
   }
 }
 
@@ -36,7 +44,7 @@ export function drawBrackets(c, room, lights) {
 // together by about ±9% (study line 397); still with reduced motion. Fills `out`.
 export function torchLights(room, lights, t, still, out) {
   out.length = 0;
-  mounted(room, lights).forEach(({ l, m }, i) => {
+  burning(room, lights).forEach(({ l, m }, i) => {
     const e = get(l.id), f = still ? 1 : flicker(t, i * 3.1, e.flicker), [ax, ay] = LIGHT_AT[m];
     out.push({ x: l.x * T + ax, y: l.y * T + ay, r: e.reach * T * f, cr: e.cr * f, cg: e.cg * f, cb: e.cb * f });
   });
@@ -48,7 +56,7 @@ export function torchLights(room, lights, t, still, out) {
 const embers = [];
 let emberCount = 0;
 export function drawFlames(c, room, lights, t, still) {
-  mounted(room, lights).forEach(({ l, m }, i) => {
+  burning(room, lights).forEach(({ l, m }, i) => {
     const x0 = l.x * T + FLAME_DX[m], y0 = l.y * T, ph = still ? 0 : Math.floor(t / 110 + i) % 3;
     c.fillStyle = FLAME_Y; c.fillRect(x0 + 6, y0 + 4, 4, 3);
     c.fillStyle = FLAME_y; c.fillRect(x0 + 7, y0 + 3, 2, 4); c.fillRect(x0 + [7, 8, 7][ph], y0 + 2 - (ph === 1 ? 1 : 0), 1, 2);

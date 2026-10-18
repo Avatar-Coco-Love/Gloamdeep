@@ -12,7 +12,7 @@ const room = makeRoom(FIRST_ROOM);
 const start = () => makeState(room, FIRST_START, FIRST_LIGHTS);
 
 test('the torch is in the registry as a light', () => {
-  assert.deepEqual(byKind('light').map((e) => e.id), ['torch']);
+  assert.deepEqual(byKind('light').map((e) => e.id), ['torch', 'unlitTorch']);
 });
 
 test('a torch picks its mount: face, then left, then right, else none', () => {
@@ -24,9 +24,9 @@ test('a torch picks its mount: face, then left, then right, else none', () => {
   assert.equal(mountAt(room, 2, 2), null, 'floor');
 });
 
-test('the first room starts with three torches that all fit', () => {
+test('the first room starts with four torches that all fit', () => {
   const s = start();
-  assert.equal(s.lights.length, 3);
+  assert.equal(s.lights.length, 4);
   for (const l of s.lights) assert.notEqual(mountAt(s.room, l.x, l.y), null);
   assert.deepEqual(makeState(room).lights, []);
 });

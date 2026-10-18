@@ -6,6 +6,8 @@ import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
 import { say, oilLine } from './lines.js';
 import { enemyAt, hitEnemy, biters } from './enemies.js';
+import { lightAt, openSide } from './lights.js';
+import { mountAt } from './mount.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -26,12 +28,12 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = []) 
 // changes nothing and passes no turn, so the same state comes back (D-043).
 // A passed turn burns oil while the lantern is lit (D-037, D-026). A flask on the new tile is then poured in,
 // never above full, and is gone (D-078). The oil lines look at the oil after
-// both (D-096). Walking into an enemy attacks it (D-017). Every passed turn
-// ends with the enemies' turn (D-114).
+// both (D-096). Walking into an enemy attacks it (D-017), and into an unlit
+// torch's wall lights it (D-121). Every passed turn ends with the enemies' turn (D-114).
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
-  if (tileAt(state.room, x, y).solid) return state;
+  if (tileAt(state.room, x, y).solid) return lightTorch(state, x, y);
   const foe = enemyAt(state, x, y);
   if (foe) return attack(state, foe);
   const next = passTurn({ ...state, hero: { x, y } });
@@ -67,6 +69,20 @@ function attack(state, foe) {
   const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, LANTERN_HIT);
   const dead = enemies.length < state.enemies.length;
   return endTurn(state, say(passTurn({ ...state, enemies }), dead ? entry.die : entry.hurt));
+}
+
+// § light a torch: walking into the wall of an unlit torch, from the tile it
+// faces, lights it for good (D-121). It passes a turn like a step (D-122);
+// the hit's rules for lines apply (D-124). With the lantern off nothing
+// happens and no turn passes, but the line says why (D-122).
+function lightTorch(state, x, y) {
+  const torch = lightAt(state, x, y), entry = torch && get(torch.id);
+  if (!entry?.lightsTo) return state;
+  const side = openSide(mountAt(state.room, x, y), x, y);
+  if (!side || side.x !== state.hero.x || side.y !== state.hero.y) return state;
+  if (!state.lit) return say(state, 'lanternDark');
+  const lights = state.lights.map((l) => (l === torch ? { ...l, id: entry.lightsTo } : l));
+  return endTurn(state, say(passTurn({ ...state, lights }), 'torchLit'));
 }
 
 // § wait: stand still for one turn (D-084). It passes a turn like a step,

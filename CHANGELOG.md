@@ -18,6 +18,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.19 (2026-10-18)
+- An unlit torch on the small block near the start, a charred stub on
+  its bracket. Walk into its wall from below, with the lantern lit, to
+  light it: it says "You light the torch." and stays lit. It costs a
+  turn, like a step.
+- With the lantern off it won't light: the hero bumps and it says "Your
+  lantern is dark.", and no turn passes.
+- A fall or "Reset room" puts it back unlit. The spawn tool can place
+  unlit torches too.
+- Decisions: D-121 to D-125.
+
 ## 0.1.18 (2026-10-18)
 - The rat fights back: after each step, wait or hit, a rat next to the
   hero bites for 1. It stays on its tile, and bites in the dark too.
