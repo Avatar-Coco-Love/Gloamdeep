@@ -78,12 +78,15 @@ export function drawItems(c, items, t, still) {
 
 // § enemies: like items, 2 pixels up on a shadow. The rat bobs 1 pixel every
 // 0.52 s, each column in its own beat; still with reduced motion (study line 378).
-// `hit`: the enemy flashing white just now, or null (D-105).
+// `hit`: the enemy flashing white just now, or null (D-105). A hit that
+// killed it still flashes it once, then it is gone (D-113).
 export function drawEnemies(c, enemies, t, still, hit) {
-  for (const e of enemies) {
-    const x = e.x * 16, y = e.y * 16;
-    const bob = still ? 0 : Math.floor(t / 520 + e.x) % 2;
-    drawShadow(c, x, y, 8);
-    c.drawImage((e === hit ? FLASHES : SPRITES)[e.id], x, y - 2 - bob);
-  }
+  for (const e of enemies) drawEnemy(c, e, t, still, hit && e.x === hit.x && e.y === hit.y);
+  if (hit && !enemies.some((e) => e.x === hit.x && e.y === hit.y)) drawEnemy(c, hit, t, still, true);
+}
+function drawEnemy(c, e, t, still, flash) {
+  const x = e.x * 16, y = e.y * 16;
+  const bob = still ? 0 : Math.floor(t / 520 + e.x) % 2;
+  drawShadow(c, x, y, 8);
+  c.drawImage((flash ? FLASHES : SPRITES)[e.id], x, y - 2 - bob);
 }

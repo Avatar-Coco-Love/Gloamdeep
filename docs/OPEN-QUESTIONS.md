@@ -27,9 +27,7 @@ blue as moonlight. Should outside at night use it? Should moon phases
 make some nights darker than others? The owner isn't sure the moon will
 be in the game. Each biome's darkness is asked when it arrives.
 
-**Q-030 · Fighting the rat** (when fighting arrives)
-Walking into the rat does nothing to it yet (D-105). When fighting
-comes: does an attack pass a turn? How much health do the rat and the
-hero have, how much does a hit take, and does the rat bite back, move
-or flee? What does the hero attack with before they find a weapon
-(D-027)?
+**Q-030 · The rat fights back** (when it does)
+The hero can now kill the rat (D-109 to D-113), but it never fights
+back. When it does: does it bite, move or flee? How much health does the
+hero have, how is it shown, and what happens when it runs out?

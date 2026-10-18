@@ -180,6 +180,7 @@ bobs a pixel about every half second, as the study's did (0.52 s), still
 with reduced motion.
 
 **D-105 · 2026-10-18 · Walking into the rat** (step 20)
+*Superseded by D-109 (2026-10-18).*
 For now the rat only sits there. Walking into it flashes it white for
 0.14 s, shakes the room a pixel side to side for 0.12 s (none with
 reduced motion), and says its line. Like bumping a wall, it passes no
@@ -201,3 +202,26 @@ The spawn tool has an Enemies group. An enemy goes on floor, off the
 hero, one thing per tile: not on an item or another enemy, and no wall
 or item goes on it. "Reset room" brings the starting rat back and
 removes spawned ones.
+
+**D-109 · 2026-10-18 · Swinging the lantern** (step 21, supersedes
+D-105, answers part of Q-030) Walking into an enemy swings the lantern
+at it, the hero's weapon until they find one (D-027); the hero stays
+put. It flashes white for 0.14 s and the room shakes a pixel for
+0.12 s (none with reduced motion), as before. The rat doesn't fight
+back yet.
+
+**D-110 · 2026-10-18 · The rat's health** (step 21, answers part of
+Q-030) A rat has 2 health and a lantern hit takes 1, so two hits kill
+it. Each rat keeps its own health.
+
+**D-111 · 2026-10-18 · An attack passes a turn** (step 21, answers
+part of Q-030) Like a step: the turn counts and oil burns while the
+lantern is lit.
+
+**D-112 · 2026-10-18 · The rat's lines** (step 21) A hit it survives
+says D-107's line; the kill says "The rat squeaks and falls still."
+An oil line crossed on the same turn replaces either, as after a step.
+
+**D-113 · 2026-10-18 · How the rat dies** (step 21) The killing hit
+flashes and shakes like any hit, then the rat is gone, leaving nothing
+behind.

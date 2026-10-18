@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.14, the text line.** A strip under the room where
+  the game speaks, in a pixel font drawn in code. "The flame is getting
+  low." as the oil drops under 20%, "The lantern gutters to an ember."
+  in amber as it runs dry; each once per crossing. A line stays 5
+  turns, then fades (D-094 to D-097, Q-028 closed). Playtest:
+  https://claude.ai/artifact/T2zbFW9vJsdr6RyDRmM1hg
 - **2026-10-18, 0.1.13, dev tools for everyone.** The wrench and a
   stats line (turn, oil %, lit, hero tile) show on every build. The
   panel has View, Spawn, Room, Oil and Share buttons, one open below; spawn entries are
