@@ -30,7 +30,8 @@ at build plan step 7 (D-039).
   hand-written list.
 - **Seeded RNG.** All randomness comes from one seeded generator, so a
   seed reproduces a run exactly ("load seed 4127 and watch the bug happen").
-  Nothing is random yet; the generator arrives with the first random thing.
+  It is `src/core/rng.js`, arriving with the generated rooms (D-147,
+  D-148); only the page's boot uses `Math.random`, to pick the first seed.
 - **Turn rules are pure functions:** `(state, action) → new state`. That
   makes them easy to test and to undo in dev mode.
 

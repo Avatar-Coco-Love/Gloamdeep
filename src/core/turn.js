@@ -1,6 +1,7 @@
 // § turn: the game state and the turn rules, as plain data (TECH.md,
 // "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
-import { tileAt, beginPlace, PLACES } from './room.js';
+import { tileAt, beginPlace, isGenerated, PLACES } from './room.js';
+import { nextSeed } from './rng.js';
 import { blankMemory } from './fog.js';
 import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
@@ -22,28 +23,28 @@ export const HERO_HEALTH = 5;
 
 // `home` is where the hero wakes after a fall: the room as it started (D-119).
 // One room on its own, as tests use it; makeWorld adds the other places.
-export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = []) {
+// `seed` sets every generated depth (D-148).
+export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home };
 }
 
 // § world: every place, the hero in the first one. The others wait in
 // `elsewhere` as they begin (stairs.js); `home.places` keeps them all as
-// they began, for a fall (D-136) and the dev reset. Deeper copies begin
-// only when first reached (stairs.js, D-144).
-export function makeWorld(first = 'first') {
+// they began, for a fall (D-136) and the dev reset. Generated depths begin
+// only when first reached (stairs.js, D-147).
+export function makeWorld(first = 'first', seed = 1) {
   const begun = {};
   for (const id of Object.keys(PLACES)) begun[id] = beginPlace(id);
-  const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies, here.items);
+  const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies, here.items, seed);
   return { ...state, place: first, elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
 }
 
 // The places other than `here` as they began, with the memory in `seen` kept
-// (D-021); a deeper copy the hero has been to begins again too (D-144).
+// (D-021). Generated depths aren't among them: they begin when reached.
 function away(begun, here, seen) {
   const out = {};
-  for (const id of new Set([...Object.keys(begun), ...Object.keys(seen)])) {
-    const p = begun[id] || beginPlace(id);
+  for (const [id, p] of Object.entries(begun)) {
     if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: p.items || [], seen: seen[id] || blankMemory(p.room) };
   }
   return out;
@@ -114,14 +115,17 @@ function chaseStep(state, e) {
 }
 
 // § fall: back to the start of the first room, every room as it began, with
-// full health and the starting oil. The map stays remembered (D-119, D-136, D-021).
+// full health and the starting oil. The map stays remembered (D-119, D-136,
+// D-021), but the depths below the second room get a new seed and new
+// layouts, and their maps are forgotten (D-148).
 function fall(state) {
   const { place, hero } = state.home, begun = state.home.places || { [place]: state.home };
   const seen = { [state.place]: state.seen };
   for (const [id, p] of Object.entries(state.elsewhere)) seen[id] = p.seen;
+  for (const id of Object.keys(seen)) if (isGenerated(id)) delete seen[id];
   const { room, lights, enemies, items = [] } = begun[place];
   const woke = { room, hero, lights, enemies, items, seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
-  return say({ ...state, ...woke, health: HERO_HEALTH, oil: OIL.start }, 'fall');
+  return say({ ...state, ...woke, seed: nextSeed(state.seed), health: HERO_HEALTH, oil: OIL.start }, 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109).

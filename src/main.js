@@ -5,6 +5,7 @@ import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { glowsIn } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
+import { SEED_MAX } from './core/rng.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero, drawItems, drawEnemies } from './render/sprites.js';
@@ -25,7 +26,8 @@ const canvas = document.getElementById('game');
 const ctx = createScreen(canvas);
 document.getElementById('version').textContent = VERSION;
 
-let state = makeWorld();
+// The one Math.random: the first seed, a new game each time the page opens (D-148)
+let state = makeWorld('first', Math.floor(Math.random() * SEED_MAX) + 1);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const textLine = createTextLine();
@@ -116,7 +118,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { state = s; },
   reset: () => { // the room the hero is in, as it began
-    const p = state.home.places[state.place] || beginPlace(state.place);
+    const p = state.home.places[state.place] || beginPlace(state.place, state.seed);
     return resetRoom(state, p.room, p.start, p.lights, p.enemies, p.items);
   },
   forget: () => forget(state),

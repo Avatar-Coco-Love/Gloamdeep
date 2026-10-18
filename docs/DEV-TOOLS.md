@@ -23,8 +23,8 @@ tools to be chosen together later.
   at the top, one open below, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
   goes into a section there**, or a new section.
 - Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
-  spawn pick and pointed tile (D-088). New state (health, floor, seed)
-  joins it as it arrives.
+  spawn pick and pointed tile (D-088). New state joins it as it arrives:
+  health, depth, and the seed (D-150).
 - PC keys: ` the panel; G, C, R the View switches (D-090).
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 - Spawn: chips grouped by registry kind; tap one, then tap tiles; tap it
@@ -49,7 +49,7 @@ tools to be chosen together later.
 - Collision overlay (the grid and coordinates part is built, D-046)
 - Show light radius and line-of-sight overlay
 - Save and load test situations
-- Seed display and load
+- Seed load (the display is built, D-150)
 - Speed up or slow down animations
 
 ## Next

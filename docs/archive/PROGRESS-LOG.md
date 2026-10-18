@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.21, stairs and a second room.** Stairs down at 1,1
+  (the study's) lead to a second room, two empty caves and a gap; you
+  arrive on stairs up and can go back. Rooms stay as left; rats don't
+  follow or bite as you go; a fall wakes you in room 1, both reset. A
+  faint violet glow, a fade and a line (D-130 to D-137). Playtest:
+  https://claude.ai/artifact/Xr6TssVDe39zh1AFjck47z
 - **2026-10-18, 0.1.20, the rat moves.** A rat on a lit tile (lantern
   or torch) notices the hero and keeps coming until it dies or they
   fall: one tile a turn, the farther way first, else the other way,

@@ -22,3 +22,5 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
   (D-120). Still in force.
 - `DECISIONS-FOUNDATION-4.md`: D-094 to D-113 (steps 18 to 21), moved
   unchanged from `DECISIONS.md` at step 25 (D-137). Still in force.
+- `DECISIONS-FOUNDATION-5.md`: D-114 to D-129 (steps 22 to 24), moved
+  unchanged from `DECISIONS.md` at step 28 (D-151). Still in force.
