@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #15 (0.1.5), the lantern lights the room.** The
+  hero holds the study's lantern, and its warm light reaches about 5
+  tiles in dithered bands, with a gentle flicker. Walls cast shadows,
+  whose edges now fade over 4 pixels instead of stepping (picked from a
+  side-by-side picture). Outside the light is almost black until fog of
+  war. Dev panel: "Lighting off". The playtest showed teeth on the
+  left wall, so walls are now lit as whole tiles (D-053 to D-058).
 - **2026-10-18, PR #14 (0.1.4), the registry and spawning.** One content
   registry gathers each kind's own file (tiles for now, keyed by id). The
   wrench panel's Spawn list (None, Wall, Floor) comes from it: pick one,
