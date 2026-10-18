@@ -92,8 +92,16 @@ Spawned tiles are gone after a reload. A "Reset room" button in the
 panel brings back the starting room.
 
 **D-051 · 2026-10-18 · Copy the room as code** (step 11, owner's request)
+*Partly superseded by D-052 (2026-10-18): the code is one line.*
 A "Copy room" button in the dev panel puts the room on the clipboard as
 its text map, ready to paste into the code, with a first line giving the
 version, the size and the hero's tile. The button says "Copied!". If the
 browser blocks copying, a box shows the code, selected, to copy by hand.
 What the copied rooms are used for is decided later.
+
+**D-052 · 2026-10-18 · The room code is one line** (step 11, supersedes
+part of D-051)
+Pasted text maps came out broken in most apps, so the copied code is one
+line with no spaces: `GD:` version, size, hero's tile, then the rows
+split by `/`, with a number before a tile for a run of it (`#3.#5.#`).
+`src/core/roomcode.js` also reads a code back into its room.

@@ -63,10 +63,10 @@ export function createDev(stage, canvas, game) {
   reset.addEventListener('click', () => game.set(game.reset()));
   panel.append(reset);
 
-  // § copy: the room's code to the clipboard, to hand to Claude (D-051). If the
+  // § copy: the room code to the clipboard, to hand to Claude (D-051, D-052). If the
   // browser blocks it, a box shows the code, selected, to copy by hand.
   const copy = el('button', { type: 'button', textContent: 'Copy room' });
-  const box = el('textarea', { id: 'dev-code', readOnly: true, hidden: true, rows: 16, spellcheck: false });
+  const box = el('textarea', { id: 'dev-code', readOnly: true, hidden: true, rows: 4, spellcheck: false });
   let copyTimer = 0;
   const said = (text) => {
     copy.textContent = text;

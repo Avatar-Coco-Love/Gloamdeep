@@ -31,11 +31,13 @@ Entry format:
   after a reload. If the hero is standing where a wall comes back, they
   go back to the starting tile.
 - While something is picked, the bottom readout says so ("placing Wall").
-- "Copy room" puts the room's code on the clipboard: its text map, ready
-  to paste into the game's code, with a first line giving the version,
-  the size and the hero's tile. The button says "Copied!". If the browser
+- "Copy room" puts the room on the clipboard as one line of text, to
+  paste to Claude (for example `GD:0.1.4:11x13:hero5,11:11#/#3.#5.#/…`):
+  the version, the size, the hero's tile, then the rows split by `/`,
+  with a number for a run of the same tile. No spaces or line breaks, so
+  chat apps can't break it up. The button says "Copied!". If the browser
   blocks copying, a box opens with the code selected, to copy by hand.
-- Decisions: D-048, D-049, D-050, D-051.
+- Decisions: D-048, D-049, D-050, D-051, D-052.
 
 ## 0.1.3 (2026-10-18)
 - Dev mode is here. Open the game with `?dev` once and that browser
