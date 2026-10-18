@@ -18,6 +18,19 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.20 (2026-10-18)
+- The rat moves. Once it stands in light (the lantern's or a torch's)
+  it notices the hero, and from then on it comes one tile closer after
+  every passed turn, until it dies or the hero falls. It slides from
+  tile to tile like the hero.
+- It walks straight toward the hero, the farther way first. If that's
+  blocked it tries the other way toward them, and else it waits. It
+  doesn't go around walls.
+- A rat that has just stepped next to the hero bites on the next turn,
+  so there's a turn to swing first.
+- With the lantern off, a rat in the dark doesn't notice the hero.
+- Decisions: D-126 to D-129. Questions opened: Q-031, Q-032.
+
 ## 0.1.19 (2026-10-18)
 - An unlit torch on the small block near the start, a charred stub on
   its bracket. Walk into its wall from below, with the lantern lit, to

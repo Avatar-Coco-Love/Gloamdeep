@@ -7,6 +7,9 @@ export const LIGHTS = {
   unlitTorch: { id: 'unlitTorch', kind: 'light', name: 'Unlit torch', reach: 0, lightsTo: 'torch' },
 };
 
+// Where a mounted torch's light comes from, in pixels from its tile's corner (D-099).
+export const LIGHT_AT = { face: [8, 13], right: [18, 10], left: [-2, 10] };
+
 // § lookups: the light on tile x, y, or undefined
 export const lightAt = (state, x, y) => state.lights.find((l) => l.x === x && l.y === y);
 

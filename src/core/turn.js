@@ -8,6 +8,7 @@ import { say, oilLine } from './lines.js';
 import { enemyAt, hitEnemy, biters } from './enemies.js';
 import { lightAt, openSide } from './lights.js';
 import { mountAt } from './mount.js';
+import { litAt } from './sight.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -46,12 +47,45 @@ export function step(state, dir) {
 // § enemies' turn: after the hero's, every enemy next to the hero bites, lit
 // or not (D-114). The bite line replaces any other said this turn (D-117).
 // At 0 health the hero falls and wakes at the room's start (D-119).
+// Then the others come one tile closer (D-126 to D-129).
 function enemiesAct(state) {
   const bites = biters(state.enemies, state.hero);
-  if (!bites.length) return state;
+  if (!bites.length) return enemiesMove(state);
   const health = Math.max(0, state.health - bites.reduce((sum, e) => sum + get(e.id).bite, 0));
   const bitten = say({ ...state, health }, get(bites[0].id).bites);
-  return health > 0 ? bitten : fall(bitten);
+  return health > 0 ? enemiesMove(bitten) : fall(bitten);
+}
+
+// § enemies move: an enemy on a lit tile notices the hero (D-126) and keeps
+// coming until it dies or the hero falls (D-127). Each turn it steps one tile
+// toward them, the farther side first, else the other side, else it stays
+// (D-128). One that steps next to the hero bites on the next turn (D-129).
+// They move in list order, so one waits behind another.
+function enemiesMove(state) {
+  let enemies = state.enemies;
+  for (const e of state.enemies) {
+    const chasing = e.chasing || litAt(state, e.x, e.y);
+    if (!chasing) continue;
+    const near = Math.abs(e.x - state.hero.x) + Math.abs(e.y - state.hero.y) === 1;
+    const to = near ? e : chaseStep({ ...state, enemies }, e) || e;
+    enemies = enemies.map((o) => (o === e ? { ...e, x: to.x, y: to.y, chasing: true } : o));
+  }
+  return enemies === state.enemies ? state : { ...state, enemies };
+}
+
+// The tile enemy e steps onto, or null when both ways toward the hero are
+// blocked: by something solid, an item, another enemy or the hero.
+function chaseStep(state, e) {
+  const dx = state.hero.x - e.x, dy = state.hero.y - e.y;
+  const across = dx ? [Math.sign(dx), 0] : null, down = dy ? [0, Math.sign(dy)] : null;
+  const ways = Math.abs(dx) >= Math.abs(dy) ? [across, down] : [down, across];
+  for (const w of ways) {
+    if (!w) continue;
+    const x = e.x + w[0], y = e.y + w[1];
+    const taken = tileAt(state.room, x, y).solid || itemAt(state, x, y) || enemyAt(state, x, y) || (x === state.hero.x && y === state.hero.y);
+    if (!taken) return { x, y };
+  }
+  return null;
 }
 
 // § fall: back to the room as it started, the hero on their starting tile

@@ -5,6 +5,7 @@
 // the open tile next to it.
 import { get } from '../core/registry.js';
 import { mountAt } from '../core/mount.js';
+import { LIGHT_AT } from '../core/lights.js';
 import { hash } from '../core/noise.js';
 import { flicker } from './light.js';
 import { TILE as T } from './screen.js';
@@ -20,9 +21,8 @@ const BRACKET = {
   right: [[15, 8, 1, 5, K], [16, 11, 3, 1, K], [16, 8, 4, 1, K], [17, 7, 2, 1, N], [16, 9, 3, 2, N], [16, 9, 3, 1, NL]],
 };
 BRACKET.left = BRACKET.right.map(([x, y, w, h, c]) => [16 - x - w, y, w, h, c]);
-// How far the flame sits from the study's spot, and where the light comes from.
+// How far the flame sits from the study's spot. Where the light comes from is in core/lights.js.
 const FLAME_DX = { face: 0, right: 10, left: -10 };
-const LIGHT_AT = { face: [8, 13], right: [18, 10], left: [-2, 10] };
 
 // The charred stub where the flame would be, option A in the picture (D-125).
 const STUB = [[6, 5, 4, 2, K], [7, 4, 2, 1, K], [7, 5, 2, 2, CHAR], [7, 4, 1, 1, ASH]];
