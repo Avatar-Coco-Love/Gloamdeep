@@ -41,3 +41,9 @@ test('forget and reset room give a blank memory', () => {
   assert.equal(forget(a).seen.some((v) => v), false);
   assert.equal(resetRoom(a, room, { x: 5, y: 11 }).seen.some((v) => v), false);
 });
+
+test('the first room is a cave: pitch black, with memory a faint grey (D-063)', () => {
+  assert.deepEqual(room.dark.unseen, [0, 0, 0]);
+  const [r, g, b] = room.dark.remembered;
+  assert.equal(r === g && g === b && r > 0 && r < 0.15, true);
+});

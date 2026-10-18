@@ -21,13 +21,18 @@ export const FIRST_ROOM = [
   '#####.#####',
 ];
 
-export function makeRoom(map) {
+// § darkness: each place sets how dark never-seen tiles are and how
+// remembered ones look, as light multipliers (D-063). The first room is a
+// cave with no lights: pitch black, with memory a faint grey.
+export const CAVE = { unseen: [0, 0, 0], remembered: [0.095, 0.095, 0.095] };
+
+export function makeRoom(map, dark = CAVE) {
   const rows = map.length, cols = map[0].length;
   map.forEach((line, y) => {
     if (line.length !== cols) throw new Error(`room row ${y} is ${line.length} wide, not ${cols}`);
     for (const ch of line) if (!byLetter(ch)) throw new Error(`room row ${y} has unknown tile '${ch}'`);
   });
-  return { cols, rows, map };
+  return { cols, rows, map, dark };
 }
 
 // § lookups

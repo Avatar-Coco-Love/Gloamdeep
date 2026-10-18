@@ -20,3 +20,9 @@ the way (D-044). Should the hero find a way around walls to reach it,
 like style study 1 did for a tapped tile? Should a tap do the same, and
 should the walk stop when something comes into view? When in the build
 plan?
+
+**Q-027 · Darkness outside, and the moon** (when outside places exist)
+Each place sets its own darkness (D-063). The owner sees the study's cold
+blue as moonlight. Should outside at night use it? Should moon phases
+make some nights darker than others? The owner isn't sure the moon will
+be in the game. Each biome's darkness is asked when it arrives.

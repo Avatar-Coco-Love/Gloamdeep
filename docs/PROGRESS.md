@@ -53,8 +53,9 @@ Foundation (0.1.x): one small visible thing per step
   war. Dev panel: "Lighting off". The playtest showed teeth on the
   left wall, so walls are now lit as whole tiles (D-053 to D-058).
 - **2026-10-18, PR #16 (0.1.6), fog of war.** Tiles the lantern has
-  reached are remembered and stay faintly visible in the study's cold
-  blue; a tile counts once the light reaches its middle. The blue fades
-  into the black over 4 pixels in the dither, like the shadows (picked
-  from a picture). Dev panel: "Reveal room" switch and "Forget" button;
-  "Reset room" forgets too (D-059 to D-062).
+  reached are remembered and stay faintly visible; a tile counts once
+  the light reaches its middle, and the edge fades over 4 pixels in the
+  dither. Dev panel: "Reveal room" and "Forget"; "Reset room" forgets
+  too. After the playtest the study's blue felt too bright and like
+  moonlight, so each place now sets its darkness: this cave is pitch
+  black with a faint grey memory (D-059 to D-063, Q-027 opened).

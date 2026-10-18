@@ -1,15 +1,14 @@
 // § light: multiply every pixel by the light reaching it; darkness is the
 // default (ART-DIRECTION.md, "Light"; style study 1, lines 403–429).
 // Shadow edges blend over one 4 × 4 cell into the dithered bands (D-053).
-// Remembered tiles get a cold blue, fading into black over one cell (D-060).
+// The room sets the darkness and the remembered tiles' look (D-063); their
+// edge fades over one cell (D-060).
 import { CELL, seenCells } from '../core/light.js';
 import { W, H } from './screen.js';
 
 const CW = W / CELL, CH = H / CELL;
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + 0.5) / 16);
 const BANDS = 5;
-const DARK = [0.02, 0.02, 0.045]; // never seen
-const GLOAM = [0.15, 0.16, 0.26]; // remembered: the cold blue of fog of war
 const seen = new Uint8Array(CW * CH); // cells the light reaches now
 const known = new Uint8Array(CW * CH); // cells on remembered tiles
 
@@ -31,10 +30,10 @@ export function drawLight(ctx, room, light, memory) {
     known[cy * CW + cx] = memory ? memory[(cy >> 2) * room.cols + (cx >> 2)] : 1;
   }
   const img = ctx.getImageData(0, 0, W, H), d = img.data;
-  const { x: lx, y: ly, r, cr, cg, cb } = light;
+  const { x: lx, y: ly, r, cr, cg, cb } = light, { unseen, remembered } = room.dark;
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const th = BAYER[((y & 3) << 2) | (x & 3)];
-    const amb = blend(known, x, y) > th ? GLOAM : DARK;
+    const amb = blend(known, x, y) > th ? remembered : unseen;
     let lr = amb[0], lg = amb[1], lb = amb[2];
     const dx = x - lx, dy = y - ly;
     let f = 1 - Math.sqrt(dx * dx + dy * dy) / r;
