@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #13 (0.1.3), dev mode.** `?dev` turns it on and
+  the browser remembers it (`?dev=off` forgets). A wrench button opens
+  switches, off at first, for a faint tile grid and a coordinates readout
+  with a bright outline on the pointed tile; ` toggles them on a PC. The
+  playtest dropped "Leave dev mode" (D-045 to D-047).
 - **2026-10-18, PR #12 (0.1.2), the hero walks.** The study's hero
   (lantern later) steps one tile per key, tap, swipe or held finger, in
   4 directions with a quick slide. Walls stop the hero with a small nudge

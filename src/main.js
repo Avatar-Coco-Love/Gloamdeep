@@ -8,6 +8,7 @@ import { drawRoom } from './render/tiles.js';
 import { drawHero, LANTERN_AT } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { LANTERN } from './core/light.js';
+import { remember, forget } from './core/fog.js';
 import { createInput } from './input/input.js';
 import { createDev } from './dev/dev.js';
 
@@ -57,7 +58,19 @@ const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-0
   get: () => state,
   set: (s) => { state = s; },
   reset: () => resetRoom(state, startRoom, FIRST_START),
+  forget: () => forget(state),
 });
+
+// § memory: once the hero stands still on a tile, the tiles their lantern
+// reaches are remembered (D-059). Again after a dev change to the memory.
+const lanternAt = (x, y) => ({ x: x * TILE + LANTERN_AT.x, y: y * TILE - 2 + LANTERN_AT.y });
+let rememberedAt = null, rememberedSeen = null;
+function rememberHere() {
+  const key = state.hero.x + ',' + state.hero.y;
+  if (key === rememberedAt && state.seen === rememberedSeen) return;
+  state = remember(state, { ...lanternAt(state.hero.x, state.hero.y), r: LANTERN.r });
+  rememberedAt = key; rememberedSeen = state.seen;
+}
 
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
@@ -65,6 +78,7 @@ function frame(t) {
   shown.x = approach(shown.x, state.hero.x);
   shown.y = approach(shown.y, state.hero.y);
   if (settled()) {
+    rememberHere();
     if (queued) { const d = queued; queued = null; tryStep(d); }
     else {
       const p = input.held();
@@ -81,7 +95,7 @@ function frame(t) {
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
   if (!(dev && dev.lightOff())) {
     const r = LANTERN.r * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035));
-    drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r });
+    drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev && dev.revealed() ? null : state.seen);
   }
   ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); // the flame's core is always bright (study line 446)
   if (dev) dev.draw(ctx, state);

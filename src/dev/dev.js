@@ -21,13 +21,13 @@ function save(opts) {
 
 // Returns null when dev mode is off, so players get no DEV button at all.
 // `game` gives tools the state: get() reads it, set(s) replaces it, reset()
-// gives the state with the starting room back.
+// gives the state with the starting room back, forget() with a blank memory.
 export function createDev(stage, canvas, game) {
   const asked = new URLSearchParams(location.search).get('dev'); // '' for ?dev, 'off' for ?dev=off
   if (asked === 'off') { save(null); return null; }
   const saved = load();
   if (asked === null && !saved) return null;
-  const opts = { grid: false, coords: false, noLight: false, ...saved }; // every switch starts off (D-047)
+  const opts = { grid: false, coords: false, noLight: false, reveal: false, ...saved }; // every switch starts off (D-047)
   save(opts);
 
   // § panel: the wrench button and its switches
@@ -40,7 +40,7 @@ export function createDev(stage, canvas, game) {
   const panel = el('div', { id: 'dev-panel', hidden: true });
   const readout = el('div', { id: 'dev-readout' });
   const boxes = {};
-  for (const [name, label] of [['grid', 'Grid'], ['coords', 'Coordinates'], ['noLight', 'Lighting off']]) {
+  for (const [name, label] of [['grid', 'Grid'], ['coords', 'Coordinates'], ['noLight', 'Lighting off'], ['reveal', 'Reveal room']]) {
     const row = el('label', {});
     boxes[name] = el('input', { type: 'checkbox', checked: opts[name] });
     boxes[name].addEventListener('change', () => { opts[name] = boxes[name].checked; save(opts); });
@@ -61,7 +61,9 @@ export function createDev(stage, canvas, game) {
   }
   const reset = el('button', { type: 'button', textContent: 'Reset room' });
   reset.addEventListener('click', () => game.set(game.reset()));
-  panel.append(reset);
+  const forgetBtn = el('button', { type: 'button', textContent: 'Forget' }); // a blank memory (D-061)
+  forgetBtn.addEventListener('click', () => game.set(game.forget()));
+  panel.append(reset, forgetBtn);
 
   // § copy: the room code to the clipboard, to hand to Claude (D-051, D-052). If the
   // browser blocks it, a box shows the code, selected, to copy by hand.
@@ -117,6 +119,7 @@ export function createDev(stage, canvas, game) {
   return {
     armed: () => picked !== null,
     lightOff: () => opts.noLight, // see the whole room, lit or not (D-057)
+    revealed: () => opts.reveal, // show every tile as remembered; the memory is kept (D-061)
     // Places the picked entry on tile x, y. False when nothing is picked,
     // so the tap walks instead.
     place(x, y) {
