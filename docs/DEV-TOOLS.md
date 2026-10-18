@@ -19,7 +19,7 @@ tools to be chosen together later.
 - Spawn any registry entry (item, enemy, NPC, tile) at a chosen tile (D-006).
 - Always on; a wrench button opens the panel, switches all off at first
   (D-086, D-047). Code: `src/dev/dev.js` (button, keys, stats line).
-- The panel has sections, View, Spawn, Room, Oil, Share: fixed buttons
+- The panel has sections, View, Spawn, Room, Oil, Hero, Share: fixed buttons
   at the top, one open below, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
   goes into a section there**, or a new section.
 - Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
@@ -38,13 +38,14 @@ tools to be chosen together later.
 - Refill, Empty and a slider for any amount, no turn passed (D-066,
   D-091).
   Rules: `src/core/oil.js`.
+- Hero: Refill hearts, back to full health, no turn passed (D-154).
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
-- God mode (no damage)
+- God mode (no damage); the owner wants it next (D-154)
 - Reveal the whole floor (when there are floors)
-- Jump to any room or floor
+- Jump to any room or floor; one depth up or down, after God mode (D-154)
 - Step enemies one turn at a time
 - Collision overlay (the grid and coordinates part is built, D-046)
 - Show light radius and line-of-sight overlay

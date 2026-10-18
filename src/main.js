@@ -123,6 +123,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   },
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
+  heal: () => ({ ...state, health: HERO_HEALTH }),
 });
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
@@ -165,11 +166,9 @@ function frame(t) {
   drawItems(ctx, s.items, t, reduceMotion.matches);
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy, !!bitten && t < bitten.until);
-  // § enemies: drawn last before the light, which shows them only in real light (D-106)
+  // § enemies: shaded by the light like the floor, so seen in memory's dim light too (D-153)
   const lightOn = !dev.lightOff();
   const flashing = hit && t < hit.until ? hit.enemy : null;
-  const under = lightOn && (s.enemies.length || flashing) // the picture before enemies, for the light
-    ? ctx.getImageData(0, 0, W, H).data : null;
   drawEnemies(ctx, s.enemies, t, reduceMotion.matches, flashing, foeAt);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
@@ -179,7 +178,7 @@ function frame(t) {
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
     lights.push(...torchLights(s.room, s.lights, t, reduceMotion.matches, torchGlow), ...glowsIn(s.room));
-    drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen, under);
+    drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen);
   }
   drawFlames(ctx, s.room, s.lights, t, reduceMotion.matches);
   if (s.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)

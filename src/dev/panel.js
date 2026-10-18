@@ -19,7 +19,7 @@ const row = (...kids) => { const r = el('div', { className: 'dev-row' }); r.appe
 // sections, `saved()` stores them. Returns flip(name) for the keys, picked()
 // for the spawn tool and sync(state), called each frame.
 export function buildPanel(panel, opts, saved, game) {
-  // § sections: View, Spawn, Room, Oil, Share. Their buttons sit in a fixed
+  // § sections: View, Spawn, Room, Oil, Hero, Share. Their buttons sit in a fixed
   // grid at the top and the open section shows below, so nothing moves under
   // the finger. One open at a time; tap it again to fold it (D-087).
   const tabs = el('div', { className: 'dev-tabs' });
@@ -94,6 +94,9 @@ export function buildPanel(panel, opts, saved, game) {
   setter.append(slider, amount);
   oil.append(setter, row(button('Refill', () => game.set(game.setOil(1))), button('Empty', () => game.set(game.setOil(0)), 'dev-undo')));
   let shownOil = null;
+
+  // § hero: Refill hearts, back to full health; no turn passes (D-154)
+  section('hero', 'Hero').append(row(button('Refill hearts', () => game.set(game.heal()))));
 
   // § share: Copy room, to hand to Claude (D-051, D-052). If the browser
   // blocks the clipboard, a box shows the code, selected, to copy by hand.

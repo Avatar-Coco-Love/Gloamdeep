@@ -4,18 +4,19 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.24 · **Stage:** foundation (the first code)
+**Version:** 0.1.25 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 29: the owner picks** (multiple choice): tune the generated
-rooms (D-147), the rat fleeing, a floor torch, or sounds.
+**Step 30: the owner picks** (multiple choice): healing (Q-033), the
+dev God mode (D-154), more room tuning (D-152), the rat fleeing, a
+floor torch, or sounds.
 Read: `DESIGN.md`.
 
 ## Waiting on the owner
 - After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
   rat notice?) and Q-032 (which way a walking rat faces).
-- After playing 0.1.24: are the generated rooms the right size and
-  shape (D-147's first guesses)?
+- After playing 0.1.25: are the rougher caves right (D-152), and does
+  the rat look right in remembered dark (D-153)?
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -52,15 +53,10 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 26 A flask and a rat in the second room, 0.1.22
 - [x] 27 A depth counter and an endless way down, 0.1.23
 - [x] 28 The first generated room, 0.1.24
-- Ideas for later: a standing torch on the floor, the rat fleeing, sounds
+- [x] 29 Rougher caves, the rat in remembered dark, 0.1.25
+- Ideas for later: a standing torch on the floor, the rat fleeing, sounds; other places (smaller caves, bigger rooms, more natural caves, dungeons, crypts, D-152)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.22, a flask and a rat in room 2.** The second
-  room's lower cave holds an oil flask at 9,11, guarded by a rat at
-  7,10; rooms can start with items. After the playtest: a flask in room
-  1 (9,2), a torch by room 2's stairs up, a full tank at the start, and
-  stairs that sink into the wall beside them (D-138 to D-143). Playtest:
-  https://claude.ai/artifact/TPAxhRK7dncVomJ12ZwVT5
 - **2026-10-18, 0.1.23, a depth counter and an endless way down.**
   "DEPTH 1" in a box at the top middle. The second room's stairs down
   at 1,11 lead to a fresh copy of it at depth 3, and so on forever; each
@@ -73,3 +69,8 @@ Foundation (0.1.x): one small visible thing per step
   it in the dark. A depth stays as left; a fall rolls a new seed and new
   depths, their maps forgotten. Seed in the dev stats (D-147 to D-151).
   Playtest: https://claude.ai/artifact/LNhmWcYaTRaey4TR9TDwkq
+- **2026-10-18, 0.1.25, rougher caves, the rat in remembered dark.**
+  Generated caves' edges are bitten back more. A rat on an explored tile
+  shows dimly in the dark like the flask; it notices only in light. After
+  the playtest: dev Refill hearts, as nothing heals yet (D-152 to D-154,
+  Q-033). Playtest: https://claude.ai/artifact/C5VP47d6BEjdnESxHwtYo9

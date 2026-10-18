@@ -77,9 +77,11 @@ with reduced motion.
 
 **D-106 · 2026-10-18 · The rat is seen only in light** (step 20)
 Lantern or torch light shows the rat, shaded like the floor around it.
-Memory never does: on a remembered tile out of the light, the floor
+~~Memory never does: on a remembered tile out of the light, the floor
 shows without it, and with the lantern off and no torch near it can't
-be seen at all. The first room's rat sits where the study's did, at 2,10.
+be seen at all.~~ *Superseded by D-153 (2026-10-18): a rat on a
+remembered tile shows in its dim light, like the flask.* The first
+room's rat sits where the study's did, at 2,10.
 
 **D-107 · 2026-10-18 · The rat's line** (step 20)
 "The rat squeaks and holds its ground." The study's line began "You

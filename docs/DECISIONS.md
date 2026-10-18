@@ -143,3 +143,25 @@ reported and made again. Seeds run from 1 to 99999.
 **D-151 · 2026-10-18 · The decision log makes room again** (step 28, as
 D-137) D-114 to D-129 (steps 22 to 24) moved unchanged to
 `archive/DECISIONS-FOUNDATION-5.md`. They stay in force.
+
+**D-152 · 2026-10-18 · Rougher caves** (step 29, owner's pick, tunes
+D-147) A generated cave's edges are bitten back more: each corner tile
+goes to wall at 60% (was 50%), each other edge tile at 30% (was 15%),
+and a bitten tile takes the next tile inward with it at 30% (caves over
+3 tiles both ways). A tile a bite cuts off goes back to wall. Sizes stay
+as D-147. Later the owner wants other kinds of place too: smaller
+caves, bigger rooms, more natural caves, dungeons, crypts.
+
+**D-153 · 2026-10-18 · The rat shows in memory's dim light** (step 29,
+owner's pick, supersedes D-106's memory rule) Like the flask and the
+hero, a rat on a remembered tile is drawn, shaded by the same dim light
+as the floor, even with no lantern or torch near. On a tile never seen
+it stays hidden in the dark. Noticing is unchanged: a rat still notices
+the hero only in light (D-126).
+
+**D-154 · 2026-10-18 · Refill hearts** (step 29 playtest, owner's pick,
+DEV-TOOLS.md) Two rats in the first two rooms cost a heart or two each
+and nothing heals, so the generated depths were hard to reach. The dev
+panel gets a Hero section with a Refill hearts button: back to full
+health, no turn passed. God mode and jumping a depth up or down come in
+later steps, one at a time. Healing in the game is its own step (Q-033).

@@ -29,8 +29,11 @@ function tryRoom(r) {
   if (caves.length < 2) return null;
   for (const c of caves) carveCave(r, g, c);
   joinCaves(r, g, caves);
+  // a bite can cut off a tile or two; those go back to wall (D-152)
+  const joined = reach(g, { x: caves[0].x + (caves[0].w >> 1), y: caves[0].y + (caves[0].h >> 1) });
+  for (const f of tilesWhere(g, (x, y) => g[y][x] === '.')) if (!joined.has(key(f))) g[f.y][f.x] = '#';
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
-  if (floors.length < MIN_OPEN || reach(g, floors[0]).size !== floors.length) return null;
+  if (floors.length < MIN_OPEN) return null;
 
   // § stairs: up on a floor tile with wall above, so the steps sink into it
   // (D-143); down as far along the way as can be. Neither may cut the room
@@ -84,13 +87,20 @@ function placeCaves(r) {
   return caves;
 }
 
-// A cave's box as floor, with rough edges: corners and edge tiles knocked
-// back to wall here and there
+// § rough: a cave's box as floor, with edges bitten back to wall here and
+// there: corners and edge tiles, and some bites a tile deeper (D-152)
+const ROUGH_CORNER = 0.6, ROUGH_EDGE = 0.3, ROUGH_DEEP = 0.3;
 function carveCave(r, g, c) {
+  for (let y = c.y; y < c.y + c.h; y++) for (let x = c.x; x < c.x + c.w; x++) g[y][x] = '.';
   for (let y = c.y; y < c.y + c.h; y++) for (let x = c.x; x < c.x + c.w; x++) {
-    const edgeX = x === c.x || x === c.x + c.w - 1, edgeY = y === c.y || y === c.y + c.h - 1;
-    const rough = edgeX && edgeY ? 0.5 : edgeX || edgeY ? 0.15 : 0;
-    g[y][x] = r() < rough ? '#' : '.';
+    const left = x === c.x, right = x === c.x + c.w - 1, top = y === c.y, bottom = y === c.y + c.h - 1;
+    if (!(left || right || top || bottom)) continue;
+    if (r() >= ((left || right) && (top || bottom) ? ROUGH_CORNER : ROUGH_EDGE)) continue;
+    g[y][x] = '#';
+    // a deeper bite: the next tile inward, if the cave is wide enough to keep a middle
+    const ix = x + (left ? 1 : right ? -1 : 0), iy = y + (top ? 1 : bottom ? -1 : 0);
+    const inside = ix > c.x && ix < c.x + c.w - 1 || iy > c.y && iy < c.y + c.h - 1;
+    if (c.w > 3 && c.h > 3 && inside && r() < ROUGH_DEEP) g[iy][ix] = '#';
   }
 }
 

@@ -22,7 +22,7 @@ function save(opts) {
 
 // `game` gives tools the state: get() reads it, set(s) replaces it, reset()
 // gives the state with the starting room back, forget() with a blank memory,
-// setOil(amount) with that much oil.
+// setOil(amount) with that much oil, heal() with full hearts.
 export function createDev(stage, canvas, game) {
   // every switch starts off (D-047); only View starts open (D-087)
   const opts = { grid: false, coords: false, noLight: false, reveal: false, open: ['view'], ...load() };

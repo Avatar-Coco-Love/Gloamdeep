@@ -18,6 +18,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.25 (2026-10-18)
+- Generated caves have rougher edges, with bites and nooks, so they
+  look less like boxes.
+- A rat on a tile you've explored now shows in the dark, dimly, like the
+  oil flask. It still only notices you in light.
+- Dev panel: a new Hero section with Refill hearts, so deeper depths can
+  be tested.
+- Decisions: D-152, D-153 (supersedes part of D-106), D-154. Questions
+  opened: Q-033.
+
 ## 0.1.24 (2026-10-18)
 - The first generated rooms: every depth below the second room is now
   made by the game, 2 to 4 rough caves joined by narrow gaps, each depth

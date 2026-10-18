@@ -36,3 +36,7 @@ step away and it stays. Should a bite or a hit count as noticing?
 The rat is drawn facing right (D-104), also while it walks left. Should
 it turn to face the way it walks, or toward the hero?
 
+**Q-033 · Healing** (step 29 playtest, its own step)
+Nothing heals the hero yet, and each rat costs a heart or two, so a run
+ends by about depth 3. How does the hero get health back: an item to
+find, resting, going back up, something else? How much, and how often?
