@@ -35,7 +35,7 @@ export function buildPanel(panel, opts, saved, game) {
   };
   const section = (id, title) => {
     const body = el('div', { className: 'dev-body', hidden: opts.open[0] !== id });
-    const tab = button(title, () => show(body.hidden ? id : null));
+    const tab = button(title, () => show(body.hidden ? id : null), 'dev-tab');
     tab.setAttribute('aria-expanded', String(!body.hidden));
     sections.push({ id, tab, body });
     tabs.append(tab);
@@ -53,7 +53,8 @@ export function buildPanel(panel, opts, saved, game) {
   };
   const views = [['grid', 'Grid', 'G'], ['coords', 'Coords', 'C'], ['noLight', 'No light', ''], ['reveal', 'Reveal', 'R']];
   view.append(row(...views.map(([name, label, key]) => {
-    switches[name] = button(key ? `${label} (${key})` : label, () => flip(name), 'dev-switch');
+    switches[name] = button(label, () => flip(name), 'dev-switch');
+    if (key) switches[name].append(el('kbd', { textContent: key }));
     switches[name].setAttribute('aria-pressed', String(opts[name]));
     return switches[name];
   })));
@@ -79,8 +80,8 @@ export function buildPanel(panel, opts, saved, game) {
 
   // § room: Reset room (D-050, D-062) and Forget (D-061)
   section('room', 'Room').append(row(
-    button('Reset room', () => game.set(game.reset())),
-    button('Forget', () => game.set(game.forget())),
+    button('Reset room', () => game.set(game.reset()), 'dev-undo'),
+    button('Forget', () => game.set(game.forget()), 'dev-undo'),
   ));
 
   // § oil: a slider for any amount (D-091), Refill and Empty (D-066); no turn passes
@@ -91,7 +92,7 @@ export function buildPanel(panel, opts, saved, game) {
   slider.addEventListener('input', () => game.set(game.setOil(slider.value / 100)));
   const setter = el('label', { className: 'dev-slider' });
   setter.append(slider, amount);
-  oil.append(setter, row(button('Refill', () => game.set(game.setOil(1))), button('Empty', () => game.set(game.setOil(0)))));
+  oil.append(setter, row(button('Refill', () => game.set(game.setOil(1))), button('Empty', () => game.set(game.setOil(0)), 'dev-undo')));
   let shownOil = null;
 
   // § share: Copy room, to hand to Claude (D-051, D-052). If the browser

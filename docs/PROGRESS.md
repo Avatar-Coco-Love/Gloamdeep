@@ -60,5 +60,5 @@ Foundation (0.1.x): one small visible thing per step
   stats line (turn, oil %, lit, hero tile) show on every build. The
   panel has View, Spawn, Room, Oil and Share buttons, one open below; spawn entries are
   chips by kind; an oil slider; PC keys ` G C R. A start-up hook syncs
-  `main` (D-086 to D-092). Playtest:
+  `main` (D-086 to D-093). Playtest:
   https://claude.ai/artifact/Ws3G6Ya6NXtCob5cbvnHHw

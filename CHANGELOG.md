@@ -28,7 +28,9 @@ Entry format:
 - An oil slider sets any amount.
 - A start-up hook brings `main` up to date at the start of each
   conversation.
-- Decisions: D-086 to D-092.
+- Polish: violet section buttons, a grey tray for the tools, gold for
+  what is on, soft red for buttons that undo.
+- Decisions: D-086 to D-093.
 
 ## 0.1.12 (2026-10-18)
 - The hero can wait a turn: tap or click the hero, or press Space

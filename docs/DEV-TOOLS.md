@@ -20,7 +20,7 @@ tools to be chosen together later.
 - Always on; a wrench button opens the panel, switches all off at first
   (D-086, D-047). Code: `src/dev/dev.js` (button, keys, stats line).
 - The panel has sections, View, Spawn, Room, Oil, Share: fixed buttons
-  at the top, one open below, remembered (D-087). Code: `src/dev/panel.js`. **A new tool
+  at the top, one open below, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
   goes into a section there**, or a new section.
 - Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
   spawn pick and pointed tile (D-088). New state (health, floor, seed)

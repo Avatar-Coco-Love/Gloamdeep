@@ -188,3 +188,10 @@ on D-070)
 A start-up hook (`.claude/settings.json`) fetches `main` and
 fast-forwards it when a conversation starts, so the stale-copy notice
 stops. It never discards work.
+
+**D-093 · 2026-10-18 · The dev panel's colours** (0.1.13, owner's request)
+Colours from the game's palette: violet section buttons (the colour for
+unusual things), a stone-grey tray for the open section's tools, lantern
+gold for a switch or chip that is on, and a soft red for buttons that
+undo (Reset room, Forget, Empty). Keys show as small key caps; the stats
+line sits on a dark strip.
