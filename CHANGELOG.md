@@ -28,7 +28,7 @@ Entry format:
 - Walking into a wall gives a tiny nudge and passes no turn.
 - Turn rules live in `src/core/turn.js`, with tests. Input has its own
   folder, `src/input`.
-- Decisions: D-042, D-043, D-044. Questions opened: Q-025.
+- Decisions: D-042, D-043, D-044. Questions opened: Q-025, Q-026.
 
 ## 0.1.1 (2026-10-18)
 - The screen now shows a whole room, built from a text map (one letter

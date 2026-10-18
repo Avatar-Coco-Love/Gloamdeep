@@ -49,4 +49,5 @@ Foundation (0.1.x): one small visible thing per step
   (lantern later) steps one tile per key, tap, swipe or held finger, in
   4 directions with a quick slide. Walls stop the hero with a small nudge
   and no turn passes. Held walking slowed to 4 steps a second after the
-  playtest (D-042 to D-044). Opened Q-025 (a tap/swipe switch).
+  playtest (D-042 to D-044). Opened Q-025 (a tap/swipe switch)
+  and Q-026 (walking around walls to a held finger).
