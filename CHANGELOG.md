@@ -18,6 +18,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.15 (2026-10-18)
+- Torches: the first light sources besides the lantern. Three hang in
+  the first room, where the study had them (the top-right one a tile
+  left, clear of the oil bar), with swaying flames and rising embers.
+- Their orange light flickers and shows even with the lantern off. Only
+  the lantern adds to the remembered map.
+- A torch picks its look from where it sits: on a brick face, or on an
+  iron arm out from a wall's side. The dev Spawn tool has a Lights group
+  and refuses spots where a torch can't sit.
+- Older decisions D-053 to D-069 moved to an archive file, unchanged.
+- Decisions: D-098 to D-103.
+
 ## 0.1.14 (2026-10-18)
 - A text line: a strip under the room where the game speaks, in a pixel
   font drawn in code. A line stays 5 turns, then fades.

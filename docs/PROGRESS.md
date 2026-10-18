@@ -4,16 +4,16 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.14 · **Stage:** foundation (the first code)
+**Version:** 0.1.15 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 19: the owner picks it** from the ideas after step 18 in the
+**Step 20: the owner picks it** from the ideas after step 19 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Pick step 19: stairs and a second room, torches, or the first enemy
-  (rat).
+- Pick step 20: stairs and a second room, the first enemy (rat), or
+  more light (lighting an unlit torch, a standing torch on the floor).
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -40,16 +40,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 17 Wait a turn, 0.1.12
 - [x] Dev tools for everyone, a tidier panel, 0.1.13 (between steps)
 - [x] 18 A text line, 0.1.14
-- Ideas after 18, order open: stairs and a second room, torches, the
-  first enemy (rat)
+- [x] 19 Torches, 0.1.15
+- Ideas after 19, order open: stairs and a second room, the first enemy
+  (rat), more light (unlit torches to light, floor mounts)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.12, wait a turn.** Tap or click the hero, or press
-  Space (hold it to keep waiting), and the hero stands still for a
-  turn. Oil burns as for a step while the lantern is lit. Only the oil
-  bar shows it. A finger held on the hero does nothing (D-084, D-085,
-  Q-029 closed). Playtest:
-  https://claude.ai/artifact/8XGRMyr6qHVeyipi2DWBPd
 - **2026-10-18, 0.1.13, dev tools for everyone.** The wrench and a
   stats line (turn, oil %, lit, hero tile) show on every build. The
   panel has View, Spawn, Room, Oil and Share buttons, one open below; spawn entries are
@@ -62,3 +57,10 @@ Foundation (0.1.x): one small visible thing per step
   in amber as it runs dry; each once per crossing. A line stays 5
   turns, then fades (D-094 to D-097, Q-028 closed). Playtest:
   https://claude.ai/artifact/T2zbFW9vJsdr6RyDRmM1hg
+- **2026-10-18, 0.1.15, torches.** Three wall torches in the first
+  room, as in the study (the top-right one a tile left, clear of the oil
+  bar): orange light that flickers, a swaying flame and rising embers,
+  shown even with the lantern off. Lights are their own registry kind;
+  a torch takes the look of where it sits, a brick face or a wall side
+  (D-098 to D-103). Playtest:
+  https://claude.ai/artifact/TTjokfKEau23XoE6QBvsip

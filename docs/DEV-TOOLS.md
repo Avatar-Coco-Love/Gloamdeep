@@ -28,7 +28,8 @@ tools to be chosen together later.
 - PC keys: ` the panel; G, C, R the View switches (D-090).
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 - Spawn: chips grouped by registry kind; tap one, then tap tiles; tap it
-  again to drop it (D-048 to D-050, D-079, D-089). Rules: `src/core/spawn.js`.
+  again to drop it (D-048 to D-050, D-079, D-089). Torches go only where
+  they can sit (D-100, D-102). Rules: `src/core/spawn.js`.
 - Lighting off: a panel switch that shows the room unlit (D-057).
 - Reveal room (a switch) and Forget (a button) for fog of war; Reset room
   forgets too (D-061, D-062). Rules: `src/core/fog.js`.

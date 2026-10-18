@@ -12,8 +12,8 @@ export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 // The hero starts where style study 1 put them (study line 277).
 export const FIRST_START = { x: 5, y: 11 };
 
-export function makeState(room, start = FIRST_START) {
-  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, items: [], line: null };
+export function makeState(room, start = FIRST_START, lights = []) {
+  return { room, hero: { x: start.x, y: start.y }, turn: 0, seen: blankMemory(room), oil: OIL.start, lit: true, items: [], lights, line: null };
 }
 
 // § step: (state, direction) → new state. Walking into something solid

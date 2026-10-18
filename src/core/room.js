@@ -21,9 +21,13 @@ export const FIRST_ROOM = [
   '#####.#####',
 ];
 
+// § first lights: the study's three wall torches (study line 273), the
+// top-right one a tile left, clear of the oil bar (D-101).
+export const FIRST_LIGHTS = [{ id: 'torch', x: 2, y: 0 }, { id: 'torch', x: 7, y: 0 }, { id: 'torch', x: 4, y: 4 }];
+
 // § darkness: each place sets how dark never-seen tiles are and how
 // remembered ones look, as light multipliers (D-063). The first room is a
-// cave with no lights: pitch black, with memory a faint grey.
+// cave: pitch black outside the light, with memory a faint grey.
 export const CAVE = { unseen: [0, 0, 0], remembered: [0.095, 0.095, 0.095] };
 
 export function makeRoom(map, dark = CAVE) {
