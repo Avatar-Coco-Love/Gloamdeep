@@ -6,15 +6,16 @@ import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
-import { drawHero, drawItems, drawEnemies, LANTERN_AT } from './render/sprites.js';
+import { drawHero, drawItems, drawEnemies } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { drawBrackets, torchLights, drawFlames } from './render/torches.js';
-import { LANTERN } from './core/light.js';
+import { LANTERN, LANTERN_AT } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
 import { drawOilBar, drawHearts } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
+import { lanternFrom } from './core/sight.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createDev } from './dev/dev.js';
@@ -64,6 +65,25 @@ function tryStep(dir) {
   if (fell || state.health < before.health) bitten = flashFor();
   if (fell) hit = null;
   if (fell || reduceMotion.matches) { shown.x = state.hero.x; shown.y = state.hero.y; }
+  else followFoes(before.enemies, state.enemies);
+}
+
+// § enemies sliding: a rat slides to its new tile like the hero (D-128).
+// `foeShown` holds where each enemy is drawn; one it doesn't know yet (a spawn,
+// a reset, a fall) shows on its tile at once. A turn keeps the enemies in order,
+// less any the hit killed, so the new list pairs with the old one by place.
+let foeShown = new Map();
+function followFoes(was, now) {
+  const alive = now.length < was.length ? was.filter((e) => e !== hit?.enemy) : was;
+  if (alive.length !== now.length) return;
+  const next = new Map();
+  now.forEach((e, i) => next.set(e, foeShown.get(alive[i]) || { x: alive[i].x, y: alive[i].y }));
+  foeShown = next;
+}
+function foeAt(e) {
+  let p = foeShown.get(e);
+  if (!p || reduceMotion.matches) { p = { x: e.x, y: e.y }; foeShown.set(e, p); }
+  return p;
 }
 function nudgeToward(dir) {
   const [dx, dy] = DIRS[dir];
@@ -95,13 +115,12 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
 // § memory: once the hero stands still on a tile, the tiles their lantern
 // reaches are remembered (D-059). Again after a dev change to the memory or oil,
 // or when the lantern comes back on. Nothing new is remembered while it is off (D-082).
-const lanternAt = (x, y) => ({ x: x * TILE + LANTERN_AT.x, y: y * TILE - 2 + LANTERN_AT.y });
 let rememberedAt = null, rememberedSeen = null;
 function rememberHere() {
   if (!state.lit) { rememberedAt = null; return; }
   const key = state.hero.x + ',' + state.hero.y + ',' + state.oil;
   if (key === rememberedAt && state.seen === rememberedSeen) return;
-  state = remember(state, { ...lanternAt(state.hero.x, state.hero.y), r: reach(state.oil) });
+  state = remember(state, { ...lanternFrom(state.hero.x, state.hero.y), r: reach(state.oil) });
   rememberedAt = key; rememberedSeen = state.seen;
 }
 
@@ -112,6 +131,7 @@ function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math
 function frame(t) {
   shown.x = approach(shown.x, state.hero.x);
   shown.y = approach(shown.y, state.hero.y);
+  for (const e of state.enemies) { const p = foeAt(e); p.x = approach(p.x, e.x); p.y = approach(p.y, e.y); }
   if (settled()) {
     rememberHere();
     if (queued) { const d = queued; queued = null; tryStep(d); }
@@ -133,7 +153,7 @@ function frame(t) {
   const flashing = hit && t < hit.until ? hit.enemy : null;
   const under = lightOn && (state.enemies.length || flashing) // the picture before enemies, for the light
     ? ctx.getImageData(0, 0, W, H).data : null;
-  drawEnemies(ctx, state.enemies, t, reduceMotion.matches, flashing);
+  drawEnemies(ctx, state.enemies, t, reduceMotion.matches, flashing, foeAt);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;

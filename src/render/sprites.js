@@ -25,9 +25,6 @@ const RAT = { mirror: false, rows: [
   '', '', '', '', '', '', '', '..........kk....', '.........kpdk...', '.....kkkkkSSSk..',
   '...kkSSSSSSSSpSk', '..kSSSSSSSSSSSSk', 'p.ksSSSSSSSSSSkp', '.pksdsssssssdkw.', '..pkkddkkkkddk..', '....kpk...kpk...'] };
 
-// Where the lantern's flame sits in the sprite: the light's centre and its bright core.
-export const LANTERN_AT = { x: 13, y: 9 };
-
 function build(rows, mirror) {
   return Array.from({ length: 16 }, (_, i) => {
     let r = rows[i] || '';
@@ -83,12 +80,13 @@ export function drawItems(c, items, t, still) {
 // 0.52 s, each column in its own beat; still with reduced motion (study line 378).
 // `hit`: the enemy flashing white just now, or null (D-105). A hit that
 // killed it still flashes it once, then it is gone (D-113).
-export function drawEnemies(c, enemies, t, still, hit) {
-  for (const e of enemies) drawEnemy(c, e, t, still, hit && e.x === hit.x && e.y === hit.y);
-  if (hit && !enemies.some((e) => e.x === hit.x && e.y === hit.y)) drawEnemy(c, hit, t, still, true);
+// `at`: (enemy) → the tile it is shown on, part way along while it slides (D-128).
+export function drawEnemies(c, enemies, t, still, hit, at = (e) => e) {
+  for (const e of enemies) drawEnemy(c, e, at(e), t, still, hit && e.x === hit.x && e.y === hit.y);
+  if (hit && !enemies.some((e) => e.x === hit.x && e.y === hit.y)) drawEnemy(c, hit, hit, t, still, true);
 }
-function drawEnemy(c, e, t, still, flash) {
-  const x = e.x * 16, y = e.y * 16;
+function drawEnemy(c, e, p, t, still, flash) {
+  const x = Math.round(p.x * 16), y = Math.round(p.y * 16);
   const bob = still ? 0 : Math.floor(t / 520 + e.x) % 2;
   drawShadow(c, x, y, 8);
   c.drawImage((flash ? FLASHES : SPRITES)[e.id], x, y - 2 - bob);

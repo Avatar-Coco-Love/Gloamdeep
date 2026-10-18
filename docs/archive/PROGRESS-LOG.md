@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.17, fighting the rat.** Walking into the rat swings
+  the lantern: the first hit says "The rat squeaks and holds its
+  ground.", the second kills it with "The rat squeaks and falls still."
+  and it flashes and is gone. A hit passes a turn and burns oil. It
+  doesn't fight back yet (D-109 to D-113, Q-030 narrowed). Playtest:
+  https://claude.ai/artifact/NBwf6Tqa3gJRmuuKRtLErp
 - **2026-10-18, 0.1.16, the rat.** The first enemy, redrawn from the
   study's rat (option A), sits at 2,10 and bobs. Walking into it flashes
   it white, shakes the room a pixel and says "The rat squeaks and holds

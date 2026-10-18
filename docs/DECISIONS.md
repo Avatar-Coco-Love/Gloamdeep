@@ -125,8 +125,9 @@ behind.
 
 **D-114 · 2026-10-18 · The rat bites** (step 22, supersedes the last
 sentence of D-109, answers Q-030) After each passed turn (a step, a
-wait or a hit), every enemy next to the hero, four ways, bites. The rat
-stays on its tile; moving and fleeing come later. It bites with the
+wait or a hit), every enemy next to the hero, four ways, bites. ~~The rat
+stays on its tile; moving and fleeing come later.~~ *Superseded by D-128
+(2026-10-18): a rat now walks; fleeing comes later.* It bites with the
 lantern off too, for now. A rat killed by the hit doesn't bite.
 
 **D-115 · 2026-10-18 · The hero's health** (step 22, answers Q-030) The
@@ -186,3 +187,29 @@ picked option A from the picture) The torch's bracket with a charred
 stub where the flame would be, and one grey ash pixel. It is still and
 gives no light, so it shows only in other light and in memory, like the
 wall.
+
+**D-126 · 2026-10-18 · The rat notices the hero in light** (step 24, D-026,
+owner's pick) A rat notices the hero when it stands on a tile lit by
+the lantern or a burning torch: if the hero can see it, it sees them
+(D-106). Lit counts as for memory: the light reaches the tile's centre,
+inside 95% of its reach (D-059). With the lantern off, a rat in the dark
+doesn't notice them; one in torchlight still does.
+
+**D-127 · 2026-10-18 · Once noticed, it keeps coming** (step 24, owner's pick)
+A rat that has noticed the hero keeps chasing until it dies or the hero
+falls (D-119 puts it back as it began), lantern off or not.
+
+**D-128 · 2026-10-18 · How the rat walks** (step 24, owner's pick,
+supersedes part of D-114) After each
+passed turn, a chasing rat not next to the hero steps one tile toward
+them, along the farther side first (as a held finger does, D-044). If a
+wall, an item, another enemy or the hero is in the way it tries the
+other side toward them, and else stays put. No going around walls.
+Rats move in list order, so one waits behind another. It slides to its
+new tile like the hero (D-043), at once with reduced motion.
+
+**D-129 · 2026-10-18 · Stepping in, then biting** (step 24, owner's pick, D-016)
+Rats already next to the hero bite (D-114); a rat that steps next to
+them this turn bites only on the next one, so the hero has a turn to
+swing first.
+

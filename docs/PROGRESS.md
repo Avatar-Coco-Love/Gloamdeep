@@ -4,17 +4,18 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.19 · **Stage:** foundation (the first code)
+**Version:** 0.1.20 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 24: the owner picks it** from the ideas after step 23 in the
+**Step 25: the owner picks it** from the ideas after step 24 in the
 build plan below. Propose the picked step as multiple choice.
 Read: `DESIGN.md`, and the open question the step touches, if any.
 
 ## Waiting on the owner
-- Pick step 24: stairs and a second room, a standing torch on the floor,
-  or the rat moving (chasing or fleeing, and noticing the hero less in
-  the dark, D-026).
+- After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
+  rat notice?) and Q-032 (which way a walking rat faces).
+- Pick step 25: stairs and a second room, a standing torch on the
+  floor, or the rat fleeing.
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -46,16 +47,11 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 21 Fighting the rat: two lantern hits kill it, 0.1.17
 - [x] 22 The rat fights back: bites, hearts and falling, 0.1.18
 - [x] 23 Lighting an unlit torch, 0.1.19
-- Ideas after 23, order open: stairs and a second room, a standing
-  torch on the floor, the rat moving
+- [x] 24 The rat moves: it notices in light and chases, 0.1.20
+- Ideas after 24, order open: stairs and a second room, a standing
+  torch on the floor, the rat fleeing
 
 ## Log (last 3)
-- **2026-10-18, 0.1.17, fighting the rat.** Walking into the rat swings
-  the lantern: the first hit says "The rat squeaks and holds its
-  ground.", the second kills it with "The rat squeaks and falls still."
-  and it flashes and is gone. A hit passes a turn and burns oil. It
-  doesn't fight back yet (D-109 to D-113, Q-030 narrowed). Playtest:
-  https://claude.ai/artifact/NBwf6Tqa3gJRmuuKRtLErp
 - **2026-10-18, 0.1.18, the rat fights back.** After each passed turn a
   rat next to the hero bites for 1, lit or dark, and stays put. The hero
   has 5 health as pixel hearts top left; a bite flashes them red, shakes
@@ -70,3 +66,10 @@ Foundation (0.1.x): one small visible thing per step
   "Your lantern is dark." A fall or reset puts it back unlit; the spawn
   tool has unlit torches (D-121 to D-125). Playtest:
   https://claude.ai/artifact/SFtxL1voF3Fc6D9NfQ1oRX
+- **2026-10-18, 0.1.20, the rat moves.** A rat on a lit tile (lantern
+  or torch) notices the hero and keeps coming until it dies or they
+  fall: one tile a turn, the farther way first, else the other way,
+  else it waits; no going around walls. It slides like the hero, and
+  one that steps next to the hero bites a turn later (D-126 to D-129,
+  Q-031 and Q-032 opened). Playtest:
+  https://claude.ai/artifact/Uq4RbG9JV7S1S5nhkShLMU

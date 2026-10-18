@@ -11,6 +11,8 @@ const TILE_SIZE = 16;
 
 // The study lantern's colour (study line 394). Oil sets its reach (src/core/oil.js).
 export const LANTERN = { cr: 1.45, cg: 1.2, cb: 0.86 };
+// Where the lantern's flame sits in the hero's sprite: the light's centre and its bright core.
+export const LANTERN_AT = { x: 13, y: 9 };
 
 const blocks = (room, tx, ty) => tileAt(room, tx, ty).blocksLight;
 
