@@ -53,4 +53,6 @@ Foundation (0.1.x): one small visible thing per step
   wrench panel's Spawn list (None, Wall, Floor) comes from it: pick one,
   then each tap or click places it, with no turn passed and never a wall
   on the hero. "Reset room" brings the room back; nothing is kept after a
-  reload (D-048 to D-050).
+  reload (D-048 to D-050). "Copy room" puts the room's text map on the
+  clipboard to hand to Claude, with a box to copy from if the browser
+  blocks it (D-051).

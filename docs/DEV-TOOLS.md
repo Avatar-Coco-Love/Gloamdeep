@@ -23,6 +23,8 @@ tools to be chosen together later.
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 - Spawn: pick from the panel's list, then tap tiles; tiles only so far;
   "Reset room" (D-048 to D-050). Rules: `src/core/spawn.js`.
+- Copy room: the room's text map and the hero's tile to the clipboard,
+  to hand to Claude (D-051). Code: `src/core/roomcode.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage)

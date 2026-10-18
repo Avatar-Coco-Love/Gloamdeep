@@ -4,7 +4,8 @@
 // Plain page text, not the pixel font (D-045).
 import { tileAt } from '../core/room.js';
 import { ALL } from '../core/registry.js';
-import { spawn, resetRoom } from '../core/spawn.js';
+import { spawn } from '../core/spawn.js';
+import { roomCode } from '../core/roomcode.js';
 import { COLS, ROWS } from '../render/screen.js';
 import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 
@@ -61,6 +62,29 @@ export function createDev(stage, canvas, game) {
   const reset = el('button', { type: 'button', textContent: 'Reset room' });
   reset.addEventListener('click', () => game.set(game.reset()));
   panel.append(reset);
+
+  // § copy: the room's code to the clipboard, to hand to Claude (D-051). If the
+  // browser blocks it, a box shows the code, selected, to copy by hand.
+  const copy = el('button', { type: 'button', textContent: 'Copy room' });
+  const box = el('textarea', { id: 'dev-code', readOnly: true, hidden: true, rows: 16, spellcheck: false });
+  let copyTimer = 0;
+  const said = (text) => {
+    copy.textContent = text;
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => { copy.textContent = 'Copy room'; }, 1500);
+  };
+  copy.addEventListener('click', async () => {
+    const code = roomCode(game.get());
+    box.hidden = true;
+    try { await navigator.clipboard.writeText(code); said('Copied!'); return; } catch { /* blocked: try the box */ }
+    box.value = code;
+    box.hidden = false;
+    box.focus(); box.select(); box.scrollTop = 0;
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch { /* not supported */ }
+    if (ok) { box.hidden = true; said('Copied!'); } else said('Copy from the box');
+  });
+  panel.append(copy, box);
   document.body.append(button, panel, readout);
 
   button.addEventListener('click', () => {

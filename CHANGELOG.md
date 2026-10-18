@@ -31,7 +31,11 @@ Entry format:
   after a reload. If the hero is standing where a wall comes back, they
   go back to the starting tile.
 - While something is picked, the bottom readout says so ("placing Wall").
-- Decisions: D-048, D-049, D-050.
+- "Copy room" puts the room's code on the clipboard: its text map, ready
+  to paste into the game's code, with a first line giving the version,
+  the size and the hero's tile. The button says "Copied!". If the browser
+  blocks copying, a box opens with the code selected, to copy by hand.
+- Decisions: D-048, D-049, D-050, D-051.
 
 ## 0.1.3 (2026-10-18)
 - Dev mode is here. Open the game with `?dev` once and that browser

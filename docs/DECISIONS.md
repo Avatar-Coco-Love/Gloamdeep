@@ -90,3 +90,10 @@ hero's tile. Spawning passes no turn.
 **D-050 · 2026-10-18 · Spawned changes don't last** (step 11)
 Spawned tiles are gone after a reload. A "Reset room" button in the
 panel brings back the starting room.
+
+**D-051 · 2026-10-18 · Copy the room as code** (step 11, owner's request)
+A "Copy room" button in the dev panel puts the room on the clipboard as
+its text map, ready to paste into the code, with a first line giving the
+version, the size and the hero's tile. The button says "Copied!". If the
+browser blocks copying, a box shows the code, selected, to copy by hand.
+What the copied rooms are used for is decided later.
