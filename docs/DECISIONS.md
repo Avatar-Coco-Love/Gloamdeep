@@ -192,5 +192,11 @@ in the registry, so they come in two steps: oil now, the flask next.
 
 **D-068 · 2026-10-18 · Oil lasts twice as long** (step 14, playtest;
 supersedes the burn in D-064)
+Superseded by D-069 (2026-10-18).
 Each passed turn burns 1.25% of a full tank, so 80 turns empty it. The
 start, the reach and the ember stay as in D-064.
+
+**D-069 · 2026-10-18 · A full tank lasts 60 turns** (step 14, playtest;
+supersedes D-068)
+80 turns felt too long, so the owner picked the middle: each passed
+turn burns 1/60 of a full tank. The starting three quarters last 45.

@@ -53,9 +53,9 @@ Foundation (0.1.x): one small visible thing per step
   moonlight, so each place now sets its darkness: this cave is pitch
   black with a faint grey memory (D-059 to D-063, Q-027 opened).
 - **2026-10-18, PR #17 (0.1.7), oil.** The lantern starts three
-  quarters full and each step burns 1.25% (80 steps empty a full tank,
-  doubled from the study's 40 by the owner).
+  quarters full and 60 steps empty a full tank (the study's 40 felt
+  too short, 80 too long).
   The light shrinks with the oil, from 5.2 tiles to 1.6, then an ember.
   The study's 10-segment oil bar sits in the top right corner. Dev panel:
-  "Refill oil" and "Empty oil". The flask became step 15 (D-064 to D-068,
+  "Refill oil" and "Empty oil". The flask became step 15 (D-064 to D-069,
   Q-028 and Q-029 opened).
