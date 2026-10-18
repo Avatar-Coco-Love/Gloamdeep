@@ -48,7 +48,8 @@ held finger walks about 4 steps a second and still steers toward the
 finger. Taps, swipes and keys keep their quick pace.
 
 **D-045 · 2026-10-18 · The dev mode switch** (step 10, builds on D-030)
-*Partly superseded by D-047 (2026-10-18): no "Leave dev mode", a wrench icon.*
+*Partly superseded by D-047 (2026-10-18): no "Leave dev mode", a wrench icon;
+by D-086 (2026-10-18): no `?dev`, on for everyone; by D-090 (2026-10-18): ` opens the panel.*
 Opening the game with `?dev` turns dev mode on, and that browser remembers
 it (saved in localStorage) until "Leave dev mode" in the dev panel. In dev
 mode a DEV button (top-left, 44 px) opens a small panel of switches. On a
@@ -56,7 +57,8 @@ PC the ` (backtick) key shows or hides the overlay. Dev text (panel,
 readout) is plain page text; the pixel font (D-031) is for game text.
 
 **D-046 · 2026-10-18 · The grid and coordinates overlay** (step 10)
-*Partly superseded by D-047 (2026-10-18): switches start off.*
+*Partly superseded by D-047 (2026-10-18): switches start off; by D-088
+(2026-10-18): the readout always shows the stats.*
 Grid: a faint 1-pixel line on every tile edge. Coordinates: a readout at
 the bottom left gives the hero's tile and the tile under the mouse or
 finger, with that tile's kind ("hero 5,11 · tile 3,4 wall"), and the
@@ -65,6 +67,7 @@ Both switches start on.
 
 **D-047 · 2026-10-18 · Dev mode after the first playtest** (step 10,
 supersedes parts of D-045 and D-046)
+*Partly superseded by D-086 (2026-10-18): no `?dev=off`, on for everyone.*
 "Leave dev mode" is gone (in the playtest it only turned everything back
 on). Opening the game with `?dev=off` forgets dev mode on that browser.
 Every dev switch starts off. The DEV button shows a small pixel wrench,
@@ -77,6 +80,7 @@ gathers them into one list. Tiles also carry the letter a room map
 writes them with.
 
 **D-049 · 2026-10-18 · The dev spawn tool** (step 11, builds on D-006)
+*Partly superseded by D-089 (2026-10-18): chips instead of a list with None.*
 The wrench panel has a Spawn list read from the registry, starting at
 None. Pick an entry, then each tap or click puts it on that tile instead
 of walking, until None is picked again. Only registry entries spawn (for
@@ -118,6 +122,7 @@ same PR edit it directly, with a note ("40 → 80 → 60 turns").
 Superseding is only for merged decisions.
 
 **D-073 · 2026-10-18 · The playtest bundler lives in the repo** (docs audit)
+*Partly superseded by D-086 (2026-10-18): no `--dev`, dev tools are always on.*
 `tools/playtest.js` packs the game into one page for the playtest
 Artifact; `--dev` starts dev mode on. A plain Node script with no
 dependencies. The game itself still has no build step.

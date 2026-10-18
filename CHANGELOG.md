@@ -18,6 +18,20 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.1.13 (2026-10-18)
+- Dev tools are on for everyone, on every build: no `?dev` needed.
+- The dev panel has sections (View, Spawn, Room, Oil, Share): a fixed
+  grid of section buttons at the top, the open one's tools below. Switches are buttons, two to a row.
+- A stats line at the bottom left: turn, oil %, lit or dark, hero tile.
+- Spawn entries are chips grouped by kind; tap one again to drop it.
+- PC keys: ` opens the panel; G, C and R switch Grid, Coords, Reveal.
+- An oil slider sets any amount.
+- A start-up hook brings `main` up to date at the start of each
+  conversation.
+- Polish: violet section buttons, a grey tray for the tools, gold for
+  what is on, soft red for buttons that undo.
+- Decisions: D-086 to D-093.
+
 ## 0.1.12 (2026-10-18)
 - The hero can wait a turn: tap or click the hero, or press Space
   (hold it to keep waiting). A wait passes a turn like a step, so oil

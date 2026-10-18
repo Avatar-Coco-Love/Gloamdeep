@@ -32,29 +32,58 @@
   }
   #lantern-button[aria-pressed="true"] { border-color: #a8642c; }
   #lantern-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
-  /* Dev mode (src/dev/dev.js): only created when dev mode is on (D-045). */
+  /* Dev tools (src/dev/dev.js, panel.js): on for everyone (D-086). Game palette
+     (ART-DIRECTION.md): violet for the section buttons, stone for the tools
+     below, lantern gold for what is on, the hostile red for what undoes (D-093). */
   #dev-button, #dev-panel, #dev-readout { position: fixed; z-index: 1; font: 12px/1.2 ui-monospace, "Courier New", monospace; color: #c9c2d6; }
   #dev-button {
     top: max(8px, env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left));
     width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
-    border: 1px solid #ffc65c; border-radius: 4px; background: rgba(11,10,16,.85); cursor: pointer;
+    border: 1px solid #ffc65c; border-radius: 6px; background: rgba(14,12,22,.88); cursor: pointer;
   }
+  #dev-button[aria-expanded="true"] { background: #3a2a14; box-shadow: 0 0 10px rgba(255,198,92,.3); }
   #dev-button canvas { width: 24px; height: 24px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
   #dev-panel {
     top: calc(max(8px, env(safe-area-inset-top)) + 52px); left: max(8px, env(safe-area-inset-left));
-    display: grid; gap: 4px; padding: 6px; border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.92);
-    max-height: calc(100% - 76px); overflow-y: auto; /* fits a phone held sideways */
+    width: min(17em, calc(100% - 16px)); box-sizing: border-box; padding: 6px;
+    border: 1px solid #3a3446; border-radius: 6px; background: rgba(14,12,22,.95);
+    box-shadow: 0 6px 20px rgba(0,0,0,.55);
+    max-height: calc(100% - 100px); overflow-y: auto; /* fits a phone held sideways */
   }
   #dev-panel[hidden] { display: none; }
-  #dev-panel label { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 6px; cursor: pointer; }
-  #dev-panel input { width: 20px; height: 20px; margin: 0; accent-color: #ffc65c; }
-  #dev-panel .dev-heading { padding: 6px 6px 0; border-top: 1px solid #3a3446; opacity: .7; }
-  #dev-panel textarea { width: 15em; font: 11px/1.2 ui-monospace, "Courier New", monospace; color: inherit; background: #0b0a10; border: 1px solid #3a3446; -webkit-user-select: text; user-select: text; resize: none; word-break: break-all; }
+  #dev-panel button { min-height: 44px; padding: 0 8px; font: inherit; color: inherit; border-radius: 4px; cursor: pointer; }
+  #dev-panel button:active { transform: translateY(1px); }
+  /* sections: violet buttons on the panel's darkest ground */
+  #dev-panel .dev-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  #dev-panel .dev-tab { color: #a99cc9; background: #1b1728; border: 1px solid #332b4a; letter-spacing: .04em; }
+  #dev-panel .dev-tab:hover { border-color: #5c4d86; }
+  #dev-panel .dev-tab[aria-expanded="true"] { color: #f0eaff; background: #3a2f5c; border-color: #a58ce0; }
+  /* the open section: a stone-coloured tray under the buttons */
+  #dev-panel .dev-body {
+    display: grid; gap: 6px; margin-top: 6px; padding: 8px;
+    background: #1d212b; border: 1px solid #2b303c; border-top: 2px solid #a58ce0; border-radius: 4px;
+  }
+  #dev-panel .dev-body[hidden] { display: none; }
+  #dev-panel .dev-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(7em, 1fr)); gap: 4px; }
+  #dev-panel .dev-kind { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #7d869c; }
+  #dev-panel .dev-kind + .dev-row { margin-top: -2px; }
+  #dev-panel .dev-body button { color: #d3d7e0; background: #2b303c; border: 1px solid #3f4656; }
+  #dev-panel .dev-body button:hover { border-color: #69748b; }
+  #dev-panel .dev-body button[aria-pressed="true"] { color: #ffd66b; background: #3a2e18; border-color: #f39a3b; }
+  #dev-panel .dev-body .dev-undo { color: #e8a49b; }
+  #dev-panel .dev-body .dev-undo:hover { border-color: #e8786a; }
+  #dev-panel .dev-switch { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  #dev-panel kbd { font: 10px/1 inherit; padding: 2px 4px; color: #9aa3b5; border: 1px solid #4a5263; border-radius: 3px; background: #22262f; }
+  #dev-panel [aria-pressed="true"] kbd { color: #ffd66b; border-color: #8a6a2a; background: #2a2212; }
+  #dev-panel .dev-slider { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+  #dev-panel .dev-slider input { flex: 1; min-width: 0; height: 32px; margin: 0; accent-color: #f39a3b; }
+  #dev-panel .dev-amount { width: 3.5em; text-align: right; color: #ffd66b; }
+  #dev-panel textarea { box-sizing: border-box; width: 100%; font: 11px/1.2 ui-monospace, "Courier New", monospace; color: inherit; background: #0e0c16; border: 1px solid #3f4656; border-radius: 4px; -webkit-user-select: text; user-select: text; resize: none; word-break: break-all; }
   #dev-panel textarea[hidden] { display: none; }
-  #dev-panel button { min-height: 44px; padding: 0 10px; font: inherit; color: inherit; background: #1a1724; border: 1px solid #3a3446; border-radius: 4px; cursor: pointer; }
   #dev-readout {
     left: max(8px, env(safe-area-inset-left)); bottom: max(6px, env(safe-area-inset-bottom));
-    font-size: 11px; line-height: 1; opacity: .85; pointer-events: none;
+    max-width: calc(100% - 72px); padding: 3px 6px; border-radius: 4px; background: rgba(14,12,22,.7);
+    font-size: 11px; line-height: 1.3; white-space: pre-line; color: #b7bdcc; pointer-events: none;
   }
 </style>
 </head>

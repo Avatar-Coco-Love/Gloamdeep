@@ -52,7 +52,7 @@ function nudgeToward(dir) {
 // A tap on the hero waits a turn; a finger held on the hero does nothing (D-085).
 const stepToward = (px, py, held = false) => {
   const h = state.hero, tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
-  if (dev && dev.place(tx, ty)) return; // a picked spawn takes the tap (D-049)
+  if (dev.place(tx, ty)) return; // a picked spawn takes the tap (D-049)
   const dir = toward(h.x, h.y, tx, ty);
   if (dir) tryStep(dir);
   else if (!held) tryStep('wait');
@@ -64,7 +64,7 @@ const lanternButton = createLanternButton(canvas, { onSwitch: switchIt });
 
 const stage = document.getElementById('stage');
 const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, onLantern: switchIt, onWait: () => tryStep('wait') });
-const dev = createDev(stage, canvas, { // null unless dev mode is on (D-030, D-045)
+const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { state = s; },
   reset: () => resetRoom(state, startRoom, FIRST_START),
@@ -95,7 +95,7 @@ function frame(t) {
     if (queued) { const d = queued; queued = null; tryStep(d); }
     else {
       const p = input.held();
-      if (p && !(dev && dev.armed()) && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p, true); }
+      if (p && !dev.armed() && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p, true); }
     }
   }
   let nx = 0, ny = 0;
@@ -108,14 +108,14 @@ function frame(t) {
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, there is no light at all: only remembered tiles show, dimly (D-082).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
-  if (!(dev && dev.lightOff())) {
+  if (!dev.lightOff()) {
     const r = state.lit ? reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035)) : 0;
-    drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev && dev.revealed() ? null : state.seen);
+    drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev.revealed() ? null : state.seen);
   }
   if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
   drawOilBar(ctx, state.oil);
   lanternButton.show(state.lit);
-  if (dev) dev.draw(ctx, state);
+  dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

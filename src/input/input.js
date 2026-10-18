@@ -17,7 +17,7 @@ export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait })
     const key = ev.key.toLowerCase(), dir = KEYS[key];
     if (key === 'l' && !ev.repeat) { ev.preventDefault(); onLantern(); return; }
     if (key === ' ' && !ev.target.closest('button')) { ev.preventDefault(); onWait(); return; } // Space on a focused button presses it
-    if (!dir) return;
+    if (!dir || (key.startsWith('arrow') && ev.target.type === 'range')) return; // arrows on the dev oil slider move it
     ev.preventDefault();
     onDir(dir);
   });

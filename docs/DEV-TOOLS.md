@@ -9,31 +9,37 @@ tools to be chosen together later.
   draws anything itself, so it can't fall out of step with the real game.
 - **Tools read the content registry** (`TECH.md`). Anything added to the
   game appears in the spawn menu automatically.
-- **Hidden from players.** Adding `?dev` to the address opens it. It ships
-  in the public build, hidden unless opened (D-030).
+- **On for everyone.** Every build and every player has the tools (D-086).
+  Screen clutter is fine when it helps make the game better.
 - **Reproducible.** Show the current seed, and allow loading a seed.
 - Each new game feature arrives with its dev hook in the same PR (for
   example, oil arrived with "Refill oil" and "Empty oil").
 
 ## Decided
 - Spawn any registry entry (item, enemy, NPC, tile) at a chosen tile (D-006).
-- The switch: `?dev` once, remembered until `?dev=off`; a wrench button
-  opens a panel of switches, all off at first; ` on a PC (D-045, D-047).
-  Code: `src/dev/dev.js`.
+- Always on; a wrench button opens the panel, switches all off at first
+  (D-086, D-047). Code: `src/dev/dev.js` (button, keys, stats line).
+- The panel has sections, View, Spawn, Room, Oil, Share: fixed buttons
+  at the top, one open below, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
+  goes into a section there**, or a new section.
+- Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
+  spawn pick and pointed tile (D-088). New state (health, floor, seed)
+  joins it as it arrives.
+- PC keys: ` the panel; G, C, R the View switches (D-090).
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
-- Spawn: pick from the panel's list, then tap tiles; tiles and the oil
-  flask; "Reset room" (D-048 to D-050, D-079). Rules: `src/core/spawn.js`.
+- Spawn: chips grouped by registry kind; tap one, then tap tiles; tap it
+  again to drop it (D-048 to D-050, D-079, D-089). Rules: `src/core/spawn.js`.
 - Lighting off: a panel switch that shows the room unlit (D-057).
 - Reveal room (a switch) and Forget (a button) for fog of war; Reset room
   forgets too (D-061, D-062). Rules: `src/core/fog.js`.
-- Refill oil and Empty oil: two buttons, no turn passed (D-066).
+- Refill, Empty and a slider for any amount, no turn passed (D-066,
+  D-091).
   Rules: `src/core/oil.js`.
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage)
-- Set any amount of oil (refill and empty are built, D-066)
 - Reveal the whole floor (when there are floors)
 - Jump to any room or floor
 - Step enemies one turn at a time
@@ -44,5 +50,7 @@ tools to be chosen together later.
 - Speed up or slow down animations
 
 ## Next
-Items, enemies and NPCs join the spawn list as each arrives in the
-registry, each with its dev hook in the same PR.
+Items, enemies and NPCs join the spawn chips as each arrives in the
+registry (a new kind gets its own group by itself), each with its dev
+hook in the same PR. Likely new sections: Enemies (step one turn), Seed,
+Saves.

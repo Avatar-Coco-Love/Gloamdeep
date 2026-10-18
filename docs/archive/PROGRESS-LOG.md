@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.10, the oil flask.** The first item: the study's
+  bottle, bobbing on its shadow. Walking onto one pours in 45% of a tank,
+  even into a full lantern. Flasks only come from the dev spawn list for
+  now; "Reset room" clears them (D-077 to D-079). Superseded decisions
+  moved to the archive. Playtest:
+  https://claude.ai/artifact/L4ezEfThPFULMmhFdG8zUM
 - **2026-10-18, 0.1.9, docs audit.** Conversations pull `main` first;
   docs name a PR by its version; open-PR decisions change in place
   after a playtest; merges aren't listed as waiting; the PR body is
