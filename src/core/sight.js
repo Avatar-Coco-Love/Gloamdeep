@@ -1,6 +1,6 @@
 // § sight: which tiles are lit now, by the lantern, a burning torch or a glow (D-134). Plain
-// data, no drawing. An enemy on a lit tile is seen, and sees the hero back
-// (D-106, D-126). A tile counts as lit by the rule that remembers it (D-059):
+// data, no drawing. An enemy on a lit tile sees the hero (D-126); it is
+// drawn in memory's dim light too (D-153). A tile counts as lit by the rule that remembers it (D-059):
 // the light reaches its centre, inside 95% of its reach. Torches count at
 // their full reach, without their flicker.
 import { CELL, LANTERN_AT, seenCells } from './light.js';

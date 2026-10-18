@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.22, a flask and a rat in room 2.** The second
+  room's lower cave holds an oil flask at 9,11, guarded by a rat at
+  7,10; rooms can start with items. After the playtest: a flask in room
+  1 (9,2), a torch by room 2's stairs up, a full tank at the start, and
+  stairs that sink into the wall beside them (D-138 to D-143). Playtest:
+  https://claude.ai/artifact/TPAxhRK7dncVomJ12ZwVT5
 - **2026-10-18, 0.1.21, stairs and a second room.** Stairs down at 1,1
   (the study's) lead to a second room, two empty caves and a gap; you
   arrive on stairs up and can go back. Rooms stay as left; rats don't
