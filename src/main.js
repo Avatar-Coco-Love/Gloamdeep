@@ -5,7 +5,7 @@ import { makeState, step, switchLantern, toward, DIRS, FIRST_START } from './cor
 import { resetRoom } from './core/spawn.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
-import { drawHero, drawFaintHero, drawItems, LANTERN_AT } from './render/sprites.js';
+import { drawHero, drawItems, LANTERN_AT } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { LANTERN } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
@@ -103,15 +103,13 @@ function frame(t) {
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
-  // Switched off, there is no light at all: only remembered tiles show, dimly,
-  // and the hero as a faint outline (D-082).
+  // Switched off, there is no light at all: only remembered tiles show, dimly (D-082).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
   if (!(dev && dev.lightOff())) {
     const r = state.lit ? reach(state.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035)) : 0;
     drawLight(ctx, state.room, { ...LANTERN, x: lx, y: ly, r }, dev && dev.revealed() ? null : state.seen);
   }
   if (state.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
-  else if (!(dev && dev.lightOff())) drawFaintHero(ctx, hx, hy);
   drawOilBar(ctx, state.oil);
   lanternButton.show(state.lit);
   if (dev) dev.draw(ctx, state);

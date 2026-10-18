@@ -56,15 +56,6 @@ export function drawHero(c, x, y) {
   c.drawImage(SPRITES.hero, x, y - 2);
 }
 
-// § faint hero: with the lantern off, the hero's own pixels at 8% of
-// their colour, drawn over the darkness so they are never lost (D-082). It lights nothing.
-export const FAINT = 0.08;
-export function drawFaintHero(c, x, y) {
-  c.globalAlpha = FAINT;
-  c.drawImage(SPRITES.hero, x, y - 2);
-  c.globalAlpha = 1;
-}
-
 // § items: each item 2 pixels up from its tile, on its shadow. A flask bobs
 // 1 pixel every 0.7 s, each row in its own beat; still with reduced motion (study line 379, D-077).
 export function drawItems(c, items, t, still) {
