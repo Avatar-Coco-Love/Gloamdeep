@@ -170,6 +170,7 @@ get their values when they arrive (Q-027).
 
 **D-064 · 2026-10-18 · Oil amounts: the study's** (step 14, supersedes
 D-055, sets D-037's amounts)
+Partly superseded by D-068 (2026-10-18): the burn per turn.
 The tank starts three quarters full, and each passed turn burns 2.5% of
 a full tank (40 turns from full to empty). The light reaches 1.6 tiles
 plus 3.6 per full tank (5.2 when full), and an empty lantern is an
@@ -188,3 +189,8 @@ passed. "Reset room" leaves the oil as it is.
 **D-067 · 2026-10-18 · The flask is its own step** (step 14, D-018)
 Draining oil is a new rule and the flask is the first item, a new kind
 in the registry, so they come in two steps: oil now, the flask next.
+
+**D-068 · 2026-10-18 · Oil lasts twice as long** (step 14, playtest;
+supersedes the burn in D-064)
+Each passed turn burns 1.25% of a full tank, so 80 turns empty it. The
+start, the reach and the ember stay as in D-064.

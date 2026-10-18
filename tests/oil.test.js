@@ -17,9 +17,9 @@ test('a step burns oil, a bump into a wall does not', () => {
   assert.equal(step(makeState(room, { x: 1, y: 1 }), 'up').oil, 0.75);
 });
 
-test('40 turns empty a full tank exactly, and it never goes below empty', () => {
+test('80 turns empty a full tank exactly, and it never goes below empty', () => {
   let oil = 1;
-  for (let i = 0; i < 39; i++) oil = burnOil(oil);
+  for (let i = 0; i < 79; i++) oil = burnOil(oil);
   assert.equal(oil > 0, true);
   assert.equal(burnOil(oil), 0);
   assert.equal(burnOil(0), 0);
