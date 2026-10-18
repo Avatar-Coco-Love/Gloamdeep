@@ -6,6 +6,7 @@ import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero } from './render/sprites.js';
 import { createInput } from './input/input.js';
+import { createDev } from './dev/dev.js';
 
 const canvas = document.getElementById('game');
 const ctx = createScreen(canvas);
@@ -44,7 +45,9 @@ const stepToward = (px, py) => {
   if (dir) tryStep(dir);
 };
 
-const input = createInput(document.getElementById('stage'), canvas, { onDir: tryStep, onPoint: stepToward });
+const stage = document.getElementById('stage');
+const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward });
+const dev = createDev(stage, canvas); // null unless dev mode is on (D-030, D-045)
 
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
@@ -62,6 +65,7 @@ function frame(t) {
   if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
   ctx.drawImage(base, 0, 0);
   drawHero(ctx, Math.round(shown.x * TILE) + nx, Math.round(shown.y * TILE) + ny);
+  if (dev) dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

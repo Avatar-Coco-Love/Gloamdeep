@@ -24,6 +24,25 @@
     position: fixed; right: max(8px, env(safe-area-inset-right)); bottom: max(6px, env(safe-area-inset-bottom));
     font: 11px/1 ui-monospace, "Courier New", monospace; opacity: .7; pointer-events: none;
   }
+  /* Dev mode (src/dev/dev.js): only created when dev mode is on (D-045). */
+  #dev-button, #dev-panel, #dev-readout { position: fixed; z-index: 1; font: 12px/1.2 ui-monospace, "Courier New", monospace; color: #c9c2d6; }
+  #dev-button {
+    top: max(8px, env(safe-area-inset-top)); left: max(8px, env(safe-area-inset-left));
+    min-width: 44px; min-height: 44px; padding: 0 8px; border: 1px solid #ffc65c; border-radius: 4px;
+    background: rgba(11,10,16,.85); color: #ffc65c; cursor: pointer;
+  }
+  #dev-panel {
+    top: calc(max(8px, env(safe-area-inset-top)) + 52px); left: max(8px, env(safe-area-inset-left));
+    display: grid; gap: 4px; padding: 6px; border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.92);
+  }
+  #dev-panel[hidden] { display: none; }
+  #dev-panel label { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 6px; cursor: pointer; }
+  #dev-panel input { width: 20px; height: 20px; margin: 0; accent-color: #ffc65c; }
+  #dev-panel button { min-height: 44px; padding: 0 10px; font: inherit; color: inherit; background: #1d1926; border: 1px solid #3a3446; border-radius: 4px; cursor: pointer; }
+  #dev-readout {
+    left: max(8px, env(safe-area-inset-left)); bottom: max(6px, env(safe-area-inset-bottom));
+    font-size: 11px; line-height: 1; opacity: .85; pointer-events: none;
+  }
 </style>
 </head>
 <body>

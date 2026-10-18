@@ -50,3 +50,17 @@ and passes no turn.
 Holding a finger raced the hero after it (about 10 steps a second). Now a
 held finger walks about 4 steps a second and still steers toward the
 finger. Taps, swipes and keys keep their quick pace.
+
+**D-045 · 2026-10-18 · The dev mode switch** (step 10, builds on D-030)
+Opening the game with `?dev` turns dev mode on, and that browser remembers
+it (saved in localStorage) until "Leave dev mode" in the dev panel. In dev
+mode a DEV button (top-left, 44 px) opens a small panel of switches. On a
+PC the ` (backtick) key shows or hides the overlay. Dev text (panel,
+readout) is plain page text; the pixel font (D-031) is for game text.
+
+**D-046 · 2026-10-18 · The grid and coordinates overlay** (step 10)
+Grid: a faint 1-pixel line on every tile edge. Coordinates: a readout at
+the bottom left gives the hero's tile and the tile under the mouse or
+finger, with that tile's kind ("hero 5,11 · tile 3,4 wall"), and the
+pointed tile gets a bright outline. Tiles count from 0,0 at the top left.
+Both switches start on.

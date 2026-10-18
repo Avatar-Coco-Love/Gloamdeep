@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, PR #10 (0.1.0), the first code.** The front page is the
+  game now: one crypt floor tile on a fixed 176 × 208 canvas, enlarged
+  with crisp pixels, plus a small version number. Code folders and two
+  tests set up (D-039).
 - **2026-10-17, PR #9 (0.0.9), brief approved, Q-022 to Q-024 answered.**
   The brief is approved (D-035). The hero is a lamplighter, with reasons
   uncovered slowly (D-036). Oil burns per lit turn (D-037). Growth comes
