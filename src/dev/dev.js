@@ -27,7 +27,7 @@ export function createDev(stage, canvas, game) {
   if (asked === 'off') { save(null); return null; }
   const saved = load();
   if (asked === null && !saved) return null;
-  const opts = { grid: false, coords: false, ...saved }; // every switch starts off (D-047)
+  const opts = { grid: false, coords: false, noLight: false, ...saved }; // every switch starts off (D-047)
   save(opts);
 
   // § panel: the wrench button and its switches
@@ -40,7 +40,7 @@ export function createDev(stage, canvas, game) {
   const panel = el('div', { id: 'dev-panel', hidden: true });
   const readout = el('div', { id: 'dev-readout' });
   const boxes = {};
-  for (const [name, label] of [['grid', 'Grid'], ['coords', 'Coordinates']]) {
+  for (const [name, label] of [['grid', 'Grid'], ['coords', 'Coordinates'], ['noLight', 'Lighting off']]) {
     const row = el('label', {});
     boxes[name] = el('input', { type: 'checkbox', checked: opts[name] });
     boxes[name].addEventListener('change', () => { opts[name] = boxes[name].checked; save(opts); });
@@ -116,6 +116,7 @@ export function createDev(stage, canvas, game) {
   let text = '';
   return {
     armed: () => picked !== null,
+    lightOff: () => opts.noLight, // see the whole room, lit or not (D-057)
     // Places the picked entry on tile x, y. False when nothing is picked,
     // so the tap walks instead.
     place(x, y) {

@@ -23,6 +23,7 @@ tools to be chosen together later.
 - Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
 - Spawn: pick from the panel's list, then tap tiles; tiles only so far;
   "Reset room" (D-048 to D-050). Rules: `src/core/spawn.js`.
+- Lighting off: a panel switch that shows the room unlit (D-057).
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 
@@ -36,7 +37,6 @@ tools to be chosen together later.
 - Show light radius and line-of-sight overlay
 - Save and load test situations
 - Seed display and load
-- Lighting on/off (the style study already has this)
 - Speed up or slow down animations
 
 ## Next
