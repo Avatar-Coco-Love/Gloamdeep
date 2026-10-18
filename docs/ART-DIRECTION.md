@@ -55,7 +55,8 @@ The study's lighting code is at lines 309–338, plus the light setup inside
   (orange, flicker more), stairs (faint violet), slimes (faint green).
 - **Line of sight:** each light checks visibility in 4 × 4 pixel cells by
   marching rays through the tile grid. Walls block light. A wall is lit
-  when the ray reaches it.
+  when the ray reaches it; the ray aims at the wall tile's point nearest
+  the light, so a seen wall is lit as a whole tile (D-058).
 - **Falloff:** `f = 1 − distance / radius`, raised to the power 1.25,
   then cut into 5 bands with a 4 × 4 Bayer dither. The dithered bands are
   the retro look, so don't smooth them.

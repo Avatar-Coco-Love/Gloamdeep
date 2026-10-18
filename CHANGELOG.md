@@ -24,9 +24,11 @@ Entry format:
   a gentle flicker (off when the device asks for reduced motion).
 - Walls cast shadows. Shadow edges now fade into the dither over 4
   pixels instead of stepping in 4-pixel blocks, at the same cost.
+- A wall you can see is lit as a whole tile. Long walls seen at a slant
+  no longer show dark teeth (found in the playtest).
 - Outside the light the room is almost black, until fog of war (step 13).
 - Dev mode: a "Lighting off" switch in the wrench panel shows the whole room.
-- Decisions: D-053 to D-057.
+- Decisions: D-053 to D-058.
 
 ## 0.1.4 (2026-10-18)
 - The game now keeps one list of everything in it, the content registry.

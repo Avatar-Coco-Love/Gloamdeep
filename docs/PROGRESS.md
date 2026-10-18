@@ -55,4 +55,5 @@ Foundation (0.1.x): one small visible thing per step
   tiles in dithered bands, with a gentle flicker. Walls cast shadows,
   whose edges now fade over 4 pixels instead of stepping (picked from a
   side-by-side picture). Outside the light is almost black until fog of
-  war. Dev panel: "Lighting off" (D-053 to D-057).
+  war. Dev panel: "Lighting off". The playtest showed teeth on the
+  left wall, so walls are now lit as whole tiles (D-053 to D-058).

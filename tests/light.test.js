@@ -21,6 +21,14 @@ test('a wall casts a shadow behind it', () => {
   assert.equal(cellAt(v, 2 * 16 + 2, 5 * 16 + 2), 0, 'the floor behind it is dark');
 });
 
+test('a seen wall is lit as a whole tile, with no teeth (D-058)', () => {
+  // from 2,8 the outer wall at 0,9 and 0,10 is seen at a slant
+  const v = seenCells(room, 2 * 16 + 13, 8 * 16 + 7, LANTERN.r, cells());
+  for (const ty of [9, 10]) for (let y = 2; y < 16; y += 4) for (let x = 2; x < 16; x += 4) {
+    assert.equal(cellAt(v, x, ty * 16 + y), 1, `wall 0,${ty} at ${x},${y}`);
+  }
+});
+
 test('nothing is lit beyond the radius', () => {
   const v = seenCells(room, 1 * 16 + 8, 11 * 16 + 8, 20, cells());
   assert.equal(cellAt(v, 9 * 16 + 8, 1 * 16 + 8), 0);

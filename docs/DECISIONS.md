@@ -129,3 +129,9 @@ flickers by about ±3.5%, not at all with reduced motion.
 **D-057 · 2026-10-18 · Dev switch: lighting off** (step 12, builds on D-047)
 The wrench panel has a "Lighting off" switch, off at first, that shows
 the whole room unlit. It is a dev tool, not the lantern switch (D-026).
+
+**D-058 · 2026-10-18 · Walls are lit as whole tiles** (step 12, playtest)
+The study's rule lit wall blocks one by one, so long walls seen at a
+slant showed dark teeth. Now each wall block aims its ray at the wall
+tile's point nearest the lantern, so a seen wall is lit as a whole tile,
+still fading with distance. Floor shadows don't change.

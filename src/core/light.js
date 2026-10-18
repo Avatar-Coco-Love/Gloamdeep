@@ -1,7 +1,9 @@
 // § light: which parts of the room a light can see (ART-DIRECTION.md, "Light").
 // Plain data, no drawing. The room is checked in 4 × 4 pixel cells; a cell is
 // seen when a ray from the light reaches its centre without crossing a tile
-// that blocks light (style study 1, lines 309–332).
+// that blocks light (style study 1, lines 309–332). On a wall, the ray aims at
+// the wall tile's point nearest the light instead, so a seen wall is lit as a
+// whole tile, not in teeth (D-058).
 import { tileAt } from './room.js';
 
 export const CELL = 4;
@@ -21,8 +23,14 @@ export function seenCells(room, x, y, r, out) {
   const cx0 = Math.max(0, Math.floor((x - r) / CELL)), cx1 = Math.min(cw - 1, Math.floor((x + r) / CELL));
   const cy0 = Math.max(0, Math.floor((y - r) / CELL)), cy1 = Math.min(ch - 1, Math.floor((y + r) / CELL));
   for (let cy = cy0; cy <= cy1; cy++) for (let cx = cx0; cx <= cx1; cx++) {
-    const mx = cx * CELL + 2, my = cy * CELL + 2, dx = mx - x, dy = my - y, d = Math.hypot(dx, dy);
-    if (d > r) continue;
+    let mx = cx * CELL + 2, my = cy * CELL + 2;
+    if (Math.hypot(mx - x, my - y) > r) continue;
+    const wtx = mx >> 4, wty = my >> 4;
+    if (blocks(room, wtx, wty)) {
+      mx = Math.max(wtx * TILE_SIZE, Math.min(wtx * TILE_SIZE + TILE_SIZE - 1, x));
+      my = Math.max(wty * TILE_SIZE, Math.min(wty * TILE_SIZE + TILE_SIZE - 1, y));
+    }
+    const dx = mx - x, dy = my - y, d = Math.hypot(dx, dy);
     const ttx = mx >> 4, tty = my >> 4, steps = Math.ceil(d / 3);
     let ok = 1;
     for (let s = 1; s < steps; s++) {
