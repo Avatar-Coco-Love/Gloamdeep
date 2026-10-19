@@ -2,6 +2,53 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+## Build plan: pre-production and foundation (steps 1 to 30, done)
+
+Moved from `PROGRESS.md` at 0.1.27, when stage 0.2 was planned (D-159).
+
+Pre-production (0.0.x): decisions only
+- [x] 1 Inspirations and must-keeps (Q-001, Q-002), PRs #1 and #2
+- [x] 2 Design pillars approved (Q-003), PR #3
+- [x] 3 The lantern and oil rule (Q-004, Q-005), PR #4
+- [x] 4 Turns, movement and bumping (Q-006, Q-007), PR #4
+- [x] 5 Shape of a run (Q-008, Q-009, Q-010), PR #5
+- [x] 6 One-page design brief (`docs/DESIGN.md`) from steps 1 to 5, approved, PRs #8 and #9
+
+Foundation (0.1.x): one small visible thing per step
+- [x] 7 Page (replaces the `index.html` that opens the study, D-012), canvas and pixel-perfect scaling, one floor tile on screen, PR #10
+- [x] 8 A room built from data: floor and walls with brick faces, PR #11
+- [x] 9 The hero drawn, moving one tile per tap or key, PR #12
+- [x] 10 Dev mode switch, plus a first tool (grid and coordinates overlay), PR #13
+- [x] 11 Content registry, plus a dev spawn tool for what exists so far, PR #14
+- [x] 12 Lantern light with shadows, PR #15
+- [x] 13 Fog of war (seen tiles stay dimly visible), PR #16
+- [x] 14 Oil drains per step, with the oil bar (D-067 split off the flask), PR #17
+- [x] 15 Oil flask pickup, the first item, 0.1.10
+- [x] 16 Lantern on/off switch, 0.1.11
+- [x] 17 Wait a turn, 0.1.12
+- [x] Dev tools for everyone, a tidier panel, 0.1.13 (between steps)
+- [x] 18 A text line, 0.1.14
+- [x] 19 Torches, 0.1.15
+- [x] 20 The first enemy, a rat that holds its ground, 0.1.16
+- [x] 21 Fighting the rat: two lantern hits kill it, 0.1.17
+- [x] 22 The rat fights back: bites, hearts and falling, 0.1.18
+- [x] 23 Lighting an unlit torch, 0.1.19
+- [x] 24 The rat moves: it notices in light and chases, 0.1.20
+- [x] 25 Stairs and a second room, 0.1.21
+- [x] 26 A flask and a rat in the second room, 0.1.22
+- [x] 27 A depth counter and an endless way down, 0.1.23
+- [x] 28 The first generated room, 0.1.24
+- [x] 29 Rougher caves, the rat in remembered dark, 0.1.25
+- [x] 30 Healing herbs, rats that notice and turn, 0.1.26
+
+## Log entries
+
+- **2026-10-18, 0.1.24, the first generated rooms.** Below the second
+  room every depth is made from the game's seed: 2 to 4 rough caves
+  joined by gaps, a torch by the stairs up, a flask and a rat guarding
+  it in the dark. A depth stays as left; a fall rolls a new seed and new
+  depths, their maps forgotten. Seed in the dev stats (D-147 to D-151).
+  Playtest: https://claude.ai/artifact/LNhmWcYaTRaey4TR9TDwkq
 - **2026-10-18, 0.1.23, a depth counter and an endless way down.**
   "DEPTH 1" in a box at the top middle. The second room's stairs down
   at 1,11 lead to a fresh copy of it at depth 3, and so on forever; each
