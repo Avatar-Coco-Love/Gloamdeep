@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.1 (2026-10-19)
+- Depths change kind: from depth 6 down, every depth is an earth
+  burrow, twisty dug tunnels with loops and dead ends, drawn as brown
+  earth with banded walls. Depths 3 to 5 stay grey rock chambers.
+- Dev: Go to depth, in the Room section. Pick a depth with − and +,
+  then Go; you land on its stairs up and no turn passes.
+- Decisions: D-165, D-166.
+
 ## 0.2.0 (2026-10-19)
 - Natural caves: every depth below the second room is now 2 to 4
   round, lumpy chambers joined by winding one-tile tunnels, smoothed

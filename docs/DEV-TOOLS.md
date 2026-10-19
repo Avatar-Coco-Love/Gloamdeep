@@ -39,13 +39,14 @@ tools to be chosen together later.
   D-091).
   Rules: `src/core/oil.js`.
 - Hero: Refill hearts, back to full health, no turn passed (D-154).
+- Room: Go to depth, 1 to 99 with − and +, onto that depth's stairs up,
+  no turn passed (D-166). Rules: `goToDepth` in `src/core/stairs.js`.
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage); the owner wants it next (D-154)
 - Reveal the whole floor (when there are floors)
-- Jump to any room or floor; one depth up or down, after God mode (D-154)
 - Step enemies one turn at a time
 - Collision overlay (the grid and coordinates part is built, D-046)
 - Show light radius and line-of-sight overlay

@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.1.26, healing, and rats that notice and turn.** Each
+  generated depth has a Healing herb (+2 hearts; at full health it
+  stays). A rat that bites or is hit notices, even in the dark, and a
+  rat faces the way it walks (D-155 to D-158). Playtest:
+  https://claude.ai/artifact/JXppcTSyx9XAw76kF1wTSG
+
 ## Build plan: pre-production and foundation (steps 1 to 30, done)
 
 Moved from `PROGRESS.md` at 0.1.27, when stage 0.2 was planned (D-159).

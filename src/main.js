@@ -3,7 +3,7 @@ import { VERSION } from './core/version.js';
 import { makeWorld, step, wait, switchLantern, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
-import { glowsIn } from './core/stairs.js';
+import { glowsIn, goToDepth } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
@@ -116,7 +116,11 @@ const stage = document.getElementById('stage');
 const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, onLantern: switchIt, onWait: () => tryStep('wait') });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
-  set: (s) => { state = s; },
+  set: (s) => { // a new place shows at once, with no slide (Go to depth)
+    const went = s.place !== state.place;
+    state = s;
+    if (went) { shown.x = state.hero.x; shown.y = state.hero.y; foeShown = new Map(); }
+  },
   reset: () => { // the room the hero is in, as it began
     const p = state.home.places[state.place] || beginPlace(state.place, state.seed);
     return resetRoom(state, p.room, p.start, p.lights, p.enemies, p.items);
@@ -124,6 +128,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
   heal: () => ({ ...state, health: HERO_HEALTH }),
+  goTo: (depth) => goToDepth(state, depth),
 });
 
 // § memory: once the hero stands still on a tile, the tiles their lantern

@@ -76,9 +76,18 @@ export const depthOf = (id) => PLACES[id]?.depth ?? Number(id.slice('depth'.leng
 export const isGenerated = (id) => !PLACES[id];
 export function placeFor(id, seed = 1) {
   if (PLACES[id]) return PLACES[id];
-  const depth = depthOf(id);
-  return { ...(generateRoom(seedFor(seed, depth)) || PLACES[DEEPER]), depth, look: 'rock' };
+  const depth = depthOf(id), { shape, look } = kindAt(depth);
+  return { ...(generateRoom(seedFor(seed, depth), shape) || PLACES[DEEPER]), depth, look };
 }
+
+// § kinds: the kind of place at each generated depth, from the depth it
+// starts at (D-165): grey rock chambers, then earth burrows from depth 6.
+// A later kind adds a line further down.
+const KINDS = [
+  { from: 3, shape: 'chambers', look: 'rock' },
+  { from: 6, shape: 'burrows', look: 'earth' },
+];
+export const kindAt = (depth) => KINDS.findLast((k) => depth >= k.from);
 
 // The place one depth up or down from `id` (a stair's `leads`), or null above the first
 export function placeBeside(id, way) {
@@ -98,7 +107,7 @@ export function beginPlace(id, seed) {
 export const CAVE = { unseen: [0, 0, 0], remembered: [0.095, 0.095, 0.095] };
 
 // § look: how a room's walls and floor are drawn. The first rooms are
-// crypt bricks; generated depths are raw grey rock (D-164).
+// crypt bricks; generated depths are raw grey rock (D-164) or earth (D-165).
 export function makeRoom(map, dark = CAVE, look = 'crypt') {
   const rows = map.length, cols = map[0].length;
   map.forEach((line, y) => {

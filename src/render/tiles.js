@@ -98,7 +98,7 @@ const DRAW = {
   stairsUp: (c, room, x, y) => drawSteps(c, room, x, y, true),
 };
 export function drawRoom(c, room) {
-  const rock = room.look === 'rock';
+  const rock = room.look !== 'crypt'; // grey rock or earth (D-164, D-165)
   if (rock) drawRock(c, room);
   for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
     const id = tileAt(room, x, y).id;

@@ -58,6 +58,18 @@ floor tile's middle (pixels 4 to 11 both ways) and stairs stay clear.
 | Floor, light, dark, pebble | `#363b48` `#404656` `#282c36` `#4a5163` |
 | Puddle, shine | `#262d3d` `#3a4660` |
 
+## Earth (burrows, depth 6 and down, D-165)
+Same code and rules as grey rock, with its own colours. Wall faces are
+uneven bands of rock with dark lines between; half the floor tiles have
+a small stone.
+
+| Role | Colour |
+| --- | --- |
+| Cap, grit, edge and face top line | `#1e1814` `#261e18` `#6e5a48` |
+| Face bands, band lines, foot | `#5a4a3e` `#6a584a` `#4e4036`, `#3a2f26` `#2a221c`, `#16110d` |
+| Floor, light, dark, pebble | `#3d3229` `#47392e` `#2e251e` `#544435` |
+| Stone, its lit top | `#544435` `#6a5848` |
+
 ## Light: the core of the look
 The study's lighting code is at lines 309–338, plus the light setup inside
 `frame()` from line 343.

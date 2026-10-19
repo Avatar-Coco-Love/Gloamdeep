@@ -3,6 +3,9 @@
 // adds a section here.
 import { ALL } from '../core/registry.js';
 import { roomCode } from '../core/roomcode.js';
+import { depthOf } from '../core/room.js';
+
+const MAX_DEPTH = 99; // the deepest Go to depth goes
 
 export function el(tag, props) {
   return Object.assign(document.createElement(tag), props);
@@ -78,11 +81,20 @@ export function buildPanel(panel, opts, saved, game) {
     })));
   }
 
-  // § room: Reset room (D-050, D-062) and Forget (D-061)
+  // § room: Reset room (D-050, D-062) and Forget (D-061), and Go to depth:
+  // pick a depth with − and +, then Go; no turn passes (D-166)
+  let want = 1, shownPlace = null;
+  const depthLabel = el('span', { className: 'dev-depth' });
+  const pickDepth = (d) => { want = Math.max(1, Math.min(MAX_DEPTH, d)); depthLabel.textContent = want; };
   section('room', 'Room').append(row(
     button('Reset room', () => game.set(game.reset()), 'dev-undo'),
     button('Forget', () => game.set(game.forget()), 'dev-undo'),
-  ));
+  ), el('div', { className: 'dev-kind', textContent: 'go to depth' }), Object.assign(row(
+    button('−', () => pickDepth(want - 1)),
+    depthLabel,
+    button('+', () => pickDepth(want + 1)),
+    button('Go', () => game.set(game.goTo(want))),
+  ), { className: 'dev-row dev-steps' }));
 
   // § oil: a slider for any amount (D-091), Refill and Empty (D-066); no turn passes
   const oil = section('oil', 'Oil');
@@ -126,6 +138,7 @@ export function buildPanel(panel, opts, saved, game) {
     picked: () => picked,
     // Keeps the slider on the real oil, which steps and flasks change too.
     sync(state) {
+      if (state.place !== shownPlace) { shownPlace = state.place; pickDepth(depthOf(state.place)); }
       if (state.oil === shownOil) return;
       shownOil = state.oil;
       const pct = Math.round(state.oil * 100);

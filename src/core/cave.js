@@ -1,5 +1,5 @@
 // § cave: a generated room, round chambers joined by winding tunnels
-// (D-147, D-162), from one seed (D-148), with a torch by the stairs up, a flask and
+// (D-147, D-162) or a digger's burrows (D-165), from one seed (D-148), with a torch by the stairs up, a flask and
 // a rat guarding it (D-149), and a herb (D-155). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 
@@ -14,18 +14,20 @@ const TRIES = 200;
 // bar boxes, as the first rooms' torches are (D-101)
 const TOP_ROW_TORCH = [2, 3, 7];
 
-// (seed) → { map, start, lights, enemies, items }, or null if no try worked
-export function generateRoom(seed) {
-  const r = rng(seed);
+// (seed, shape) → { map, start, lights, enemies, items }, or null if no try
+// worked. The shape is 'chambers' or 'burrows' (D-165).
+export function generateRoom(seed, shape = 'chambers') {
+  const r = rng(seed), carve = shape === 'burrows' ? burrows : chambers;
   for (let i = 0; i < TRIES; i++) {
-    const room = tryRoom(r);
+    const g = carve(r), room = g && fill(r, g);
     if (room) return room;
   }
   return null;
 }
 
-function tryRoom(r) {
-  let g = Array.from({ length: ROWS }, () => Array(COLS).fill('#'));
+// Round chambers joined by tunnels, as a grid of '#' and '.', or null
+function chambers(r) {
+  let g = walls();
   const caves = placeCaves(r);
   if (caves.length < 2) return null;
   for (const c of caves) carveCave(r, g, c);
@@ -34,6 +36,11 @@ function tryRoom(r) {
   // a tile the smoothing cuts off goes back to wall
   const joined = reach(g, caves[0]);
   for (const f of tilesWhere(g, (x, y) => g[y][x] === '.')) if (!joined.has(key(f))) g[f.y][f.x] = '#';
+  return g;
+}
+
+// The stairs, torch, flask, rat and herb in a carved grid, or null if they don't fit
+function fill(r, g) {
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
 
@@ -137,7 +144,24 @@ function joinCaves(r, g, caves) {
   }
 }
 
+// § burrows: a digger starts near the middle and wanders, mostly keeping its
+// way, carving as it goes until 50 to 58 tiles are open: twisty tunnels,
+// loops and dead ends (D-163, D-165). Its path is one piece, so all is joined.
+const DIG_OPEN = [50, 58], DIG_TURN = 0.35, DIG_STEPS = 4000;
+const WAYS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+function burrows(r) {
+  const g = walls(), want = int(r, DIG_OPEN[0], DIG_OPEN[1]);
+  let x = int(r, 3, 7), y = int(r, 3, 9), [dx, dy] = pick(r, WAYS), open = 0;
+  for (let i = 0; i < DIG_STEPS && open < want; i++) {
+    if (g[y][x] === '#') { g[y][x] = '.'; open++; }
+    if (r() < DIG_TURN) [dx, dy] = pick(r, WAYS);
+    if (x + dx > 0 && x + dx < COLS - 1 && y + dy > 0 && y + dy < ROWS - 1) { x += dx; y += dy; } else [dx, dy] = pick(r, WAYS);
+  }
+  return g;
+}
+
 // § helpers
+const walls = () => Array.from({ length: ROWS }, () => Array(COLS).fill('#'));
 const key = (t) => t.y * COLS + t.x;
 const same = (a, b) => a.x === b.x && a.y === b.y;
 const dist = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
