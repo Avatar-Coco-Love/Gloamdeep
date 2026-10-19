@@ -40,3 +40,44 @@ The owner's ideas: different kinds of weather, and outside shadows that
 follow the time of day, cast from where the sun (or the moon, see Q-027)
 is in the sky. Which weather, what does it change, and do shadows move
 with the hour?
+
+**Q-036 · The starting region** (first, in stage 0.3)
+Its name, grid size and which cells are used; where the home base,
+landmarks, cave entrances and NPC houses go; which promises hold for
+every seed (special items in named rooms or buildings). Designed together
+one rule at a time, in `docs/regions/` (D-170). See `WORLD.md`.
+
+**Q-037 · How regions are generated and joined** (stage 0.3)
+Proposed in `WORLD.md`: two passes, the region's layout first, then each
+room made to fit its ways in, each room with its own seed. How do
+regions join each other: grid edge to grid edge on the surface, and
+stairs or cave mouths between the surface and the regions below?
+
+**Q-038 · Kinds of room, shapes and sizes** (stage 0.3)
+Which kinds (tunnel, clearing, house, marsh, desert…), how big each is,
+and whether shapes come from hand-made templates, are generated, or both
+(D-172). The owner mentioned "predefined tiles" for the shapes.
+
+**Q-039 · Swimming** (later)
+How the hero learns to swim, where they may jump into water, what water
+does to the lantern and oil, and how rivers and underground streams
+carry them into rooms reached no other way (D-171).
+
+**Q-040 · Light through openings** (when outside places exist)
+How far daylight reaches in through a cave mouth or stairs, its colour
+by hour, how weather dims it, and how strong the glow from an unfound
+lit room is (D-173).
+
+**Q-041 · How dim the stairs are** (a small step)
+How far the dimmer glow reaches, and whether all stairs change or only
+those in generated places, the crypt's too (D-174).
+
+**Q-042 · The map screen** (stage 0.3)
+How it opens (button, key), what it shows (rooms as boxes, or every
+tile seen), markers or names, and whether dev map mode is the same
+screen with everything revealed (D-176).
+
+**Q-043 · Does the first cave have a bottom?** (stage 0.3)
+D-019 keeps the world fixed and puts endless, renewed depths behind
+portals (D-032). Should the first cave (D-175) end at a set depth, with
+today's endless depths moved behind a portal, or keep going down?

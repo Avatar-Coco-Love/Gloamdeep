@@ -59,6 +59,8 @@ Read the smallest file that answers the question.
 | `docs/archive/DECISIONS-FOUNDATION-6.md` | D-130 to D-158, still in force | grep only, never read whole |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
 | `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
+| `docs/WORLD.md` | regions, ways between rooms, the map (D-170) | before any world, region or map step |
+| `docs/regions/` | one rule sheet per region, once designed | only the region a step touches |
 | `docs/VISION.md` | the pitch, inspirations, the pillars | when proposing a design |
 | `docs/ART-DIRECTION.md` | the visual rules taken from the style study | before any drawing code |
 | `docs/TECH.md` | architecture and code rules | before writing code |

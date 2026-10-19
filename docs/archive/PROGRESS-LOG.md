@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.2.1, depths change kind.** Owner's picks of options
+  shown: earth burrows (the digger, brown earth art) from depth 6 down;
+  depths 3 to 5 stay grey rock chambers. Dev: Go to depth in the Room
+  section (D-165, D-166). Playtest:
+  https://claude.ai/artifact/SNMFZ8yWmzXUdGa3rmf7Fo
 - **2026-10-19, 0.2.0, natural caves.** Owner's pick of three shown
   (dripping stone, burrowing, chambers and tunnels): generated depths
   are round, lumpy chambers, smoothed once, joined by winding one-tile

@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.4 (2026-10-19)
+- Nothing new to play. The owner's world ideas are written down in a new
+  `docs/WORLD.md`: regions as grids of rooms, each with its own rules;
+  ways between rooms that line up; rooms of every size, with a camera
+  that follows; light through openings; stairs that must be found; a
+  world map. Stage 0.3, the world, is planned and comes next.
+- Decisions: D-168 to D-176 (D-134 partly superseded). Questions opened:
+  Q-036 to Q-043.
+
 ## 0.2.3 (2026-10-19)
 - Nothing new to play. The owner's ideas from a woods sketch are written
   down as open questions: outside trees (their look, kinds, wind, and

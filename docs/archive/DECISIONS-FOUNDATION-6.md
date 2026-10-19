@@ -32,7 +32,8 @@ down are the study's: five violet-lipped steps narrowing into a dark pit
 the top and widest and brightest at the bottom.
 
 **D-134 · 2026-10-18 · Stairs glow** (step 25, owner's pick,
-ART-DIRECTION.md) Both stairs give a faint, steady violet light (the
+ART-DIRECTION.md) *Partly superseded by D-174 (2026-10-19): dimmer, and
+only where the fog has lifted.* Both stairs give a faint, steady violet light (the
 stairs colour, `#a58ce0`) reaching 1.5 tiles. A rat in it notices the
 hero, as in torchlight (D-126).
 
