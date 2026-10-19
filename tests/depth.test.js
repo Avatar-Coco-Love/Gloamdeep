@@ -105,3 +105,11 @@ test('the first two rooms\' maps stay remembered after a fall', () => {
   const n = wait(lit);
   assert.ok(n.elsewhere.second.seen.every((v) => v === 1));
 });
+
+test('the first rooms are crypt, generated depths grey rock (D-164)', () => {
+  assert.equal(makeWorld().room.look, 'crypt');
+  assert.equal(makeWorld().elsewhere.second.room.look, 'crypt');
+  const s = down({ ...second(), enemies: [], items: [] });
+  assert.equal(s.place, 'depth3');
+  assert.equal(s.room.look, 'rock');
+});

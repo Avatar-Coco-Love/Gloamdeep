@@ -77,7 +77,7 @@ export const isGenerated = (id) => !PLACES[id];
 export function placeFor(id, seed = 1) {
   if (PLACES[id]) return PLACES[id];
   const depth = depthOf(id);
-  return { ...(generateRoom(seedFor(seed, depth)) || PLACES[DEEPER]), depth };
+  return { ...(generateRoom(seedFor(seed, depth)) || PLACES[DEEPER]), depth, look: 'rock' };
 }
 
 // The place one depth up or down from `id` (a stair's `leads`), or null above the first
@@ -89,7 +89,7 @@ export function placeBeside(id, way) {
 // § begin: any place as it begins, from its plan and the game's seed
 export function beginPlace(id, seed) {
   const p = placeFor(id, seed);
-  return { room: makeRoom(p.map), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
+  return { room: makeRoom(p.map, CAVE, p.look), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
 }
 
 // § darkness: each place sets how dark never-seen tiles are and how
@@ -97,13 +97,15 @@ export function beginPlace(id, seed) {
 // cave: pitch black outside the light, with memory a faint grey.
 export const CAVE = { unseen: [0, 0, 0], remembered: [0.095, 0.095, 0.095] };
 
-export function makeRoom(map, dark = CAVE) {
+// § look: how a room's walls and floor are drawn. The first rooms are
+// crypt bricks; generated depths are raw grey rock (D-164).
+export function makeRoom(map, dark = CAVE, look = 'crypt') {
   const rows = map.length, cols = map[0].length;
   map.forEach((line, y) => {
     if (line.length !== cols) throw new Error(`room row ${y} is ${line.length} wide, not ${cols}`);
     for (const ch of line) if (!byLetter(ch)) throw new Error(`room row ${y} has unknown tile '${ch}'`);
   });
-  return { cols, rows, map, dark };
+  return { cols, rows, map, dark, look };
 }
 
 // § lookups

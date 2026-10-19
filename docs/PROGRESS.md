@@ -9,7 +9,8 @@ go to the top of `archive/PROGRESS-LOG.md`.
 ## Next up
 **Step 33: the place changes kind as you go deeper.** Propose with
 pictures how depths change, and from which depth. Burrows are one
-candidate (D-163). Read: `DECISIONS.md` (D-159, D-162, D-163), D-152 in
+candidate (D-163), as are the earth and slate looks (D-164). Read:
+`DECISIONS.md` (D-159, D-162 to D-164), D-152 in
 `archive/DECISIONS-FOUNDATION-6.md`, `TECH.md`.
 
 ## Waiting on the owner
@@ -53,5 +54,7 @@ dev God mode and depth jumps (D-154); the rat fleeing; a floor torch.
 - **2026-10-19, 0.2.0, natural caves.** Owner's pick of three shown
   (dripping stone, burrowing, chambers and tunnels): generated depths
   are round, lumpy chambers, smoothed once, joined by winding one-tile
-  tunnels. Burrows kept for step 33 (D-162, D-163). Playtest:
+  tunnels. Burrows kept for step 33. After the playtest ("still just
+  layouts"): grey rock art with edges off the grid; earth and slate
+  looks kept for later (D-162 to D-164). Playtest:
   https://claude.ai/artifact/RQnJouEb1uBxfmcEnG1PQy

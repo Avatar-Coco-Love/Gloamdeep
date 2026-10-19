@@ -24,9 +24,14 @@ Entry format:
 - Natural caves: every depth below the second room is now 2 to 4
   round, lumpy chambers joined by winding one-tile tunnels, smoothed
   like worn stone. No more boxes with nicks and straight gaps.
+- Cave art: those depths are drawn as raw grey rock, not crypt bricks.
+  Walls are piled rock chunks, the floor is rough stone with gravel and
+  the odd puddle, and the rock's edges round off and wander instead of
+  following the square tiles. The first two rooms stay crypt.
 - Torch, flask, rat, herb and stairs are placed by the same rules as
-  before.
-- Decisions: D-162 (supersedes D-152 and the shape in D-147), D-163.
+  before. Walking is still tile by tile.
+- Decisions: D-162 (supersedes D-152 and the shape in D-147), D-163,
+  D-164.
 
 ## 0.1.27 (2026-10-19)
 - Nothing to play yet: this step plans stage 0.2. Natural caves and

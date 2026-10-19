@@ -58,3 +58,16 @@ first guesses to tune by playing.
 The other way shown, a digger wandering and carving twisty tunnels,
 loops and dead ends, is kept as a candidate kind of place deeper down
 for step 33 (depths that change kind). Not built yet.
+
+**D-164 · 2026-10-19 · Grey rock for generated depths** (step 32,
+owner's pick of three art styles shown, after the playtest of the first
+0.2.0 build: "less like caves, more like different layouts") Depths 3
+and down are drawn as raw grey rock; the first two rooms keep their
+crypt bricks. Same view and light as the study, in its cool blue-greys:
+a dark cap, a front face of piled rock chunks lit on their top edges,
+a rough stone floor with gravel and puddles on about 1 floor tile in 8.
+Rock edges don't keep to the tiles: corners round off and edges wander
+up to a few pixels, but never over a floor tile's middle, and walking
+stays by tile. The palette is in `ART-DIRECTION.md`. The other two
+styles shown, brown earth and strata, and dark slate with drips and
+stalactites, are kept as candidate looks for later kinds of place.
