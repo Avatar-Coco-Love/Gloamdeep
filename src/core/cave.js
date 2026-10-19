@@ -1,6 +1,6 @@
 // § cave: a generated room, caves joined by narrow gaps like the second room
 // (D-147), from one seed (D-148), with a torch by the stairs up, a flask and
-// a rat guarding it (D-149). Plain data, no drawing. Same seed, same room.
+// a rat guarding it (D-149), and a herb (D-155). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 
 // § sizes: the first rooms' 11 × 13, and the caves' sizes in tiles (D-147)
@@ -67,11 +67,17 @@ function tryRoom(r) {
   if (!rats.length) return null;
   const rat = pick(r, rats);
 
+  // § herb: anywhere open, at least 3 tiles from the flask and the rat (D-155).
+  // Picked last, so the rest of a seed's room is as it was before herbs.
+  const herbs = open.filter((f) => dist(f, flask) >= 3 && dist(f, rat) >= 3);
+  if (!herbs.length) return null;
+  const herb = pick(r, herbs);
+
   return {
     map: g.map((row) => row.join('')),
     start: { x: up.x, y: up.y },
     lights: [{ id: 'torch', x: torch.x, y: torch.y }],
-    items: [{ id: 'flask', x: flask.x, y: flask.y }],
+    items: [{ id: 'flask', x: flask.x, y: flask.y }, { id: 'herb', x: herb.x, y: herb.y }],
     enemies: [{ id: 'rat', x: rat.x, y: rat.y }],
   };
 }

@@ -157,11 +157,39 @@ owner's pick, supersedes D-106's memory rule) Like the flask and the
 hero, a rat on a remembered tile is drawn, shaded by the same dim light
 as the floor, even with no lantern or torch near. On a tile never seen
 it stays hidden in the dark. Noticing is unchanged: a rat still notices
-the hero only in light (D-126).
+the hero only in light (D-126). *A bite or a hit now counts too: D-157
+(2026-10-19).*
 
 **D-154 · 2026-10-18 · Refill hearts** (step 29 playtest, owner's pick,
 DEV-TOOLS.md) Two rats in the first two rooms cost a heart or two each
 and nothing heals, so the generated depths were hard to reach. The dev
 panel gets a Hero section with a Refill hearts button: back to full
 health, no turn passed. God mode and jumping a depth up or down come in
-later steps, one at a time. Healing in the game is its own step (Q-033).
+later steps, one at a time. Healing in the game is its own step (Q-033,
+answered by D-155).
+
+**D-155 · 2026-10-19 · The healing herb** (step 30, owner's pick,
+answers Q-033) The hero heals by finding a Healing herb, a new item:
+a sprig of three leaves in the moss greens. Walking onto it heals 2
+hearts, never above full, and it is gone. Every generated depth has
+one, on open floor at least 3 tiles from the flask and the rat, picked
+after them so the rest of each seed's room is unchanged. The first two
+rooms have none. The dev spawn tool lists it, as it lists every item.
+
+**D-156 · 2026-10-19 · A herb at full health stays** (step 30, owner's
+pick) At full health walking onto a herb does nothing: it stays on the
+floor for later (a flask is always used, D-078). Eaten, it says "You
+eat the herb and feel better."; a bite on the same turn replaces that
+line (D-117).
+
+**D-157 · 2026-10-19 · A bite or a hit makes a rat notice** (step 30,
+owner's pick, answers Q-031, supersedes part of D-126) A rat that bites
+the hero, or lives through their hit, has noticed them, even in the
+dark: step away and it follows. Otherwise a rat still notices only in
+light.
+
+**D-158 · 2026-10-19 · A rat faces the way it walks** (step 30, owner's
+pick, answers Q-032, supersedes D-104's "facing right") A rat that
+steps left turns to face left, one that steps right faces right, and a
+step up or down keeps its facing. One that hasn't walked yet faces
+right.

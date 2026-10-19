@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-18, 0.1.23, a depth counter and an endless way down.**
+  "DEPTH 1" in a box at the top middle. The second room's stairs down
+  at 1,11 lead to a fresh copy of it at depth 3, and so on forever; each
+  depth stays as left, a fall resets them all, maps kept (D-144 to
+  D-146). Playtest:
+  https://claude.ai/artifact/TNgfvgptV1a4Mv3YreMPFb
 - **2026-10-18, 0.1.22, a flask and a rat in room 2.** The second
   room's lower cave holds an oil flask at 9,11, guarded by a rat at
   7,10; rooms can start with items. After the playtest: a flask in room

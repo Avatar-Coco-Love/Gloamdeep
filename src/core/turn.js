@@ -52,8 +52,8 @@ function away(begun, here, seen) {
 
 // § step: (state, direction) → new state. Walking into something solid
 // changes nothing and passes no turn, so the same state comes back (D-043).
-// A passed turn burns oil while the lantern is lit (D-037, D-026). A flask on the new tile is then poured in,
-// never above full, and is gone (D-078). The oil lines look at the oil after
+// A passed turn burns oil while the lantern is lit (D-037, D-026). An item on
+// the new tile is then picked up (pickUp). The oil lines look at the oil after
 // both (D-096). Walking into an enemy attacks it (D-017), and into an unlit
 // torch's wall lights it (D-121). Stepping onto stairs takes them, before the
 // enemies left behind can act (D-132). Every passed turn ends with the
@@ -66,19 +66,31 @@ export function step(state, dir) {
   if (foe) return attack(state, foe);
   let next = passTurn({ ...state, hero: { x, y } });
   const found = itemAt(state, x, y);
-  if (found) next = { ...next, items: state.items.filter((it) => it !== found), oil: Math.min(1, next.oil + get(found.id).oil) };
+  if (found) next = pickUp(next, found);
   return endTurn(state, takeStairs(next) || next);
+}
+
+// § pick up: a flask is poured in, never above full, and is gone, even into a
+// full lantern (D-078). A herb heals, never above full, and is gone with its
+// line; at full health it stays on the floor (D-155, D-156).
+function pickUp(state, found) {
+  const entry = get(found.id), items = state.items.filter((it) => it !== found);
+  if (entry.oil) return { ...state, items, oil: Math.min(1, state.oil + entry.oil) };
+  if (entry.heal && state.health < HERO_HEALTH) return say({ ...state, items, health: Math.min(HERO_HEALTH, state.health + entry.heal) }, entry.says);
+  return state;
 }
 
 // § enemies' turn: after the hero's, every enemy next to the hero bites, lit
 // or not (D-114). The bite line replaces any other said this turn (D-117).
+// A biting enemy has noticed the hero, even in the dark (D-157).
 // At 0 health the hero falls and wakes at the room's start (D-119).
 // Then the others come one tile closer (D-126 to D-129).
 function enemiesAct(state) {
   const bites = biters(state.enemies, state.hero);
   if (!bites.length) return enemiesMove(state);
   const health = Math.max(0, state.health - bites.reduce((sum, e) => sum + get(e.id).bite, 0));
-  const bitten = say({ ...state, health }, get(bites[0].id).bites);
+  const enemies = state.enemies.map((e) => (bites.includes(e) ? { ...e, chasing: true } : e));
+  const bitten = say({ ...state, health, enemies }, get(bites[0].id).bites);
   return health > 0 ? enemiesMove(bitten) : fall(bitten);
 }
 
@@ -86,7 +98,8 @@ function enemiesAct(state) {
 // coming until it dies or the hero falls (D-127). Each turn it steps one tile
 // toward them, the farther side first, else the other side, else it stays
 // (D-128). One that steps next to the hero bites on the next turn (D-129).
-// They move in list order, so one waits behind another.
+// A step left or right turns it to face that way; up or down keeps its
+// facing (D-158). They move in list order, so one waits behind another.
 function enemiesMove(state) {
   let enemies = state.enemies;
   for (const e of state.enemies) {
@@ -94,7 +107,8 @@ function enemiesMove(state) {
     if (!chasing) continue;
     const near = Math.abs(e.x - state.hero.x) + Math.abs(e.y - state.hero.y) === 1;
     const to = near ? e : chaseStep({ ...state, enemies }, e) || e;
-    enemies = enemies.map((o) => (o === e ? { ...e, x: to.x, y: to.y, chasing: true } : o));
+    const facing = to.x < e.x ? 'left' : to.x > e.x ? 'right' : e.facing;
+    enemies = enemies.map((o) => (o === e ? { ...e, x: to.x, y: to.y, chasing: true, ...(facing && { facing }) } : o));
   }
   return enemies === state.enemies ? state : { ...state, enemies };
 }

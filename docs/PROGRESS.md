@@ -4,19 +4,19 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.1.25 · **Stage:** foundation (the first code)
+**Version:** 0.1.26 · **Stage:** foundation (the first code)
 
 ## Next up
-**Step 30: the owner picks** (multiple choice): healing (Q-033), the
-dev God mode (D-154), more room tuning (D-152), the rat fleeing, a
-floor torch, or sounds.
+**Step 31: the owner picks** (multiple choice): plan stage 0.2 (the
+foundation list is done; recommended), the dev God mode (D-154), the
+rat fleeing, a floor torch, or sounds.
 Read: `DESIGN.md`.
 
 ## Waiting on the owner
-- After playing 0.1.20: Q-031 (does a bite or hit in the dark make the
-  rat notice?) and Q-032 (which way a walking rat faces).
 - After playing 0.1.25: are the rougher caves right (D-152), and does
   the rat look right in remembered dark (D-153)?
+- After playing 0.1.26: are 2 hearts per herb, one a depth, and its
+  look right (D-155)?
 
 ## Build plan (proposed; the order may change as we go)
 Each line is a step. Small decision steps may share a PR (D-018). Tick it when merged and add its version (D-071).
@@ -54,15 +54,10 @@ Foundation (0.1.x): one small visible thing per step
 - [x] 27 A depth counter and an endless way down, 0.1.23
 - [x] 28 The first generated room, 0.1.24
 - [x] 29 Rougher caves, the rat in remembered dark, 0.1.25
+- [x] 30 Healing herbs, rats that notice and turn, 0.1.26
 - Ideas for later: a standing torch on the floor, the rat fleeing, sounds; other places (smaller caves, bigger rooms, more natural caves, dungeons, crypts, D-152)
 
 ## Log (last 3)
-- **2026-10-18, 0.1.23, a depth counter and an endless way down.**
-  "DEPTH 1" in a box at the top middle. The second room's stairs down
-  at 1,11 lead to a fresh copy of it at depth 3, and so on forever; each
-  depth stays as left, a fall resets them all, maps kept (D-144 to
-  D-146). Playtest:
-  https://claude.ai/artifact/TNgfvgptV1a4Mv3YreMPFb
 - **2026-10-18, 0.1.24, the first generated rooms.** Below the second
   room every depth is made from the game's seed: 2 to 4 rough caves
   joined by gaps, a torch by the stairs up, a flask and a rat guarding
@@ -74,3 +69,8 @@ Foundation (0.1.x): one small visible thing per step
   shows dimly in the dark like the flask; it notices only in light. After
   the playtest: dev Refill hearts, as nothing heals yet (D-152 to D-154,
   Q-033). Playtest: https://claude.ai/artifact/C5VP47d6BEjdnESxHwtYo9
+- **2026-10-19, 0.1.26, healing, and rats that notice and turn.** Each
+  generated depth has a Healing herb (+2 hearts; at full health it
+  stays). A rat that bites or is hit notices, even in the dark, and a
+  rat faces the way it walks (D-155 to D-158). Playtest:
+  https://claude.ai/artifact/JXppcTSyx9XAw76kF1wTSG

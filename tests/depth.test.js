@@ -35,7 +35,7 @@ test('down from the second room: a generated room, depth 3, on its stairs up', (
   assert.equal(shownLine(n).text, 'You go down the stairs.');
   assert.deepEqual(n.room.map, generateRoom(seedFor(n.seed, 3)).map);
   assert.equal(n.enemies.length, 1);
-  assert.equal(n.items.length, 1);
+  assert.deepEqual(n.items.map((it) => it.id), ['flask', 'herb']);
   assert.ok(n.seen.every((v) => v === 0));
   assert.deepEqual(n.elsewhere.second.enemies, []); // depth 2 stays as left
 });
