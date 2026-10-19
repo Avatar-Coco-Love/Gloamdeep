@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.3 (2026-10-19)
+- Nothing new to play. The owner's ideas from a woods sketch are written
+  down as open questions: outside trees (their look, kinds, wind, and
+  lantern shadows that follow a tree's shape), weather, and shadows from
+  the sun and moon. Next conversation starts by hearing more ideas.
+- Questions opened: Q-034, Q-035.
+
 ## 0.2.2 (2026-10-19)
 - Stairs that match the place: in grey rock and earth, the steps are
   pale stone with violet edges, set in a square opening of the ground's

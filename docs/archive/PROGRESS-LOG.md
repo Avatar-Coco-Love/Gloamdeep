@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.2.0, natural caves.** Owner's pick of three shown
+  (dripping stone, burrowing, chambers and tunnels): generated depths
+  are round, lumpy chambers, smoothed once, joined by winding one-tile
+  tunnels. Burrows kept for step 33. After the playtest ("still just
+  layouts"): grey rock art with edges off the grid; earth and slate
+  looks kept for later (D-162 to D-164). Playtest:
+  https://claude.ai/artifact/RQnJouEb1uBxfmcEnG1PQy
 - **2026-10-19, 0.1.27, stage 0.2 planned.** Owner's picks: places
   first (natural caves, depths that change kind, more rats deeper), then
   a dive worth repeating, then getting stronger; sounds later. The
