@@ -26,17 +26,3 @@ Each place sets its own darkness (D-063). The owner sees the study's cold
 blue as moonlight. Should outside at night use it? Should moon phases
 make some nights darker than others? The owner isn't sure the moon will
 be in the game. Each biome's darkness is asked when it arrives.
-
-**Q-031 · Noticing from a bite or a hit in the dark** (step 24 playtest)
-A rat notices only in light (D-126). In the dark, a rat next to the hero
-still bites, and the hero can still hit it, but neither makes it notice:
-step away and it stays. Should a bite or a hit count as noticing?
-
-**Q-032 · Which way a walking rat faces** (step 24 playtest)
-The rat is drawn facing right (D-104), also while it walks left. Should
-it turn to face the way it walks, or toward the hero?
-
-**Q-033 · Healing** (step 29 playtest, its own step)
-Nothing heals the hero yet, and each rat costs a heart or two, so a run
-ends by about depth 3. How does the hero get health back: an item to
-find, resting, going back up, something else? How much, and how often?

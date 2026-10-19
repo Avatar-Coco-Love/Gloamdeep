@@ -1,7 +1,8 @@
 // § enemies: every enemy kind, keyed by id (D-104). Enemies stand on floor
 // tiles, one per tile, in `state.enemies`. registry.js gathers this table.
-// An enemy in the state is { id, x, y }, plus `health` once it has been hit
-// and `chasing` once it has noticed the hero (D-127).
+// An enemy in the state is { id, x, y }, plus `health` once it has been hit,
+// `chasing` once it has noticed the hero (D-127, D-157) and `facing` ('left'
+// or 'right', drawn facing right until it walks, D-158).
 export const ENEMIES = {
   // Two lantern hits kill it (D-109, D-110); it bites for 1 when next to the hero (D-114)
   // and comes for them once it notices them (D-126).
@@ -12,11 +13,12 @@ export const ENEMIES = {
 export const enemyAt = (state, x, y) => state.enemies.find((e) => e.x === x && e.y === y);
 
 // § hit: (enemies, foe, entry, damage) → the enemies after the hit. A foe
-// whose health reaches 0 is gone (D-110).
+// whose health reaches 0 is gone (D-110). One that lives has noticed the
+// hero, even in the dark (D-157).
 export function hitEnemy(enemies, foe, entry, damage) {
   const health = (foe.health ?? entry.health) - damage;
   if (health <= 0) return enemies.filter((e) => e !== foe);
-  return enemies.map((e) => (e === foe ? { ...foe, health } : e));
+  return enemies.map((e) => (e === foe ? { ...foe, health, chasing: true } : e));
 }
 
 // § bites: (enemies, hero) → the enemies next to the hero, four ways (D-042),

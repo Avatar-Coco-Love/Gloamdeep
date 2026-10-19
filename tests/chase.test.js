@@ -80,3 +80,35 @@ test('bumping a wall passes no turn, so no rat moves', () => {
   const s = with_({ x: 1, y: 11 }, [{ id: 'rat', x: 4, y: 10, chasing: true }]);
   assert.equal(step(s, 'left'), s);
 });
+
+// § noticing in the dark: a bite or a hit makes a rat notice (D-157, answers Q-031)
+test('a rat that bites in the dark has noticed: step away and it follows', () => {
+  const s = switchLantern(with_({ x: 3, y: 10 }, [{ id: 'rat', x: 2, y: 10 }]));
+  const bitten = wait(s);
+  assert.equal(bitten.enemies[0].chasing, true);
+  assert.deepEqual(rats(step(bitten, 'right')), [[3, 10]]);
+});
+
+test('a rat hit in the dark and still alive has noticed', () => {
+  const s = switchLantern(with_({ x: 3, y: 10 }, [{ id: 'rat', x: 2, y: 10 }]));
+  const n = step(s, 'left');
+  assert.equal(n.enemies[0].health, 1);
+  assert.equal(n.enemies[0].chasing, true);
+});
+
+// § facing: a walking rat faces the way it walks (D-158, answers Q-032)
+test('a rat walking left faces left, and keeps that facing walking up or down', () => {
+  const s = with_({ x: 2, y: 8 }, [{ id: 'rat', x: 5, y: 10, chasing: true }]);
+  const left = wait(s); // three across, two up: across first
+  assert.deepEqual(rats(left), [[4, 10]]);
+  assert.equal(left.enemies[0].facing, 'left');
+  const s2 = with_({ x: 4, y: 7 }, left.enemies);
+  const up = wait(s2);
+  assert.deepEqual(rats(up), [[4, 9]]);
+  assert.equal(up.enemies[0].facing, 'left');
+});
+
+test('a rat walking right faces right; one that has not walked has no facing', () => {
+  assert.equal(start().enemies[0].facing, undefined);
+  assert.equal(wait(start()).enemies[0].facing, 'right'); // from 2,10 toward the hero at 5,11
+});

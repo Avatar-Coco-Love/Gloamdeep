@@ -5,6 +5,7 @@ const PAL = {
   k: '#0e0c16', w: '#efe6cc', C: '#a6e0e4', c: '#58a8b4', B: '#2f6a7c', b: '#1c3e4e',
   y: '#ffd66b', Y: '#f39a3b', O: '#a8642c', o: '#e9a94a', a: '#e8d5a0',
   S: '#9aa6b4', s: '#6b7686', d: '#4a5262', p: '#e8786a',
+  g: '#6fb04e', G: '#3c6e3a', // moss (ART-DIRECTION.md palette)
 };
 
 // § hero: the study's hero, with the lantern held out to its right (D-042, D-056).
@@ -18,6 +19,12 @@ const HERO = { mirror: true, rows: [
 const FLASK = { mirror: true, rows: [
   '', '', '......kk', '.....kaa', '......kk', '......ko', '.....koo', '....kooo', '...kwooo', '...kwooo',
   '...koooo', '...kOooo', '....kOOO', '.....kkk'] };
+
+// § herb: a sprig of three leaves in the moss greens, light on top, dark
+// underneath and down the stem (D-155)
+const HERB = { mirror: false, rows: [
+  '', '', '', '', '.......kk.......', '......kggk......', '......kgGk......', '..kkk..kGk.kkk..',
+  '.kgggk.kGk.kgggk', '..kgGGkkGkkGGgk.', '...kkGGkGkGGkk..', '.....kkGGGkk....', '.......kGk......', '.......kkk......'] };
 
 // § rat: redrawn from the study's (D-009), side on and facing right: a pink
 // hostile eye (ART-DIRECTION.md palette), ear, nose, feet and tail (D-104)
@@ -47,8 +54,17 @@ function spriteCanvas(def, flash = null) {
   return cv;
 }
 
-export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), rat: spriteCanvas(RAT) }; // keyed by registry id
+export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), rat: spriteCanvas(RAT) }; // keyed by registry id
 const FLASHES = { rat: spriteCanvas(RAT, '#ffffff') };
+// § facing left: an enemy's sprite mirrored, for one that walked left (D-158)
+function mirrored(cv) {
+  const out = document.createElement('canvas');
+  out.width = out.height = 16;
+  const c = out.getContext('2d');
+  c.scale(-1, 1); c.drawImage(cv, -16, 0);
+  return out;
+}
+const LEFT = { rat: mirrored(SPRITES.rat) }, LEFT_FLASHES = { rat: mirrored(FLASHES.rat) };
 const BITTEN = spriteCanvas(HERO, PAL.p);
 
 // § shadow: a small dark oval under a sprite (study line 345)
@@ -65,7 +81,7 @@ export function drawHero(c, x, y, bitten = false) {
   c.drawImage(bitten ? BITTEN : SPRITES.hero, x, y - 2);
 }
 
-// § items: each item 2 pixels up from its tile, on its shadow. A flask bobs
+// § items: each item 2 pixels up from its tile, on its shadow. An item bobs
 // 1 pixel every 0.7 s, each row in its own beat; still with reduced motion (study line 379, D-077).
 export function drawItems(c, items, t, still) {
   for (const it of items) {
@@ -81,6 +97,7 @@ export function drawItems(c, items, t, still) {
 // `hit`: the enemy flashing white just now, or null (D-105). A hit that
 // killed it still flashes it once, then it is gone (D-113).
 // `at`: (enemy) → the tile it is shown on, part way along while it slides (D-128).
+// One that walked left is drawn mirrored (D-158).
 export function drawEnemies(c, enemies, t, still, hit, at = (e) => e) {
   for (const e of enemies) drawEnemy(c, e, at(e), t, still, hit && e.x === hit.x && e.y === hit.y);
   if (hit && !enemies.some((e) => e.x === hit.x && e.y === hit.y)) drawEnemy(c, hit, hit, t, still, true);
@@ -89,5 +106,6 @@ function drawEnemy(c, e, p, t, still, flash) {
   const x = Math.round(p.x * 16), y = Math.round(p.y * 16);
   const bob = still ? 0 : Math.floor(t / 520 + e.x) % 2;
   drawShadow(c, x, y, 8);
-  c.drawImage((flash ? FLASHES : SPRITES)[e.id], x, y - 2 - bob);
+  const left = e.facing === 'left';
+  c.drawImage((flash ? (left ? LEFT_FLASHES : FLASHES) : (left ? LEFT : SPRITES))[e.id], x, y - 2 - bob);
 }

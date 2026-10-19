@@ -79,7 +79,9 @@ owner's pick) A rat notices the hero when it stands on a tile lit by
 the lantern or a burning torch: if the hero can see it, it sees them
 (D-106). Lit counts as for memory: the light reaches the tile's centre,
 inside 95% of its reach (D-059). With the lantern off, a rat in the dark
-doesn't notice them; one in torchlight still does.
+doesn't notice them; one in torchlight still does. *Partly superseded by
+D-157 (2026-10-19): a bite or a hit it lives through makes it notice, even
+in the dark.*
 
 **D-127 · 2026-10-18 · Once noticed, it keeps coming** (step 24, owner's pick)
 A rat that has noticed the hero keeps chasing until it dies or the hero
