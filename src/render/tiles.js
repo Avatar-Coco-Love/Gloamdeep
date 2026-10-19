@@ -75,18 +75,29 @@ const COURSES = [[5, 3], [9, 3], [13, 2]]; // [top row, height]
 // lipped steps narrowing into a dark pit (D-133). They sink toward the wall
 // beside them, the top step at the floor (D-143). The stairs up narrow the
 // same way but brighten toward the wall, rising to the light above.
+// In grey rock and earth (D-167) the steps are pale stone a shade above the
+// ground, and the opening around them is the ground's own colour, darker
+// deeper down, inside a dark rim.
 const STEP_SHADES = ['#6a7288', '#535a6e', '#3e4456', '#2c3040', '#1d2030'];
 const STEP_LIPS = ['#b9a4ec', '#9682cf', '#6f5ea6', '#4b3f78', '#2f2850'];
+const STAIR_LOOKS = {
+  rock: { shades: ['#9aa3b6', '#7a8396', '#5a6276', '#3b4152', '#23262f'], ground: [0x36, 0x3b, 0x48], rim: '#14161d' },
+  earth: { shades: ['#b09a7e', '#8e7a62', '#6c5b48', '#4a3d30', '#2a221b'], ground: [0x3d, 0x32, 0x29], rim: '#16110d' },
+};
+const OPENING_DIM = [0.78, 0.66, 0.55, 0.45, 0.36]; // the ground in the opening, by step, the floor side first
+const dim = (rgb, f) => '#' + rgb.map((v) => Math.round(v * f).toString(16).padStart(2, '0')).join('');
 function drawSteps(c, room, tx, ty, up) {
-  const x0 = tx * T, y0 = ty * T, dir = stairsFacing(room, tx, ty);
-  c.fillStyle = '#0c0b12'; c.fillRect(x0, y0, T, T);
+  const x0 = tx * T, y0 = ty * T, dir = stairsFacing(room, tx, ty), look = STAIR_LOOKS[room.look];
+  const shades = look ? look.shades : STEP_SHADES;
+  const band = (p, m, size) => (dir === 'up' || dir === 'down' ? c.fillRect(x0 + m, y0 + p, T - 2 * m, size) : c.fillRect(x0 + p, y0 + m, size, T - 2 * m));
+  c.fillStyle = look ? look.rim : '#0c0b12'; c.fillRect(x0, y0, T, T);
   for (let i = 0; i < 5; i++) { // i: 0 the step at the floor, 4 the one at the wall
-    const m = 1 + i, k = up ? 4 - i : i, w = 16 - 2 * m;
+    const m = 1 + i, k = up ? 4 - i : i;
     const a = dir === 'up' || dir === 'left' ? 12 - i * 3 : 1 + i * 3; // the step's 3 px band
     const lip = dir === 'up' || dir === 'left' ? a + 2 : a; // its edge on the floor side
-    const band = (p, size) => (dir === 'up' || dir === 'down' ? c.fillRect(x0 + m, y0 + p, w, size) : c.fillRect(x0 + p, y0 + m, size, w));
-    c.fillStyle = STEP_SHADES[k]; band(a, 3);
-    c.fillStyle = STEP_LIPS[k]; band(lip, 1);
+    if (look) { c.fillStyle = dim(look.ground, OPENING_DIM[k]); band(a, 1, 3); } // the opening beside the step
+    c.fillStyle = shades[k]; band(a, m, 3);
+    c.fillStyle = STEP_LIPS[k]; band(lip, m, 1);
   }
 }
 

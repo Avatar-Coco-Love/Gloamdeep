@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.2 (2026-10-19)
+- Stairs that match the place: in grey rock and earth, the steps are
+  pale stone with violet edges, set in a square opening of the ground's
+  own colour that darkens as it goes down, instead of a black square.
+  The crypt rooms keep their stairs.
+- Decisions: D-167.
+
 ## 0.2.1 (2026-10-19)
 - Depths change kind: from depth 6 down, every depth is an earth
   burrow, twisty dug tunnels with loops and dead ends, drawn as brown

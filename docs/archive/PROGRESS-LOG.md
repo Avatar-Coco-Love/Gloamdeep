@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.1.27, stage 0.2 planned.** Owner's picks: places
+  first (natural caves, depths that change kind, more rats deeper), then
+  a dive worth repeating, then getting stronger; sounds later. The
+  0.1.25 caves felt boxy and samey; the herb is right. Foundation
+  decisions archived (D-159 to D-161). Nothing to play.
 - **2026-10-19, 0.1.26, healing, and rats that notice and turn.** Each
   generated depth has a Healing herb (+2 hearts; at full health it
   stays). A rat that bites or is hit notices, even in the dark, and a
