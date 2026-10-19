@@ -71,3 +71,19 @@ up to a few pixels, but never over a floor tile's middle, and walking
 stays by tile. The palette is in `ART-DIRECTION.md`. The other two
 styles shown, brown earth and strata, and dark slate with drips and
 stalactites, are kept as candidate looks for later kinds of place.
+
+**D-165 · 2026-10-19 · Depths change kind: earth burrows from depth 6**
+(step 33, owner's picks of options shown) Depths 3 to 5 stay grey rock
+chambers (D-162, D-164); from depth 6 down every depth is an earth burrow.
+The burrow is D-163's digger: it starts near the middle and wanders,
+turning at random 35 times in 100, until 50 to 58 tiles are open. It is
+drawn in D-164's brown earth look: packed earth with stones, and wall
+faces of banded strata (palette in `ART-DIRECTION.md`). The rest of D-147
+and the contents stay. A later kind of place takes a band further down.
+Depth 6 and the digger's numbers are first guesses to tune by playing.
+
+**D-166 · 2026-10-19 · Dev: Go to depth** (owner's request, ahead of God
+mode, D-154) The dev panel's Room section gets Go to depth: pick 1 to 99
+with − and +, then Go. The hero arrives on that depth's stairs up (the
+first room's start, which has none), no turn passes, and the room left
+waits as if the stairs were taken. The picker follows the hero's depth.

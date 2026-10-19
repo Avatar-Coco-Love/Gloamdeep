@@ -4,17 +4,18 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.0 · **Stage:** 0.2, places with character
+**Version:** 0.2.1 · **Stage:** 0.2, places with character
 
 ## Next up
-**Step 33: the place changes kind as you go deeper.** Propose with
-pictures how depths change, and from which depth. Burrows are one
-candidate (D-163), as are the earth and slate looks (D-164). Read:
-`DECISIONS.md` (D-159, D-162 to D-164), D-152 in
-`archive/DECISIONS-FOUNDATION-6.md`, `TECH.md`.
+**Stairs that match the place.** At depth 6 the crypt-style stairs
+clash with the earth burrows (owner, 0.2.1 playtest); check the grey
+rock depths too. Propose with pictures. Read: D-133 and D-143 in
+`archive/DECISIONS-FOUNDATION-6.md`, D-164 and D-165 in `DECISIONS.md`,
+`ART-DIRECTION.md`, `src/render/tiles.js` (drawSteps). Then step 34.
 
 ## Waiting on the owner
-- Nothing right now.
+- Add the setup script line from the 0.2.1 PR to the cloud environment,
+  so each conversation starts on the latest `main`.
 
 ## Build plan: stage 0.2 (D-159; the order may change)
 Steps 1 to 30 (pre-production and foundation) are done; the list is in
@@ -23,7 +24,7 @@ Steps 1 to 30 (pre-production and foundation) are done; the list is in
 - [x] 31 Plan stage 0.2, 0.1.27
 Places with character
 - [x] 32 Natural caves instead of boxy ones, 0.2.0
-- [ ] 33 The place changes kind as you go deeper
+- [x] 33 The place changes kind as you go deeper, 0.2.1
 - [ ] 34 More danger deeper: more rats further down
 A dive worth repeating
 - [ ] 35 The deepest depth reached, kept and shown
@@ -38,14 +39,9 @@ Stronger, slowly
 Ideas for later: sounds; scarcer light and better finds deeper (D-159); more
 kinds of place (burrows, D-163; smaller caves, bigger rooms, dungeons,
 crypts, D-152);
-dev God mode and depth jumps (D-154); the rat fleeing; a floor torch.
+dev God mode (D-154); the rat fleeing; a floor torch.
 
 ## Log (last 3)
-- **2026-10-19, 0.1.26, healing, and rats that notice and turn.** Each
-  generated depth has a Healing herb (+2 hearts; at full health it
-  stays). A rat that bites or is hit notices, even in the dark, and a
-  rat faces the way it walks (D-155 to D-158). Playtest:
-  https://claude.ai/artifact/JXppcTSyx9XAw76kF1wTSG
 - **2026-10-19, 0.1.27, stage 0.2 planned.** Owner's picks: places
   first (natural caves, depths that change kind, more rats deeper), then
   a dive worth repeating, then getting stronger; sounds later. The
@@ -58,3 +54,8 @@ dev God mode and depth jumps (D-154); the rat fleeing; a floor torch.
   layouts"): grey rock art with edges off the grid; earth and slate
   looks kept for later (D-162 to D-164). Playtest:
   https://claude.ai/artifact/RQnJouEb1uBxfmcEnG1PQy
+- **2026-10-19, 0.2.1, depths change kind.** Owner's picks of options
+  shown: earth burrows (the digger, brown earth art) from depth 6 down;
+  depths 3 to 5 stay grey rock chambers. Dev: Go to depth in the Room
+  section (D-165, D-166). Playtest:
+  https://claude.ai/artifact/SNMFZ8yWmzXUdGa3rmf7Fo

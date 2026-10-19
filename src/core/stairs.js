@@ -3,7 +3,7 @@
 // other room waits in `state.elsewhere`, by place id, just as it was left
 // (D-019): its tiles, lights, enemies, items and memory. A depth never
 // visited begins fresh, generated from the game's seed (D-147, D-148).
-import { placeBeside, beginPlace, tileAt, isWall } from './room.js';
+import { placeBeside, placeAt, placeFor, beginPlace, tileAt, isWall } from './room.js';
 import { blankMemory } from './fog.js';
 import { say } from './lines.js';
 
@@ -17,10 +17,25 @@ export function takeStairs(state) {
   const there = to && (state.elsewhere[to] || fresh(to, state.seed));
   const spot = there && find(there.room, entry.arrive);
   if (!spot) return null;
+  return say(arrive(state, to, there, spot), entry.line);
+}
+
+// § go to: (state, depth) → the state at that depth, on its stairs up, or
+// where the place starts if it has none (the first room). A dev tool (D-166):
+// no turn passes, and the room left waits as stairs leave it.
+export function goToDepth(state, depth) {
+  const to = placeAt(depth);
+  if (to === state.place) return state;
+  const there = state.elsewhere[to] || fresh(to, state.seed);
+  return arrive(state, to, there, find(there.room, 'stairsUp') || placeFor(to, state.seed).start);
+}
+
+// The state moved to place `to`, its room `there`, the hero at `spot`; the room left waits
+function arrive(state, to, there, spot) {
   const here = { room: state.room, lights: state.lights, enemies: state.enemies, items: state.items, seen: state.seen };
   const elsewhere = { ...state.elsewhere, [state.place]: here };
   delete elsewhere[to];
-  return say({ ...state, ...there, place: to, elsewhere, hero: spot }, entry.line);
+  return { ...state, ...there, place: to, elsewhere, hero: spot };
 }
 
 // A place never visited, as it begins from the game's seed, with nothing remembered

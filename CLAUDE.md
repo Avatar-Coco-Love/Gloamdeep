@@ -31,7 +31,11 @@ CSS and JavaScript, with everything drawn and synthesized in code.
 
 1. Pull the latest `main` first (`git fetch origin main`); the starting
    copy can be old (D-070). A start-up hook does this already when it
-   runs (D-092); there is no need to tell the owner about it. If any PR is still open, tell the owner and ask
+   runs (D-092); there is no need to tell the owner about it. In cloud
+   conversations Claude can start one folder above the repo, on an old
+   copy, and then the hook doesn't run: `cd` into the repo, fetch, and
+   check out `origin/main` by hand. The environment's setup script fixes
+   this for good (see the 0.2.1 PR). If any PR is still open, tell the owner and ask
    whether to merge it, update it or close it. If this conversation's
    branch had a PR merged, restart the branch from `origin/main`.
 2. Read `docs/PROGRESS.md` on the fresh `main`. It says where things
