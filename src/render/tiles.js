@@ -4,6 +4,7 @@ import { hash } from '../core/noise.js';
 import { isWall, tileAt } from '../core/room.js';
 import { stairsFacing } from '../core/stairs.js';
 import { TILE as T } from './screen.js';
+import { drawRock } from './rock.js';
 
 const px = (c, x, y, col) => { c.fillStyle = col; c.fillRect(x, y, 1, 1); };
 
@@ -89,14 +90,18 @@ function drawSteps(c, room, tx, ty, up) {
   }
 }
 
-// § room: draw every tile of a room, by registry id (D-048)
+// § room: draw every tile of a room, by registry id (D-048), or a rock
+// room whole, as its edges don't keep to the tiles (D-164)
 const DRAW = {
   wall: drawWall, floor: drawFloor,
   stairsDown: (c, room, x, y) => drawSteps(c, room, x, y, false),
   stairsUp: (c, room, x, y) => drawSteps(c, room, x, y, true),
 };
 export function drawRoom(c, room) {
+  const rock = room.look === 'rock';
+  if (rock) drawRock(c, room);
   for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
-    DRAW[tileAt(room, x, y).id](c, room, x, y);
+    const id = tileAt(room, x, y).id;
+    if (!rock || tileAt(room, x, y).leads) DRAW[id](c, room, x, y);
   }
 }

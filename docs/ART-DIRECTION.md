@@ -46,6 +46,18 @@ Named colours are in the study's `PAL` (lines 121–128). Key roles:
 Rule to keep: important things (oil, stairs, enemies, the hero) are
 recognisable by shape **and** colour, never by colour alone.
 
+## Grey rock (generated depths, D-164)
+Code: `src/render/rock.js`. Same view rules as above, but drawn per pixel
+from a rock mask whose edges round off and wander in 3-pixel steps. A
+floor tile's middle (pixels 4 to 11 both ways) and stairs stay clear.
+
+| Role | Colour |
+| --- | --- |
+| Cap, grit, edge and face top line | `#1c1f28` `#252935` `#5a6478` |
+| Face rock chunks, chunk tops, seams, foot | `#4b5468` `#555e73` `#434b5d`, `#6a7489` `#5f697e`, `#262a35`, `#14161d` |
+| Floor, light, dark, pebble | `#363b48` `#404656` `#282c36` `#4a5163` |
+| Puddle, shine | `#262d3d` `#3a4660` |
+
 ## Light: the core of the look
 The study's lighting code is at lines 309–338, plus the light setup inside
 `frame()` from line 343.

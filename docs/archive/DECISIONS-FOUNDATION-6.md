@@ -110,6 +110,8 @@ can be reached from the stairs up without crossing a stair, and the
 stairs down lie as far along the way as the room allows. The sizes are
 first guesses to tune by playing: caves 3 to 7 wide and 3 to 6 tall, at
 least 45 open tiles (the second room has 67), stairs at least 8 steps apart.
+*The caves' shape (boxes, straight gaps) is superseded by D-162
+(2026-10-19); the size, open tiles, reach and stairs rules stay.*
 
 **D-148 · 2026-10-18 · One seed, new on each fall** (step 28, owner's
 pick, supersedes D-144's remembered maps for these depths, D-020) The
@@ -134,7 +136,7 @@ reported and made again. Seeds run from 1 to 99999.
 D-137) D-114 to D-129 (steps 22 to 24) moved unchanged to
 `archive/DECISIONS-FOUNDATION-5.md`. They stay in force.
 
-**D-152 · 2026-10-18 · Rougher caves** (step 29, owner's pick, tunes
+**D-152 · 2026-10-18 · Rougher caves** *Superseded by D-162 (2026-10-19).* (step 29, owner's pick, tunes
 D-147) A generated cave's edges are bitten back more: each corner tile
 goes to wall at 60% (was 50%), each other edge tile at 30% (was 15%),
 and a bitten tile takes the next tile inward with it at 30% (caves over

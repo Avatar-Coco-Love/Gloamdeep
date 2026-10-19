@@ -43,6 +43,11 @@ Foundation (0.1.x): one small visible thing per step
 
 ## Log entries
 
+- **2026-10-18, 0.1.25, rougher caves, the rat in remembered dark.**
+  Generated caves' edges are bitten back more. A rat on an explored tile
+  shows dimly in the dark like the flask; it notices only in light. After
+  the playtest: dev Refill hearts, as nothing heals yet (D-152 to D-154,
+  Q-033). Playtest: https://claude.ai/artifact/C5VP47d6BEjdnESxHwtYo9
 - **2026-10-18, 0.1.24, the first generated rooms.** Below the second
   room every depth is made from the game's seed: 2 to 4 rough caves
   joined by gaps, a torch by the stairs up, a flask and a rat guarding
