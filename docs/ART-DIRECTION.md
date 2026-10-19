@@ -70,6 +70,17 @@ a small stone.
 | Floor, light, dark, pebble | `#3d3229` `#47392e` `#2e251e` `#544435` |
 | Stone, its lit top | `#544435` `#6a5848` |
 
+## Stairs in grey rock and earth (D-167)
+Code: `src/render/tiles.js` (drawSteps). The crypt's five steps and
+violet lips, with pale stone steps (light to dark, floor side first;
+reversed for stairs up), the opening around them the ground's floor
+colour times 0.78, 0.66, 0.55, 0.45, 0.36 by step, inside a 1-pixel rim.
+
+| Look | Steps | Rim |
+| --- | --- | --- |
+| Grey rock | `#9aa3b6` `#7a8396` `#5a6276` `#3b4152` `#23262f` | `#14161d` |
+| Earth | `#b09a7e` `#8e7a62` `#6c5b48` `#4a3d30` `#2a221b` | `#16110d` |
+
 ## Light: the core of the look
 The study's lighting code is at lines 309–338, plus the light setup inside
 `frame()` from line 343.

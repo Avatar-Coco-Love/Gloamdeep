@@ -87,3 +87,14 @@ mode, D-154) The dev panel's Room section gets Go to depth: pick 1 to 99
 with − and +, then Go. The hero arrives on that depth's stairs up (the
 first room's start, which has none), no turn passes, and the room left
 waits as if the stairs were taken. The picker follows the hero's depth.
+
+**D-167 · 2026-10-19 · Stairs that match the place** (owner's picks of
+options shown, after the 0.2.1 playtest: the crypt stairs clash with the
+burrows) In grey rock and earth, stairs keep D-133's five steps and
+D-143's direction, but the steps are pale stone a shade above the
+ground, still with violet lips. The black square goes: the opening around
+the steps is the ground's own colour, darker toward the deep end, inside
+a 1-pixel dark rim, so it reads as a ledge going down. The crypt rooms
+keep their stairs. Rough-cut steps and a dug hole were shown and turned
+down ("too distorted, you can't tell they are stairs"). Palette in
+`ART-DIRECTION.md`.
