@@ -4,14 +4,18 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.2 · **Stage:** 0.2, places with character
+**Version:** 0.2.3 · **Stage:** 0.2, places with character
 
 ## Next up
-**Step 34, more danger deeper: more rats further down.** Propose how
-many rats at which depth, with options. Read: D-147 and D-159 (grep the
-archive files), `src/core/cave.js`.
+**Hear the owner's ideas.** The owner has had many new ideas and will
+describe them in the next conversation. Listen, ask multiple choice
+questions where useful, and record each as an open question (start
+with Q-034 and Q-035, outside trees, weather, sun and moon shadows).
+Build nothing yet. After that: step 34, more rats deeper (D-147, D-159,
+`src/core/cave.js`).
 
 ## Waiting on the owner
+- Share the ideas thought up since the woods sketch (0.2.3 log).
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
 
@@ -37,16 +41,10 @@ Stronger, slowly
 Ideas for later: sounds; scarcer light and better finds deeper (D-159); more
 kinds of place (burrows, D-163; smaller caves, bigger rooms, dungeons,
 crypts, D-152);
-dev God mode (D-154); the rat fleeing; a floor torch.
+dev God mode (D-154); the rat fleeing; a floor torch; outside trees,
+weather, sun and moon shadows (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-19, 0.2.0, natural caves.** Owner's pick of three shown
-  (dripping stone, burrowing, chambers and tunnels): generated depths
-  are round, lumpy chambers, smoothed once, joined by winding one-tile
-  tunnels. Burrows kept for step 33. After the playtest ("still just
-  layouts"): grey rock art with edges off the grid; earth and slate
-  looks kept for later (D-162 to D-164). Playtest:
-  https://claude.ai/artifact/RQnJouEb1uBxfmcEnG1PQy
 - **2026-10-19, 0.2.1, depths change kind.** Owner's picks of options
   shown: earth burrows (the digger, brown earth art) from depth 6 down;
   depths 3 to 5 stay grey rock chambers. Dev: Go to depth in the Room
@@ -58,3 +56,10 @@ dev God mode (D-154); the rat fleeing; a floor torch.
   going down, inside a dark rim; the crypt keeps its stairs. Rough-cut
   steps and a dug hole were too distorted (D-167). Playtest:
   https://claude.ai/artifact/B2Futybpzz4XofbEzZggL7
+- **2026-10-19, 0.2.3, ideas from a surface sketch.** At the owner's
+  request, a sketch (not in the game) of a woods clearing with a cave
+  mouth, at morning, noon, dusk or night. Owner's notes: trees need
+  work, and a lantern shadow should follow a tree's shape, not its whole
+  tile; tree kinds, wind, weather and sun or moon shadows are for later
+  (Q-034, Q-035). Sketch:
+  https://claude.ai/artifact/NNdk6rD2Cgg1FkNguoaKg4
