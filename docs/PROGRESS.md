@@ -9,7 +9,7 @@ go to the top of `archive/PROGRESS-LOG.md`.
 ## Next up
 **Stairs that match the place.** At depth 6 the crypt-style stairs
 clash with the earth burrows (owner, 0.2.1 playtest); check the grey
-rock depths too. Propose with pictures. Read: D-143 in
+rock depths too. Propose with pictures. Read: D-133 and D-143 in
 `archive/DECISIONS-FOUNDATION-6.md`, D-164 and D-165 in `DECISIONS.md`,
 `ART-DIRECTION.md`, `src/render/tiles.js` (drawSteps). Then step 34.
 
