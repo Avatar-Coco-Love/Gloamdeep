@@ -23,11 +23,11 @@ Format: `D-xxx · date · title`, then the decision and, where useful, why.
 
 
 **D-159 · 2026-10-19 · Stage 0.2: the plan** (step 31, owner's pick)
-The foundation list is done. Stage 0.2 covers four themes, in this
+The foundation list is done. Stage 0.2 covers three themes, in this
 order: places with character first, then a dive worth repeating, then
-stronger, slowly; sounds come in between. Going deeper changes two
+stronger, slowly. Sounds wait for a later stage. Going deeper changes two
 things in this stage: the kind of place, and the danger. Scarcer light
-and better finds deeper wait for a later stage. The step list is in
+and better finds deeper wait for later too. The step list is in
 `PROGRESS.md` and may change as we go. Steps from 32 on are versioned
 0.2.x.
 

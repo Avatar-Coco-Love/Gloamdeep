@@ -7,7 +7,7 @@ Versions:
 - `0.0.x`: pre-production (decisions, docs, art studies). No playable game.
 - `0.1.x`: foundation. The first code, built up one small visible step at a time.
 - `0.2.x`: stage 0.2, from step 32: places with character, a dive worth
-  repeating, stronger, slowly, and sounds (D-159).
+  repeating, and stronger, slowly (D-159).
 - Later minor versions (`0.3`…) are set when the build plan in
   `docs/PROGRESS.md` defines the next stage.
 - `1.0.0`: the first release the owner calls finished.
@@ -23,8 +23,8 @@ Entry format:
 ## 0.1.27 (2026-10-19)
 - Nothing to play yet: this step plans stage 0.2. Natural caves and
   depths that change as you go down come first, then a dive worth
-  repeating (a record, a proper fall, saving), then getting stronger,
-  with sounds in between.
+  repeating (a record, a proper fall, saving), then getting stronger.
+  Sounds come in a later stage.
 - After your playtest: caves will stop being boxy and samey; the rat
   in the dark and the healing herb stay as they are.
 - The foundation's decisions and older changelog entries moved to

@@ -24,19 +24,17 @@ Places with character
 - [ ] 32 Natural caves instead of boxy ones
 - [ ] 33 The place changes kind as you go deeper
 - [ ] 34 More danger deeper: more rats further down
-- [ ] 35 First sounds
 A dive worth repeating
-- [ ] 36 The deepest depth reached, kept and shown
-- [ ] 37 A proper fall, and starting again
-- [ ] 38 Saving the journey between visits
-- [ ] 39 A second creature that lives only further down
-- [ ] 40 More sounds
+- [ ] 35 The deepest depth reached, kept and shown
+- [ ] 36 A proper fall, and starting again
+- [ ] 37 Saving the journey between visits
+- [ ] 38 A second creature that lives only further down
 Stronger, slowly
-- [ ] 41 Experience from fights and discoveries
-- [ ] 42 Levels
-- [ ] 43 The first gear
+- [ ] 39 Experience from fights and discoveries
+- [ ] 40 Levels
+- [ ] 41 The first gear
 
-Ideas for later: scarcer light and better finds deeper (D-159); more
+Ideas for later: sounds; scarcer light and better finds deeper (D-159); more
 kinds of place (smaller caves, bigger rooms, dungeons, crypts, D-152);
 dev God mode and depth jumps (D-154); the rat fleeing; a floor torch.
 
@@ -53,6 +51,6 @@ dev God mode and depth jumps (D-154); the rat fleeing; a floor torch.
   https://claude.ai/artifact/JXppcTSyx9XAw76kF1wTSG
 - **2026-10-19, 0.1.27, stage 0.2 planned.** Owner's picks: places
   first (natural caves, depths that change kind, more rats deeper), then
-  a dive worth repeating, then getting stronger, sounds between. The
+  a dive worth repeating, then getting stronger; sounds later. The
   0.1.25 caves felt boxy and samey; the herb is right. Foundation
   decisions archived (D-159 to D-161). Nothing to play.
