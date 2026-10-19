@@ -1,11 +1,12 @@
-// § cave: a generated room, caves joined by narrow gaps like the second room
-// (D-147), from one seed (D-148), with a torch by the stairs up, a flask and
+// § cave: a generated room, round chambers joined by winding tunnels
+// (D-147, D-162), from one seed (D-148), with a torch by the stairs up, a flask and
 // a rat guarding it (D-149), and a herb (D-155). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 
-// § sizes: the first rooms' 11 × 13, and the caves' sizes in tiles (D-147)
+// § sizes: the first rooms' 11 × 13, and the chambers (D-162): how many,
+// their half-widths and half-heights in tiles, and how far apart their middles are
 const COLS = 11, ROWS = 13;
-const CAVES = [2, 4], CAVE_W = [3, 7], CAVE_H = [3, 6];
+const CAVES = [2, 4], CAVE_R = [1.3, 3], CAVE_GAP = 4;
 // At least this many open tiles, near the second room's 67 (D-147)
 const MIN_OPEN = 45;
 const TRIES = 200;
@@ -24,13 +25,14 @@ export function generateRoom(seed) {
 }
 
 function tryRoom(r) {
-  const g = Array.from({ length: ROWS }, () => Array(COLS).fill('#'));
+  let g = Array.from({ length: ROWS }, () => Array(COLS).fill('#'));
   const caves = placeCaves(r);
   if (caves.length < 2) return null;
   for (const c of caves) carveCave(r, g, c);
+  g = smooth(g);
   joinCaves(r, g, caves);
-  // a bite can cut off a tile or two; those go back to wall (D-152)
-  const joined = reach(g, { x: caves[0].x + (caves[0].w >> 1), y: caves[0].y + (caves[0].h >> 1) });
+  // a tile the smoothing cuts off goes back to wall
+  const joined = reach(g, caves[0]);
   for (const f of tilesWhere(g, (x, y) => g[y][x] === '.')) if (!joined.has(key(f))) g[f.y][f.x] = '#';
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
@@ -82,50 +84,57 @@ function tryRoom(r) {
   };
 }
 
-// § caves: 2 to 4 boxes inside the outer wall, a wall at least between them
+// § chambers: 2 to 4 roundish chambers, their middles well apart (D-162)
 function placeCaves(r) {
   const want = int(r, CAVES[0], CAVES[1]), caves = [];
-  for (let i = 0; i < 80 && caves.length < want; i++) {
-    const w = int(r, CAVE_W[0], CAVE_W[1]), h = int(r, CAVE_H[0], CAVE_H[1]);
-    const c = { x: int(r, 1, COLS - 1 - w), y: int(r, 1, ROWS - 1 - h), w, h };
-    if (!caves.some((o) => c.x <= o.x + o.w && o.x <= c.x + c.w && c.y <= o.y + o.h && o.y <= c.y + c.h)) caves.push(c);
+  for (let i = 0; i < 60 && caves.length < want; i++) {
+    const c = { x: int(r, 2, COLS - 3), y: int(r, 2, ROWS - 3), rx: size(r), ry: size(r) };
+    if (!caves.some((o) => Math.hypot(o.x - c.x, o.y - c.y) < CAVE_GAP)) caves.push(c);
   }
   return caves;
 }
+const size = (r) => CAVE_R[0] + r() * (CAVE_R[1] - CAVE_R[0]);
 
-// § rough: a cave's box as floor, with edges bitten back to wall here and
-// there: corners and edge tiles, and some bites a tile deeper (D-152)
-const ROUGH_CORNER = 0.6, ROUGH_EDGE = 0.3, ROUGH_DEEP = 0.3;
+// § lumpy: a chamber's oval as floor, each edge tile in or out by chance (D-162)
+const LUMPY = 0.9;
 function carveCave(r, g, c) {
-  for (let y = c.y; y < c.y + c.h; y++) for (let x = c.x; x < c.x + c.w; x++) g[y][x] = '.';
-  for (let y = c.y; y < c.y + c.h; y++) for (let x = c.x; x < c.x + c.w; x++) {
-    const left = x === c.x, right = x === c.x + c.w - 1, top = y === c.y, bottom = y === c.y + c.h - 1;
-    if (!(left || right || top || bottom)) continue;
-    if (r() >= ((left || right) && (top || bottom) ? ROUGH_CORNER : ROUGH_EDGE)) continue;
-    g[y][x] = '#';
-    // a deeper bite: the next tile inward, if the cave is wide enough to keep a middle
-    const ix = x + (left ? 1 : right ? -1 : 0), iy = y + (top ? 1 : bottom ? -1 : 0);
-    const inside = ix > c.x && ix < c.x + c.w - 1 || iy > c.y && iy < c.y + c.h - 1;
-    if (c.w > 3 && c.h > 3 && inside && r() < ROUGH_DEEP) g[iy][ix] = '#';
+  for (let y = 1; y < ROWS - 1; y++) for (let x = 1; x < COLS - 1; x++) {
+    const d = ((x - c.x) / c.rx) ** 2 + ((y - c.y) / c.ry) ** 2;
+    if (d <= 1 + (r() - 0.5) * LUMPY) g[y][x] = '.';
   }
 }
 
-// § gaps: each cave joins the nearest one already joined, by a narrow,
-// one-tile path that turns once
+// § smooth: one pass that rounds the chambers off, like water on stone: a tile
+// is wall when 5 or more of it and its 8 neighbours are wall (D-162). It runs
+// before the tunnels, which it would close.
+function smooth(g) {
+  return g.map((row, y) => row.map((ch, x) => {
+    if (x === 0 || y === 0 || x === COLS - 1 || y === ROWS - 1) return '#';
+    let walls = 0;
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) if (g[y + dy][x + dx] === '#') walls++;
+    return walls >= 5 ? '#' : '.';
+  }));
+}
+
+// § tunnels: each chamber joins the nearest one already joined, by a one-tile
+// tunnel that heads there but wanders a step aside now and then (D-162)
+const WANDER = 0.3;
 function joinCaves(r, g, caves) {
-  const mid = (c) => ({ x: c.x + (c.w >> 1), y: c.y + (c.h >> 1) });
   const joined = [caves[0]], left = caves.slice(1);
   while (left.length) {
     let best = null;
-    for (const a of left) for (const b of joined) if (!best || dist(mid(a), mid(b)) < best.d) best = { a, b, d: dist(mid(a), mid(b)) };
-    const from = mid(best.a), to = mid(best.b), across = r() < 0.5;
-    const turn = across ? { x: to.x, y: from.y } : { x: from.x, y: to.y };
-    carveLine(g, from, turn); carveLine(g, turn, to);
+    for (const a of left) for (const b of joined) if (!best || dist(a, b) < best.d) best = { a, b, d: dist(a, b) };
+    let { x, y } = best.a; const to = best.b;
+    for (let s = 0; s < 200 && (x !== to.x || y !== to.y); s++) {
+      if (r() < WANDER) {
+        const [dx, dy] = pick(r, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
+        if (x + dx > 0 && x + dx < COLS - 1 && y + dy > 0 && y + dy < ROWS - 1) { x += dx; y += dy; }
+      } else if (x !== to.x && (y === to.y || r() < 0.5)) x += Math.sign(to.x - x);
+      else y += Math.sign(to.y - y);
+      g[y][x] = '.';
+    }
     joined.push(best.a); left.splice(left.indexOf(best.a), 1);
   }
-}
-function carveLine(g, a, b) {
-  for (let x = Math.min(a.x, b.x); x <= Math.max(a.x, b.x); x++) for (let y = Math.min(a.y, b.y); y <= Math.max(a.y, b.y); y++) g[y][x] = '.';
 }
 
 // § helpers

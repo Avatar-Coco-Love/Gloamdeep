@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.0 (2026-10-19)
+- Natural caves: every depth below the second room is now 2 to 4
+  round, lumpy chambers joined by winding one-tile tunnels, smoothed
+  like worn stone. No more boxes with nicks and straight gaps.
+- Torch, flask, rat, herb and stairs are placed by the same rules as
+  before.
+- Decisions: D-162 (supersedes D-152 and the shape in D-147), D-163.
+
 ## 0.1.27 (2026-10-19)
 - Nothing to play yet: this step plans stage 0.2. Natural caves and
   depths that change as you go down come first, then a dive worth
