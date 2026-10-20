@@ -144,3 +144,15 @@ journey: New journey then starts a new world with a new random seed.
 **D-188 · 2026-10-20 · The decision log makes room again** (step 53,
 as D-151) D-159 to D-167 (steps 31 to 33) moved unchanged to
 `archive/DECISIONS-STAGE-0.2-1.md`. They stay in force.
+
+**D-189 · 2026-10-20 · How Settings and the Controls switch work**
+(step 54, owner's picks) Settings joins the title (New journey,
+Settings) and the pause menu (Resume, Settings, Back to title). It is
+a page headed Settings with a line "Controls: Tap and swipe" and Back;
+picking the line moves it on to Tap only, Swipe only and round again,
+and Left or Right change it too. Back, Esc or P return to the menu it
+came from. The choice is kept on this device; if the browser's storage
+is blocked it starts on Tap and swipe. It changes only walking in
+play: Tap only stops swipes; Swipe only stops taps toward a side and
+held fingers, though a tap on the hero still waits. Menus always take
+both, so no one is locked out.
