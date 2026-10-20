@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.8 (2026-10-20)
+- A pause menu: a new button with two bars, beside the lantern button,
+  or Esc or P, opens it over the darkened room. Resume goes back to
+  play (Esc or P again does too); Back to title ends the journey, and
+  New journey then starts in a new world. No turn passes while paused.
+- The decision log made room: D-159 to D-167 moved to the archive.
+- Decisions: D-187, D-188.
+
 ## 0.2.7 (2026-10-20)
 - The game opens on a title screen: pitch black, the hero on crypt floor
   in the lantern's light, the name Gloamdeep carved in warm gold above,

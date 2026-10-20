@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.5, the main menu planned.** Owner's picks: a title
+  screen with the menu on it and a pause menu in play; buttons only for
+  what works; Settings holds a tap or swipe switch, a motion switch and
+  a seed, plus How to play; the menu comes after step 42; its look is
+  the lantern in the dark, drawn with the game's own art (D-177 to
+  D-181). Mock-up of the looks shown:
+  https://claude.ai/artifact/5cKubwaAFaAoH6ot3JAm7A
 - **2026-10-19, 0.2.4, the world planned.** The owner's ideas for the
   world: regions as grids of rooms with their own rules, ways between
   rooms that line up, rooms of every size with a following camera,
