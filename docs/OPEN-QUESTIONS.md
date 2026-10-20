@@ -81,9 +81,3 @@ show?
 D-165 makes depths from 6 down earth burrows, but the first cave now
 ends at depth 5 (D-185). Do burrows move behind the portal, become the
 bottom depths of the first cave, or wait for a later cave?
-
-**Q-049 · A lantern that switches itself** (the owner's idea at step 48)
-A Settings option could switch the lantern on and off by itself as the
-light changes, or for other reasons. For now a lit lantern burns oil in
-daylight too (D-209). Is there such an option, what does it react to,
-and is it on by default?

@@ -1,7 +1,7 @@
-// § settings: the Controls, Motion and Seed lines (D-179, D-189 to D-191)
+// § settings: the Controls, Motion, Seed and Lantern lines (D-179, D-189 to D-191, D-210)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { nextControl, controlsText, swipesWalk, tapsWalk, loadSettings, saveSettings, stillMotion, motionText, nextMotion, seedText } from '../src/core/settings.js';
+import { nextControl, controlsText, swipesWalk, tapsWalk, loadSettings, saveSettings, stillMotion, motionText, nextMotion, seedText, lanternText, nextLantern } from '../src/core/settings.js';
 
 test('picking Controls goes Tap and swipe, Tap only, Swipe only, and round again; Left goes back', () => {
   assert.equal(nextControl('both'), 'tap');
@@ -18,7 +18,7 @@ test('Tap only stops swipes walking; Swipe only stops taps walking', () => {
 });
 
 test('with no storage, or a strange value kept, it starts on Tap and swipe', () => {
-  assert.deepEqual(loadSettings(), { controls: 'both', motion: null, seed: null }); // no localStorage here
+  assert.deepEqual(loadSettings(), { controls: 'both', motion: null, seed: null, lantern: 'hand' }); // no localStorage here
   saveSettings({ controls: 'tap' }); // does not throw
   const kept = { 'gloamdeep-settings': '{"controls":"fly"}' };
   globalThis.localStorage = { getItem: (k) => kept[k] ?? null, setItem: (k, v) => { kept[k] = v; } };
@@ -46,7 +46,7 @@ test('a kept Motion choice comes back; a strange one follows the device', () => 
   try {
     assert.equal(loadSettings().motion, null);
     saveSettings({ controls: 'tap', motion: 'reduced' });
-    assert.deepEqual(loadSettings(), { controls: 'tap', motion: 'reduced', seed: null });
+    assert.deepEqual(loadSettings(), { controls: 'tap', motion: 'reduced', seed: null, lantern: 'hand' });
   } finally { delete globalThis.localStorage; }
 });
 
@@ -65,4 +65,11 @@ test('a kept seed comes back; one out of 1 to 99999 is Random', () => {
     saveSettings({ controls: 'both', motion: null, seed: 4071 });
     assert.equal(loadSettings().seed, 4071);
   } finally { delete globalThis.localStorage; }
+});
+
+test('Lantern starts By hand and flips to By itself and back', () => {
+  assert.equal(lanternText(undefined), 'Lantern: By hand');
+  assert.equal(nextLantern('hand'), 'self');
+  assert.equal(lanternText('self'), 'Lantern: By itself');
+  assert.equal(nextLantern('self'), 'hand');
 });

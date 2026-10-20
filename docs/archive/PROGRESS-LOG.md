@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.21, the map.** A map button (left of pause) or M
+  shows the floor you're on, each room drawn from the tiles remembered.
+  After the playtest: a box over the veiled room, drag and pinch, a
+  close cross (D-205). Next it turns between floors (D-206). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3
 - **2026-10-20, 0.2.20, stairs line up.** Stairs down lead to stairs
   up at the same tile in the same cell one floor down; depths 4 and 5
   are L grids too. Owner's picks: stairs down in another room; the seed

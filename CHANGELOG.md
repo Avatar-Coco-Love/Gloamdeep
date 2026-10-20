@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.24 (2026-10-20)
+- Settings gains "Lantern: By hand" under Seed. Picked, or Left and Right,
+  it flips to "By itself": the lantern then goes out as you step into
+  daylight and lights again as you go back into the dark.
+- It switches only at that moment, so switching it yourself in between
+  holds. Like the switch, it costs no turn and no oil. By hand until picked.
+- Decisions: D-210. Questions closed: Q-049.
+
 ## 0.2.23 (2026-10-20)
 - The first outside room: woods, 17 × 20, made from the seed. Trees stand
   thick at the edges and thinner inside; they block the way and the view.

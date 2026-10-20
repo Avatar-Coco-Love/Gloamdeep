@@ -164,3 +164,12 @@ One round tree a tile, each with its own crown, trunk and shadow. The
 room is 17 × 20, like the caves, made from the seed: trees all round the
 edge, thick near it and thinner inside, every open tile joined. It is
 depth 0; the strip and the map say SURFACE until places have names.
+
+**D-210 · 2026-10-20 · A lantern that switches itself** (before step 49,
+owner's picks; answers Q-049) Settings gains "Lantern: By hand" under
+Seed, above Back; picking it, Left or Right flip it to "Lantern: By
+itself", kept on this device. It is By hand until picked. By itself, the
+lantern goes out as the hero comes into daylight and lights again as they
+leave it, only at that moment, so the player's own switch between holds.
+For now it reacts to daylight only; night (step 50) will join it. No line
+is said. Later, a choice of oil levels at which it goes out (an idea).

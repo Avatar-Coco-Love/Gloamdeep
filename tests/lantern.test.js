@@ -2,7 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM } from '../src/core/room.js';
-import { makeState, step, switchLantern } from '../src/core/turn.js';
+import { makeState, makeWorld, step, switchLantern, followDaylight } from '../src/core/turn.js';
+import { goToDepth } from '../src/core/stairs.js';
 import { OIL } from '../src/core/oil.js';
 import { spawn } from '../src/core/spawn.js';
 
@@ -32,4 +33,19 @@ test('a step with the lantern off passes a turn but burns no oil', () => {
 test('a flask still pours in with the lantern off', () => {
   const s = switchLantern(spawn(makeState(room), 'flask', 5, 10));
   assert.equal(step(s, 'up').oil, Math.min(1, OIL.start + 0.45));
+});
+
+test('By itself, the lantern goes out in daylight and lights again in the dark (D-210)', () => {
+  const crypt = makeWorld('first', 4127), woods = followDaylight(crypt, goToDepth(crypt, 0));
+  assert.equal(woods.lit, false);
+  const back = goToDepth(woods, 1);
+  assert.equal(followDaylight(woods, back).lit, true);
+});
+
+test('By itself acts only as the light changes, so the player\'s own switch holds', () => {
+  const crypt = makeWorld('first', 4127), woods = followDaylight(crypt, goToDepth(crypt, 0));
+  const relit = switchLantern(woods);
+  assert.equal(followDaylight(relit, step(relit, 'up')).lit, true); // still in daylight: it stays lit
+  const dark = switchLantern(crypt);
+  assert.equal(followDaylight(dark, step(dark, 'up')).lit, false); // still in the dark: it stays off
 });

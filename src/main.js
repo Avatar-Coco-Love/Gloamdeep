@@ -1,6 +1,6 @@
 // § boot: set up the screen, the room and the hero
 import { VERSION } from './core/version.js';
-import { makeWorld, step, wait, switchLantern, toward, DIRS, HERO_HEALTH } from './core/turn.js';
+import { makeWorld, step, wait, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { glowsIn, goToDepth } from './core/stairs.js';
@@ -22,7 +22,7 @@ import { drawHowTo, howtoAt } from './render/howto.js';
 import { nextPage, howtoWords, HOWTO_LINES } from './core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from './core/seedpad.js';
 import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
-import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
+import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText, lanternText, nextLantern } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { floorPlan, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
@@ -90,6 +90,7 @@ function tryStep(dir) {
     else if (next.turn === state.turn) nudgeToward(dir); // a bump, or a torch the dark lantern can't light (D-122)
     state = next;
   }
+  state = byItself(before, state);
   // A fall wakes the hero at the start: they appear there, with no slide (D-119).
   const fell = state.line !== before.line && state.line?.id === 'fall';
   if (fell || state.health < before.health) bitten = flashFor();
@@ -133,6 +134,8 @@ const stepToward = (px, py, held = false) => {
   else if (!held) tryStep('wait');
 };
 
+// The lantern set to By itself follows the daylight as the hero comes and goes (D-210)
+const byItself = (before, after) => (settings.lantern === 'self' ? followDaylight(before, after) : after);
 // § switch: the lantern button and the L key, free at any time in play (D-080, D-081)
 const switchIt = () => { if (screen === 'play') state = switchLantern(state); };
 const lanternButton = createLanternButton(hud, { onSwitch: switchIt });
@@ -233,6 +236,11 @@ function changeMotion() {
   saveSettings(settings);
   spoken.textContent = motionText(settings.motion, reduceMotion.matches);
 }
+function changeLantern() {
+  settings = { ...settings, lantern: nextLantern(settings.lantern) };
+  saveSettings(settings);
+  spoken.textContent = lanternText(settings.lantern);
+}
 // § seed pad (D-191): OK keeps the typed seed, or Random when none is typed; Random
 // keeps Random. Either starts the next New journey; this one goes on as it is.
 function openPad() { entry = settings.seed ? String(settings.seed) : ''; show('seed'); }
@@ -272,6 +280,7 @@ function choose(i = chosen) {
   else if (id === 'controls') changeControls();
   else if (id === 'motion') changeMotion();
   else if (id === 'seed') openPad();
+  else if (id === 'lantern') changeLantern();
   else if (id === 'back') closeSettings();
 }
 // Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
@@ -283,6 +292,7 @@ const onDir = (dir, how) => {
   const id = menuOf(screen)[chosen]?.id;
   if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
   else if (id === 'motion' && (dir === 'left' || dir === 'right')) changeMotion();
+  else if (id === 'lantern' && (dir === 'left' || dir === 'right')) changeLantern();
   else chosen = moveChoice(chosen, dir, menuOf(screen).length);
 };
 const onPoint = (px, py, held) => {
@@ -307,7 +317,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   still,
   set: (s) => { // a new place shows at once, with no slide (Go to depth)
     const went = s.place !== state.place;
-    state = s;
+    state = byItself(state, s);
     if (went) { shown.x = state.hero.x; shown.y = state.hero.y; foeShown = new Map(); }
   },
   reset: () => { // the room the hero is in, as it began
