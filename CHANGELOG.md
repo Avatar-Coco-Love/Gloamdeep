@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.5 (2026-10-20)
+- Nothing new to play. The main menu is planned: a title screen with the
+  menu on it, and a pause menu during play. Buttons appear only when
+  their feature exists. Settings will hold a tap or swipe switch, a
+  motion switch and a seed, plus a How to play page. Three looks for the
+  title screen are shown in a mock-up, for the owner to pick.
+- Decisions: D-177 to D-180. Questions closed: Q-025. Q-044 narrowed to
+  the menu's look.
+
 ## 0.2.4 (2026-10-19)
 - Nothing new to play. The owner's world ideas are written down in a new
   `docs/WORLD.md`: regions as grids of rooms, each with its own rules;

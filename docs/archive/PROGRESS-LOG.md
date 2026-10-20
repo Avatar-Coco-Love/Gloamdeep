@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.2.2, stairs that match the place.** Owner's picks of
+  options shown: in grey rock and earth the steps are pale stone with
+  violet lips, in a square opening of the ground's colour that darkens
+  going down, inside a dark rim; the crypt keeps its stairs. Rough-cut
+  steps and a dug hole were too distorted (D-167). Playtest:
+  https://claude.ai/artifact/B2Futybpzz4XofbEzZggL7
 - **2026-10-19, 0.2.1, depths change kind.** Owner's picks of options
   shown: earth burrows (the digger, brown earth art) from depth 6 down;
   depths 3 to 5 stay grey rock chambers. Dev: Go to depth in the Room
