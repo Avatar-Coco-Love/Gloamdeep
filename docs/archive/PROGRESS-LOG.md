@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.10, the Motion switch.** Settings gains "Motion:
+  Full / Reduced" under Controls. Owner's picks: under Controls, picked
+  or flipped with Left and Right like Controls; it follows the device's
+  reduced-motion setting until picked, then the pick wins and is kept
+  (D-190). Playtest:
+  https://claude.ai/artifact/U8nbNvay7vcMURLEk9PY6c
 - **2026-10-20, 0.2.9, Settings.** Settings joins the title and pause
   menus: a page with "Controls: Tap and swipe" and Back. Owner's picks:
   one line that cycles (Left and Right too); on both menus; kept on

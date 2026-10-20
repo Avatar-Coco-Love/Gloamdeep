@@ -18,6 +18,8 @@ import { createTextLine } from './render/textline.js';
 import { drawTitle, titleTop } from './render/title.js';
 import { drawPause, lineAt, pauseTop } from './render/menu.js';
 import { drawSeedPad, keyAt } from './render/seedpad.js';
+import { drawHowTo, howtoAt } from './render/howto.js';
+import { nextPage, howtoWords, HOWTO_LINES } from './core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from './core/seedpad.js';
 import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
@@ -135,35 +137,42 @@ const stage = document.getElementById('stage');
 // Esc or P open the pause menu over the room (D-187). Settings opens from either,
 // and Back, Esc or P return there (D-189). On a menu, arrows and swipes
 // move the flame; Enter, Space or a tap on a line picks it. The Seed line opens
-// the seed pad; Esc or P leave it with nothing changed (D-191).
-let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings' or 'seed'
-let settingsFrom = 'title'; // the menu Settings was opened from
+// the seed pad; Esc or P leave it with nothing changed (D-191). How to play opens
+// from either menu on the way of playing last used, and returns there the same way (D-193).
+let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed' or 'howto'
+let pageFrom = 'title'; // the menu Settings or How to play was opened from
+let page = 'touch'; // How to play's page
 let entry = ''; // the digits typed on the seed pad
 const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU
-  : settingsMenu(settings, reduceMotion.matches, settingsFrom === 'paused' ? journeySeed : null));
-const onTitle = () => screen === 'title' || (screen !== 'play' && screen !== 'paused' && settingsFrom === 'title');
+  : settingsMenu(settings, reduceMotion.matches, pageFrom === 'paused' ? journeySeed : null));
+const onTitle = () => screen === 'title' || (screen !== 'play' && screen !== 'paused' && pageFrom === 'title');
 const menuTop = () => (onTitle() ? titleTop(menuOf(screen).length) : pauseTop(menuOf(screen).length, screen === 'settings'));
 const WORDS = {
-  title: 'Gloamdeep. New journey or Settings: press Enter, or tap one.',
-  paused: 'Paused. Resume, Settings, or Back to title.',
+  title: 'Gloamdeep. New journey, How to play or Settings: press Enter, or tap one.',
+  paused: 'Paused. Resume, Settings, How to play, or Back to title.',
   play: '',
 };
 const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -1).map((l) => l.text).join('. ')}. Pick one to change it. Back.`;
 const SEED_WORDS = 'Seed. Type up to 5 digits, then OK. Random gives a new world each journey. Esc leaves it unchanged.';
 function show(next, at = 0) {
-  if (next === 'settings' && screen !== 'seed') settingsFrom = screen;
+  if ((next === 'settings' && screen !== 'seed') || next === 'howto') pageFrom = screen;
   screen = next; chosen = at;
   const playing = next === 'play';
   lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
   spokenLine = null;
-  spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? SEED_WORDS : WORDS[next];
+  spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? SEED_WORDS
+    : next === 'howto' ? howtoWords(page, settings.controls) : WORDS[next];
 }
-const closeSettings = () => show(settingsFrom, menuOf(settingsFrom).findIndex((l) => l.id === 'settings'));
+const backTo = (id) => () => show(pageFrom, menuOf(pageFrom).findIndex((l) => l.id === id));
+const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
+function openHowTo() { page = input.kind(); show('howto'); }
+function flipPage(back = false) { page = nextPage(page, back); spoken.textContent = howtoWords(page, settings.controls); }
 function pause() {
   if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
   else if (screen === 'paused') show('play'); // Esc or P again resumes
   else if (screen === 'settings') closeSettings();
   else if (screen === 'seed') closePad();
+  else if (screen === 'howto') closeHowTo();
 }
 function changeControls(back = false) {
   settings = { ...settings, controls: nextControl(settings.controls, back) };
@@ -205,10 +214,12 @@ function newJourney() {
 function choose(i = chosen) {
   const id = menuOf(screen)[i]?.id;
   if (screen === 'seed') { pressKey(PAD[i].id); return; }
+  if (screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
   if (id === 'new') newJourney();
   else if (id === 'resume') show('play');
   else if (id === 'title') show('title');
   else if (id === 'settings') show('settings');
+  else if (id === 'howto') openHowTo();
   else if (id === 'controls') changeControls();
   else if (id === 'motion') changeMotion();
   else if (id === 'seed') openPad();
@@ -218,6 +229,7 @@ function choose(i = chosen) {
 const onDir = (dir, how) => {
   if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
   if (screen === 'seed') { chosen = moveKey(chosen, dir); return; }
+  if (screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else chosen = moveChoice(chosen, dir, HOWTO_LINES.length); return; }
   const id = menuOf(screen)[chosen]?.id;
   if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
   else if (id === 'motion' && (dir === 'left' || dir === 'right')) changeMotion();
@@ -226,6 +238,7 @@ const onDir = (dir, how) => {
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
   if (screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { chosen = k; choose(k); } return; }
+  if (screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { chosen = 0; flipPage(at === 'prev'); } return; }
   const i = lineAt(py, menuOf(screen).length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
@@ -269,6 +282,7 @@ function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math
 function frame(t) {
   if (onTitle()) {
     if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
+    else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, page, settings.controls, chosen, t, still()); }
     else drawTitle(ctx, menuOf(screen), chosen, t, still(), screen === 'settings' ? 'Settings' : null);
     requestAnimationFrame(frame); return;
   }
@@ -333,6 +347,7 @@ function frame(t) {
   if (screen === 'paused') drawPause(ctx, PAUSE_MENU, chosen, t, still());
   else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
   else if (screen === 'seed') drawSeedPad(ctx, entry, chosen, t, still());
+  else if (screen === 'howto') drawHowTo(ctx, page, settings.controls, chosen, t, still());
   else dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }

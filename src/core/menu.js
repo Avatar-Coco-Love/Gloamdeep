@@ -1,10 +1,10 @@
 // § menu: the title screen's lines (D-177). Only what works is listed (D-178);
-// Continue and How to play join as their steps arrive. Plain data, no drawing.
+// Continue joins with saving (step 37). Plain data, no drawing.
 import { controlsText, motionText, seedText } from './settings.js';
 
-export const TITLE_MENU = [{ id: 'new', text: 'New journey' }, { id: 'settings', text: 'Settings' }];
-// The pause menu during play (D-177, D-187); How to play joins later.
-export const PAUSE_MENU = [{ id: 'resume', text: 'Resume' }, { id: 'settings', text: 'Settings' }, { id: 'title', text: 'Back to title' }];
+export const TITLE_MENU = [{ id: 'new', text: 'New journey' }, { id: 'howto', text: 'How to play' }, { id: 'settings', text: 'Settings' }];
+// The pause menu during play (D-177, D-187, D-193)
+export const PAUSE_MENU = [{ id: 'resume', text: 'Resume' }, { id: 'settings', text: 'Settings' }, { id: 'howto', text: 'How to play' }, { id: 'title', text: 'Back to title' }];
 // Settings, from the title or the pause menu (D-189, D-190): picking a switch moves it to the next choice.
 // deviceReduced: the device's own reduced-motion setting, which Motion follows until picked;
 // journey: this journey's seed, named from the pause menu (D-191), else null

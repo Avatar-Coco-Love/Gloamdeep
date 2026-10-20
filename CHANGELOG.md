@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.13 (2026-10-20)
+- How to play joins the title (under New journey) and the pause menu
+  (after Settings): a page each for Touch, Mouse and Keyboard showing
+  how to walk, wait, switch the lantern and pause. Left and Right flip
+  the page; it opens on the way you last played.
+- Decisions: D-193. Questions opened: Q-047.
+
 ## 0.2.12 (2026-10-20)
 - The first two rooms now change with the seed: their shape stays, but
   the flask and the rat start in different places each world, and again

@@ -13,10 +13,13 @@ const HOLD_MS = 250; // a still finger held this long keeps stepping
 // onLantern() for the L key; onWait() for Space, which repeats while held, like the arrows;
 // onChoose() for Enter; onPause() for Esc and P; onType(key) for digits and Backspace (the seed pad, D-191),
 // which returns true when it used the key.
-// held() gives the point of a finger held still, so the loop keeps stepping toward it.
+// held() gives the point of a finger held still, so the loop keeps stepping toward it;
+// kind() the way of playing last used: 'touch', 'mouse' or 'keyboard' (How to play opens on it, D-193).
 export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, onChoose, onPause, onType }) {
+  let kind = 'touch'; // phone first, until something is pressed
   addEventListener('keydown', (ev) => {
     if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    kind = 'keyboard';
     const key = ev.key.toLowerCase(), dir = KEYS[key];
     if ((/^[0-9]$/.test(key) || key === 'backspace') && !ev.target.closest('input')) { if (onType(key)) ev.preventDefault(); return; }
     if (key === 'l' && !ev.repeat) { ev.preventDefault(); onLantern(); return; }
@@ -36,6 +39,7 @@ export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, o
   const end = () => { if (press) clearTimeout(press.timer); press = null; };
 
   area.addEventListener('pointerdown', (ev) => {
+    kind = ev.pointerType === 'mouse' ? 'mouse' : 'touch';
     if (press || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
     area.setPointerCapture(ev.pointerId);
     press = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: ev.clientX, y: ev.clientY, swiped: false, held: false };
@@ -56,5 +60,5 @@ export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, o
   });
   area.addEventListener('pointercancel', end);
 
-  return { held: () => (press && press.held ? gamePoint(press) : null) };
+  return { held: () => (press && press.held ? gamePoint(press) : null), kind: () => kind };
 }
