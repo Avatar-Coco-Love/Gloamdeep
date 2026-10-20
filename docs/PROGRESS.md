@@ -14,11 +14,10 @@ entrances, NPC houses, promises for every seed. Write its rule sheet in
 `docs/regions/`. Docs only, build nothing.
 
 ## Waiting on the owner
-- Approve or reorder the stage 0.3 step list below.
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
 
-## Build plan: stage 0.3, the world (D-168; the order may change)
+## Build plan: stage 0.3, the world (D-168, order approved; may change)
 Steps 1 to 30 are done; the list is in `archive/PROGRESS-LOG.md`. Tick
 a step when merged and add its version.
 
@@ -41,6 +40,9 @@ The surface
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
 kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
 40 levels, 41 first gear.
+
+Soon, at the owner's wish: a main menu with its options, then UI and
+dev tool improvements (Q-044); where it fits in the plan is asked then.
 
 Ideas for later: landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
@@ -66,4 +68,5 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   rooms that line up, rooms of every size with a following camera,
   light through openings, stairs that must be found, a world map. Owner's
   picks: stage 0.3 is the world, next; today's game becomes the first
-  cave. Written in `WORLD.md` (D-168 to D-176, Q-036 to Q-043).
+  cave. Written in `WORLD.md` (D-168 to D-176, Q-036 to Q-043). The
+  owner approved the stage 0.3 order and asked for a main menu soon.

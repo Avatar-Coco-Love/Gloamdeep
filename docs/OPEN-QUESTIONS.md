@@ -81,3 +81,9 @@ screen with everything revealed (D-176).
 D-019 keeps the world fixed and puts endless, renewed depths behind
 portals (D-032). Should the first cave (D-175) end at a set depth, with
 today's endless depths moved behind a portal, or keep going down?
+
+**Q-044 · A main menu, then UI and dev tools** (soon, the owner's wish)
+The owner wants a main menu with all its options, then further
+improvements to the UI and the dev tools. What does the menu hold (new
+journey, continue, settings, Q-025's tap or swipe switch…), how does it
+look, and where in the stage 0.3 plan does it go?

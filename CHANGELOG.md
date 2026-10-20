@@ -27,7 +27,7 @@ Entry format:
   that follows; light through openings; stairs that must be found; a
   world map. Stage 0.3, the world, is planned and comes next.
 - Decisions: D-168 to D-176 (D-134 partly superseded). Questions opened:
-  Q-036 to Q-043.
+  Q-036 to Q-044 (a main menu, the owner's wish for soon).
 
 ## 0.2.3 (2026-10-19)
 - Nothing new to play. The owner's ideas from a woods sketch are written
