@@ -38,7 +38,10 @@ regions join each other is Q-037.
 Both sides of an opening always line up: walk out of one room's east
 edge and you come in at the matching spot on the next room's west edge.
 The first one joins the first crypt room's bottom doorway to a crypt room
-south of it (D-197).
+south of it (D-197). Generated rooms get one-tile openings at a spot the
+seed picks along their shared edge (D-201).
+Stairs line up too: stairs down in a cell at a tile lead to stairs up in
+the same cell at the same tile one floor down (D-202, step 46b).
 
 ## How a region is generated (proposed, confirmed at its step, Q-037)
 Two passes, both run from the save's seed:
@@ -49,6 +52,8 @@ Two passes, both run from the save's seed:
    its kind's own rules (cave chambers, burrows, woods…). Each room gets
    its own seed from the save's seed, so it can be built the first time
    the hero walks in and still be the same every time.
+The first built: depth 3 is a 2 × 2 grid, one cell empty, three rooms in
+an L; the seed picks the stairs room (D-201, `src/core/region.js`).
 
 ## Shapes and sizes (D-172)
 Rooms differ in shape and size by kind: tunnels are narrow, deserts are

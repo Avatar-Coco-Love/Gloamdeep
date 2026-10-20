@@ -20,6 +20,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.19 (2026-10-20)
+- Depth 3 is now three cave rooms instead of one: a 2 × 2 grid with one
+  corner left empty by the seed, so the rooms make an L. The corner room
+  joins the other two through a one-tile gap in the shared edge; walk
+  out through it and you come in at the same spot in the next room.
+  The rock is drawn open right up to the edge there, so the gap shows.
+- The seed picks which of the three holds the stairs up and down and the
+  torch. The other two each hold a flask, a rat and a herb, in the dark.
+- Depths 4 and 5 stay one room each, and every other depth is as before.
+- Decisions: D-201, D-202.
+
 ## 0.2.18 (2026-10-20)
 - The dev tools are now a drawer that slides out from the left edge,
   from under the wrench down to the stats line. The sections (View,
