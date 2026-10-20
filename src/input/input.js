@@ -1,5 +1,6 @@
 // § input: keys, taps, swipes and holds, turned into "step this way" (D-042),
-// the L key, which switches the lantern (D-080), and Space, which waits a turn (D-085).
+// the L key, which switches the lantern (D-080), Space, which waits a turn (D-085),
+// and Enter, which picks the chosen menu line (D-177).
 // Thin layer: it only reports a direction, a tap point in game pixels, the switch or a wait.
 const KEYS = {
   arrowup: 'up', w: 'up', arrowdown: 'down', s: 'down',
@@ -9,13 +10,15 @@ const SWIPE_PX = 24; // a finger moving this far (CSS px) is a swipe, not a tap
 const HOLD_MS = 250; // a still finger held this long keeps stepping
 
 // onDir(dir) for keys and swipes; onPoint(x, y) for taps and holds, in game pixels;
-// onLantern() for the L key; onWait() for Space, which repeats while held, like the arrows.
+// onLantern() for the L key; onWait() for Space, which repeats while held, like the arrows;
+// onChoose() for Enter.
 // held() gives the point of a finger held still, so the loop keeps stepping toward it.
-export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait }) {
+export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, onChoose }) {
   addEventListener('keydown', (ev) => {
     if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
     const key = ev.key.toLowerCase(), dir = KEYS[key];
     if (key === 'l' && !ev.repeat) { ev.preventDefault(); onLantern(); return; }
+    if (key === 'enter' && !ev.repeat && !ev.target.closest('button, input')) { ev.preventDefault(); onChoose(); return; }
     if (key === ' ' && !ev.target.closest('button')) { ev.preventDefault(); onWait(); return; } // Space on a focused button presses it
     if (!dir || (key.startsWith('arrow') && ev.target.type === 'range')) return; // arrows on the dev oil slider move it
     ev.preventDefault();

@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.7 (2026-10-20)
+- The game opens on a title screen: pitch black, the hero on crypt floor
+  in the lantern's light, the name Gloamdeep glowing warm above, and New
+  journey below with a small flame beside it. Tap it, click it, or press
+  Enter or Space to start. The wrench and the lantern button wait until
+  the journey starts.
+- Decisions: D-186.
+
 ## 0.2.6 (2026-10-20)
 - Nothing new to play. The starting region is designed: a 3 × 3 grid,
   all rooms used, home in the centre, mountains along the north and

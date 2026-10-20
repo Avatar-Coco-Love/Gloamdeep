@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.2.4, the world planned.** The owner's ideas for the
+  world: regions as grids of rooms with their own rules, ways between
+  rooms that line up, rooms of every size with a following camera,
+  light through openings, stairs that must be found, a world map. Owner's
+  picks: stage 0.3 is the world, next; today's game becomes the first
+  cave. Written in `WORLD.md` (D-168 to D-176, Q-036 to Q-043). The
+  owner approved the stage 0.3 order and asked for a main menu soon.
 - **2026-10-19, 0.2.3, ideas from a surface sketch.** At the owner's
   request, a sketch (not in the game) of a woods clearing with a cave
   mouth, at morning, noon, dusk or night. Owner's notes: trees need

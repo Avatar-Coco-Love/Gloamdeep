@@ -2,7 +2,7 @@
 // outside the game picture: above it on a tall screen, beside it on a wide
 // one, and just under it inside the picture when neither fits (D-080). Thin layer: a tap or
 // click only calls onSwitch(); show(lit) redraws its icon and tells screen
-// readers whether it is on.
+// readers whether it is on; hide(on) takes it away on the title screen.
 import { drawLanternIcon } from '../render/hud.js';
 
 const SIZE = 44, GAP = 8; // a 44 px tap target (TECH.md), 8 px from the picture
@@ -32,6 +32,7 @@ export function createLanternButton(canvas, { onSwitch }) {
 
   let shown = null;
   return {
+    hide(on) { button.style.display = on ? 'none' : ''; },
     show(lit) {
       if (lit === shown) return;
       shown = lit;

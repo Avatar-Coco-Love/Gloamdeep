@@ -47,10 +47,18 @@ export function createDev(stage, canvas, game) {
   };
   button.addEventListener('click', () => showPanel(panel.hidden));
 
+  // § hide: the title screen keeps the wrench, panel and stats away, and their keys off
+  let hidden = false;
+  const hide = (on) => {
+    hidden = on;
+    if (on) showPanel(false);
+    button.style.display = readout.style.display = on ? 'none' : '';
+  };
+
   // § keys: ` the panel, G grid, C coordinates, R reveal room (D-090)
   const SWITCH_KEYS = { g: 'grid', c: 'coords', r: 'reveal' };
   addEventListener('keydown', (ev) => {
-    if (ev.repeat || ev.ctrlKey || ev.metaKey || ev.altKey || ev.target.closest('textarea')) return;
+    if (hidden || ev.repeat || ev.ctrlKey || ev.metaKey || ev.altKey || ev.target.closest('textarea')) return;
     if (ev.key === '`') { showPanel(panel.hidden); return; }
     const name = SWITCH_KEYS[ev.key.toLowerCase()];
     if (name) tools.flip(name);
@@ -71,6 +79,7 @@ export function createDev(stage, canvas, game) {
   // § draw: called each frame after the game is drawn
   let text = '';
   return {
+    hide,
     armed: () => tools.picked() !== null,
     lightOff: () => opts.noLight, // see the whole room, lit or not (D-057)
     revealed: () => opts.reveal, // show every tile as remembered; the memory is kept (D-061)

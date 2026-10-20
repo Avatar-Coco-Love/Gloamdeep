@@ -15,6 +15,8 @@ import { LANTERN, LANTERN_AT } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
 import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
+import { drawTitle, lineAt } from './render/title.js';
+import { TITLE_MENU, moveChoice } from './core/menu.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { lanternFrom } from './core/sight.js';
@@ -108,12 +110,28 @@ const stepToward = (px, py, held = false) => {
   else if (!held) tryStep('wait');
 };
 
-// § switch: the lantern button and the L key, free at any time (D-080, D-081)
-const switchIt = () => { state = switchLantern(state); };
+// § switch: the lantern button and the L key, free at any time in play (D-080, D-081)
+const switchIt = () => { if (!onTitle) state = switchLantern(state); };
 const lanternButton = createLanternButton(canvas, { onSwitch: switchIt });
 
 const stage = document.getElementById('stage');
-const input = createInput(stage, canvas, { onDir: tryStep, onPoint: stepToward, onLantern: switchIt, onWait: () => tryStep('wait') });
+// § title: the game opens on the title screen (D-177). Arrows and swipes move
+// the flame, Enter, Space or a tap on a line picks it.
+let onTitle = true, chosen = 0;
+function choose(i = chosen) {
+  if (TITLE_MENU[i]?.id !== 'new') return;
+  onTitle = false; // New journey: the world made at boot, with its random seed
+  lanternButton.hide(false); dev.hide(false);
+  spokenLine = null; spoken.textContent = '';
+}
+const onDir = (dir) => { if (onTitle) chosen = moveChoice(chosen, dir, TITLE_MENU.length); else tryStep(dir); };
+const onPoint = (px, py, held) => {
+  if (!onTitle) { stepToward(px, py, held); return; }
+  const i = lineAt(py, TITLE_MENU.length);
+  if (i >= 0) { chosen = i; choose(i); }
+};
+const onWait = () => { if (onTitle) choose(); else tryStep('wait'); };
+const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose: () => { if (onTitle) choose(); } });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { // a new place shows at once, with no slide (Go to depth)
@@ -130,6 +148,8 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   heal: () => ({ ...state, health: HERO_HEALTH }),
   goTo: (depth) => goToDepth(state, depth),
 });
+lanternButton.hide(true); dev.hide(true);
+spoken.textContent = 'Gloamdeep. New journey: press Enter, or tap it.';
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
 // reaches are remembered (D-059). Again after a dev change to the memory or oil,
@@ -148,6 +168,7 @@ const lights = [], torchGlow = []; // reused every frame (TECH.md)
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
 function frame(t) {
+  if (onTitle) { drawTitle(ctx, TITLE_MENU, chosen, t, reduceMotion.matches); requestAnimationFrame(frame); return; }
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)
   if (travel && t >= travel.mid && travel.from) { travel.from = null; shown.x = state.hero.x; shown.y = state.hero.y; foeShown = new Map(); }
   if (travel && t >= travel.end) travel = null;
