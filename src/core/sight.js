@@ -25,7 +25,7 @@ export function lightsNow(state) {
     const [ax, ay] = LIGHT_AT[m];
     out.push({ x: l.x * TILE_SIZE + ax, y: l.y * TILE_SIZE + ay, r: r * TILE_SIZE });
   }
-  return out.concat(glowsIn(state.room));
+  return out.concat(glowsIn(state.room, state.seen)); // a glow not yet found is no light (D-194)
 }
 
 // § lit: (state, x, y) → true when any light shining now reaches tile x, y

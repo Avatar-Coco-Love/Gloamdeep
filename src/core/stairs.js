@@ -62,18 +62,21 @@ export function stairsFacing(room, x, y) {
   return 'down';
 }
 
-// § glows: every glowing tile in a room as a light, { x, y, r, cr, cg, cb }
-// in pixels from the tile's centre (D-134). Worked out once per room.
+// § glows: (room, seen) → every glowing tile the hero remembers, as a light
+// { x, y, r, cr, cg, cb } in pixels from the tile's centre (D-134). Stairs
+// must be found: a glow shows only once its own tile is remembered (D-174,
+// D-194). `seen` null shows them all (dev Reveal). Worked out once per room.
 const TILE_SIZE = 16;
 const glowCache = new WeakMap();
-export function glowsIn(room) {
-  let out = glowCache.get(room);
-  if (out) return out;
-  out = [];
-  for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
-    const g = tileAt(room, x, y).glow;
-    if (g) out.push({ x: x * TILE_SIZE + TILE_SIZE / 2, y: y * TILE_SIZE + TILE_SIZE / 2, r: g.reach * TILE_SIZE, cr: g.cr, cg: g.cg, cb: g.cb });
+export function glowsIn(room, seen) {
+  let all = glowCache.get(room);
+  if (!all) {
+    all = [];
+    for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
+      const g = tileAt(room, x, y).glow;
+      if (g) all.push({ at: y * room.cols + x, x: x * TILE_SIZE + TILE_SIZE / 2, y: y * TILE_SIZE + TILE_SIZE / 2, r: g.reach * TILE_SIZE, cr: g.cr, cg: g.cg, cb: g.cb });
+    }
+    glowCache.set(room, all);
   }
-  glowCache.set(room, out);
-  return out;
+  return seen ? all.filter((g) => seen[g.at]) : all;
 }

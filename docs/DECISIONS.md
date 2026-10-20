@@ -195,3 +195,11 @@ Pause; how to hit a rat waits for a bestiary (Q-047). Walking by touch
 or mouse follows the Controls switch, so only what works is shown
 (D-178, D-189). On the title it sits under New journey; on the pause
 menu after Settings (D-177). Back, Esc or P return to the menu.
+
+**D-194 · 2026-10-20 · How dim the stairs are** (step 43, owner's
+picks, answers Q-041) The stairs' glow shows only once the stairs tile
+itself is remembered, then stays for good. It is half as bright as
+before and reaches 1 tile, the stairs and a touch beside them. All
+stairs, the crypt's too. A glow not yet found is no light, so it wakes
+no rat; once found it counts as light as before (D-134). Dev Reveal
+shows every glow (D-174).

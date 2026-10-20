@@ -67,7 +67,7 @@ How far, how bright and what colour: Q-040.
 Stairs glow more dimly than now (D-134), and their glow shows only once
 the fog of war has lifted from them, so stairs and doors must be found.
 Light that reaches them, a lantern, a torch or a lit room, reveals them
-as usual. Some underground places are brightly lit. Numbers: Q-041.
+as usual. Some underground places are brightly lit. Numbers: D-194.
 
 ## The map (D-176)
 The world map is uncovered as you explore and kept forever (D-021). Dev
