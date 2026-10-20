@@ -195,6 +195,13 @@ const endTurn = (before, after) => {
 // § switch: the lantern on or off, whenever the player likes. It is free:
 // no turn passes and no oil burns (D-015, D-080, D-081).
 export const switchLantern = (state) => ({ ...state, lit: !state.lit });
+// With the lantern set to By itself (D-210): out as the hero comes into daylight,
+// lit again as they leave it; else the state as it is. Only at that change, so
+// the player's own switch between holds. It is free, like the switch.
+export function followDaylight(before, after) {
+  const was = !!before.room.dark.day, now = !!after.room.dark.day;
+  return was === now || after.lit === was ? after : { ...after, lit: was };
+}
 
 // § items: the item lying on tile x, y, or undefined
 export const itemAt = (state, x, y) => state.items.find((it) => it.x === x && it.y === y);

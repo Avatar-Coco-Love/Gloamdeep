@@ -32,6 +32,12 @@ export const seedText = (seed, journey = null) =>
   'Seed: ' + (seed ? seed : journey ? `Random (this one ${journey})` : 'Random');
 const isSeed = (n) => Number.isInteger(n) && n >= 1 && n <= SEED_MAX;
 
+// § lantern: By hand or By itself (Q-049, D-210). By itself, the lantern goes out
+// as the hero steps into daylight and lights again back in the dark, only at that
+// moment, so a press of the switch between holds. Off (By hand) until picked.
+export const lanternText = (id) => 'Lantern: ' + (id === 'self' ? 'By itself' : 'By hand');
+export const nextLantern = (id) => (id === 'self' ? 'hand' : 'self');
+
 // § storage: localStorage, wrapped (TECH.md)
 const KEY = 'gloamdeep-settings';
 export function loadSettings() {
@@ -40,7 +46,8 @@ export function loadSettings() {
   const controls = CONTROLS.some((c) => c.id === s?.controls) ? s.controls : 'both';
   const motion = s?.motion === 'full' || s?.motion === 'reduced' ? s.motion : null;
   const seed = isSeed(s?.seed) ? s.seed : null;
-  return { controls, motion, seed };
+  const lantern = s?.lantern === 'self' ? 'self' : 'hand';
+  return { controls, motion, seed, lantern };
 }
 export function saveSettings(s) {
   try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* not kept */ }

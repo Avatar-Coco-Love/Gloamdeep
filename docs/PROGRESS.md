@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.23 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.24 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
 **Step 49, a cave entrance down to the first cave** (D-175, D-184,
@@ -14,7 +14,6 @@ then propose.
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
-- A lantern that switches itself, in Settings (Q-049), any time.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
@@ -43,6 +42,7 @@ A region
 - [x] 47 The map screen, and dev Reveal map, 0.2.21
 - [x] 47b The map turns between floors, 0.2.22
 The surface
+- [x] 48b A lantern that switches itself, in Settings, 0.2.24
 - [x] 48 The first outside room: woods, 0.2.23
 - [ ] 49 A cave entrance down to the first cave (D-175, Q-043)
 - [ ] 50 Day and night outside (D-025)
@@ -57,15 +57,12 @@ UI and dev tools (the owner's wish, before step 46)
 - [x] U2 The dev side drawer, in the pixel font, 0.2.18
 
 Ideas for later: menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
-lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
+lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
+low oil (D-210); sounds; scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.21, the map.** A map button (left of pause) or M
-  shows the floor you're on, each room drawn from the tiles remembered.
-  After the playtest: a box over the veiled room, drag and pinch, a
-  close cross (D-205). Next it turns between floors (D-206). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3
 - **2026-10-20, 0.2.22, the map turns.** Arrows beside "DEPTH 3",
   < and >, Page Up and Page Down, or a tap on found stairs show other
   floors seen; the hero stays put. Owner's picks: skip floors never seen; a
@@ -76,3 +73,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   dev Go outside leads there and the strip says SURFACE. Owner's picks
   from a mock-up of three tree looks (D-209). The owner's idea: a
   lantern that switches itself (Q-049). Playtest: https://claude.ai/artifact/9dRDwGZPLdwZ5mWrc9TVxk
+- **2026-10-20, 0.2.24, the lantern by itself.** Settings gains
+  "Lantern: By hand"; set to By itself, the lantern goes out as you step
+  into daylight and lights again back in the dark, only at that moment.
+  Owner's picks: daylight only, By hand until picked, your switch
+  holds, no line (D-210). Playtest: https://claude.ai/artifact/1Mh56fEwSg9iVqd6Awtn7Q
