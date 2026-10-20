@@ -101,3 +101,10 @@ export function drawMapIcon(c) {
   c.fillStyle = '#9790a4';
   MAP_ICON.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === 'x') c.fillRect(x, y, 1, 1); }));
 }
+
+// § close icon: the map button while the map is open, a cross in the same grey (D-205)
+export function drawCloseIcon(c) {
+  c.clearRect(0, 0, 5, 5);
+  c.fillStyle = '#9790a4';
+  for (let i = 0; i < 5; i++) { c.fillRect(i, i, 1, 1); c.fillRect(4 - i, i, 1, 1); }
+}

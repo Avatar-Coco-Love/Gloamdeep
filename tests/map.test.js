@@ -1,7 +1,7 @@
 // § map: the floor the hero is on, from the tiles remembered (D-176, D-205)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { floorPlan, markAt, roomsFound } from '../src/core/map.js';
+import { floorPlan, markAt, roomsFound, fitView, panView, zoomView, ZOOM_MAX } from '../src/core/map.js';
 import { makeWorld, step } from '../src/core/turn.js';
 import { goToDepth } from '../src/core/stairs.js';
 import { remember } from '../src/core/fog.js';
@@ -68,4 +68,31 @@ test('the map changes nothing: the memory is the same after a revealed plan', ()
   floorPlan(s, true);
   assert.equal(s.seen, seen);
   assert.equal(Object.keys(s.elsewhere).some((id) => id.startsWith('depth3:')), false);
+});
+
+test('the view opens on the whole floor, centred, and zooms in whole pixels up to its limit', () => {
+  const p = floorPlan(makeWorld('first', SEED), true), w = 152, h = 185;
+  const v = fitView(p, w, h);
+  assert.equal(v.k, 7); // 26 rows in 185 pixels
+  assert.ok(p.rows * v.k <= h && p.cols * v.k <= w);
+  assert.equal(v.x, -Math.floor((w - p.cols * 7) / 2));
+  let z = v;
+  for (let i = 0; i < 20; i++) z = zoomView(z, p, w, h, 1);
+  assert.equal(z.k, ZOOM_MAX);
+  assert.deepEqual(zoomView(v, p, w, h, -1), v); // no smaller than the whole floor
+});
+
+test('scrolling stops at the floor\'s edges', () => {
+  const p = floorPlan(goToDepth(makeWorld('first', SEED), 3), true), w = 152, h = 185;
+  const z = zoomView(fitView(p, w, h), p, w, h, 6);
+  assert.deepEqual([panView(z, p, w, h, -999, -999).x, panView(z, p, w, h, -999, -999).y], [0, 0]);
+  const far = panView(z, p, w, h, 9999, 9999);
+  assert.deepEqual([far.x, far.y], [p.cols * z.k - w, p.rows * z.k - h]);
+});
+
+test('zooming keeps the point under the finger in place', () => {
+  const p = floorPlan(goToDepth(makeWorld('first', SEED), 3), true), w = 152, h = 185;
+  const v = panView(zoomView(fitView(p, w, h), p, w, h, 4), p, w, h, 40, 40), z = zoomView(v, p, w, h, 1, 60, 70);
+  assert.ok(Math.abs((v.x + 60) / v.k - (z.x + 60) / z.k) < 0.2);
+  assert.ok(Math.abs((v.y + 70) / v.k - (z.y + 70) / z.k) < 0.2);
 });

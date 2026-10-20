@@ -49,3 +49,32 @@ export function markAt(room, seen, x, y) {
 
 // How many rooms of the plan show at least one tile, for the screen reader's words
 export const roomsFound = (plan) => plan.rooms.filter((r) => !r.seen || r.seen.some(Boolean)).length;
+
+// § view: how the map sits in its window (D-205): k pixels per tile, and
+// x, y the map pixel at the window's top-left (below 0 when the map is
+// smaller than the window, so it is centred). It opens with the whole floor
+// in the window; zoom keeps pixels whole, from that up to ZOOM_MAX; drags
+// and arrows scroll it, stopping at the floor's edges.
+export const FIT_MAX = 8, ZOOM_MAX = 16;
+const fitK = (plan, w, h) => Math.max(1, Math.min(FIT_MAX, Math.floor(w / plan.cols), Math.floor(h / plan.rows)));
+
+// (plan, window width, height) → the view that shows the whole floor
+export const fitView = (plan, w, h) => clampView({ k: fitK(plan, w, h), x: 0, y: 0 }, plan, w, h);
+
+// Centred along a side the map doesn't fill, else kept inside the floor's edges
+export function clampView(view, plan, w, h) {
+  const fit = (at, size, win) => (size <= win ? -Math.floor((win - size) / 2) : Math.max(0, Math.min(size - win, Math.round(at))));
+  return { k: view.k, x: fit(view.x, plan.cols * view.k, w), y: fit(view.y, plan.rows * view.k, h) };
+}
+
+// The view scrolled by dx, dy window pixels
+export const panView = (view, plan, w, h, dx, dy) => clampView({ ...view, x: view.x + dx, y: view.y + dy }, plan, w, h);
+
+// The view zoomed `by` steps (one pixel per tile each), the map point under
+// window point cx, cy kept there
+export function zoomView(view, plan, w, h, by, cx = w / 2, cy = h / 2) {
+  const k = Math.max(fitK(plan, w, h), Math.min(ZOOM_MAX, view.k + by));
+  if (k === view.k) return view;
+  const s = k / view.k;
+  return clampView({ k, x: (view.x + cx) * s - cx, y: (view.y + cy) * s - cy }, plan, w, h);
+}

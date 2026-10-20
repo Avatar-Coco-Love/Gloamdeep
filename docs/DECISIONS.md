@@ -183,10 +183,15 @@ numbers.
 
 **D-205 · 2026-10-20 · The map screen** (step 47, owner's picks,
 answers Q-042) A map button left of the pause button (under it
-sideways) and the M key open the map; a tap, M or Esc closes it, and no
-turn passes. It shows the floor the hero is on, laid out on its grid,
-each room drawn small, tile by tile, from the tiles the hero remembers;
-rooms never seen stay dark. Marks: the hero as a blinking dot (still
-with reduced motion), stairs once found, and "DEPTH 3" above. A dev
-Reveal map switch shows every room of the floor in full on the same
-screen, and the memory is kept as it is.
+sideways) and the M key open the map, and no turn passes. It shows the
+floor the hero is on, laid out on its grid, each room drawn small, tile
+by tile, from the tiles the hero remembers; rooms never seen stay dark.
+Marks: the hero as a blinking dot (still with reduced motion), stairs
+once found, and "DEPTH 3". A dev Reveal map switch shows every room of
+the floor in full on the same screen, and the memory is kept as it is.
+Changed after the playtest: the map sits in a box like the hearts', the
+depth inside at the top, over the room under the menus' veil. It opens
+on the whole floor; drag or the arrows scroll it, pinch or the wheel
+zoom it. The map button turns into a cross that closes it; M, Esc or a
+tap outside the box close it too (a full-screen map closed by any tap
+before).

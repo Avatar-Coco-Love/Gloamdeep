@@ -72,6 +72,6 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   (D-203). Later, odd rooms line up by place on the floor (D-204). Playtest: https://claude.ai/artifact/QjizYhRsMhB1eJSom6kKjS
 - **2026-10-20, 0.2.21, the map.** A map button (left of pause) or M
   shows the floor you're on, each room drawn from the tiles remembered.
-  Owner's picks: button and M key; tiles, not boxes; the hero's dot,
-  found stairs and the depth as marks; dev Reveal map shows the whole
-  floor on the same screen (D-205). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3
+  Owner's picks: button and M key; tiles; the hero's dot, found stairs
+  and depth; dev Reveal map. After the playtest: a box over the veiled
+  room, drag and pinch, the button turns into a cross (D-205). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3

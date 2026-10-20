@@ -25,14 +25,15 @@ import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
-import { floorPlan, roomsFound } from './core/map.js';
-import { setMap, drawMap } from './render/map.js';
+import { floorPlan, roomsFound, fitView, panView, zoomView } from './core/map.js';
+import { setMap, drawMap, inBox, VIEW } from './render/map.js';
 import { lanternFrom } from './core/sight.js';
 import { cameraAt } from './core/camera.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
 import { createMapButton } from './input/mapbutton.js';
+import { createMapMoves } from './input/mapview.js';
 import { createDev } from './dev/dev.js';
 
 const canvas = document.getElementById('game'), hud = document.getElementById('hud');
@@ -145,7 +146,8 @@ const stage = document.getElementById('stage');
 // move the flame; Enter, Space or a tap on a line picks it. The Seed line opens
 // the seed pad; Esc or P leave it with nothing changed (D-191). How to play opens
 // from either menu on the way of playing last used, and returns there the same way (D-193).
-// In play, the map button or M opens the map; a tap, M, Esc or P closes it (D-205).
+// In play, the map button or M opens the map; the button (a cross while it is open), M, Esc,
+// P or a tap outside its box closes it. Drags, pinches, the wheel and arrows move it (D-205).
 let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto' or 'map'
 let pageFrom = 'title'; // the menu Settings or How to play was opened from
 let page = 'touch'; // How to play's page
@@ -165,7 +167,8 @@ function show(next, at = 0) {
   if ((next === 'settings' && screen !== 'seed') || next === 'howto') pageFrom = screen;
   screen = next; chosen = at;
   const playing = next === 'play';
-  lanternButton.hide(!playing); pauseButton.hide(!playing); mapButton.hide(!playing); dev.hide(!playing);
+  lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
+  mapButton.hide(!playing && next !== 'map'); mapButton.closes(next === 'map');
   spokenLine = null;
   spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? SEED_WORDS
     : next === 'howto' ? howtoWords(page, settings.controls) : WORDS[next];
@@ -175,15 +178,20 @@ const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
 function openHowTo() { page = input.kind(); show('howto'); }
 function flipPage(back = false) { page = nextPage(page, back); spoken.textContent = howtoWords(page, settings.controls); }
 // § map: the floor the hero is on, worked out once as it opens; no turn passes (D-205)
+let plan = null, view = null;
+const PAN = 8; // game pixels an arrow key scrolls the map
+const panMap = (dx, dy) => { view = panView(view, plan, VIEW.w, VIEW.h, dx, dy); };
+const zoomMap = (by, x, y) => { view = zoomView(view, plan, VIEW.w, VIEW.h, by, x - VIEW.x, y - VIEW.y); };
 function toggleMap() {
   if (screen === 'map') { show('play'); return; }
   if (screen !== 'play') return;
   queued = null;
-  const plan = floorPlan(state, dev.revealedMap());
+  plan = floorPlan(state, dev.revealedMap());
   setMap(plan);
+  view = fitView(plan, VIEW.w, VIEW.h);
   show('map');
   const n = roomsFound(plan);
-  spoken.textContent = `Map of depth ${plan.depth}. ${n} ${n === 1 ? 'room' : 'rooms'} found. Tap, or press M, to close.`;
+  spoken.textContent = `Map of depth ${plan.depth}. ${n} ${n === 1 ? 'room' : 'rooms'} found. Drag or use the arrows to scroll, pinch or the wheel to zoom. M or the close button closes it.`;
 }
 function pause() {
   if (screen === 'map') show('play');
@@ -247,7 +255,7 @@ function choose(i = chosen) {
 // Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
 const onDir = (dir, how) => {
   if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
-  if (screen === 'map') return;
+  if (screen === 'map') { if (how !== 'swipe') panMap(...{ up: [0, -PAN], down: [0, PAN], left: [-PAN, 0], right: [PAN, 0] }[dir]); return; }
   if (screen === 'seed') { chosen = moveKey(chosen, dir); return; }
   if (screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else chosen = moveChoice(chosen, dir, HOWTO_LINES.length); return; }
   const id = menuOf(screen)[chosen]?.id;
@@ -257,15 +265,16 @@ const onDir = (dir, how) => {
 };
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
-  if (screen === 'map') { if (!held) show('play'); return; }
+  if (screen === 'map') { if (!held && !inBox(px, py)) show('play'); return; }
   if (screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { chosen = k; choose(k); } return; }
   if (screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { chosen = 0; flipPage(at === 'prev'); } return; }
   const i = lineAt(py, menuOf(screen).length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
-const onWait = () => { if (screen === 'play') tryStep('wait'); else if (screen === 'map') show('play'); else choose(); };
-const onChoose = () => { if (screen === 'map') show('play'); else if (screen !== 'play') choose(); };
+const onWait = () => { if (screen === 'play') tryStep('wait'); else if (screen !== 'map') choose(); };
+const onChoose = () => { if (screen !== 'play' && screen !== 'map') choose(); };
 const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onMap: toggleMap, onType });
+createMapMoves(stage, canvas, { active: () => screen === 'map', onPan: panMap, onZoom: zoomMap });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   still,
@@ -381,7 +390,7 @@ function frame(t) {
   else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
   else if (screen === 'seed') drawSeedPad(ctx, entry, chosen, t, still());
   else if (screen === 'howto') drawHowTo(ctx, page, settings.controls, chosen, t, still());
-  else if (screen === 'map') drawMap(ctx, t, still());
+  else if (screen === 'map') drawMap(ctx, view, t, still());
   else dev.draw(ctx, state, cam);
   requestAnimationFrame(frame);
 }
