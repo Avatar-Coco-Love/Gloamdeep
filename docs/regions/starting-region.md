@@ -35,8 +35,9 @@ may leave cells empty).
 ## Caves (D-184, D-185)
 - One cave entrance for now: the first cave. The sheet leaves room for
   more caves later.
-- **The first cave** is today's game (D-175): the two crypt rooms, then
-  generated depths 3 to 5. Depth 5 is its bottom, 5 levels in all.
+- **The first cave** is today's game (D-175): the two crypt rooms, with
+  a third south of the first through a doorway (D-197), then generated
+  depths 3 to 5. Depth 5 is its bottom, 5 levels in all.
 - A portal at the bottom leads to the endless depths, renewed on each
   visit (D-019, D-032). Where the earth burrows (D-165) go now: Q-046.
 - The first cave gets its own rule sheet when it is built.

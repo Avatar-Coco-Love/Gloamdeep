@@ -37,6 +37,8 @@ regions join each other is Q-037.
 - **Secret entrances**, like the marsh centre's.
 Both sides of an opening always line up: walk out of one room's east
 edge and you come in at the matching spot on the next room's west edge.
+The first one joins the first crypt room's bottom doorway to a crypt room
+south of it (D-197). A top box over the hero turns faint (D-198).
 
 ## How a region is generated (proposed, confirmed at its step, Q-037)
 Two passes, both run from the save's seed:
@@ -76,8 +78,8 @@ tools get a switch to reveal the whole map, and a map mode, which may be
 the same map players see. What it shows and how it opens: Q-042.
 
 ## Where today's game goes (D-175)
-The two crypt rooms and the generated depths below them become the first
-cave under the starting region, reached by a cave entrance on the
+The crypt rooms (two, and a third beside the first since D-197) and the
+generated depths below them become the first cave under the starting region, reached by a cave entrance on the
 surface. It ends at 5 levels; the endless depths move behind a portal at
 its bottom (D-185).
 

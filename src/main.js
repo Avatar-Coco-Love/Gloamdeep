@@ -349,9 +349,10 @@ function frame(t) {
     ctx.fillStyle = '#0e0c16'; ctx.fillRect(0, 0, W, H);
     ctx.globalAlpha = 1;
   }
-  drawOilBar(ctx, s.oil);
-  drawHearts(ctx, s.health, HERO_HEALTH);
-  drawDepth(ctx, depthOf(s.place));
+  const heroOnScreen = { x: sx - cam.x, y: sy - cam.y, w: TILE, h: TILE }; // a box over the hero turns faint (D-198)
+  drawOilBar(ctx, s.oil, heroOnScreen);
+  drawHearts(ctx, s.health, HERO_HEALTH, heroOnScreen);
+  drawDepth(ctx, depthOf(s.place), heroOnScreen);
   const line = shownLine(state);
   textLine.draw(ctx, line, t, still());
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }

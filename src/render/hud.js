@@ -2,6 +2,12 @@
 import { W } from './screen.js';
 import { drawText, textWidth } from './font.js';
 
+// § see-through: a top box the hero stands under turns faint, so the hero
+// shows through it (D-198). `hero` is their tile on the screen, { x, y, w, h }.
+export const FAINT = 0.35;
+const under = (hero, x, y, w, h) => !!hero && hero.x < x + w && hero.x + hero.w > x && hero.y < y + h && hero.y + hero.h > y;
+const faintIf = (c, hero, x, y, w, h) => { c.globalAlpha = under(hero, x, y, w, h) ? FAINT : 1; };
+
 // § oil bar: style study 1's 10 amber segments (study lines 37–40, 522), drawn
 // in pixels in the top right corner, away from the dev wrench (D-065). A
 // segment is lit while the oil is above its share, as in the study.
@@ -9,7 +15,8 @@ const SEG_W = 3, SEG_H = 4, GAP = 1, SEGS = 10;
 const BOX_W = SEGS * SEG_W + (SEGS - 1) * GAP + 4, BOX_H = SEG_H + 4;
 const BOX_X = W - BOX_W - 2, BOX_Y = 2;
 
-export function drawOilBar(c, oil) {
+export function drawOilBar(c, oil, hero) {
+  faintIf(c, hero, BOX_X, BOX_Y, BOX_W, BOX_H);
   c.fillStyle = '#0e0c16'; c.fillRect(BOX_X, BOX_Y, BOX_W, BOX_H);
   c.fillStyle = '#2a2636'; // the study's --line, its border
   c.fillRect(BOX_X, BOX_Y, BOX_W, 1); c.fillRect(BOX_X, BOX_Y + BOX_H - 1, BOX_W, 1);
@@ -23,14 +30,16 @@ export function drawOilBar(c, oil) {
       c.fillStyle = '#2a2636'; c.fillRect(x, y, SEG_W, SEG_H);
     }
   }
+  c.globalAlpha = 1;
 }
 
 // § hearts: the hero's health as small pixel hearts in the top left, in a
 // box like the oil bar's (D-116). A full heart is the hostile red with the
 // study's deeper red (PAL p, R) under it; an empty one is an empty oil segment's colour.
 const HEART = ['.x.x.', 'xxxxx', '.xxx.', '..x..'], HEART_W = 5;
-export function drawHearts(c, health, max) {
+export function drawHearts(c, health, max, hero) {
   const w = max * HEART_W + (max - 1) * GAP + 4, h = HEART.length + 4, bx = 2, by = BOX_Y;
+  faintIf(c, hero, bx, by, w, h);
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
@@ -44,19 +53,22 @@ export function drawHearts(c, health, max) {
       c.fillRect(x0 + x, by + 2 + y, 1, 1);
     }));
   }
+  c.globalAlpha = 1;
 }
 
 // § depth: how deep the hero is, "DEPTH 1" for the first room, in the top
 // middle between the hearts and the oil bar, in a box like theirs and the
 // text line's grey (D-146).
-export function drawDepth(c, depth) {
+export function drawDepth(c, depth, hero) {
   const text = `DEPTH ${depth}`, w = textWidth(text) + 6, h = 7 + 4;
   const bx = Math.floor((W - w) / 2), by = BOX_Y;
+  faintIf(c, hero, bx, by, w, h);
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
   c.fillRect(bx, by, 1, h); c.fillRect(bx + w - 1, by, 1, h);
   drawText(c, text, bx + 3, by + 2, '#9790a4'); // the study's --muted
+  c.globalAlpha = 1;
 }
 
 // § lantern icon: the hero's lantern pixels (sprites.js) for the switch button,

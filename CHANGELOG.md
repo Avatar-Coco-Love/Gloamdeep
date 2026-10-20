@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.16 (2026-10-20)
+- Side openings: the gap in the first room's bottom wall is now a
+  doorway. Step out through it into a new crypt room to the south, and
+  back the same way. The seed places its flask and rat.
+- The hearts, depth and oil boxes turn faint while the hero stands under
+  one, so the hero never hides behind them.
+- The main menu decisions, and the 0.1.26 and 0.1.27 changelog entries,
+  moved to archive files.
+- Decisions: D-196 to D-198.
+
 ## 0.2.15 (2026-10-20)
 - The camera: the caves from depth 3 down are now about 1.5 screens
   (17 × 20 tiles), and the view glides along with the hero, keeping them
@@ -149,27 +159,7 @@ Entry format:
 - Decisions: D-162 (supersedes D-152 and the shape in D-147), D-163,
   D-164.
 
-## 0.1.27 (2026-10-19)
-- Nothing to play yet: this step plans stage 0.2. Natural caves and
-  depths that change as you go down come first, then a dive worth
-  repeating (a record, a proper fall, saving), then getting stronger.
-  Sounds come in a later stage.
-- After your playtest: caves will stop being boxy and samey; the rat
-  in the dark and the healing herb stay as they are.
-- The foundation's decisions and older changelog entries moved to
-  archive files; the decisions still hold.
-- Decisions: D-159 to D-161.
-
-## 0.1.26 (2026-10-19)
-- Healing: every generated depth now has a Healing herb, a green sprig.
-  Walking onto it heals 2 hearts. At full health it stays on the floor
-  for later.
-- A rat that bites you, or that you hit without killing, has noticed
-  you, even in the dark: step away and it follows.
-- A rat faces the way it walks, left or right.
-- Decisions: D-155 to D-158 (D-157 supersedes part of D-126, D-158
-  part of D-104). Questions closed: Q-031, Q-032, Q-033.
-
-Older entries: `docs/archive/CHANGELOG-FOUNDATION-2.md` (0.1.13 to
-0.1.25), `CHANGELOG-FOUNDATION-1.md` (0.1.0 to 0.1.12) and
+Older entries: `docs/archive/CHANGELOG-FOUNDATION-3.md` (0.1.26 to
+0.1.27), `CHANGELOG-FOUNDATION-2.md` (0.1.13 to 0.1.25),
+`CHANGELOG-FOUNDATION-1.md` (0.1.0 to 0.1.12) and
 `CHANGELOG-PREPRODUCTION.md` (0.0.x).
