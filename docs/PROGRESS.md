@@ -55,7 +55,7 @@ UI and dev tools (the owner's wish, before step 46)
 - [x] U1 Sideways, the room uses the sides, 0.2.17
 - [x] U2 The dev side drawer, in the pixel font, 0.2.18
 
-Ideas for later: a Depth Meter to find or craft (the owner's idea); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
+Ideas for later: a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
 low oil (D-210); sounds; scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
