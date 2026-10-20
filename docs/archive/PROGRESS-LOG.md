@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.7, the title screen.** The game opens on the
+  lantern in the dark: the hero on crypt floor, the name carved at
+  double size, New journey with a small flame. Owner's picks: drawn on
+  the game's own canvas; the wrench and lantern button hidden until the
+  journey starts; the carved name, picked from 5 looks (D-186).
+  Playtest:
+  https://claude.ai/artifact/HSUj1xqGshTeVcsy7hJNei
 - **2026-10-20, 0.2.6, the starting region designed.** Owner's picks:
   3 × 3, all 9 cells used, home in the centre; mountains in the north
   row, woods elsewhere; one cave, its entrance beside home (side from

@@ -16,13 +16,21 @@ export const controlsText = (id) => 'Controls: ' + (CONTROLS.find((c) => c.id ==
 export const swipesWalk = (id) => id !== 'tap';
 export const tapsWalk = (id) => id !== 'swipe';
 
+// § motion: the Motion switch (D-179, D-190): Full or Reduced. Until it is picked
+// (null) it follows the device's own reduced-motion setting; once picked, the pick wins.
+export const stillMotion = (motion, deviceReduced) => (motion ? motion === 'reduced' : deviceReduced);
+export const motionText = (motion, deviceReduced) => 'Motion: ' + (stillMotion(motion, deviceReduced) ? 'Reduced' : 'Full');
+// Two choices, so picking it, Left and Right all flip it
+export const nextMotion = (motion, deviceReduced) => (stillMotion(motion, deviceReduced) ? 'full' : 'reduced');
+
 // § storage: localStorage, wrapped (TECH.md)
 const KEY = 'gloamdeep-settings';
 export function loadSettings() {
   let s = null;
   try { s = JSON.parse(localStorage.getItem(KEY)); } catch { /* not kept */ }
   const controls = CONTROLS.some((c) => c.id === s?.controls) ? s.controls : 'both';
-  return { controls };
+  const motion = s?.motion === 'full' || s?.motion === 'reduced' ? s.motion : null;
+  return { controls, motion };
 }
 export function saveSettings(s) {
   try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* not kept */ }

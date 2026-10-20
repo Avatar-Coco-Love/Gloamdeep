@@ -18,7 +18,7 @@ import { createTextLine } from './render/textline.js';
 import { drawTitle, MENU_Y } from './render/title.js';
 import { drawPause, lineAt, pauseTop } from './render/menu.js';
 import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
-import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk } from './core/settings.js';
+import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { lanternFrom } from './core/sight.js';
@@ -37,6 +37,8 @@ const newWorld = () => makeWorld('first', Math.floor(Math.random() * SEED_MAX) +
 let state = newWorld();
 let settings = loadSettings(); // kept on this device (D-189)
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+// Motion follows the device until the Motion switch is picked (D-190)
+const still = () => stillMotion(settings.motion, reduceMotion.matches);
 
 const textLine = createTextLine();
 const spoken = document.getElementById('line'); // the same words for screen readers
@@ -79,10 +81,10 @@ function tryStep(dir) {
   if (fell || state.health < before.health) bitten = flashFor();
   if (fell) hit = null;
   const went = !fell && state.place !== before.place;
-  if (went && !reduceMotion.matches) { // the hero walks onto the stairs as the old room fades (D-135)
+  if (went && !still()) { // the hero walks onto the stairs as the old room fades (D-135)
     const now = performance.now();
     travel = { from: { ...before, hero: to }, mid: now + FADE_MS, end: now + 2 * FADE_MS };
-  } else if (fell || went || reduceMotion.matches) { shown.x = state.hero.x; shown.y = state.hero.y; if (went) foeShown = new Map(); }
+  } else if (fell || went || still()) { shown.x = state.hero.x; shown.y = state.hero.y; if (went) foeShown = new Map(); }
   else followFoes(before.enemies, state.enemies);
 }
 
@@ -100,7 +102,7 @@ function followFoes(was, now) {
 }
 function foeAt(e) {
   let p = foeShown.get(e);
-  if (!p || reduceMotion.matches) { p = { x: e.x, y: e.y }; foeShown.set(e, p); }
+  if (!p || still()) { p = { x: e.x, y: e.y }; foeShown.set(e, p); }
   return p;
 }
 function nudgeToward(dir) {
@@ -129,7 +131,7 @@ const stage = document.getElementById('stage');
 // move the flame; Enter, Space or a tap on a line picks it.
 let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused' or 'settings'
 let settingsFrom = 'title'; // the menu Settings was opened from
-const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU : settingsMenu(settings));
+const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU : settingsMenu(settings, reduceMotion.matches));
 const onTitle = () => screen === 'title' || (screen === 'settings' && settingsFrom === 'title');
 const menuTop = () => (onTitle() ? MENU_Y : pauseTop(menuOf(screen).length, screen === 'settings'));
 const WORDS = {
@@ -137,7 +139,7 @@ const WORDS = {
   paused: 'Paused. Resume, Settings, or Back to title.',
   play: '',
 };
-const settingsWords = () => `Settings. ${controlsText(settings.controls)}; pick it to change it. Back.`;
+const settingsWords = () => `Settings. ${controlsText(settings.controls)}. ${motionText(settings.motion, reduceMotion.matches)}. Pick one to change it. Back.`;
 function show(next, at = 0) {
   if (next === 'settings') settingsFrom = screen;
   screen = next; chosen = at;
@@ -157,6 +159,11 @@ function changeControls(back = false) {
   saveSettings(settings);
   spoken.textContent = controlsText(settings.controls);
 }
+function changeMotion() {
+  settings = { ...settings, motion: nextMotion(settings.motion, reduceMotion.matches) };
+  saveSettings(settings);
+  spoken.textContent = motionText(settings.motion, reduceMotion.matches);
+}
 // § journey: Back to title ends it; the next New journey starts in a new world (D-187)
 function endJourney() {
   state = newWorld();
@@ -171,6 +178,7 @@ function choose(i = chosen) {
   else if (id === 'title') endJourney();
   else if (id === 'settings') show('settings');
   else if (id === 'controls') changeControls();
+  else if (id === 'motion') changeMotion();
   else if (id === 'back') closeSettings();
 }
 // Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
@@ -178,6 +186,7 @@ const onDir = (dir, how) => {
   if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
   const id = menuOf(screen)[chosen]?.id;
   if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
+  else if (id === 'motion' && (dir === 'left' || dir === 'right')) changeMotion();
   else chosen = moveChoice(chosen, dir, menuOf(screen).length);
 };
 const onPoint = (px, py, held) => {
@@ -225,7 +234,7 @@ function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math
 function frame(t) {
   if (onTitle()) {
     const page = screen === 'settings' ? 'Settings' : null;
-    drawTitle(ctx, menuOf(screen), chosen, t, reduceMotion.matches, page);
+    drawTitle(ctx, menuOf(screen), chosen, t, still(), page);
     requestAnimationFrame(frame); return;
   }
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)
@@ -244,32 +253,32 @@ function frame(t) {
     }
   }
   let nx = 0, ny = 0;
-  if (nudge && t < nudge.until && !reduceMotion.matches) { nx = nudge.dx; ny = nudge.dy; }
+  if (nudge && t < nudge.until && !still()) { nx = nudge.dx; ny = nudge.dy; }
   if (s.room !== drawnRoom) { drawnRoom = s.room; drawRoom(base.getContext('2d'), drawnRoom); }
   ctx.drawImage(base, 0, 0);
   drawBrackets(ctx, s.room, s.lights);
-  drawItems(ctx, s.items, t, reduceMotion.matches);
+  drawItems(ctx, s.items, t, still());
   const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
   drawHero(ctx, hx, hy, !!bitten && t < bitten.until);
   // § enemies: shaded by the light like the floor, so seen in memory's dim light too (D-153)
   const lightOn = !dev.lightOff();
   const flashing = hit && t < hit.until ? hit.enemy : null;
-  drawEnemies(ctx, s.enemies, t, reduceMotion.matches, flashing, foeAt);
+  drawEnemies(ctx, s.enemies, t, still(), flashing, foeAt);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
   if (lightOn) {
-    const r = s.lit ? reach(s.oil) * (reduceMotion.matches ? 1 : flicker(t, 1.7, 0.035)) : 0;
+    const r = s.lit ? reach(s.oil) * (still() ? 1 : flicker(t, 1.7, 0.035)) : 0;
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
-    lights.push(...torchLights(s.room, s.lights, t, reduceMotion.matches, torchGlow), ...glowsIn(s.room));
+    lights.push(...torchLights(s.room, s.lights, t, still(), torchGlow), ...glowsIn(s.room));
     drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen);
   }
-  drawFlames(ctx, s.room, s.lights, t, reduceMotion.matches);
+  drawFlames(ctx, s.room, s.lights, t, still());
   if (s.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
   // § shake: the room jumps a pixel left and right after a hit; none with reduced motion (study line 432, D-105)
   // A bite shakes it the same way (D-118).
-  if (((hit && t < hit.shakeUntil) || (bitten && t < bitten.shakeUntil)) && !reduceMotion.matches) {
+  if (((hit && t < hit.shakeUntil) || (bitten && t < bitten.shakeUntil)) && !still()) {
     const sx = Math.floor(t / 30) % 2 ? 1 : -1;
     ctx.drawImage(canvas, 0, 0, W, H, sx, 0, W, H);
     ctx.fillStyle = '#0e0c16'; ctx.fillRect(sx > 0 ? 0 : W - 1, 0, 1, H);
@@ -283,11 +292,11 @@ function frame(t) {
   drawHearts(ctx, s.health, HERO_HEALTH);
   drawDepth(ctx, depthOf(s.place));
   const line = shownLine(state);
-  textLine.draw(ctx, line, t, reduceMotion.matches);
+  textLine.draw(ctx, line, t, still());
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }
   lanternButton.show(state.lit);
-  if (screen === 'paused') drawPause(ctx, PAUSE_MENU, chosen, t, reduceMotion.matches);
-  else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, reduceMotion.matches, 'Settings');
+  if (screen === 'paused') drawPause(ctx, PAUSE_MENU, chosen, t, still());
+  else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
   else dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }

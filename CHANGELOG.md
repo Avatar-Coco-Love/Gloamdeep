@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.10 (2026-10-20)
+- Settings has a Motion line under Controls: Full or Reduced. Pick it
+  (or press Left or Right) to flip it. Until you pick, it follows the
+  device's own reduce-motion setting; after that your choice is kept on
+  this device. Reduced stills slides, shakes, flames and flicker.
+- Decisions: D-190.
+
 ## 0.2.9 (2026-10-20)
 - Settings: on the title and in the pause menu. Its first line is
   Controls: pick it (or press Left or Right) to go Tap and swipe, Tap
