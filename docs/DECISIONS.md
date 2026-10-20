@@ -205,5 +205,6 @@ bottom (D-019, D-032).
 **D-186 · 2026-10-20 · How the title screen is built** (step 52, owner's
 picks) Drawn on the game's own canvas as a second screen, picked with
 arrows, Enter, Space, a tap or a click. The name is the pixel font at
-double size. The wrench and the lantern button stay hidden until the
-journey starts.
+double size, carved: gold, a dark outline, an ember edge underneath
+(changed after seeing 5 looks: glow → carved). The wrench and the
+lantern button stay hidden until the journey starts.

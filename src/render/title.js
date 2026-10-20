@@ -1,6 +1,6 @@
 // § title: the title screen, the lantern in the dark (D-181). Pitch black,
 // the hero on crypt floor in the lantern's dithered light, the name glowing
-// warm above and a small flame marking the chosen line. Drawn with the
+// warm above, carved, and a small flame marking the chosen line. Drawn with the
 // game's own tiles, sprite, light and font.
 import { makeRoom } from '../core/room.js';
 import { LANTERN, LANTERN_AT } from '../core/light.js';
@@ -26,13 +26,13 @@ function paint() {
   floor = document.createElement('canvas');
   floor.width = W; floor.height = H;
   drawRoom(floor.getContext('2d'), room);
-  // § name: drawn small once, then doubled with crisp pixels, on a warm glow
+  // § name: carved (D-186): a dark outline all round and an ember edge
+  // underneath, drawn small once, then doubled with crisp pixels
   const w = textWidth(NAME), small = document.createElement('canvas');
-  small.width = w + 2; small.height = FONT_H + 2;
+  small.width = w + 2; small.height = FONT_H + 3;
   const s = small.getContext('2d');
-  s.globalAlpha = 0.5; // the glow: the name in ember, a pixel out each way, half seen
-  for (const [dx, dy] of [[0, 1], [2, 1], [1, 0], [1, 2]]) drawText(s, NAME, dx, dy, EMBER);
-  s.globalAlpha = 1;
+  for (let dx = 0; dx <= 2; dx++) for (let dy = 0; dy <= 3; dy++) drawText(s, NAME, dx, dy, K);
+  drawText(s, NAME, 1, 2, EMBER);
   drawText(s, NAME, 1, 1, GOLD);
   name = small;
 }

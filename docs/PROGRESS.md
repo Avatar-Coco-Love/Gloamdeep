@@ -68,8 +68,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   (D-182 to D-185). Name still open (Q-045). Burrows past the bottom:
   Q-046. Rule sheet: `docs/regions/starting-region.md`.
 - **2026-10-20, 0.2.7, the title screen.** The game opens on the
-  lantern in the dark: the hero on crypt floor, the name glowing at
+  lantern in the dark: the hero on crypt floor, the name carved at
   double size, New journey with a small flame. Owner's picks: drawn on
   the game's own canvas; the wrench and lantern button hidden until the
-  journey starts (D-186). Playtest:
+  journey starts; the carved name, picked from 5 looks (D-186).
+  Playtest:
   https://claude.ai/artifact/HSUj1xqGshTeVcsy7hJNei
