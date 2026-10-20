@@ -164,3 +164,15 @@ Until it is picked it follows the device's own reduced-motion setting
 and shows what that setting is; once picked, the pick wins and is kept
 on this device. Reduced stills the same things the device setting
 always did: the walking slide, the shake, flames, flicker and fades.
+
+**D-191 · 2026-10-20 · How the seed is set** (step 56, owner's picks)
+Settings gains "Seed: Random" under Motion, above Back. Picking it opens
+a seed pad drawn in the game's style: the digits typed so far, keys 1 to
+9 and 0, Del, Random and OK; tapped, clicked, walked with the arrows, or
+typed with a keyboard's digits and Backspace (the flame then moves to
+OK, so Enter keeps it). Up to 5 digits, 1 to 99999 (D-150). OK keeps the
+typed seed, or Random if none is typed; Esc or P leave it unchanged. A
+typed seed starts every New journey until set back to Random, and is
+kept on this device. A journey under way goes on as it is. From the
+pause menu a Random line names this journey's seed: "Seed: Random (this
+one 4071)".

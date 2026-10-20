@@ -11,12 +11,14 @@ const HOLD_MS = 250; // a still finger held this long keeps stepping
 
 // onDir(dir, how) for keys and swipes, how being 'swipe' for a swipe (the Controls switch, D-189); onPoint(x, y) for taps and holds, in game pixels;
 // onLantern() for the L key; onWait() for Space, which repeats while held, like the arrows;
-// onChoose() for Enter; onPause() for Esc and P.
+// onChoose() for Enter; onPause() for Esc and P; onType(key) for digits and Backspace (the seed pad, D-191),
+// which returns true when it used the key.
 // held() gives the point of a finger held still, so the loop keeps stepping toward it.
-export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, onChoose, onPause }) {
+export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, onChoose, onPause, onType }) {
   addEventListener('keydown', (ev) => {
     if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
     const key = ev.key.toLowerCase(), dir = KEYS[key];
+    if ((/^[0-9]$/.test(key) || key === 'backspace') && !ev.target.closest('input')) { if (onType(key)) ev.preventDefault(); return; }
     if (key === 'l' && !ev.repeat) { ev.preventDefault(); onLantern(); return; }
     if ((key === 'escape' || key === 'p') && !ev.repeat) { ev.preventDefault(); onPause(); return; }
     if (key === 'enter' && !ev.repeat && !ev.target.closest('button, input')) { ev.preventDefault(); onChoose(); return; }

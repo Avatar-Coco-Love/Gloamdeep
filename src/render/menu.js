@@ -22,7 +22,7 @@ const FLAME = [
   [[1, 0], [0, 1], [1, 1], [2, 1], [0, 2], [2, 2], [0, 3], [2, 3], [1, 4]],
   [[2, 0], [1, 1], [0, 1], [2, 1], [0, 2], [2, 2], [0, 3], [2, 3], [1, 4]],
 ];
-function drawMarker(c, x, y, t, still) {
+export function drawMarker(c, x, y, t, still) {
   const f = FLAME[still ? 0 : Math.floor(t / 180) % 2];
   c.fillStyle = EMBER; for (const [px, py] of f) c.fillRect(x + px, y + py, 1, 1);
   c.fillStyle = GOLD; c.fillRect(x + 1, y + 2, 1, 2);
@@ -47,8 +47,9 @@ export function drawHeading(c, text, linesTop) {
 // with a heading, the heading and lines together are in the middle
 export const pauseTop = (count, heading = false) =>
   Math.floor((SCREEN_H - (count - (heading ? 0 : 1)) * LINE_GAP - FONT_H) / 2) + (heading ? LINE_GAP : 0);
+export function veil(c) { c.globalAlpha = VEIL; c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H); c.globalAlpha = 1; }
 export function drawPause(c, menu, chosen, t, still, heading = null) {
-  c.globalAlpha = VEIL; c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H); c.globalAlpha = 1;
+  veil(c);
   const top = pauseTop(menu.length, !!heading);
   if (heading) drawHeading(c, heading, top);
   drawLines(c, menu, chosen, top, t, still);

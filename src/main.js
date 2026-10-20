@@ -15,10 +15,12 @@ import { LANTERN, LANTERN_AT } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
 import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
-import { drawTitle, MENU_Y } from './render/title.js';
+import { drawTitle, titleTop } from './render/title.js';
 import { drawPause, lineAt, pauseTop } from './render/menu.js';
+import { drawSeedPad, keyAt } from './render/seedpad.js';
+import { PAD, typeKey, entrySeed, moveKey } from './core/seedpad.js';
 import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
-import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion } from './core/settings.js';
+import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { lanternFrom } from './core/sight.js';
@@ -31,11 +33,15 @@ const canvas = document.getElementById('game');
 const ctx = createScreen(canvas);
 document.getElementById('version').textContent = VERSION;
 
-// The only Math.random: a new seed each time the page opens (D-148), and again
-// when Back to title ends a journey (D-187)
-const newWorld = () => makeWorld('first', Math.floor(Math.random() * SEED_MAX) + 1);
-let state = newWorld();
 let settings = loadSettings(); // kept on this device (D-189)
+// The only Math.random: a new seed for each journey (D-148, D-187), unless a
+// seed is typed in Settings (D-191). journeySeed: the one this journey began on.
+let journeySeed = 0;
+const newWorld = () => {
+  journeySeed = settings.seed || Math.floor(Math.random() * SEED_MAX) + 1;
+  return makeWorld('first', journeySeed);
+};
+let state = newWorld();
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 // Motion follows the device until the Motion switch is picked (D-190)
 const still = () => stillMotion(settings.motion, reduceMotion.matches);
@@ -128,31 +134,36 @@ const stage = document.getElementById('stage');
 // § screens: the game opens on the title screen (D-177); in play, the pause button,
 // Esc or P open the pause menu over the room (D-187). Settings opens from either,
 // and Back, Esc or P return there (D-189). On a menu, arrows and swipes
-// move the flame; Enter, Space or a tap on a line picks it.
-let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused' or 'settings'
+// move the flame; Enter, Space or a tap on a line picks it. The Seed line opens
+// the seed pad; Esc or P leave it with nothing changed (D-191).
+let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings' or 'seed'
 let settingsFrom = 'title'; // the menu Settings was opened from
-const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU : settingsMenu(settings, reduceMotion.matches));
-const onTitle = () => screen === 'title' || (screen === 'settings' && settingsFrom === 'title');
-const menuTop = () => (onTitle() ? MENU_Y : pauseTop(menuOf(screen).length, screen === 'settings'));
+let entry = ''; // the digits typed on the seed pad
+const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU
+  : settingsMenu(settings, reduceMotion.matches, settingsFrom === 'paused' ? journeySeed : null));
+const onTitle = () => screen === 'title' || (screen !== 'play' && screen !== 'paused' && settingsFrom === 'title');
+const menuTop = () => (onTitle() ? titleTop(menuOf(screen).length) : pauseTop(menuOf(screen).length, screen === 'settings'));
 const WORDS = {
   title: 'Gloamdeep. New journey or Settings: press Enter, or tap one.',
   paused: 'Paused. Resume, Settings, or Back to title.',
   play: '',
 };
-const settingsWords = () => `Settings. ${controlsText(settings.controls)}. ${motionText(settings.motion, reduceMotion.matches)}. Pick one to change it. Back.`;
+const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -1).map((l) => l.text).join('. ')}. Pick one to change it. Back.`;
+const SEED_WORDS = 'Seed. Type up to 5 digits, then OK. Random gives a new world each journey. Esc leaves it unchanged.';
 function show(next, at = 0) {
-  if (next === 'settings') settingsFrom = screen;
+  if (next === 'settings' && screen !== 'seed') settingsFrom = screen;
   screen = next; chosen = at;
   const playing = next === 'play';
   lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
   spokenLine = null;
-  spoken.textContent = next === 'settings' ? settingsWords() : WORDS[next];
+  spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? SEED_WORDS : WORDS[next];
 }
 const closeSettings = () => show(settingsFrom, menuOf(settingsFrom).findIndex((l) => l.id === 'settings'));
 function pause() {
   if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
   else if (screen === 'paused') show('play'); // Esc or P again resumes
   else if (screen === 'settings') closeSettings();
+  else if (screen === 'seed') closePad();
 }
 function changeControls(back = false) {
   settings = { ...settings, controls: nextControl(settings.controls, back) };
@@ -164,26 +175,49 @@ function changeMotion() {
   saveSettings(settings);
   spoken.textContent = motionText(settings.motion, reduceMotion.matches);
 }
-// § journey: Back to title ends it; the next New journey starts in a new world (D-187)
-function endJourney() {
+// § seed pad (D-191): OK keeps the typed seed, or Random when none is typed; Random
+// keeps Random. Either starts the next New journey; this one goes on as it is.
+function openPad() { entry = settings.seed ? String(settings.seed) : ''; show('seed'); }
+const closePad = () => show('settings', menuOf('settings').findIndex((l) => l.id === 'seed'));
+function pressKey(id) {
+  if (id === 'ok' || id === 'random') {
+    settings = { ...settings, seed: id === 'ok' ? entrySeed(entry) : null };
+    saveSettings(settings);
+    closePad();
+    spoken.textContent = seedText(settings.seed);
+  } else { entry = typeKey(entry, id); spoken.textContent = entry || 'nothing typed'; }
+}
+// Digits and Backspace type on the seed pad from a keyboard; the flame moves to OK, so Enter keeps it
+const onType = (key) => {
+  if (screen !== 'seed') return false;
+  pressKey(key === 'backspace' ? 'del' : key);
+  chosen = PAD.findIndex((k) => k.id === 'ok');
+  return true;
+};
+// § journey: New journey starts in a new world; Back to title ends it (D-187)
+function newJourney() {
   state = newWorld();
   shown.x = state.hero.x; shown.y = state.hero.y;
   queued = nudge = hit = bitten = travel = null; foeShown = new Map();
   drawnRoom = null; rememberedAt = rememberedSeen = null;
-  show('title');
+  show('play');
 }
 function choose(i = chosen) {
   const id = menuOf(screen)[i]?.id;
-  if (id === 'new' || id === 'resume') show('play');
-  else if (id === 'title') endJourney();
+  if (screen === 'seed') { pressKey(PAD[i].id); return; }
+  if (id === 'new') newJourney();
+  else if (id === 'resume') show('play');
+  else if (id === 'title') show('title');
   else if (id === 'settings') show('settings');
   else if (id === 'controls') changeControls();
   else if (id === 'motion') changeMotion();
+  else if (id === 'seed') openPad();
   else if (id === 'back') closeSettings();
 }
 // Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
 const onDir = (dir, how) => {
   if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
+  if (screen === 'seed') { chosen = moveKey(chosen, dir); return; }
   const id = menuOf(screen)[chosen]?.id;
   if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
   else if (id === 'motion' && (dir === 'left' || dir === 'right')) changeMotion();
@@ -191,12 +225,13 @@ const onDir = (dir, how) => {
 };
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
+  if (screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { chosen = k; choose(k); } return; }
   const i = lineAt(py, menuOf(screen).length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
 const onWait = () => { if (screen === 'play') tryStep('wait'); else choose(); };
 const onChoose = () => { if (screen !== 'play') choose(); };
-const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause });
+const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onType });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { // a new place shows at once, with no slide (Go to depth)
@@ -233,8 +268,8 @@ const lights = [], torchGlow = []; // reused every frame (TECH.md)
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
 function frame(t) {
   if (onTitle()) {
-    const page = screen === 'settings' ? 'Settings' : null;
-    drawTitle(ctx, menuOf(screen), chosen, t, still(), page);
+    if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
+    else drawTitle(ctx, menuOf(screen), chosen, t, still(), screen === 'settings' ? 'Settings' : null);
     requestAnimationFrame(frame); return;
   }
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)
@@ -297,6 +332,7 @@ function frame(t) {
   lanternButton.show(state.lit);
   if (screen === 'paused') drawPause(ctx, PAUSE_MENU, chosen, t, still());
   else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
+  else if (screen === 'seed') drawSeedPad(ctx, entry, chosen, t, still());
   else dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }
