@@ -17,7 +17,8 @@ import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
 import { drawTitle, MENU_Y } from './render/title.js';
 import { drawPause, lineAt, pauseTop } from './render/menu.js';
-import { TITLE_MENU, PAUSE_MENU, moveChoice } from './core/menu.js';
+import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
+import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { lanternFrom } from './core/sight.js';
@@ -34,6 +35,7 @@ document.getElementById('version').textContent = VERSION;
 // when Back to title ends a journey (D-187)
 const newWorld = () => makeWorld('first', Math.floor(Math.random() * SEED_MAX) + 1);
 let state = newWorld();
+let settings = loadSettings(); // kept on this device (D-189)
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const textLine = createTextLine();
@@ -106,11 +108,12 @@ function nudgeToward(dir) {
   nudge = { dx, dy, until: performance.now() + 90 };
 }
 // A tap on the hero waits a turn; a finger held on the hero does nothing (D-085).
+// With Swipe only, taps toward a side and held fingers don't walk; a tap on the hero still waits (D-189).
 const stepToward = (px, py, held = false) => {
   const h = state.hero, tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
   if (dev.place(tx, ty)) return; // a picked spawn takes the tap (D-049)
   const dir = toward(h.x, h.y, tx, ty);
-  if (dir) tryStep(dir);
+  if (dir) { if (tapsWalk(settings.controls)) tryStep(dir); }
   else if (!held) tryStep('wait');
 };
 
@@ -121,22 +124,38 @@ const pauseButton = createPauseButton(canvas, { onPause: () => pause() });
 
 const stage = document.getElementById('stage');
 // § screens: the game opens on the title screen (D-177); in play, the pause button,
-// Esc or P open the pause menu over the room (D-187). On a menu, arrows and swipes
+// Esc or P open the pause menu over the room (D-187). Settings opens from either,
+// and Back, Esc or P return there (D-189). On a menu, arrows and swipes
 // move the flame; Enter, Space or a tap on a line picks it.
-let screen = 'title', chosen = 0; // screen: 'title', 'play' or 'paused'
-const MENUS = { title: TITLE_MENU, paused: PAUSE_MENU };
-const menuTop = () => (screen === 'title' ? MENU_Y : pauseTop(PAUSE_MENU.length));
-const TITLE_WORDS = 'Gloamdeep. New journey: press Enter, or tap it.';
-function show(next) {
-  screen = next; chosen = 0;
+let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused' or 'settings'
+let settingsFrom = 'title'; // the menu Settings was opened from
+const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU : settingsMenu(settings));
+const onTitle = () => screen === 'title' || (screen === 'settings' && settingsFrom === 'title');
+const menuTop = () => (onTitle() ? MENU_Y : pauseTop(menuOf(screen).length, screen === 'settings'));
+const WORDS = {
+  title: 'Gloamdeep. New journey or Settings: press Enter, or tap one.',
+  paused: 'Paused. Resume, Settings, or Back to title.',
+  play: '',
+};
+const settingsWords = () => `Settings. ${controlsText(settings.controls)}; pick it to change it. Back.`;
+function show(next, at = 0) {
+  if (next === 'settings') settingsFrom = screen;
+  screen = next; chosen = at;
   const playing = next === 'play';
   lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
   spokenLine = null;
-  spoken.textContent = next === 'title' ? TITLE_WORDS : next === 'paused' ? 'Paused. Resume, or Back to title.' : '';
+  spoken.textContent = next === 'settings' ? settingsWords() : WORDS[next];
 }
+const closeSettings = () => show(settingsFrom, menuOf(settingsFrom).findIndex((l) => l.id === 'settings'));
 function pause() {
   if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
   else if (screen === 'paused') show('play'); // Esc or P again resumes
+  else if (screen === 'settings') closeSettings();
+}
+function changeControls(back = false) {
+  settings = { ...settings, controls: nextControl(settings.controls, back) };
+  saveSettings(settings);
+  spoken.textContent = controlsText(settings.controls);
 }
 // § journey: Back to title ends it; the next New journey starts in a new world (D-187)
 function endJourney() {
@@ -147,14 +166,23 @@ function endJourney() {
   show('title');
 }
 function choose(i = chosen) {
-  const id = MENUS[screen]?.[i]?.id;
+  const id = menuOf(screen)[i]?.id;
   if (id === 'new' || id === 'resume') show('play');
   else if (id === 'title') endJourney();
+  else if (id === 'settings') show('settings');
+  else if (id === 'controls') changeControls();
+  else if (id === 'back') closeSettings();
 }
-const onDir = (dir) => { if (screen === 'play') tryStep(dir); else chosen = moveChoice(chosen, dir, MENUS[screen].length); };
+// Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
+const onDir = (dir, how) => {
+  if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
+  const id = menuOf(screen)[chosen]?.id;
+  if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
+  else chosen = moveChoice(chosen, dir, menuOf(screen).length);
+};
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
-  const i = lineAt(py, MENUS[screen].length, menuTop());
+  const i = lineAt(py, menuOf(screen).length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
 const onWait = () => { if (screen === 'play') tryStep('wait'); else choose(); };
@@ -195,7 +223,11 @@ const lights = [], torchGlow = []; // reused every frame (TECH.md)
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
 function frame(t) {
-  if (screen === 'title') { drawTitle(ctx, TITLE_MENU, chosen, t, reduceMotion.matches); requestAnimationFrame(frame); return; }
+  if (onTitle()) {
+    const page = screen === 'settings' ? 'Settings' : null;
+    drawTitle(ctx, menuOf(screen), chosen, t, reduceMotion.matches, page);
+    requestAnimationFrame(frame); return;
+  }
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)
   if (travel && t >= travel.mid && travel.from) { travel.from = null; shown.x = state.hero.x; shown.y = state.hero.y; foeShown = new Map(); }
   if (travel && t >= travel.end) travel = null;
@@ -208,7 +240,7 @@ function frame(t) {
     if (queued) { const d = queued; queued = null; tryStep(d); }
     else {
       const p = input.held();
-      if (p && !dev.armed() && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p, true); }
+      if (p && !dev.armed() && tapsWalk(settings.controls) && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p, true); }
     }
   }
   let nx = 0, ny = 0;
@@ -255,6 +287,7 @@ function frame(t) {
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }
   lanternButton.show(state.lit);
   if (screen === 'paused') drawPause(ctx, PAUSE_MENU, chosen, t, reduceMotion.matches);
+  else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, reduceMotion.matches, 'Settings');
   else dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }

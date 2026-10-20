@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.6, the starting region designed.** Owner's picks:
+  3 × 3, all 9 cells used, home in the centre; mountains in the north
+  row, woods elsewhere; one cave, its entrance beside home (side from
+  the seed); no NPC houses yet; ways to other regions later; the first
+  cave ends at 5 levels, a portal to the endless depths at its bottom
+  (D-182 to D-185). Name still open (Q-045). Burrows past the bottom:
+  Q-046. Rule sheet: `docs/regions/starting-region.md`.
 - **2026-10-20, 0.2.5, the main menu planned.** Owner's picks: a title
   screen with the menu on it and a pause menu in play; buttons only for
   what works; Settings holds a tap or swipe switch, a motion switch and

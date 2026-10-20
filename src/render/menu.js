@@ -38,9 +38,18 @@ export function drawLines(c, menu, chosen, top, t, still) {
   });
 }
 
-// § pause: the room darkened behind a veil, the lines in the middle of the picture (D-187)
-export const pauseTop = (count) => Math.floor((SCREEN_H - (count - 1) * LINE_GAP - FONT_H) / 2);
-export function drawPause(c, menu, chosen, t, still) {
+// § heading: a page's name, ember, one line above its lines (Settings, D-189)
+export function drawHeading(c, text, linesTop) {
+  drawText(c, text, Math.floor((W - textWidth(text)) / 2), linesTop - LINE_GAP, EMBER);
+}
+
+// § pause: the room darkened behind a veil, the lines in the middle of the picture (D-187);
+// with a heading, the heading and lines together are in the middle
+export const pauseTop = (count, heading = false) =>
+  Math.floor((SCREEN_H - (count - (heading ? 0 : 1)) * LINE_GAP - FONT_H) / 2) + (heading ? LINE_GAP : 0);
+export function drawPause(c, menu, chosen, t, still, heading = null) {
   c.globalAlpha = VEIL; c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H); c.globalAlpha = 1;
-  drawLines(c, menu, chosen, pauseTop(menu.length), t, still);
+  const top = pauseTop(menu.length, !!heading);
+  if (heading) drawHeading(c, heading, top);
+  drawLines(c, menu, chosen, top, t, still);
 }

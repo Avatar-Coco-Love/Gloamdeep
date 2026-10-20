@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.9 (2026-10-20)
+- Settings: on the title and in the pause menu. Its first line is
+  Controls: pick it (or press Left or Right) to go Tap and swipe, Tap
+  only, Swipe only. Tap only stops swipes walking the hero; Swipe only
+  stops taps and held fingers, though a tap on the hero still waits.
+  Menus always take both. The choice is kept on this device.
+- Decisions: D-189.
+
 ## 0.2.8 (2026-10-20)
 - A pause menu: a new button with two bars, beside the lantern button,
   or Esc or P, opens it over the darkened room. Resume goes back to

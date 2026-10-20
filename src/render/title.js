@@ -10,7 +10,7 @@ import { drawRoom } from './tiles.js';
 import { drawHero } from './sprites.js';
 import { drawLight, flicker } from './light.js';
 import { drawText, textWidth, FONT_H } from './font.js';
-import { drawLines } from './menu.js';
+import { drawLines, drawHeading } from './menu.js';
 
 const K = '#0e0c16', GOLD = '#ffd66b', EMBER = '#f39a3b', CORE = '#fff5d6';
 const NAME = 'Gloamdeep', NAME_Y = 28, NAME_SCALE = 2; // the name at double size
@@ -38,8 +38,8 @@ function paint() {
 }
 
 const lights = [{ ...LANTERN, x: 0, y: 0, r: 0 }]; // reused every frame (TECH.md)
-// menu: [{ text }]; chosen: its index; still: prefers-reduced-motion
-export function drawTitle(c, menu, chosen, t, still) {
+// menu: [{ text }]; chosen: its index; still: prefers-reduced-motion; heading: a page's name (Settings)
+export function drawTitle(c, menu, chosen, t, still, heading = null) {
   if (!floor) paint();
   c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H);
   c.drawImage(floor, 0, 0);
@@ -51,5 +51,6 @@ export function drawTitle(c, menu, chosen, t, still) {
   drawLight(c, room, lights, unseen);
   c.fillStyle = CORE; c.fillRect(L.x, L.y, 1, 1); // the flame's core is always bright
   c.drawImage(name, Math.floor((W - name.width * NAME_SCALE) / 2), NAME_Y, name.width * NAME_SCALE, name.height * NAME_SCALE);
+  if (heading) drawHeading(c, heading, MENU_Y);
   drawLines(c, menu, chosen, MENU_Y, t, still);
 }

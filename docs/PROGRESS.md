@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.8 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.9 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 54, Settings, with the tap or swipe switch.** Read D-178, D-179
-and D-187. Propose how the Settings page looks and how the switch is
-picked (2 or 3 options); Settings joins the title and pause menus.
+**Step 55, the motion switch.** Read D-179 and D-189. Propose how
+"Motion: Full / Reduced" sits under Controls in Settings and how it
+joins the device's own reduced-motion setting (2 or 3 options).
 
 ## Waiting on the owner
 - The starting region's name (Q-045), any time.
@@ -26,7 +26,7 @@ a step when merged and add its version.
 The main menu (D-177 to D-181; step order proposed, may change)
 - [x] 52 A title screen with New journey, the lantern in the dark, 0.2.7
 - [x] 53 The pause menu: Resume, Back to title, 0.2.8
-- [ ] 54 Settings, with the tap or swipe switch
+- [x] 54 Settings, with the tap or swipe switch, 0.2.9
 - [ ] 55 The motion switch · 56 The seed · 57 How to play
 Getting around
 - [ ] 43 Stairs must be found: dimmer, only where fog has lifted (D-174)
@@ -53,13 +53,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.6, the starting region designed.** Owner's picks:
-  3 × 3, all 9 cells used, home in the centre; mountains in the north
-  row, woods elsewhere; one cave, its entrance beside home (side from
-  the seed); no NPC houses yet; ways to other regions later; the first
-  cave ends at 5 levels, a portal to the endless depths at its bottom
-  (D-182 to D-185). Name still open (Q-045). Burrows past the bottom:
-  Q-046. Rule sheet: `docs/regions/starting-region.md`.
 - **2026-10-20, 0.2.7, the title screen.** The game opens on the
   lantern in the dark: the hero on crypt floor, the name carved at
   double size, New journey with a small flame. Owner's picks: drawn on
@@ -73,3 +66,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   dimmed room; Back to title ends the journey, New journey starts a new
   world (D-187). D-159 to D-167 archived (D-188). Playtest:
   https://claude.ai/artifact/GrAnLZBHYTHMH87mtgr5w6
+- **2026-10-20, 0.2.9, Settings.** Settings joins the title and pause
+  menus: a page with "Controls: Tap and swipe" and Back. Owner's picks:
+  one line that cycles (Left and Right too); on both menus; kept on
+  this device; it changes only walking, menus take both (D-189).
+  Playtest:
+  https://claude.ai/artifact/UWBYLdgQua9oFYhXimdpcP

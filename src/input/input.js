@@ -9,7 +9,7 @@ const KEYS = {
 const SWIPE_PX = 24; // a finger moving this far (CSS px) is a swipe, not a tap
 const HOLD_MS = 250; // a still finger held this long keeps stepping
 
-// onDir(dir) for keys and swipes; onPoint(x, y) for taps and holds, in game pixels;
+// onDir(dir, how) for keys and swipes, how being 'swipe' for a swipe (the Controls switch, D-189); onPoint(x, y) for taps and holds, in game pixels;
 // onLantern() for the L key; onWait() for Space, which repeats while held, like the arrows;
 // onChoose() for Enter; onPause() for Esc and P.
 // held() gives the point of a finger held still, so the loop keeps stepping toward it.
@@ -45,7 +45,7 @@ export function createInput(area, canvas, { onDir, onPoint, onLantern, onWait, o
     const dx = press.x - press.x0, dy = press.y - press.y0;
     if (press.swiped || press.held || Math.hypot(dx, dy) < SWIPE_PX) return;
     press.swiped = true;
-    onDir(Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+    onDir(Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'), 'swipe');
   });
   area.addEventListener('pointerup', (ev) => {
     if (!press || ev.pointerId !== press.id) return;
