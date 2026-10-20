@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.13 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.14 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**The menu is done.** Ask the owner which UI and dev tool improvements
-come first (their wish, after the menu), or whether to go on to step 43,
-stairs must be found (D-174, Q-041).
+**Step 44, the camera:** a room bigger than the screen scrolls (D-172).
+Or first the UI and dev tool improvements the owner wished for after
+the menu, if they prefer.
 
 ## Waiting on the owner
 - The starting region's name (Q-045), any time.
@@ -32,7 +32,7 @@ The main menu (D-177 to D-181; step order proposed, may change)
   rooms change with the seed, 0.2.12
 - [x] 58 How to play, 0.2.13
 Getting around
-- [ ] 43 Stairs must be found: dimmer, only where fog has lifted (D-174)
+- [x] 43 Stairs must be found: dimmer, only where fog has lifted, 0.2.14
 - [ ] 44 The camera: a room bigger than the screen scrolls (D-172)
 - [ ] 45 Side openings: walk off an edge into the next room (D-171)
 A region
@@ -56,11 +56,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.11, the seed.** Settings gains "Seed: Random"
-  and a drawn seed pad. Owner's picks: a number pad in the game's own
-  style; a typed seed stays until set back to Random; from the pause
-  menu, Random names this journey's seed (D-191). Playtest:
-  https://claude.ai/artifact/URrtmYoVAoC6VdShbanKLK
 - **2026-10-20, 0.2.12, every room changes with the seed.** Owner's
   note: the first levels looked the same each world. Owner's picks: a
   standing rule that every room takes something from the seed, some
@@ -73,3 +68,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   journey on the title; Walk, Wait, Lantern and Pause only, how to hit
   a rat perhaps in a bestiary (Q-047); it follows the Controls switch
   (D-193). Playtest: https://claude.ai/artifact/EDXra2gLfuLS6LerFmgzSp
+- **2026-10-20, 0.2.14, stairs must be found.** The stairs' glow stays
+  hidden until the lantern has reached them once. Owner's picks: the
+  stairs tile itself must be found; half as bright, reaching 1 tile; all
+  stairs, the crypt's too; a hidden glow wakes no rat (D-194, answers
+  Q-041). Playtest: https://claude.ai/artifact/56cQtkLqEB6kropucCMpte

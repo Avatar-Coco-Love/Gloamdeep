@@ -59,10 +59,6 @@ How far daylight reaches in through a cave mouth or stairs, its colour
 by hour, how weather dims it, and how strong the glow from an unfound
 lit room is (D-173).
 
-**Q-041 · How dim the stairs are** (a small step)
-How far the dimmer glow reaches, and whether all stairs change or only
-those in generated places, the crypt's too (D-174).
-
 **Q-042 · The map screen** (stage 0.3)
 How it opens (button, key), what it shows (rooms as boxes, or every
 tile seen), markers or names, and whether dev map mode is the same

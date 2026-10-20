@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { tileAt, makeRoom, placeFor, SECOND_LIGHTS } from '../src/core/room.js';
 import { nextSeed } from '../src/core/rng.js';
-import { stairsFacing } from '../src/core/stairs.js';
+import { stairsFacing, glowsIn } from '../src/core/stairs.js';
 import { makeWorld, step, wait, switchLantern, FIRST_START, HERO_HEALTH } from '../src/core/turn.js';
 import { OIL, burnOil } from '../src/core/oil.js';
 import { shownLine } from '../src/core/lines.js';
@@ -97,10 +97,23 @@ test('falling in the second room wakes the hero at the first room\'s start, ever
   assert.ok(second.seen.every((v) => v === 1)); // the map stays remembered
 });
 
-test('the stairs glow: a rat on the stairs tile is in light with the lantern off', () => {
-  const s = switchLantern(at(5, 11));
+// The first room with its torches out and the lantern off: only the stairs' glow is left
+const dark = (seen) => switchLantern({ ...at(5, 11), lights: [], ...(seen && { seen }) });
+const found = (s, x, y) => { const seen = s.seen.slice(); seen[y * s.room.cols + x] = 1; return seen; };
+
+test('stairs not yet found give no light, so a rat on them sees nothing (D-174, D-194)', () => {
+  const s = dark();
+  assert.ok(!litAt(s, 1, 1));
+  assert.deepEqual(glowsIn(s.room, s.seen), []);
+});
+
+test('found stairs glow faintly on their own tile only, and dev Reveal shows them all (D-194)', () => {
+  const s = dark(found(makeWorld(), 1, 1));
   assert.ok(litAt(s, 1, 1));
-  assert.ok(!litAt(s, 3, 3));
+  assert.ok(!litAt(s, 2, 1));
+  assert.ok(!litAt(s, 1, 2));
+  assert.equal(glowsIn(s.room, s.seen).length, 1);
+  assert.equal(glowsIn(s.room, null).length, 1);
 });
 
 test('a room code carries the stairs', () => {

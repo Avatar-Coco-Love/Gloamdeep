@@ -320,7 +320,7 @@ function frame(t) {
     const r = s.lit ? reach(s.oil) * (still() ? 1 : flicker(t, 1.7, 0.035)) : 0;
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
-    lights.push(...torchLights(s.room, s.lights, t, still(), torchGlow), ...glowsIn(s.room));
+    lights.push(...torchLights(s.room, s.lights, t, still(), torchGlow), ...glowsIn(s.room, dev.revealed() ? null : s.seen));
     drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen);
   }
   drawFlames(ctx, s.room, s.lights, t, still());

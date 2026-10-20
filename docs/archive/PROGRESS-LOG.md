@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.11, the seed.** Settings gains "Seed: Random"
+  and a drawn seed pad. Owner's picks: a number pad in the game's own
+  style; a typed seed stays until set back to Random; from the pause
+  menu, Random names this journey's seed (D-191). Playtest:
+  https://claude.ai/artifact/URrtmYoVAoC6VdShbanKLK
 - **2026-10-20, 0.2.10, the Motion switch.** Settings gains "Motion:
   Full / Reduced" under Controls. Owner's picks: under Controls, picked
   or flipped with Left and Right like Controls; it follows the device's

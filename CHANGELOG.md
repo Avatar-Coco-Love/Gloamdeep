@@ -20,6 +20,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.14 (2026-10-20)
+- Stairs must be found: their violet glow stays hidden until your
+  lantern has reached them once. Found, it glows half as bright as
+  before, on the stairs and just beside them. A hidden glow wakes no rat.
+- Decisions: D-194. Questions closed: Q-041.
+
 ## 0.2.13 (2026-10-20)
 - How to play joins the title (under New journey) and the pause menu
   (after Settings): a page each for Touch, Mouse and Keyboard showing
