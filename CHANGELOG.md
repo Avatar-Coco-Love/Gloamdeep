@@ -29,7 +29,9 @@ Entry format:
   you go through an opening to get deeper. The torch stays by the
   stairs up.
 - Depth 6 and deeper are still one room each, lined up the same way.
-- Decisions: D-203.
+- Written down for later: stairs line up by their place on the floor,
+  so rooms of different sizes and shapes can still match.
+- Decisions: D-203, D-204.
 
 ## 0.2.19 (2026-10-20)
 - Depth 3 is now three cave rooms instead of one: a 2 × 2 grid with one

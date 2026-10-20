@@ -171,3 +171,12 @@ crypt the seed picks depth 3's stairs-up room, at the crypt's tile
 numbers; below that, the cell under the stairs down is never the empty
 one. Everything sits on the same grid: depth 6 and deeper, still one
 room each, line up too, at the same tile.
+
+**D-204 · 2026-10-20 · Stairs line up by their place on the floor**
+(the owner's point, step 46b; written down now, built later) Lining up
+does not need rooms of one size or a perfect grid. Each room has a spot
+on its floor, and stairs line up by where they are on the floor, so
+rooms of different sizes and shapes still match stairs above and below.
+It is built when rooms first come in different sizes (Q-038); today
+every generated room is 17 × 20, and the crypt matches by its tile
+numbers.

@@ -75,4 +75,4 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   up at the same tile in the same cell one floor down; depths 4 and 5
   are L grids too. Owner's picks: stairs down in another room; the seed
   picks the room under the crypt; depth 6 and down line up as well
-  (D-203). Playtest: https://claude.ai/artifact/QjizYhRsMhB1eJSom6kKjS
+  (D-203). Later, odd rooms line up by place on the floor (D-204). Playtest: https://claude.ai/artifact/QjizYhRsMhB1eJSom6kKjS

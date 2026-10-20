@@ -48,7 +48,8 @@ stairs or cave mouths between the surface and the regions below?
 **Q-038 · Kinds of room, shapes and sizes** (stage 0.3)
 Which kinds (tunnel, clearing, house, marsh, desert…), how big each is,
 and whether shapes come from hand-made templates, are generated, or both
-(D-172). The owner mentioned "predefined tiles" for the shapes. So far
+(D-172). The owner mentioned "predefined tiles" for the shapes. Rooms
+of other sizes line up their stairs by place on the floor (D-204). So far
 the generated caves are 17 × 20 and the crypt rooms 11 × 13 (D-195).
 
 **Q-039 · Swimming** (later)
