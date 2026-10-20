@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.11 (2026-10-20)
+- Settings has a Seed line under Motion. Pick it to open a number pad
+  drawn in the game's style (tap, arrows, or a keyboard's digits): type
+  up to 5 digits and OK, or Random. A typed seed starts every New
+  journey until set back to Random, so a world can be replayed. From
+  the pause menu, Random shows this journey's seed.
+- Decisions: D-191.
+
 ## 0.2.10 (2026-10-20)
 - Settings has a Motion line under Controls: Full or Reduced. Pick it
   (or press Left or Right) to flip it. Until you pick, it follows the

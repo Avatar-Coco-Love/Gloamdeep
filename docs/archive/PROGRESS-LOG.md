@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.8, the pause menu.** A button with two bars beside
+  the lantern button, or Esc or P, opens Resume and Back to title over
+  the darkened room. Owner's picks: the button plus keys; drawn over the
+  dimmed room; Back to title ends the journey, New journey starts a new
+  world (D-187). D-159 to D-167 archived (D-188). Playtest:
+  https://claude.ai/artifact/GrAnLZBHYTHMH87mtgr5w6
 - **2026-10-20, 0.2.7, the title screen.** The game opens on the
   lantern in the dark: the hero on crypt floor, the name carved at
   double size, New journey with a small flame. Owner's picks: drawn on

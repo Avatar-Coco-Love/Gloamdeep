@@ -1,7 +1,7 @@
-// § settings: the Controls and Motion switches (D-179, D-189, D-190)
+// § settings: the Controls, Motion and Seed lines (D-179, D-189 to D-191)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { nextControl, controlsText, swipesWalk, tapsWalk, loadSettings, saveSettings, stillMotion, motionText, nextMotion } from '../src/core/settings.js';
+import { nextControl, controlsText, swipesWalk, tapsWalk, loadSettings, saveSettings, stillMotion, motionText, nextMotion, seedText } from '../src/core/settings.js';
 
 test('picking Controls goes Tap and swipe, Tap only, Swipe only, and round again; Left goes back', () => {
   assert.equal(nextControl('both'), 'tap');
@@ -18,7 +18,7 @@ test('Tap only stops swipes walking; Swipe only stops taps walking', () => {
 });
 
 test('with no storage, or a strange value kept, it starts on Tap and swipe', () => {
-  assert.deepEqual(loadSettings(), { controls: 'both', motion: null }); // no localStorage here
+  assert.deepEqual(loadSettings(), { controls: 'both', motion: null, seed: null }); // no localStorage here
   saveSettings({ controls: 'tap' }); // does not throw
   const kept = { 'gloamdeep-settings': '{"controls":"fly"}' };
   globalThis.localStorage = { getItem: (k) => kept[k] ?? null, setItem: (k, v) => { kept[k] = v; } };
@@ -46,6 +46,23 @@ test('a kept Motion choice comes back; a strange one follows the device', () => 
   try {
     assert.equal(loadSettings().motion, null);
     saveSettings({ controls: 'tap', motion: 'reduced' });
-    assert.deepEqual(loadSettings(), { controls: 'tap', motion: 'reduced' });
+    assert.deepEqual(loadSettings(), { controls: 'tap', motion: 'reduced', seed: null });
+  } finally { delete globalThis.localStorage; }
+});
+
+test('the Seed line reads Random or the typed seed; from the pause menu Random names this journey', () => {
+  assert.equal(seedText(null), 'Seed: Random');
+  assert.equal(seedText(4071), 'Seed: 4071');
+  assert.equal(seedText(null, 4071), 'Seed: Random (this one 4071)');
+  assert.equal(seedText(12, 4071), 'Seed: 12');
+});
+
+test('a kept seed comes back; one out of 1 to 99999 is Random', () => {
+  const kept = { 'gloamdeep-settings': '{"seed":100000}' };
+  globalThis.localStorage = { getItem: (k) => kept[k] ?? null, setItem: (k, v) => { kept[k] = v; } };
+  try {
+    assert.equal(loadSettings().seed, null);
+    saveSettings({ controls: 'both', motion: null, seed: 4071 });
+    assert.equal(loadSettings().seed, 4071);
   } finally { delete globalThis.localStorage; }
 });

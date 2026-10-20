@@ -1,6 +1,8 @@
 // § settings: the Controls switch (D-179, D-189): tap and swipe, tap only, or swipe only.
 // It turns off only walking by taps or swipes in play; menus take both always.
 // Kept on this device; if the browser's storage is blocked it stays Tap and swipe.
+import { SEED_MAX } from './rng.js';
+
 export const CONTROLS = [
   { id: 'both', text: 'Tap and swipe' },
   { id: 'tap', text: 'Tap only' },
@@ -23,6 +25,13 @@ export const motionText = (motion, deviceReduced) => 'Motion: ' + (stillMotion(m
 // Two choices, so picking it, Left and Right all flip it
 export const nextMotion = (motion, deviceReduced) => (stillMotion(motion, deviceReduced) ? 'full' : 'reduced');
 
+// § seed: Random (null) or a typed seed, 1 to 99999 (D-179, D-191). A typed seed
+// starts every New journey until set back to Random. From the pause menu, a
+// Random line also names this journey's seed, so a good world can be replayed.
+export const seedText = (seed, journey = null) =>
+  'Seed: ' + (seed ? seed : journey ? `Random (this one ${journey})` : 'Random');
+const isSeed = (n) => Number.isInteger(n) && n >= 1 && n <= SEED_MAX;
+
 // § storage: localStorage, wrapped (TECH.md)
 const KEY = 'gloamdeep-settings';
 export function loadSettings() {
@@ -30,7 +39,8 @@ export function loadSettings() {
   try { s = JSON.parse(localStorage.getItem(KEY)); } catch { /* not kept */ }
   const controls = CONTROLS.some((c) => c.id === s?.controls) ? s.controls : 'both';
   const motion = s?.motion === 'full' || s?.motion === 'reduced' ? s.motion : null;
-  return { controls, motion };
+  const seed = isSeed(s?.seed) ? s.seed : null;
+  return { controls, motion, seed };
 }
 export function saveSettings(s) {
   try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* not kept */ }

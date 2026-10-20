@@ -22,15 +22,16 @@ test('the pause menu offers Resume, Settings, then Back to title, and nothing th
   assert.deepEqual(PAUSE_MENU.map((l) => l.id), ['resume', 'settings', 'title']);
 });
 
-test('Settings shows Controls, then Motion, then Back, and every choice fits the picture with its flame', () => {
-  assert.deepEqual(settingsMenu({ controls: 'tap', motion: null }).map((l) => l.text), ['Controls: Tap only', 'Motion: Full', 'Back']);
+test('Settings shows Controls, Motion, Seed, then Back, and every choice fits the picture with its flame', () => {
+  assert.deepEqual(settingsMenu({ controls: 'tap', motion: null, seed: null }).map((l) => l.text), ['Controls: Tap only', 'Motion: Full', 'Seed: Random', 'Back']);
   assert.equal(settingsMenu({ controls: 'tap', motion: null }, true)[1].text, 'Motion: Reduced');
+  assert.ok(textWidth(settingsMenu({ seed: null }, false, 99999)[2].text) + 2 * 8 <= W);
   for (const c of CONTROLS) assert.ok(textWidth(settingsMenu({ controls: c.id })[0].text) + 2 * 8 <= W);
 });
 
 test('with a heading, the heading and lines still sit inside the picture', () => {
-  const top = pauseTop(3, true); // Settings: Controls, Motion, Back
-  assert.ok(top - LINE_GAP > 0 && top + 2 * LINE_GAP < SCREEN_H);
+  const top = pauseTop(4, true); // Settings: Controls, Motion, Seed, Back
+  assert.ok(top - LINE_GAP > 0 && top + 3 * LINE_GAP < SCREEN_H);
 });
 
 test('a tap picks the line under it, near it, or none', () => {

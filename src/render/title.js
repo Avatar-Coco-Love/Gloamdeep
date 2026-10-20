@@ -10,13 +10,15 @@ import { drawRoom } from './tiles.js';
 import { drawHero } from './sprites.js';
 import { drawLight, flicker } from './light.js';
 import { drawText, textWidth, FONT_H } from './font.js';
-import { drawLines, drawHeading } from './menu.js';
+import { drawLines, drawHeading, LINE_GAP } from './menu.js';
 
 const K = '#0e0c16', GOLD = '#ffd66b', EMBER = '#f39a3b', CORE = '#fff5d6';
 const NAME = 'Gloamdeep', NAME_Y = 28, NAME_SCALE = 2; // the name at double size
 const HERO = { x: 5, y: 6 }; // the middle of the room, in tiles
 const LIGHT_OIL = 0.5; // a half-full lantern: the light stays between the name and the menu
 export const MENU_Y = 166; // the first menu line's top
+// A longer page (Settings) starts higher, so its last line stays where a 3-line menu's does
+export const titleTop = (count) => Math.min(MENU_Y, MENU_Y - (count - 3) * LINE_GAP);
 
 // § scene: the floor, drawn once; no tile is remembered, so only the light shows it
 const room = makeRoom(Array.from({ length: H / TILE }, () => '.'.repeat(W / TILE)));
@@ -51,6 +53,7 @@ export function drawTitle(c, menu, chosen, t, still, heading = null) {
   drawLight(c, room, lights, unseen);
   c.fillStyle = CORE; c.fillRect(L.x, L.y, 1, 1); // the flame's core is always bright
   c.drawImage(name, Math.floor((W - name.width * NAME_SCALE) / 2), NAME_Y, name.width * NAME_SCALE, name.height * NAME_SCALE);
-  if (heading) drawHeading(c, heading, MENU_Y);
-  drawLines(c, menu, chosen, MENU_Y, t, still);
+  const top = titleTop(menu.length);
+  if (heading) drawHeading(c, heading, top);
+  drawLines(c, menu, chosen, top, t, still);
 }
