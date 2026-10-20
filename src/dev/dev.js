@@ -30,7 +30,7 @@ function save(opts) {
 // picture's top; the wrench sits at the left end of the buttons' row (D-198).
 export function createDev(stage, canvas, game, hud) {
   // every switch starts off (D-047); only View starts open (D-087)
-  const opts = { grid: false, coords: false, noLight: false, reveal: false, open: ['view'], ...load() };
+  const opts = { grid: false, coords: false, noLight: false, reveal: false, revealMap: false, open: ['view'], ...load() };
   save(opts);
 
   // § panel: the wrench button and the folding sections
@@ -106,6 +106,7 @@ export function createDev(stage, canvas, game, hud) {
     armed: () => tools.picked() !== null,
     lightOff: () => opts.noLight, // see the whole room, lit or not (D-057)
     revealed: () => opts.reveal, // show every tile as remembered; the memory is kept (D-061)
+    revealedMap: () => opts.revealMap, // the map shows every room of the floor in full (D-205)
     // Places the picked entry on tile x, y. False when nothing is picked,
     // so the tap walks instead.
     place(x, y) {

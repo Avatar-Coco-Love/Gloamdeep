@@ -4,12 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.20 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.21 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 47, the map screen:** players see the rooms they have uncovered,
-and dev Reveal map shows them all (D-176, Q-042). Read `WORLD.md`,
-Q-042, D-176 and `src/core/fog.js` first.
+**Step 47b, the map turns between floors** (D-206). Read D-205,
+D-206, `src/core/map.js` and `src/render/map.js` first.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -39,7 +38,8 @@ Getting around
 A region
 - [x] 46 A region's layout from the seed, rooms joined by openings, 0.2.19
 - [x] 46b Stairs line up between floors; depths 4 and 5 as grids, 0.2.20
-- [ ] 47 The map screen, and dev Reveal map (D-176)
+- [x] 47 The map screen, and dev Reveal map, 0.2.21
+- [ ] 47b The map turns between floors (D-206)
 The surface
 - [ ] 48 The first outside room: woods (Q-034)
 - [ ] 49 A cave entrance down to the first cave (D-175, Q-043)
@@ -60,11 +60,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.18, the dev drawer.** The dev tools slide out from
-  the left edge, sections stacked as tabs, all words in the pixel font.
-  Owner's picks: left, full height; a word per tab; 44 px rows; the
-  stats line in the pixel font, bottom left (D-200).
-  Playtest: https://claude.ai/artifact/PdsgM2BVcrBiPcFFzSCF9j
 - **2026-10-20, 0.2.19, depth 3 as a grid.** Depth 3 is three cave
   rooms in an L, from a 2 × 2 grid with one cell empty, joined by
   one-tile openings. Owner's picks: depth 3 first; the seed picks the
@@ -76,3 +71,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   are L grids too. Owner's picks: stairs down in another room; the seed
   picks the room under the crypt; depth 6 and down line up as well
   (D-203). Later, odd rooms line up by place on the floor (D-204). Playtest: https://claude.ai/artifact/QjizYhRsMhB1eJSom6kKjS
+- **2026-10-20, 0.2.21, the map.** A map button (left of pause) or M
+  shows the floor you're on, each room drawn from the tiles remembered.
+  After the playtest: a box over the veiled room, drag and pinch, a
+  close cross (D-205). Next it turns between floors (D-206). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3

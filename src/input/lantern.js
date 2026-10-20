@@ -8,11 +8,11 @@ import { drawLanternIcon } from '../render/hud.js';
 import { BUTTON as SIZE, BUTTON_GAP as GAP } from '../render/screen.js';
 
 // § place: the button's spot (D-198, D-199): slot 0 the lantern, 1 the
-// pause button, -1 the dev wrench. Above the picture they make one row,
-// the wrench at the left end, the lantern at the right end with pause to
-// its left. Sideways (the strip is a column at the room's left), the wrench
-// stands left of the picture's top, pause right of it, and the lantern at
-// the bottom right, under the thumb. `hud` is the strip; the picture is it
+// pause button, 2 the map (D-205), -1 the dev wrench. Above the picture they
+// make one row, the wrench at the left end, the lantern at the right end with
+// pause and then the map to its left. Sideways (the strip is a column at the
+// room's left), the wrench stands left of the picture's top, pause right of
+// it with the map under it, and the lantern at the bottom right, under the thumb. `hud` is the strip; the picture is it
 // and the room's canvas beside it. Placed again whenever the page or the
 // picture changes size; then(top, left, picture) hears where it went.
 export function keepPlaced(hud, button, slot, then) {
@@ -21,7 +21,7 @@ export function keepPlaced(hud, button, slot, then) {
     const h = hud.getBoundingClientRect(), g = room.getBoundingClientRect(), s = button.style, left = slot < 0;
     const r = { top: h.top, left: h.left, right: g.right, bottom: g.bottom }, step = Math.max(slot, 0) * (SIZE + GAP);
     let top, x;
-    if (h.bottom > g.top + 1) { top = slot === 0 ? r.bottom - SIZE : r.top; x = left ? r.left - SIZE - GAP : r.right + GAP; }
+    if (h.bottom > g.top + 1) { top = slot === 0 ? r.bottom - SIZE : r.top + Math.max(slot - 1, 0) * (SIZE + GAP); x = left ? r.left - SIZE - GAP : r.right + GAP; }
     else if (r.top >= SIZE + GAP) { top = r.top - SIZE - GAP; x = left ? r.left : r.right - SIZE - step; }
     else { top = h.bottom + 2; x = left ? r.left + 2 : r.right - SIZE - 2 - step; }
     s.top = top + 'px'; s.left = x + 'px';

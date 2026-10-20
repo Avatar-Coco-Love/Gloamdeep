@@ -20,6 +20,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.21 (2026-10-20)
+- A map: the new map button (left of pause) or the M key shows the
+  floor you are on, in a box over the darkened room. Each room is drawn
+  small from the tiles your lantern has reached; rooms you haven't seen
+  stay dark. Your spot blinks gold, stairs you've found are violet, and
+  the depth is written at the top. Drag or use the arrows to scroll;
+  pinch or the mouse wheel to zoom. The map button becomes a cross that
+  closes it; M, Esc or a tap outside the box close it too. No turn passes.
+- Dev tools: a Reveal map switch shows every room of the floor in full.
+- Written down for the next step: the map will turn between floors.
+- Decisions: D-205, D-206. Questions closed: Q-042.
+
 ## 0.2.20 (2026-10-20)
 - The stairs line up between floors: the stairs up on a floor are at
   the same spot, in the same room of the grid, as the stairs down on the

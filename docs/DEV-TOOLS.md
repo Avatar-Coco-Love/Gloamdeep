@@ -40,6 +40,8 @@ tools to be chosen together later.
 - Reveal room (a switch) and Forget (a button) for fog of war; Reset room
   forgets too (D-061, D-062), and resets only the room the hero is in
   (D-136). Rules: `src/core/fog.js`.
+- Reveal map (a switch): the map screen shows every room of the floor
+  in full; the memory is kept (D-176, D-205). Rules: `src/core/map.js`.
 - Refill, Empty and a slider for any amount, no turn passed (D-066,
   D-091).
   Rules: `src/core/oil.js`.
@@ -51,7 +53,6 @@ tools to be chosen together later.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage); the owner wants it next (D-154)
-- Reveal the whole map, and a map mode (D-176)
 - Step enemies one turn at a time
 - Collision overlay (the grid and coordinates part is built, D-046)
 - Show light radius and line-of-sight overlay

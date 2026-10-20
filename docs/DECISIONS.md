@@ -180,3 +180,29 @@ rooms of different sizes and shapes still match stairs above and below.
 It is built when rooms first come in different sizes (Q-038); today
 every generated room is 17 × 20, and the crypt matches by its tile
 numbers.
+
+**D-205 · 2026-10-20 · The map screen** (step 47, owner's picks,
+answers Q-042) A map button left of the pause button (under it
+sideways) and the M key open the map, and no turn passes. It shows the
+floor the hero is on, laid out on its grid, each room drawn small, tile
+by tile, from the tiles the hero remembers; rooms never seen stay dark.
+Marks: the hero as a blinking dot (still with reduced motion), stairs
+once found, and "DEPTH 3". A dev Reveal map switch shows every room of
+the floor in full on the same screen, and the memory is kept as it is.
+Changed after the playtest: the map sits in a box like the hearts', the
+depth inside at the top, over the room under the menus' veil. It opens
+on the whole floor; drag or the arrows scroll it, pinch or the wheel
+zoom it. The map button turns into a cross that closes it; M, Esc or a
+tap outside the box close it too (a full-screen map closed by any tap
+before).
+
+**D-206 · 2026-10-20 · The map turns between floors** (the owner's
+idea at the 0.2.21 playtest; written down now, built at step 47b) Only
+the map turns; the hero stays put. An up arrow left of "DEPTH 3" and a
+down arrow right of it, with big tap areas, turn the map a floor up or
+down; on a PC, < and > or Page Up and Page Down do the same. Tapping
+stairs found on the map turns it to the floor they lead to, centred on
+the matching stairs. Players can turn to any floor they have seen some
+of, and an arrow is greyed out when nothing more lies that way; with
+dev Reveal map, every floor from 1 to 99 shows in full. The hero's dot
+shows only on their own floor.
