@@ -4,6 +4,7 @@ import { OUTSIDE } from './tiles.js';
 import { byLetter } from './registry.js';
 import { generateRoom } from './cave.js';
 import { seedFor } from './rng.js';
+import { scatter } from './scatter.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
 // its water as floor, and the study's stairs down at 1,1 (D-130). The doorway
@@ -64,7 +65,7 @@ export const SECOND_ENEMIES = [{ id: 'rat', x: 7, y: 10 }];
 // deeper and arrive on the stairs up there, and back.
 export const PLACES = {
   first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1 },
-  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2 },
+  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2, guard: true },
 };
 
 // § depth: the place at each depth, and back. Below the second room every
@@ -74,8 +75,9 @@ const DEEPER = 'second';
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? Number(id.slice('depth'.length));
 export const isGenerated = (id) => !PLACES[id];
+// The hand-made rooms keep their shape; the seed places what is in them (D-192).
 export function placeFor(id, seed = 1) {
-  if (PLACES[id]) return PLACES[id];
+  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth)) };
   const depth = depthOf(id), { shape, look } = kindAt(depth);
   return { ...(generateRoom(seedFor(seed, depth), shape) || PLACES[DEEPER]), depth, look };
 }

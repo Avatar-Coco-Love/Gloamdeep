@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.9, Settings.** Settings joins the title and pause
+  menus: a page with "Controls: Tap and swipe" and Back. Owner's picks:
+  one line that cycles (Left and Right too); on both menus; kept on
+  this device; it changes only walking, menus take both (D-189).
+  Playtest:
+  https://claude.ai/artifact/UWBYLdgQua9oFYhXimdpcP
 - **2026-10-20, 0.2.8, the pause menu.** A button with two bars beside
   the lantern button, or Esc or P, opens Resume and Back to title over
   the darkened room. Owner's picks: the button plus keys; drawn over the
