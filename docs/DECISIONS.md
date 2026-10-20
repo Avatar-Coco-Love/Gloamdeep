@@ -112,7 +112,13 @@ costs a turn like a step, says no line, and fades like the stairs (D-135).
 Rats stay in their own room (D-132). The first cave now has 3 crypt rooms
 (extends D-185).
 
-**D-198 · 2026-10-20 · Top boxes turn faint over the hero** (step 45,
-owner's pick) The hearts, depth and oil boxes turn faint (35%) while the
-hero stands under one, so the hero shows through, as when coming in by a
-top doorway.
+**D-198 · 2026-10-20 · The top boxes move above the room** (step 45,
+the owner's idea and picks; partly supersedes D-080) Nothing covers the
+room any more. The hearts, depth and oil sit in a strip 15 game pixels
+tall drawn on the game picture just above the room, dimmed with it under
+a menu and empty on the title. Above that strip, one row holds the dev
+wrench at the left and pause and the lantern at the right. On a wide
+screen, when that gives a bigger picture, the row stands beside it: the
+wrench at the top left, the lantern at the top right with pause under it.
+(Changed in this PR: first the boxes turned faint over the hero, then
+the owner moved them out of the room instead.)

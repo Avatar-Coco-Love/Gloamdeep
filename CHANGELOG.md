@@ -24,8 +24,10 @@ Entry format:
 - Side openings: the gap in the first room's bottom wall is now a
   doorway. Step out through it into a new crypt room to the south, and
   back the same way. The seed places its flask and rat.
-- The hearts, depth and oil boxes turn faint while the hero stands under
-  one, so the hero never hides behind them.
+- The hearts, depth and oil now sit in a strip just above the room, so
+  they no longer cover it. Above them, one row holds the dev wrench on
+  the left and pause and the lantern on the right. On a wide screen the
+  buttons stand beside the picture when that makes it bigger.
 - The main menu decisions, and the 0.1.26 and 0.1.27 changelog entries,
   moved to archive files.
 - Decisions: D-196 to D-198.

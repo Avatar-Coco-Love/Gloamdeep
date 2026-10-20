@@ -70,5 +70,6 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   is a doorway into a new crypt room south of it. Owner's picks: a
   hand-made one-screen crypt room at depth 1, its flask and rat from the
   seed; one step out of the doorway crosses, a turn, no line, the stairs'
-  fade; rats stay behind (D-197); top boxes turn faint over the hero
-  (D-198). Playtest: https://claude.ai/artifact/UCou8cY9RUDJpzNdBPptPB
+  fade; rats stay behind (D-197). The owner's idea: the hearts, depth
+  and oil move to a strip above the room, the wrench joins pause and the
+  lantern in a row above that (D-198). Playtest: https://claude.ai/artifact/UCou8cY9RUDJpzNdBPptPB

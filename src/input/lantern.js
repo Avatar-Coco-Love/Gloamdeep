@@ -1,28 +1,33 @@
-// § lantern button: the on-screen lantern switch, next to the oil bar just
-// outside the game picture: above it on a tall screen, beside it on a wide
-// one, and just under it inside the picture when neither fits (D-080). Thin layer: a tap or
+// § lantern button: the on-screen lantern switch, in the buttons' row just
+// outside the game picture: above it, or beside it when the picture is wider
+// that way, and just under the top strip inside the picture when neither fits
+// (D-080, D-198). Thin layer: a tap or
 // click only calls onSwitch(); show(lit) redraws its icon and tells screen
 // readers whether it is on; hide(on) takes it away on the title screen.
 import { drawLanternIcon } from '../render/hud.js';
+import { BUTTON as SIZE, BUTTON_GAP as GAP } from '../render/screen.js';
 
-const SIZE = 44, GAP = 8; // a 44 px tap target (TECH.md), 8 px from the picture
-const BAR_BOTTOM = 12; // game pixels from the picture's top to below the oil bar (hud.js)
-
-// § place: the button's spot in the row by the oil bar (0 the lantern, 1 the
-// pause button to its left, or under it when the row stands beside the picture),
-// again whenever the page or the picture changes size
-export function keepPlaced(canvas, button, i) {
+// § place: the button's spot in the row (D-198): slot 0 the lantern at the
+// right end, 1 the pause button to its left, -1 the dev wrench at the left
+// end. Above the picture the row runs along its top; beside it, the wrench
+// stands at the left and the others at the right, pause under the lantern.
+// `hud` is the strip at the picture's top. Placed again whenever the page or
+// the picture changes size; then(top, left) hears where it went.
+export function keepPlaced(hud, button, slot, then) {
   const place = () => {
-    const r = canvas.getBoundingClientRect(), s = button.style, step = i * (SIZE + GAP);
-    if (r.top >= SIZE + 2 * GAP) { s.top = r.top - SIZE - GAP + 'px'; s.left = r.right - SIZE - step + 'px'; }
-    else if (innerWidth - r.right >= SIZE + 2 * GAP) { s.top = r.top + step + 'px'; s.left = r.right + GAP + 'px'; }
-    else { s.top = r.top + BAR_BOTTOM * r.height / canvas.height + 'px'; s.left = r.right - SIZE - 2 - step + 'px'; }
+    const r = hud.getBoundingClientRect(), s = button.style, left = slot < 0, step = Math.max(slot, 0) * (SIZE + GAP);
+    let top, x;
+    if (r.top >= SIZE + GAP) { top = r.top - SIZE - GAP; x = left ? r.left : r.right - SIZE - step; }
+    else if (r.left >= SIZE + 2 * GAP) { top = r.top + step; x = left ? r.left - SIZE - GAP : r.right + GAP; }
+    else { top = r.bottom + 2; x = left ? r.left + 2 : r.right - SIZE - 2 - step; }
+    s.top = top + 'px'; s.left = x + 'px';
+    then?.(top, x);
   };
   const watch = new ResizeObserver(place);
-  watch.observe(document.documentElement); watch.observe(canvas);
+  watch.observe(document.documentElement); watch.observe(hud);
 }
 
-export function createLanternButton(canvas, { onSwitch }) {
+export function createLanternButton(hud, { onSwitch }) {
   const button = document.createElement('button');
   button.id = 'lantern-button';
   button.type = 'button';
@@ -34,7 +39,7 @@ export function createLanternButton(canvas, { onSwitch }) {
   button.addEventListener('click', (ev) => { onSwitch(); if (ev.detail) button.blur(); }); // a tap or click lets go of the focus; Enter or Space keeps it
   document.body.append(button);
 
-  keepPlaced(canvas, button, 0);
+  keepPlaced(hud, button, 0);
 
   let shown = null;
   return {

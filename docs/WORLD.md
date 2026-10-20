@@ -38,7 +38,7 @@ regions join each other is Q-037.
 Both sides of an opening always line up: walk out of one room's east
 edge and you come in at the matching spot on the next room's west edge.
 The first one joins the first crypt room's bottom doorway to a crypt room
-south of it (D-197). A top box over the hero turns faint (D-198).
+south of it (D-197).
 
 ## How a region is generated (proposed, confirmed at its step, Q-037)
 Two passes, both run from the save's seed:
