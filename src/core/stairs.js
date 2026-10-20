@@ -31,7 +31,7 @@ export function goToDepth(state, depth) {
 }
 
 // The state moved to place `to`, its room `there`, the hero at `spot`; the room left waits
-function arrive(state, to, there, spot) {
+export function arrive(state, to, there, spot) {
   const here = { room: state.room, lights: state.lights, enemies: state.enemies, items: state.items, seen: state.seen };
   const elsewhere = { ...state.elsewhere, [state.place]: here };
   delete elsewhere[to];
@@ -39,7 +39,7 @@ function arrive(state, to, there, spot) {
 }
 
 // A place never visited, as it begins from the game's seed, with nothing remembered
-function fresh(id, seed) {
+export function fresh(id, seed) {
   const { room, lights, enemies, items } = beginPlace(id, seed);
   return { room, lights, enemies, items, seen: blankMemory(room) };
 }

@@ -6,7 +6,7 @@ import { enemyAt } from './core/enemies.js';
 import { glowsIn, goToDepth } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
-import { createScreen, TILE, W, H } from './render/screen.js';
+import { createScreen, TILE, W, H, HUD_H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero, drawItems, drawEnemies } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
@@ -16,7 +16,7 @@ import { reach, setOil } from './core/oil.js';
 import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
 import { drawTitle, titleTop } from './render/title.js';
-import { drawPause, lineAt, pauseTop } from './render/menu.js';
+import { drawPause, lineAt, pauseTop, veil } from './render/menu.js';
 import { drawSeedPad, keyAt } from './render/seedpad.js';
 import { drawHowTo, howtoAt } from './render/howto.js';
 import { nextPage, howtoWords, HOWTO_LINES } from './core/howto.js';
@@ -32,8 +32,8 @@ import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
 import { createDev } from './dev/dev.js';
 
-const canvas = document.getElementById('game');
-const ctx = createScreen(canvas);
+const canvas = document.getElementById('game'), hud = document.getElementById('hud');
+const { ctx, hudCtx } = createScreen(canvas, hud);
 document.getElementById('version').textContent = VERSION;
 
 let settings = loadSettings(); // kept on this device (D-189)
@@ -131,8 +131,8 @@ const stepToward = (px, py, held = false) => {
 
 // § switch: the lantern button and the L key, free at any time in play (D-080, D-081)
 const switchIt = () => { if (screen === 'play') state = switchLantern(state); };
-const lanternButton = createLanternButton(canvas, { onSwitch: switchIt });
-const pauseButton = createPauseButton(canvas, { onPause: () => pause() });
+const lanternButton = createLanternButton(hud, { onSwitch: switchIt });
+const pauseButton = createPauseButton(hud, { onPause: () => pause() });
 
 const stage = document.getElementById('stage');
 // § screens: the game opens on the title screen (D-177); in play, the pause button,
@@ -263,7 +263,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   heal: () => ({ ...state, health: HERO_HEALTH }),
   goTo: (depth) => goToDepth(state, depth),
   camera: () => cam,
-});
+}, hud);
 show('title');
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
@@ -283,6 +283,7 @@ const lights = [], torchGlow = []; // reused every frame (TECH.md)
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
 function frame(t) {
+  hudCtx.fillStyle = '#0e0c16'; hudCtx.fillRect(0, 0, W, HUD_H); // the strip stays empty on the title
   if (onTitle()) {
     if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, page, settings.controls, chosen, t, still()); }
@@ -349,9 +350,11 @@ function frame(t) {
     ctx.fillStyle = '#0e0c16'; ctx.fillRect(0, 0, W, H);
     ctx.globalAlpha = 1;
   }
-  drawOilBar(ctx, s.oil);
-  drawHearts(ctx, s.health, HERO_HEALTH);
-  drawDepth(ctx, depthOf(s.place));
+  // § strip: the hearts, depth and oil above the room, covering none of it (D-198)
+  drawOilBar(hudCtx, s.oil);
+  drawHearts(hudCtx, s.health, HERO_HEALTH);
+  drawDepth(hudCtx, depthOf(s.place));
+  if (screen !== 'play') veil(hudCtx); // dimmed with the room under a menu
   const line = shownLine(state);
   textLine.draw(ctx, line, t, still());
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }

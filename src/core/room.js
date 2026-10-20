@@ -7,8 +7,8 @@ import { seedFor } from './rng.js';
 import { scatter } from './scatter.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
-// its water as floor, and the study's stairs down at 1,1 (D-130). The doorway
-// comes in a later step.
+// its water as floor, and the study's stairs down at 1,1 (D-130). The gap in
+// its bottom wall is a doorway into the south room (D-197).
 export const FIRST_ROOM = [
   '###########',
   '#>..#.....#',
@@ -60,12 +60,39 @@ export const SECOND_LIGHTS = [{ id: 'torch', x: 3, y: 0 }];
 export const SECOND_ITEMS = [{ id: 'flask', x: 9, y: 11 }];
 export const SECOND_ENEMIES = [{ id: 'rat', x: 7, y: 10 }];
 
+// § south room: a crypt hall beside the first room, through the first room's
+// bottom doorway, which lines up with its own at 5,0 (D-197). Pillars above,
+// a lower hall below with a lit torch over its door and an unlit one by the
+// far wall. The seed places its flask and rat (D-192).
+export const SOUTH_ROOM = [
+  '#####.#####',
+  '###.....###',
+  '#.........#',
+  '#.#..#..#.#',
+  '#.........#',
+  '#.#..#..#.#',
+  '#.........#',
+  '####.#.####',
+  '#.........#',
+  '#.........#',
+  '#..##.##..#',
+  '#.........#',
+  '###########',
+];
+export const SOUTH_LIGHTS = [{ id: 'torch', x: 5, y: 7 }, { id: 'unlitTorch', x: 7, y: 10 }];
+export const SOUTH_ITEMS = [{ id: 'flask', x: 9, y: 11 }];
+export const SOUTH_ENEMIES = [{ id: 'rat', x: 1, y: 9 }];
+
 // § places: every room, with where the hero starts in it, what is in it at
 // first, and how deep it is (D-130, D-144). Stairs down lead one depth
-// deeper and arrive on the stairs up there, and back.
+// deeper and arrive on the stairs up there, and back. `sides` names the room
+// beyond each edge with an opening (D-197). The first place at a depth is
+// the one its stairs lead to; a room beside it takes a `slot`, so the seed
+// places its things apart from its neighbour's.
 export const PLACES = {
-  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1 },
+  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1, sides: { down: 'south' } },
   second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2, guard: true },
+  south: { map: SOUTH_ROOM, start: { x: 5, y: 0 }, lights: SOUTH_LIGHTS, enemies: SOUTH_ENEMIES, items: SOUTH_ITEMS, depth: 1, slot: 1, sides: { up: 'first' } },
 };
 
 // § depth: the place at each depth, and back. Below the second room every
@@ -77,7 +104,7 @@ export const depthOf = (id) => PLACES[id]?.depth ?? Number(id.slice('depth'.leng
 export const isGenerated = (id) => !PLACES[id];
 // The hand-made rooms keep their shape; the seed places what is in them (D-192).
 export function placeFor(id, seed = 1) {
-  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth)) };
+  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)) };
   const depth = depthOf(id), { shape, look } = kindAt(depth);
   return { ...(generateRoom(seedFor(seed, depth), shape) || PLACES[DEEPER]), depth, look };
 }

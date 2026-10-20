@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.13, How to play.** The title and pause menus gain
+  How to play. Owner's picks: a page each for Touch, Mouse and Keyboard,
+  flipped with Left and Right, opening on the way last used; under New
+  journey on the title; Walk, Wait, Lantern and Pause only, how to hit
+  a rat perhaps in a bestiary (Q-047); it follows the Controls switch
+  (D-193). Playtest: https://claude.ai/artifact/EDXra2gLfuLS6LerFmgzSp
 - **2026-10-20, 0.2.12, every room changes with the seed.** Owner's
   note: the first levels looked the same each world. Owner's picks: a
   standing rule that every room takes something from the seed, some

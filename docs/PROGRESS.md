@@ -4,13 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.15 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.16 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 45, side openings:** walk off an edge into the next room (D-171).
-Or first the UI and dev tool improvements the owner wished for after
-the menu, if they prefer. `DECISIONS.md` is near 12 KB: the next
-decision first moves older ones to an archive file.
+**Step 46, a region's layout:** rooms laid out from the seed, joined by
+openings (D-169, D-171). Read `WORLD.md` and Q-037 first. Or first the
+UI and dev tool improvements the owner wished for, if they prefer.
 
 ## Waiting on the owner
 - The starting region's name (Q-045), any time.
@@ -35,7 +34,7 @@ The main menu (D-177 to D-181; step order proposed, may change)
 Getting around
 - [x] 43 Stairs must be found: dimmer, only where fog has lifted, 0.2.14
 - [x] 44 The camera: a room bigger than the screen scrolls, 0.2.15
-- [ ] 45 Side openings: walk off an edge into the next room (D-171)
+- [x] 45 Side openings: walk off an edge into the next room, 0.2.16
 A region
 - [ ] 46 A region's layout from the seed, rooms joined by openings
 - [ ] 47 The map screen, and dev Reveal map (D-176)
@@ -57,12 +56,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.13, How to play.** The title and pause menus gain
-  How to play. Owner's picks: a page each for Touch, Mouse and Keyboard,
-  flipped with Left and Right, opening on the way last used; under New
-  journey on the title; Walk, Wait, Lantern and Pause only, how to hit
-  a rat perhaps in a bestiary (Q-047); it follows the Controls switch
-  (D-193). Playtest: https://claude.ai/artifact/EDXra2gLfuLS6LerFmgzSp
 - **2026-10-20, 0.2.14, stairs must be found.** The stairs' glow stays
   hidden until the lantern has reached them once. Owner's picks: the
   stairs tile itself must be found; half as bright, reaching 1 tile; all
@@ -73,3 +66,10 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   stays on the middle tile, the camera stops at the room's edges; the
   generated caves grow, the crypt stays one screen; about 1.5 screens
   (D-195). Playtest: https://claude.ai/artifact/S5UU19HbMBS6B721dzZEVR
+- **2026-10-20, 0.2.16, side openings.** The first room's bottom gap
+  is a doorway into a new crypt room south of it. Owner's picks: a
+  hand-made one-screen crypt room at depth 1, its flask and rat from the
+  seed; one step out of the doorway crosses, a turn, no line, the stairs'
+  fade; rats stay behind (D-197). The owner's idea: the hearts, depth
+  and oil move to a strip above the room, the wrench joins pause and the
+  lantern in a row above that (D-198). Playtest: https://claude.ai/artifact/UCou8cY9RUDJpzNdBPptPB

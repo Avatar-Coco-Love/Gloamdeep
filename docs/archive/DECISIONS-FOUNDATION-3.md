@@ -25,6 +25,8 @@ clears them. The coordinates readout names an item on the pointed tile.
 
 **D-080 · 2026-10-18 · The lantern switch: a button and L** (step 16,
 builds on D-015)
+*Partly superseded by D-198 (2026-10-20): the button sits in the
+buttons' row above the picture, with pause and the dev wrench.*
 A 44 px button with the hero's lantern pixels sits next to the oil bar,
 just outside the game picture (above it on a tall screen, beside it on a
 wide one, just under it when neither fits). A tap or click switches the

@@ -12,6 +12,8 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
   moved unchanged from `CHANGELOG.md` at 0.1.21.
 - `CHANGELOG-FOUNDATION-2.md`: the 0.1.13 to 0.1.25 changelog entries,
   moved unchanged from `CHANGELOG.md` at 0.1.27.
+- `CHANGELOG-FOUNDATION-3.md`: the 0.1.26 and 0.1.27 changelog entries,
+  moved unchanged from `CHANGELOG.md` at 0.2.16.
 - `DECISIONS-PREPRODUCTION.md`: D-001 to D-038, moved unchanged from
   `DECISIONS.md` at step 8 (D-041). Still in force.
 - `DECISIONS-FOUNDATION-1.md`: D-039 to D-052 (steps 7 to 11) and D-070
@@ -31,5 +33,7 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
   ended (D-161). Still in force.
 - `DECISIONS-STAGE-0.2-1.md`: D-159 to D-167 (steps 31 to 33), moved
   unchanged from `DECISIONS.md` at step 53 (D-188). Still in force.
+- `DECISIONS-MENU.md`: D-177 to D-193 (the main menu, steps 52 to 58),
+  moved unchanged from `DECISIONS.md` at step 45 (D-196). Still in force.
 - The foundation build plan (steps 7 to 30) is at the top of
   `PROGRESS-LOG.md`.

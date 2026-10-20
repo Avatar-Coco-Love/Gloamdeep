@@ -11,6 +11,7 @@ import { lightAt, openSide } from './lights.js';
 import { mountAt } from './mount.js';
 import { litAt } from './sight.js';
 import { takeStairs } from './stairs.js';
+import { offEdge, walkOff } from './openings.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -62,11 +63,17 @@ function away(begun, here, seen) {
 // the new tile is then picked up (pickUp). The oil lines look at the oil after
 // both (D-096). Walking into an enemy attacks it (D-017), and into an unlit
 // torch's wall lights it (D-121). Stepping onto stairs takes them, before the
-// enemies left behind can act (D-132). Every passed turn ends with the
-// enemies' turn (D-114), in the room the hero ends it in.
+// enemies left behind can act (D-132). Walking off an edge through an
+// opening does the same, into the room beyond (D-197); elsewhere the edge is
+// wall. Every passed turn ends with the enemies' turn (D-114), in the room
+// the hero ends it in.
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
+  if (offEdge(state.room, x, y)) {
+    const out = walkOff(passTurn(state), dir);
+    return out ? endTurn(state, out) : state;
+  }
   if (tileAt(state.room, x, y).solid) return lightTorch(state, x, y);
   const foe = enemyAt(state, x, y);
   if (foe) return attack(state, foe);

@@ -9,6 +9,7 @@ import { spawn } from '../core/spawn.js';
 import { W, H, TILE } from '../render/screen.js';
 import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 import { buildPanel, el } from './panel.js';
+import { keepPlaced } from '../input/lantern.js';
 
 const KEY = 'gloamdeep-dev'; // localStorage: the switches and the open sections
 
@@ -23,8 +24,9 @@ function save(opts) {
 // `game` gives tools the state: get() reads it, set(s) replaces it, reset()
 // gives the state with the starting room back, forget() with a blank memory,
 // setOil(amount) with that much oil, heal() with full hearts; camera() is the
-// room pixel at the screen's top-left (D-195).
-export function createDev(stage, canvas, game) {
+// room pixel at the screen's top-left (D-195). `hud` is the strip at the
+// picture's top; the wrench sits at the left end of the buttons' row (D-198).
+export function createDev(stage, canvas, game, hud) {
   // every switch starts off (D-047); only View starts open (D-087)
   const opts = { grid: false, coords: false, noLight: false, reveal: false, open: ['view'], ...load() };
   save(opts);
@@ -40,6 +42,7 @@ export function createDev(stage, canvas, game) {
   const readout = el('div', { id: 'dev-readout' });
   const tools = buildPanel(panel, opts, () => save(opts), game);
   document.body.append(button, panel, readout);
+  keepPlaced(hud, button, -1, (top, left) => { panel.style.top = top + 52 + 'px'; panel.style.left = left + 'px'; });
 
   const showPanel = (show) => {
     panel.hidden = !show;

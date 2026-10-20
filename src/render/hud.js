@@ -1,4 +1,4 @@
-// § hud: things drawn over the game after the light, so they are always bright.
+// § hud: the hearts, depth and oil, drawn in the strip above the room (D-198), and the buttons' icons.
 import { W } from './screen.js';
 import { drawText, textWidth } from './font.js';
 
