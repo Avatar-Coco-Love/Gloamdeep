@@ -25,11 +25,14 @@ import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
+import { floorPlan, roomsFound } from './core/map.js';
+import { setMap, drawMap } from './render/map.js';
 import { lanternFrom } from './core/sight.js';
 import { cameraAt } from './core/camera.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
+import { createMapButton } from './input/mapbutton.js';
 import { createDev } from './dev/dev.js';
 
 const canvas = document.getElementById('game'), hud = document.getElementById('hud');
@@ -133,6 +136,7 @@ const stepToward = (px, py, held = false) => {
 const switchIt = () => { if (screen === 'play') state = switchLantern(state); };
 const lanternButton = createLanternButton(hud, { onSwitch: switchIt });
 const pauseButton = createPauseButton(hud, { onPause: () => pause() });
+const mapButton = createMapButton(hud, { onMap: () => toggleMap() });
 
 const stage = document.getElementById('stage');
 // § screens: the game opens on the title screen (D-177); in play, the pause button,
@@ -141,13 +145,14 @@ const stage = document.getElementById('stage');
 // move the flame; Enter, Space or a tap on a line picks it. The Seed line opens
 // the seed pad; Esc or P leave it with nothing changed (D-191). How to play opens
 // from either menu on the way of playing last used, and returns there the same way (D-193).
-let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed' or 'howto'
+// In play, the map button or M opens the map; a tap, M, Esc or P closes it (D-205).
+let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto' or 'map'
 let pageFrom = 'title'; // the menu Settings or How to play was opened from
 let page = 'touch'; // How to play's page
 let entry = ''; // the digits typed on the seed pad
 const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU
   : settingsMenu(settings, reduceMotion.matches, pageFrom === 'paused' ? journeySeed : null));
-const onTitle = () => screen === 'title' || (screen !== 'play' && screen !== 'paused' && pageFrom === 'title');
+const onTitle = () => screen === 'title' || (!['play', 'paused', 'map'].includes(screen) && pageFrom === 'title');
 const menuTop = () => (onTitle() ? titleTop(menuOf(screen).length) : pauseTop(menuOf(screen).length, screen === 'settings'));
 const WORDS = {
   title: 'Gloamdeep. New journey, How to play or Settings: press Enter, or tap one.',
@@ -160,7 +165,7 @@ function show(next, at = 0) {
   if ((next === 'settings' && screen !== 'seed') || next === 'howto') pageFrom = screen;
   screen = next; chosen = at;
   const playing = next === 'play';
-  lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
+  lanternButton.hide(!playing); pauseButton.hide(!playing); mapButton.hide(!playing); dev.hide(!playing);
   spokenLine = null;
   spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? SEED_WORDS
     : next === 'howto' ? howtoWords(page, settings.controls) : WORDS[next];
@@ -169,8 +174,20 @@ const backTo = (id) => () => show(pageFrom, menuOf(pageFrom).findIndex((l) => l.
 const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
 function openHowTo() { page = input.kind(); show('howto'); }
 function flipPage(back = false) { page = nextPage(page, back); spoken.textContent = howtoWords(page, settings.controls); }
+// § map: the floor the hero is on, worked out once as it opens; no turn passes (D-205)
+function toggleMap() {
+  if (screen === 'map') { show('play'); return; }
+  if (screen !== 'play') return;
+  queued = null;
+  const plan = floorPlan(state, dev.revealedMap());
+  setMap(plan);
+  show('map');
+  const n = roomsFound(plan);
+  spoken.textContent = `Map of depth ${plan.depth}. ${n} ${n === 1 ? 'room' : 'rooms'} found. Tap, or press M, to close.`;
+}
 function pause() {
-  if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
+  if (screen === 'map') show('play');
+  else if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
   else if (screen === 'paused') show('play'); // Esc or P again resumes
   else if (screen === 'settings') closeSettings();
   else if (screen === 'seed') closePad();
@@ -230,6 +247,7 @@ function choose(i = chosen) {
 // Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
 const onDir = (dir, how) => {
   if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
+  if (screen === 'map') return;
   if (screen === 'seed') { chosen = moveKey(chosen, dir); return; }
   if (screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else chosen = moveChoice(chosen, dir, HOWTO_LINES.length); return; }
   const id = menuOf(screen)[chosen]?.id;
@@ -239,14 +257,15 @@ const onDir = (dir, how) => {
 };
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
+  if (screen === 'map') { if (!held) show('play'); return; }
   if (screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { chosen = k; choose(k); } return; }
   if (screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { chosen = 0; flipPage(at === 'prev'); } return; }
   const i = lineAt(py, menuOf(screen).length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
-const onWait = () => { if (screen === 'play') tryStep('wait'); else choose(); };
-const onChoose = () => { if (screen !== 'play') choose(); };
-const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onType });
+const onWait = () => { if (screen === 'play') tryStep('wait'); else if (screen === 'map') show('play'); else choose(); };
+const onChoose = () => { if (screen === 'map') show('play'); else if (screen !== 'play') choose(); };
+const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onMap: toggleMap, onType });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   still,
@@ -362,6 +381,7 @@ function frame(t) {
   else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
   else if (screen === 'seed') drawSeedPad(ctx, entry, chosen, t, still());
   else if (screen === 'howto') drawHowTo(ctx, page, settings.controls, chosen, t, still());
+  else if (screen === 'map') drawMap(ctx, t, still());
   else dev.draw(ctx, state, cam);
   requestAnimationFrame(frame);
 }

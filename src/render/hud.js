@@ -93,3 +93,11 @@ export function drawPauseIcon(c) {
   c.clearRect(0, 0, 5, 5);
   c.fillStyle = '#9790a4'; c.fillRect(1, 0, 1, 5); c.fillRect(3, 0, 1, 5);
 }
+
+// § map icon: three rooms in an L, like a floor of the grid, in the stone grey (D-205)
+const MAP_ICON = ['xx.xx', 'xx.xx', '.....', 'xx...', 'xx...'];
+export function drawMapIcon(c) {
+  c.clearRect(0, 0, 5, 5);
+  c.fillStyle = '#9790a4';
+  MAP_ICON.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === 'x') c.fillRect(x, y, 1, 1); }));
+}

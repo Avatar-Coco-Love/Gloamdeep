@@ -27,14 +27,14 @@
     font: 11px/1 ui-monospace, "Courier New", monospace; opacity: .7; pointer-events: none;
   }
   /* The lantern switch (src/input/lantern.js, D-080), the pause button (src/input/pause.js,
-     D-187) and the dev wrench: placed by script in a row above the picture (D-198). */
-  #lantern-button, #pause-button {
+     D-187), the map button (src/input/mapbutton.js, D-205) and the dev wrench: placed by script in a row above the picture (D-198). */
+  #lantern-button, #pause-button, #map-button {
     position: fixed; z-index: 1; top: 8px; left: 8px;
     width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
     border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.85); cursor: pointer;
   }
   #lantern-button[aria-pressed="true"] { border-color: #a8642c; }
-  #lantern-button canvas, #pause-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
+  #lantern-button canvas, #pause-button canvas, #map-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
   /* Dev tools (src/dev/dev.js, panel.js): on for everyone (D-086). Game palette
      (ART-DIRECTION.md): violet for the section tabs, stone for the tools
      beside them, lantern gold for what is on, the hostile red for what undoes

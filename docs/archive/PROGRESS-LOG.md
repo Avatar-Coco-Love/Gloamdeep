@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.18, the dev drawer.** The dev tools slide out from
+  the left edge, sections stacked as tabs, all words in the pixel font.
+  Owner's picks: left, full height; a word per tab; 44 px rows; the
+  stats line in the pixel font, bottom left (D-200).
+  Playtest: https://claude.ai/artifact/PdsgM2BVcrBiPcFFzSCF9j
 - **2026-10-20, 0.2.17, sideways.** Held sideways, the hearts, depth
   and oil stack in a column left of the room, so it can grow. Owner's
   picks: wrench top left, pause top right, lantern bottom right; dev

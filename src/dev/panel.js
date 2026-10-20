@@ -58,7 +58,7 @@ export function buildPanel(panel, opts, saved, game) {
     switches[name].setAttribute('aria-pressed', String(on));
     saved();
   };
-  const views = [['grid', 'Grid', 'G'], ['coords', 'Coords', 'C'], ['noLight', 'No light', ''], ['reveal', 'Reveal', 'R']];
+  const views = [['grid', 'Grid', 'G'], ['coords', 'Coords', 'C'], ['noLight', 'No light', ''], ['reveal', 'Reveal', 'R'], ['revealMap', 'Reveal map', '']];
   view.append(row(...views.map(([name, label, key]) => {
     switches[name] = button(label, () => flip(name), 'dev-switch');
     if (key) switches[name].append(pixel('kbd', '', key));
