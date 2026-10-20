@@ -1,7 +1,7 @@
 // § dev: dev tools (DEV-TOOLS.md), on for everyone on every build (D-086).
-// A wrench button opens the panel (panel.js); a stats line sits at the bottom
-// left (D-088); on a PC, keys work the panel (D-090). Plain page text, not the
-// pixel font (D-045).
+// A wrench button slides out the drawer (panel.js); a stats line sits at the
+// bottom left (D-088); on a PC, keys work the drawer (D-090). Words are in
+// the game's pixel font (D-200).
 import { tileAt, depthOf } from '../core/room.js';
 import { get } from '../core/registry.js';
 import { itemAt } from '../core/turn.js';
@@ -9,6 +9,7 @@ import { spawn } from '../core/spawn.js';
 import { W, H, TILE } from '../render/screen.js';
 import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 import { buildPanel, el } from './panel.js';
+import { setPixelText } from './pixeltext.js';
 import { keepPlaced } from '../input/lantern.js';
 
 const KEY = 'gloamdeep-dev'; // localStorage: the switches and the open sections
@@ -23,7 +24,8 @@ function save(opts) {
 
 // `game` gives tools the state: get() reads it, set(s) replaces it, reset()
 // gives the state with the starting room back, forget() with a blank memory,
-// setOil(amount) with that much oil, heal() with full hearts; camera() is the
+// setOil(amount) with that much oil, heal() with full hearts; still() is
+// true when motion is reduced (D-190); camera() is the
 // room pixel at the screen's top-left (D-195). `hud` is the strip at the
 // picture's top; the wrench sits at the left end of the buttons' row (D-198).
 export function createDev(stage, canvas, game, hud) {
@@ -38,34 +40,34 @@ export function createDev(stage, canvas, game, hud) {
   const icon = el('canvas', { width: 12, height: 12 });
   drawWrench(icon.getContext('2d'));
   button.append(icon);
-  const panel = el('div', { id: 'dev-panel', hidden: true });
+  const panel = el('div', { id: 'dev-panel', className: 'shut', inert: true });
   const readout = el('div', { id: 'dev-readout' });
   const tools = buildPanel(panel, opts, () => save(opts), game);
   document.body.append(button, panel, readout);
-  // under the wrench, ending at the screen's bottom; sideways it keeps to the
-  // space left of the picture and ends above the stats line, which keeps to
-  // that space too (D-199)
-  let beside = false;
+  // § drawer: along the screen's left edge, from under the wrench down to
+  // the stats line (D-200); the stats line keeps to the space left of the
+  // picture when it stands sideways (D-199)
   const fitPanel = () => {
-    const end = beside ? readout.getBoundingClientRect().top : innerHeight;
-    panel.style.maxHeight = Math.max(88, end - 8 - parseFloat(panel.style.top)) + 'px';
+    const top = parseFloat(button.style.top) + 52;
+    panel.style.top = top + 'px';
+    panel.style.height = Math.max(88, readout.getBoundingClientRect().top - 8 - top) + 'px';
   };
   keepPlaced(hud, button, -1, (top, left, pic) => {
-    const p = panel.style;
-    beside = left < pic.left;
-    p.top = top + 52 + 'px';
-    p.left = beside ? 'auto' : left + 'px'; p.right = beside ? innerWidth - left - 44 + 'px' : 'auto';
-    p.maxWidth = readout.style.maxWidth = beside ? pic.left - 16 + 'px' : '';
+    readout.style.maxWidth = left < pic.left ? pic.left - 16 + 'px' : '';
     fitPanel();
   });
   new ResizeObserver(fitPanel).observe(readout);
 
+  let open = false;
   const showPanel = (show) => {
-    panel.hidden = !show;
+    open = show;
+    panel.style.transition = game.still() ? 'none' : ''; // the Motion switch (D-190)
+    panel.classList.toggle('shut', !show);
+    panel.inert = !show;
     if (!show && panel.contains(document.activeElement)) document.activeElement.blur(); // keys walk again
     button.setAttribute('aria-expanded', String(show));
   };
-  button.addEventListener('click', () => showPanel(panel.hidden));
+  button.addEventListener('click', () => showPanel(!open));
 
   // § hide: the title screen keeps the wrench, panel and stats away, and their keys off
   let hidden = false;
@@ -79,7 +81,7 @@ export function createDev(stage, canvas, game, hud) {
   const SWITCH_KEYS = { g: 'grid', c: 'coords', r: 'reveal' };
   addEventListener('keydown', (ev) => {
     if (hidden || ev.repeat || ev.ctrlKey || ev.metaKey || ev.altKey || ev.target.closest('textarea')) return;
-    if (ev.key === '`') { showPanel(panel.hidden); return; }
+    if (ev.key === '`') { showPanel(!open); return; }
     const name = SWITCH_KEYS[ev.key.toLowerCase()];
     if (name) tools.flip(name);
   });
@@ -132,7 +134,7 @@ export function createDev(stage, canvas, game, hud) {
         more.push(tile);
       }
       if (more.length) next += '\n' + more.join(' · ');
-      if (next !== text) { text = next; readout.textContent = text; } // touch the page only on change
+      if (next !== text) { text = next; setPixelText(readout, text); } // touch the page only on change
     },
   };
 }

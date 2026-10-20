@@ -19,12 +19,14 @@ tools to be chosen together later.
 - Spawn any registry entry (item, enemy, NPC, tile) at a chosen tile (D-006).
 - Always on; a wrench button opens the panel, switches all off at first
   (D-086, D-047). Code: `src/dev/dev.js` (button, keys, stats line).
-- The panel has sections, View, Spawn, Room, Oil, Hero, Share: fixed buttons
-  at the top, one open below, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
+- The panel has sections, View, Spawn, Room, Oil, Hero, Share, one open
+  at a time, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
   goes into a section there**, or a new section.
-- Sideways, the wrench stands left of the picture's top; the panel and
-  the stats line keep to the space left of the room, the panel ending
-  above the stats line (D-199).
+- It is a drawer along the left edge, from under the wrench down to the
+  stats line; tabs in a column, the open section's tools beside them;
+  all words in the pixel font (D-200). Code: `src/dev/pixeltext.js`.
+- Sideways, the wrench stands left of the picture's top, and the stats
+  line keeps to the space left of the room (D-199).
 - Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
   spawn pick and pointed tile (D-088). New state joins it as it arrives:
   health, depth, and the seed (D-150).

@@ -68,6 +68,7 @@ The switches are still remembered per browser. Clutter on screen is fine
 when it helps make the game better.
 
 **D-087 · 2026-10-18 · The dev panel has sections** (0.1.13)
+*Partly superseded by D-200 (2026-10-20): the section tabs stand in a column at the drawer's left.*
 View, Spawn, Room, Oil and Share. Their buttons sit in a fixed 3 + 2
 grid at the top, and the open section shows below, so nothing moves
 under the finger. One is open at a time; tap it again to fold it. The

@@ -4,12 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.17 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.18 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**U2, the dev side drawer:** a tall strip at the screen's edge, sections
-down its side like tabs, in the game's pixel font (the owner's picks).
-Propose details first. Then step 46 (read `WORLD.md`, Q-037).
+**Step 46, a region's layout:** rooms laid out from the seed, joined by
+openings (D-169, D-171). Read `WORLD.md` and Q-037 first.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -51,7 +50,7 @@ kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
 
 UI and dev tools (the owner's wish, before step 46)
 - [x] U1 Sideways, the room uses the sides, 0.2.17
-- [ ] U2 The dev side drawer, in the pixel font
+- [x] U2 The dev side drawer, in the pixel font, 0.2.18
 
 Ideas for later: menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
@@ -59,11 +58,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.15, the camera.** Caves from depth 3 down grow to
-  17 × 20 tiles, and the view follows the hero. Owner's picks: the hero
-  stays on the middle tile, the camera stops at the room's edges; the
-  generated caves grow, the crypt stays one screen; about 1.5 screens
-  (D-195). Playtest: https://claude.ai/artifact/S5UU19HbMBS6B721dzZEVR
 - **2026-10-20, 0.2.16, side openings.** The first room's bottom gap
   is a doorway into a new crypt room south of it. Owner's picks: a
   hand-made one-screen crypt room at depth 1, its flask and rat from the
@@ -75,3 +69,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   and oil stack in a column left of the room, so it can grow. Owner's
   picks: wrench top left, pause top right, lantern bottom right; dev
   panel and stats beside the room (D-199). Filling the screen: Q-048. Playtest: https://claude.ai/artifact/VyFTUUKJ5WB4AwZ98615Ma
+- **2026-10-20, 0.2.18, the dev drawer.** The dev tools slide out from
+  the left edge, sections stacked as tabs, all words in the pixel font.
+  Owner's picks: left, full height; a word per tab; 44 px rows; the
+  stats line in the pixel font, bottom left (D-200).
+  Playtest: https://claude.ai/artifact/PdsgM2BVcrBiPcFFzSCF9j

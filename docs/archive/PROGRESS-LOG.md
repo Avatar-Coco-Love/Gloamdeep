@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.15, the camera.** Caves from depth 3 down grow to
+  17 × 20 tiles, and the view follows the hero. Owner's picks: the hero
+  stays on the middle tile, the camera stops at the room's edges; the
+  generated caves grow, the crypt stays one screen; about 1.5 screens
+  (D-195). Playtest: https://claude.ai/artifact/S5UU19HbMBS6B721dzZEVR
 - **2026-10-20, 0.2.14, stairs must be found.** The stairs' glow stays
   hidden until the lantern has reached them once. Owner's picks: the
   stairs tile itself must be found; half as bright, reaching 1 tile; all

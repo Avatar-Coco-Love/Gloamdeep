@@ -134,3 +134,16 @@ under the thumb. The dev panel and the stats line keep to the space left
 of the picture and never cover the room; the panel ends above the stats
 line and scrolls. Upright nothing changes. Whether the room should fill
 the whole screen sideways waits for a playtest (Q-048).
+*Partly superseded by D-200 (2026-10-20): the dev panel's place.*
+
+**D-200 · 2026-10-20 · The dev side drawer** (UI step 2, the owner's
+picks; supersedes D-045's plain page text, D-087's grid of section
+buttons, and D-199's panel placement) The wrench slides out a drawer
+along the screen's left edge, from under the wrench down to the stats
+line. Upright it covers the room's left part until closed. The sections
+stand as a column of words at its left, the open one lit violet, and its
+tools in one column beside them; tapping the open one folds it and the
+drawer narrows to its tabs. Rows stay 44 px tall. Every dev word, the
+stats line too, is in the game's pixel font at double size; the stats
+line stays at the bottom left. When the drawer is short (sideways) the
+tabs and tools scroll. D-093's colours stay.

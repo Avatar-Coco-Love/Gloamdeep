@@ -49,7 +49,8 @@ finger. Taps, swipes and keys keep their quick pace.
 
 **D-045 · 2026-10-18 · The dev mode switch** (step 10, builds on D-030)
 *Partly superseded by D-047 (2026-10-18): no "Leave dev mode", a wrench icon;
-by D-086 (2026-10-18): no `?dev`, on for everyone; by D-090 (2026-10-18): ` opens the panel.*
+by D-086 (2026-10-18): no `?dev`, on for everyone; by D-090 (2026-10-18): ` opens the panel;
+by D-200 (2026-10-20): dev text is in the pixel font.*
 Opening the game with `?dev` turns dev mode on, and that browser remembers
 it (saved in localStorage) until "Leave dev mode" in the dev panel. In dev
 mode a DEV button (top-left, 44 px) opens a small panel of switches. On a

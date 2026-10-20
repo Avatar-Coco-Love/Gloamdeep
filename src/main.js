@@ -249,6 +249,7 @@ const onChoose = () => { if (screen !== 'play') choose(); };
 const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onType });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
+  still,
   set: (s) => { // a new place shows at once, with no slide (Go to depth)
     const went = s.place !== state.place;
     state = s;
