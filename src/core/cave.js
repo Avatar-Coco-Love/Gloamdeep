@@ -13,15 +13,33 @@ const CAVES = [5, 10], CAVE_R = [1.3, 3], CAVE_GAP = 4;
 const MIN_OPEN = 107;
 const TRIES = 200;
 
-// (seed, shape) → { map, start, lights, enemies, items }, or null if no try
-// worked. The shape is 'chambers' or 'burrows' (D-165).
-export function generateRoom(seed, shape = 'chambers') {
+// (seed, shape, ways) → { map, start, lights, enemies, items }, or null if no
+// try worked. The shape is 'chambers' or 'burrows' (D-165). `ways.doors` are
+// openings to carve at the edges, as { dir, at } (region.js, D-201), and
+// `ways.stairs` false leaves the stairs and their torch out.
+export function generateRoom(seed, shape = 'chambers', { doors = [], stairs = true } = {}) {
   const r = rng(seed), carve = shape === 'burrows' ? burrows : chambers;
   for (let i = 0; i < TRIES; i++) {
-    const g = carve(r), room = g && fill(r, g);
+    const g = carve(r), room = g && fill(r, openDoors(r, g, doors), stairs);
     if (room) return room;
   }
   return null;
+}
+
+// § doors: each opening is a gap in the edge, with a tunnel in from it to the
+// nearest open tile (D-201). The tile just inside is where the hero comes in.
+const EDGE = { up: (at) => [{ x: at, y: 0 }, { x: at, y: 1 }], down: (at) => [{ x: at, y: ROWS - 1 }, { x: at, y: ROWS - 2 }],
+  left: (at) => [{ x: 0, y: at }, { x: 1, y: at }], right: (at) => [{ x: COLS - 1, y: at }, { x: COLS - 2, y: at }] };
+function openDoors(r, g, doors) {
+  const inside = tilesWhere(g, (x, y) => g[y][x] === '.');
+  const out = doors.map(({ dir, at }) => {
+    const [edge, inner] = EDGE[dir](at), to = inside.reduce((a, b) => (dist(b, inner) < dist(a, inner) ? b : a));
+    g[edge.y][edge.x] = '.'; g[inner.y][inner.x] = '.';
+    tunnel(r, g, inner, to);
+    return inner;
+  });
+  g.doors = out;
+  return g;
 }
 
 // Round chambers joined by tunnels, as a grid of '#' and '.', or null
@@ -38,20 +56,24 @@ function chambers(r) {
   return g;
 }
 
-// The stairs, torch, flask, rat and herb in a carved grid, or null if they don't fit
-function fill(r, g) {
+// The stairs, torch, flask, rat and herb in a carved grid, or null if they
+// don't fit. With no stairs, the room has only the flask, rat and herb, the
+// way in through its first door standing for the stairs up (D-201).
+function fill(r, g, stairs = true) {
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
+  const doors = g.doors || [];
+  if (!stairs) return finds(r, g, floors, reach(g, doors[0]), doors[0], null, null, doors);
 
   // § stairs: up on a floor tile with wall above, so the steps sink into it
   // (D-143); down as far along the way as can be. Neither may cut the room
   // in two, so the hero never has to cross a stair to get somewhere.
   const free = (x, y, cut) => reach(g, floors.find((f) => !cut.some((c) => c.x === f.x && c.y === f.y)), cut).size === floors.length - cut.length;
-  const ups = floors.filter((f) => g[f.y - 1][f.x] === '#' && free(f.x, f.y, [f]));
+  const ups = floors.filter((f) => !onEdge(f) && g[f.y - 1][f.x] === '#' && free(f.x, f.y, [f]));
   if (!ups.length) return null;
   const up = pick(r, ups);
   const far = reach(g, up);
-  const downs = floors.filter((f) => far.get(key(f)) >= 8 && free(f.x, f.y, [up, f]));
+  const downs = floors.filter((f) => !onEdge(f) && far.get(key(f)) >= 8 && free(f.x, f.y, [up, f]));
   if (!downs.length) return null;
   const most = Math.max(...downs.map((f) => far.get(key(f))));
   const down = pick(r, downs.filter((f) => far.get(key(f)) >= most - 2));
@@ -64,16 +86,21 @@ function fill(r, g) {
   const near = faces.filter((t) => dist(t, up) <= 3 && !(t.x === up.x && t.y === up.y - 1));
   if (!near.length) return null;
   const torch = pick(r, near);
+  return finds(r, g, floors, far, up, down, torch, doors);
+}
 
+// The flask, rat and herb, `far` steps from `up`, the way in; with `down` and
+// `torch` when the room has them
+function finds(r, g, floors, far, up, down, torch, doors) {
   // § flask and rat: the flask well away from the stairs, the rat beside it,
   // at least 5 steps from the stairs up, and 3 tiles off counting across walls.
   // It starts in the dark, as the second room's does: out of the torch's
   // light (3 tiles, D-098) and the stairs' glow (1.5, D-134).
-  const open = floors.filter((f) => !same(f, up) && !same(f, down));
+  const open = floors.filter((f) => !onEdge(f) && !same(f, up) && !(down && same(f, down)) && !doors.some((d) => same(f, d)));
   const flasks = open.filter((f) => far.get(key(f)) >= 5);
   if (!flasks.length) return null;
   const flask = pick(r, flasks);
-  const rats = open.filter((f) => !same(f, flask) && dist(f, flask) <= 2 && far.get(key(f)) >= 5 && dist(f, up) >= 3 && dist(f, torch) >= 5 && dist(f, down) >= 3);
+  const rats = open.filter((f) => !same(f, flask) && dist(f, flask) <= 2 && far.get(key(f)) >= 5 && dist(f, up) >= 3 && (!torch || dist(f, torch) >= 5) && (!down || dist(f, down) >= 3));
   if (!rats.length) return null;
   const rat = pick(r, rats);
 
@@ -86,7 +113,7 @@ function fill(r, g) {
   return {
     map: g.map((row) => row.join('')),
     start: { x: up.x, y: up.y },
-    lights: [{ id: 'torch', x: torch.x, y: torch.y }],
+    lights: torch ? [{ id: 'torch', x: torch.x, y: torch.y }] : [],
     items: [{ id: 'flask', x: flask.x, y: flask.y }, { id: 'herb', x: herb.x, y: herb.y }],
     enemies: [{ id: 'rat', x: rat.x, y: rat.y }],
   };
@@ -132,16 +159,21 @@ function joinCaves(r, g, caves) {
   while (left.length) {
     let best = null;
     for (const a of left) for (const b of joined) if (!best || dist(a, b) < best.d) best = { a, b, d: dist(a, b) };
-    let { x, y } = best.a; const to = best.b;
-    for (let s = 0; s < 200 && (x !== to.x || y !== to.y); s++) {
-      if (r() < WANDER) {
-        const [dx, dy] = pick(r, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
-        if (x + dx > 0 && x + dx < COLS - 1 && y + dy > 0 && y + dy < ROWS - 1) { x += dx; y += dy; }
-      } else if (x !== to.x && (y === to.y || r() < 0.5)) x += Math.sign(to.x - x);
-      else y += Math.sign(to.y - y);
-      g[y][x] = '.';
-    }
+    tunnel(r, g, best.a, best.b);
     joined.push(best.a); left.splice(left.indexOf(best.a), 1);
+  }
+}
+
+// A one-tile tunnel from `from` to `to`, wandering a step aside now and then
+function tunnel(r, g, from, to) {
+  let { x, y } = from;
+  for (let s = 0; s < 200 && (x !== to.x || y !== to.y); s++) {
+    if (r() < WANDER) {
+      const [dx, dy] = pick(r, [[1, 0], [-1, 0], [0, 1], [0, -1]]);
+      if (x + dx > 0 && x + dx < COLS - 1 && y + dy > 0 && y + dy < ROWS - 1) { x += dx; y += dy; }
+    } else if (x !== to.x && (y === to.y || r() < 0.5)) x += Math.sign(to.x - x);
+    else y += Math.sign(to.y - y);
+    g[y][x] = '.';
   }
 }
 
@@ -165,6 +197,7 @@ function burrows(r) {
 // § helpers
 const walls = () => Array.from({ length: ROWS }, () => Array(COLS).fill('#'));
 const key = (t) => t.y * COLS + t.x;
+const onEdge = (t) => t.x === 0 || t.y === 0 || t.x === COLS - 1 || t.y === ROWS - 1;
 const same = (a, b) => a.x === b.x && a.y === b.y;
 const dist = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 function tilesWhere(g, test) {

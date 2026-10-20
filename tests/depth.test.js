@@ -1,10 +1,9 @@
 // § depth: the depth counter and the endless way down (D-144 to D-146)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tileAt, depthOf, placeAt, placeBeside } from '../src/core/room.js';
+import { tileAt, depthOf, placeAt, placeBeside, placeFor } from '../src/core/room.js';
 import { makeWorld, step, wait, FIRST_START, DIRS } from '../src/core/turn.js';
-import { generateRoom } from '../src/core/cave.js';
-import { seedFor, nextSeed } from '../src/core/rng.js';
+import { nextSeed } from '../src/core/rng.js';
 import { shownLine } from '../src/core/lines.js';
 
 // Room 2's stairs down are at 1,11; 2,11 is the tile beside them. Its stairs up at 1,1.
@@ -33,7 +32,7 @@ test('down from the second room: a generated room, depth 3, on its stairs up', (
   assert.equal(depthOf(n.place), 3);
   assert.equal(tileAt(n.room, n.hero.x, n.hero.y).id, 'stairsUp');
   assert.equal(shownLine(n).text, 'You go down the stairs.');
-  assert.deepEqual(n.room.map, generateRoom(seedFor(n.seed, 3)).map);
+  assert.deepEqual(n.room.map, placeFor('depth3', n.seed).map); // the stairs room of its grid (D-201)
   assert.equal(n.enemies.length, 1);
   assert.deepEqual(n.items.map((it) => it.id), ['flask', 'herb']);
   assert.ok(n.seen.every((v) => v === 0));
@@ -96,7 +95,7 @@ test('a fall at depth 3 wakes the hero in the first room with a new seed; depth 
   assert.equal(n.elsewhere.depth3, undefined); // it begins again when reached
   const again = down({ ...step(at(n, 2, 1), 'left'), enemies: [] });
   assert.ok(again.seen.every((v) => v === 0));
-  assert.deepEqual(again.room.map, generateRoom(seedFor(n.seed, 3)).map);
+  assert.deepEqual(again.room.map, placeFor('depth3', n.seed).map);
 });
 
 test('the first two rooms\' maps stay remembered after a fall', () => {

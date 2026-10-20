@@ -5,6 +5,7 @@ import { byLetter } from './registry.js';
 import { generateRoom } from './cave.js';
 import { seedFor } from './rng.js';
 import { scatter } from './scatter.js';
+import { cellOf } from './region.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
 // its water as floor, and the study's stairs down at 1,1 (D-130). The gap in
@@ -97,17 +98,24 @@ export const PLACES = {
 
 // § depth: the place at each depth, and back. Below the second room every
 // depth is generated, with ids depth3, depth4…, from the game's seed (D-147,
-// D-148); the second room is the fallback if a seed ever gives no room.
+// D-148); the second room is the fallback if a seed ever gives no room. A
+// depth laid out as a grid (region.js, D-201) adds rooms depth3:x,y beside
+// depth3, which holds its stairs.
 const DEEPER = 'second';
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
-export const depthOf = (id) => PLACES[id]?.depth ?? Number(id.slice('depth'.length));
+export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.length), 10);
 export const isGenerated = (id) => !PLACES[id];
 // The hand-made rooms keep their shape; the seed places what is in them (D-192).
 export function placeFor(id, seed = 1) {
   if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)) };
-  const depth = depthOf(id), { shape, look } = kindAt(depth);
-  return { ...(generateRoom(seedFor(seed, depth), shape) || PLACES[DEEPER]), depth, look };
+  const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
+  if (!cell) return { ...(generateRoom(seedFor(seed, depth), shape) || PLACES[DEEPER]), depth, look };
+  const made = generateRoom(cell.seed, shape, cell) || generateRoom(cell.seed, shape, { stairs: cell.stairs });
+  return { ...(made || PLACES[DEEPER]), depth, look, sides: cell.sides };
 }
+
+// The room beyond each edge of a place with openings, by direction (D-197, D-201)
+export const sidesOf = (id, seed) => PLACES[id]?.sides || (isGenerated(id) && cellOf(seed, id, depthOf(id))?.sides) || {};
 
 // § kinds: the kind of place at each generated depth, from the depth it
 // starts at (D-165): grey rock chambers, then earth burrows from depth 6.

@@ -4,11 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.18 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.19 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 46, a region's layout:** rooms laid out from the seed, joined by
-openings (D-169, D-171). Read `WORLD.md` and Q-037 first.
+**Step 46b, stairs that line up:** stairs down lead to stairs up in the
+same cell at the same tile one floor down, and depths 4 and 5 become
+grids too (D-202). Read `src/core/region.js` and D-201 first.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -36,7 +37,8 @@ Getting around
 - [x] 44 The camera: a room bigger than the screen scrolls, 0.2.15
 - [x] 45 Side openings: walk off an edge into the next room, 0.2.16
 A region
-- [ ] 46 A region's layout from the seed, rooms joined by openings
+- [x] 46 A region's layout from the seed, rooms joined by openings, 0.2.19
+- [ ] 46b Stairs line up between floors; depths 4 and 5 as grids (D-202)
 - [ ] 47 The map screen, and dev Reveal map (D-176)
 The surface
 - [ ] 48 The first outside room: woods (Q-034)
@@ -58,13 +60,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.16, side openings.** The first room's bottom gap
-  is a doorway into a new crypt room south of it. Owner's picks: a
-  hand-made one-screen crypt room at depth 1, its flask and rat from the
-  seed; one step out of the doorway crosses, a turn, no line, the stairs'
-  fade; rats stay behind (D-197). The owner's idea: the hearts, depth
-  and oil move to a strip above the room, the wrench joins pause and the
-  lantern in a row above that (D-198). Playtest: https://claude.ai/artifact/UCou8cY9RUDJpzNdBPptPB
 - **2026-10-20, 0.2.17, sideways.** Held sideways, the hearts, depth
   and oil stack in a column left of the room, so it can grow. Owner's
   picks: wrench top left, pause top right, lantern bottom right; dev
@@ -74,3 +69,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   Owner's picks: left, full height; a word per tab; 44 px rows; the
   stats line in the pixel font, bottom left (D-200).
   Playtest: https://claude.ai/artifact/PdsgM2BVcrBiPcFFzSCF9j
+- **2026-10-20, 0.2.19, depth 3 as a grid.** Depth 3 is three cave
+  rooms in an L, from a 2 × 2 grid with one cell empty, joined by
+  one-tile openings. Owner's picks: depth 3 first; the seed picks the
+  stairs room; a flask, rat and herb in the others; depths 4 and 5 wait
+  (D-201). The owner's idea: stairs line up between floors, step 46b
+  (D-202). Playtest: https://claude.ai/artifact/HXDUsvKafDfgcE9791My4V

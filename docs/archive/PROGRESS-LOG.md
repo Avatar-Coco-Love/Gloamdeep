@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.16, side openings.** The first room's bottom gap
+  is a doorway into a new crypt room south of it. Owner's picks: a
+  hand-made one-screen crypt room at depth 1, its flask and rat from the
+  seed; one step out of the doorway crosses, a turn, no line, the stairs'
+  fade; rats stay behind (D-197). The owner's idea: the hearts, depth
+  and oil move to a strip above the room, the wrench joins pause and the
+  lantern in a row above that (D-198). Playtest: https://claude.ai/artifact/UCou8cY9RUDJpzNdBPptPB
 - **2026-10-20, 0.2.15, the camera.** Caves from depth 3 down grow to
   17 × 20 tiles, and the view follows the hero. Owner's picks: the hero
   stays on the middle tile, the camera stops at the room's edges; the

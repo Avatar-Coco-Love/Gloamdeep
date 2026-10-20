@@ -40,7 +40,8 @@ with the hour?
 
 **Q-037 · How regions are generated and joined** (stage 0.3)
 Proposed in `WORLD.md`: two passes, the region's layout first, then each
-room made to fit its ways in, each room with its own seed. How do
+room made to fit its ways in, each room with its own seed. Built for
+depth 3 (D-201); the owner left the rest open until a second region. How do
 regions join each other: grid edge to grid edge on the surface, and
 stairs or cave mouths between the surface and the regions below?
 

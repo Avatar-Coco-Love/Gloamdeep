@@ -147,3 +147,18 @@ drawer narrows to its tabs. Rows stay 44 px tall. Every dev word, the
 stats line too, is in the game's pixel font at double size; the stats
 line stays at the bottom left. When the drawer is short (sideways) the
 tabs and tools scroll. D-093's colours stay.
+
+**D-201 · 2026-10-20 · Depth 3 is a grid of rooms** (step 46, owner's
+picks, part of Q-037) Depth 3 is the first region laid out from the
+seed: a 2 × 2 grid with one cell left empty, so three cave rooms in an
+L, each 17 × 20. Rooms side by side join by a one-tile opening at a spot
+on their shared edge the seed picks. The seed picks the room with the
+stairs up and down and the torch; the other two hold a flask, a rat and
+a herb each, for now. Depths 4 and 5 stay one room until step 46b.
+
+**D-202 · 2026-10-20 · Stairs line up between floors** (step 46, the
+owner's idea, built at step 46b) Each floor knows what lies directly
+above and below it: stairs down in a cell at a tile lead to stairs up in
+the same cell at the same tile one floor down, and generation makes each
+floor fit. The crypt's stairs down line up with depth 3's stairs up by
+the same tile numbers, which fit inside the bigger cave room.
