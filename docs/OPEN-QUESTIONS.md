@@ -10,10 +10,6 @@ else entirely.
 
 ---
 
-**Q-025 · Turning tapping or swiping off** (when a settings menu exists)
-Tapping and swiping both work at once (D-042). Should the settings menu
-offer a switch: tap only, swipe only, or both? Where does that menu live?
-
 **Q-026 · Walking around walls to a held finger** (pathfinding, later)
 A held finger now steps straight toward the finger and bumps any wall in
 the way (D-044). Should the hero find a way around walls to reach it,
@@ -81,9 +77,3 @@ screen with everything revealed (D-176).
 D-019 keeps the world fixed and puts endless, renewed depths behind
 portals (D-032). Should the first cave (D-175) end at a set depth, with
 today's endless depths moved behind a portal, or keep going down?
-
-**Q-044 · A main menu, then UI and dev tools** (soon, the owner's wish)
-The owner wants a main menu with all its options, then further
-improvements to the UI and the dev tools. What does the menu hold (new
-journey, continue, settings, Q-025's tap or swipe switch…), how does it
-look, and where in the stage 0.3 plan does it go?

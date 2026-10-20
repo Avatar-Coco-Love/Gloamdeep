@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.4 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.5 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
 **Step 42, design the starting region.** Read `WORLD.md`, then Q-036,
@@ -24,6 +24,11 @@ a step when merged and add its version.
 - [x] 31 Plan 0.2, 0.1.27 · 32 Natural caves, 0.2.0 · 33 Depths change
   kind, 0.2.1
 - [ ] 42 Design the starting region (docs only)
+The main menu (D-177 to D-181; step order proposed, may change)
+- [ ] 52 A title screen with New journey, the lantern in the dark (D-181)
+- [ ] 53 The pause menu: Resume, Back to title
+- [ ] 54 Settings, with the tap or swipe switch
+- [ ] 55 The motion switch · 56 The seed · 57 How to play
 Getting around
 - [ ] 43 Stairs must be found: dimmer, only where fog has lifted (D-174)
 - [ ] 44 The camera: a room bigger than the screen scrolls (D-172)
@@ -41,21 +46,14 @@ Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
 kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
 40 levels, 41 first gear.
 
-Soon, at the owner's wish: a main menu with its options, then UI and
-dev tool improvements (Q-044); where it fits in the plan is asked then.
+After the menu, at the owner's wish: UI and dev tool improvements.
 
-Ideas for later: landmarks, NPC houses, special items, a second region,
+Ideas for later: menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-19, 0.2.2, stairs that match the place.** Owner's picks of
-  options shown: in grey rock and earth the steps are pale stone with
-  violet lips, in a square opening of the ground's colour that darkens
-  going down, inside a dark rim; the crypt keeps its stairs. Rough-cut
-  steps and a dug hole were too distorted (D-167). Playtest:
-  https://claude.ai/artifact/B2Futybpzz4XofbEzZggL7
 - **2026-10-19, 0.2.3, ideas from a surface sketch.** At the owner's
   request, a sketch (not in the game) of a woods clearing with a cave
   mouth, at morning, noon, dusk or night. Owner's notes: trees need
@@ -70,3 +68,10 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   picks: stage 0.3 is the world, next; today's game becomes the first
   cave. Written in `WORLD.md` (D-168 to D-176, Q-036 to Q-043). The
   owner approved the stage 0.3 order and asked for a main menu soon.
+- **2026-10-20, 0.2.5, the main menu planned.** Owner's picks: a title
+  screen with the menu on it and a pause menu in play; buttons only for
+  what works; Settings holds a tap or swipe switch, a motion switch and
+  a seed, plus How to play; the menu comes after step 42; its look is
+  the lantern in the dark, drawn with the game's own art (D-177 to
+  D-181). Mock-up of the looks shown:
+  https://claude.ai/artifact/5cKubwaAFaAoH6ot3JAm7A

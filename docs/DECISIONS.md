@@ -153,3 +153,30 @@ the surface. Q-043 asks whether it gets a bottom.
 builds on D-021) Players uncover the map as they explore. Dev tools get
 a switch that reveals the whole map, and a map mode, which may be the
 same map players see. Details are Q-042.
+
+**D-177 · 2026-10-20 · A title screen and a pause menu** (owner's pick,
+part of Q-044) The game opens on a title screen with its name and the
+menu on it. During play a small pause menu offers Resume, Settings, How
+to play and Back to title.
+
+**D-178 · 2026-10-20 · The menu shows only what works** (owner's pick,
+part of Q-044) A button appears only once its feature exists: Continue
+with saving (step 37), Sound with sound. Nothing is shown greyed out.
+
+**D-179 · 2026-10-20 · What Settings holds first** (owner's picks,
+answers Q-025, part of Q-044) A Controls switch: tap and swipe, tap
+only, or swipe only. A Motion switch: full or reduced, on top of the
+device's own setting. A seed: random, or one typed in. How to play is
+its own page of the controls for touch, mouse and keyboard.
+
+**D-180 · 2026-10-20 · The menu comes after step 42** (owner's pick,
+part of Q-044) The menu steps follow the starting region's design
+(step 42), before the world steps from 43 on.
+
+**D-181 · 2026-10-20 · The menu's look: the lantern in the dark**
+(owner's pick, answers Q-044) Pitch black, the hero on crypt floor in
+the lantern's dithered light, the name glowing warm above and a small
+flame marking the chosen line. Drawn with the game's own tiles, sprites,
+light and font, so it matches the game exactly, not the mock-up's
+simplified copies. Picking themes, a changing or moving background and
+a moving hero may come later.
