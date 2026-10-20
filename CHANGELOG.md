@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.15 (2026-10-20)
+- The camera: the caves from depth 3 down are now about 1.5 screens
+  (17 × 20 tiles), and the view glides along with the hero, keeping them
+  in the middle and stopping at the cave's edges. The crypt rooms at the
+  top stay one screen and don't move.
+- Dev: the grid and pointed tile move with the camera.
+- Decisions: D-195.
+
 ## 0.2.14 (2026-10-20)
 - Stairs must be found: their violet glow stays hidden until your
   lantern has reached them once. Found, it glows half as bright as

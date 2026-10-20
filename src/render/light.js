@@ -2,14 +2,15 @@
 // default (ART-DIRECTION.md, "Light"; style study 1, lines 403–429).
 // Shadow edges blend over one 4 × 4 cell into the dithered bands (D-053).
 // The room sets the darkness and the remembered tiles' look (D-063); their
-// edge fades over one cell (D-060).
+// edge fades over one cell (D-060). Lights and cells are in room pixels; the
+// camera picks which of them land on the screen (D-195).
 import { CELL, seenCells } from '../core/light.js';
-import { W, H } from './screen.js';
+import { TILE, W, H } from './screen.js';
 
-const CW = W / CELL, CH = H / CELL;
+let CW = 0, CH = 0; // the room's size in cells
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + 0.5) / 16);
 const BANDS = 5;
-const known = new Uint8Array(CW * CH); // cells on remembered tiles
+let known = new Uint8Array(0); // cells on remembered tiles
 
 // How much of `cells` covers pixel x, y (0 to 1): the four nearest cell
 // centres mixed by distance, so an edge fades across one cell.
@@ -24,8 +25,14 @@ function blend(cells, x, y) {
 // `lights`: [{ x, y, r, cr, cg, cb }] in screen pixels: the lantern and any
 // torches (D-101). r 0 is no light at all, the lantern switched off (D-082).
 // `memory`: one byte per tile, 1 when remembered; null shows every tile remembered.
-const seenBy = []; // one cell buffer per light, reused every frame
-export function drawLight(ctx, room, lights, memory) {
+// `cam`: the room pixel at the screen's top-left (src/core/camera.js).
+const NO_SHIFT = { x: 0, y: 0 }; // a screen-sized room, as on the title
+let seenBy = []; // one cell buffer per light, reused every frame
+export function drawLight(ctx, room, lights, memory, cam = NO_SHIFT) {
+  if (room.cols * TILE / CELL !== CW || room.rows * TILE / CELL !== CH) { // a new room size: new buffers
+    CW = room.cols * TILE / CELL; CH = room.rows * TILE / CELL;
+    known = new Uint8Array(CW * CH); seenBy = [];
+  }
   const lit = [];
   for (const L of lights) {
     if (L.r <= 0) continue;
@@ -38,7 +45,8 @@ export function drawLight(ctx, room, lights, memory) {
   }
   const img = ctx.getImageData(0, 0, W, H), d = img.data;
   const { unseen, remembered } = room.dark;
-  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+  for (let sy = 0; sy < H; sy++) for (let sx = 0; sx < W; sx++) {
+    const x = sx + cam.x, y = sy + cam.y; // the room pixel; the dither keeps to the room, not the screen
     const th = BAYER[((y & 3) << 2) | (x & 3)];
     const amb = blend(known, x, y) > th ? remembered : unseen;
     let lr = 0, lg = 0, lb = 0;
@@ -51,7 +59,7 @@ export function drawLight(ctx, room, lights, memory) {
       f = Math.floor(Math.pow(f, 1.25) * s * BANDS + th) / BANDS;
       lr += f * L.cr; lg += f * L.cg; lb += f * L.cb;
     }
-    const k = (y * W + x) * 4;
+    const k = (sy * W + sx) * 4;
     d[k] = Math.min(255, d[k] * (amb[0] + lr));
     d[k + 1] = Math.min(255, d[k + 1] * (amb[1] + lg));
     d[k + 2] = Math.min(255, d[k + 2] * (amb[2] + lb));
