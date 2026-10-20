@@ -2,6 +2,13 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-19, 0.2.3, ideas from a surface sketch.** At the owner's
+  request, a sketch (not in the game) of a woods clearing with a cave
+  mouth, at morning, noon, dusk or night. Owner's notes: trees need
+  work, and a lantern shadow should follow a tree's shape, not its whole
+  tile; tree kinds, wind, weather and sun or moon shadows are for later
+  (Q-034, Q-035). Sketch:
+  https://claude.ai/artifact/NNdk6rD2Cgg1FkNguoaKg4
 - **2026-10-19, 0.2.2, stairs that match the place.** Owner's picks of
   options shown: in grey rock and earth the steps are pale stone with
   violet lips, in a square opening of the ground's colour that darkens

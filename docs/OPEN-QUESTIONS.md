@@ -37,11 +37,6 @@ follow the time of day, cast from where the sun (or the moon, see Q-027)
 is in the sky. Which weather, what does it change, and do shadows move
 with the hour?
 
-**Q-036 · The starting region** (first, in stage 0.3)
-Its name, grid size and which cells are used; where the home base,
-landmarks, cave entrances and NPC houses go; which promises hold for
-every seed (special items in named rooms or buildings). Designed together
-one rule at a time, in `docs/regions/` (D-170). See `WORLD.md`.
 
 **Q-037 · How regions are generated and joined** (stage 0.3)
 Proposed in `WORLD.md`: two passes, the region's layout first, then each
@@ -73,7 +68,11 @@ How it opens (button, key), what it shows (rooms as boxes, or every
 tile seen), markers or names, and whether dev map mode is the same
 screen with everything revealed (D-176).
 
-**Q-043 · Does the first cave have a bottom?** (stage 0.3)
-D-019 keeps the world fixed and puts endless, renewed depths behind
-portals (D-032). Should the first cave (D-175) end at a set depth, with
-today's endless depths moved behind a portal, or keep going down?
+**Q-045 · The starting region's name** (any time)
+The owner liked "Gloamwood" but felt it may suit a later place. Other
+ideas shown: Thornmere, The Greyhold. The owner may name it.
+
+**Q-046 · Where do the earth burrows go?** (when the first cave gets its bottom)
+D-165 makes depths from 6 down earth burrows, but the first cave now
+ends at depth 5 (D-185). Do burrows move behind the portal, become the
+bottom depths of the first cave, or wait for a later cave?

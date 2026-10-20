@@ -180,3 +180,24 @@ flame marking the chosen line. Drawn with the game's own tiles, sprites,
 light and font, so it matches the game exactly, not the mock-up's
 simplified copies. Picking themes, a changing or moving background and
 a moving hero may come later.
+
+**D-182 · 2026-10-20 · The starting region: 3 × 3, home in the centre**
+(step 42, owner's picks, part of Q-036) The starting region is a 3 × 3
+grid with all 9 cells used, every seed. The home base is in the centre
+cell, every seed. Its name is still open (Q-045). Rule sheet:
+`docs/regions/starting-region.md`.
+
+**D-183 · 2026-10-20 · Mountains north, woods elsewhere** (step 42,
+owner's pick, part of Q-036) The north row's 3 cells are mountain rooms;
+the other 6 are woods, every seed.
+
+**D-184 · 2026-10-20 · One cave, beside home; houses and ways out later**
+(step 42, owner's picks, answers Q-036) One cave entrance for now, the
+first cave's, in a side cell next to home (N, E, S or W from the seed),
+with room for more caves later. No NPC houses yet, a slot kept for later.
+Ways to other regions wait for the second region (Q-037).
+
+**D-185 · 2026-10-20 · The first cave ends at 5 levels** (step 42,
+owner's picks, answers Q-043) The first cave has a bottom: the 2 crypt
+rooms and depths 3 to 5. The endless depths move behind a portal at the
+bottom (D-019, D-032).
