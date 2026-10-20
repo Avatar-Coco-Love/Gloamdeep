@@ -1,7 +1,7 @@
 // § map: the floor the hero is on, from the tiles remembered (D-176, D-205)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { floorPlan, markAt, roomsFound, fitView, panView, zoomView, ZOOM_MAX } from '../src/core/map.js';
+import { floorPlan, markAt, roomsFound, fitView, panView, zoomView, ZOOM_MAX, floorsShown, turnFrom, stairsNear, stairsIn, centreView, DEEPEST } from '../src/core/map.js';
 import { makeWorld, step } from '../src/core/turn.js';
 import { goToDepth } from '../src/core/stairs.js';
 import { remember } from '../src/core/fog.js';
@@ -95,4 +95,47 @@ test('zooming keeps the point under the finger in place', () => {
   const v = panView(zoomView(fitView(p, w, h), p, w, h, 4), p, w, h, 40, 40), z = zoomView(v, p, w, h, 1, 60, 70);
   assert.ok(Math.abs((v.x + 60) / v.k - (z.x + 60) / z.k) < 0.2);
   assert.ok(Math.abs((v.y + 70) / v.k - (z.y + 70) / z.k) < 0.2);
+});
+
+// § turning (D-206): the map shows other floors seen; the hero stays put
+test('floors shown: the hero\'s own and every floor with a tile remembered, or 1 to 99 with reveal', () => {
+  let s = goToDepth(makeWorld('first', SEED), 3);
+  s = goToDepth(remember(s, { x: 8, y: 8, r: 200 }), 9);
+  assert.deepEqual(floorsShown(s), [3, 9]); // the first room was never lit
+  assert.deepEqual(floorsShown(goToDepth(s, 1)), [1, 3]); // nor depth 9
+  assert.deepEqual(floorsShown(goToDepth(remember(s, { x: 8, y: 8, r: 200 }), 1)), [1, 3, 9]);
+  assert.equal(floorsShown(s, true).length, DEEPEST);
+});
+
+test('an arrow skips floors never seen, and is greyed out when nothing lies that way', () => {
+  const floors = [1, 3, 9];
+  assert.equal(turnFrom(floors, 3, 'down'), 9);
+  assert.equal(turnFrom(floors, 3, 'up'), 1);
+  assert.equal(turnFrom(floors, 1, 'up'), null);
+  assert.equal(turnFrom(floors, 9, 'down'), null);
+});
+
+test('another floor shows from memory, with no hero dot', () => {
+  const s = goToDepth(goToDepth(makeWorld('first', SEED), 3), 4), p = floorPlan(s, false, 3);
+  assert.equal(p.depth, 3);
+  assert.equal(p.hero, null);
+  assert.deepEqual(p.rooms.map((r) => r.id), ['depth3']);
+  assert.ok(floorPlan(s).hero);
+});
+
+test('a tap near found stairs down turns to the floor below, on the matching stairs up', () => {
+  const s = goToDepth(makeWorld('first', SEED), 3), p = floorPlan(s, true), down = layoutAt(SEED, 3).down;
+  const room = p.rooms.find((r) => r.id === (layoutAt(SEED, 3).cells.find((c) => c.down).id));
+  const at = { x: room.x + down.x, y: room.y + down.y };
+  assert.equal(stairsNear(p, at.x + 3, at.y, 1, SEED), null); // too far
+  const near = stairsNear(p, at.x + 0.9, at.y + 0.2, 1, SEED);
+  assert.deepEqual([near.depth, near.arrive], [4, 'stairsUp']);
+  const below = floorPlan(s, true, 4), up = stairsIn(below, near.room, near.arrive), cell = below.rooms.find((r) => r.id === near.room);
+  assert.deepEqual([up.x - cell.x, up.y - cell.y], [down.x, down.y]); // lined up (D-202)
+});
+
+test('centring a view puts the tile in the window\'s middle, inside the floor\'s edges', () => {
+  const p = floorPlan(goToDepth(makeWorld('first', SEED), 3), true), v = centreView(p, 40, 40, 4, 10, 10);
+  assert.deepEqual(v, { k: 4, x: 10 * 4 + 2 - 20, y: 10 * 4 + 2 - 20 });
+  assert.deepEqual(centreView(p, 40, 40, 4, 0, 0), { k: 4, x: 0, y: 0 });
 });

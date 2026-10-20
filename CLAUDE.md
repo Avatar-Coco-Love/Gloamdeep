@@ -17,7 +17,7 @@ CSS and JavaScript, with everything drawn and synthesized in code.
   the owner's choice. This applies to design, art, code structure and bug
   fixes.
 - Never invent mechanics, story, names or numbers that are not in
-  `docs/DECISIONS.md` or its archive files (D-041, D-083, D-103, D-120, D-137, D-151, D-161, D-188, D-196). If something
+  `docs/DECISIONS.md` or its archive files (D-041, D-083, D-103, D-120, D-137, D-151, D-161, D-188, D-196, D-208). If something
   is missing, add it to
   `docs/OPEN-QUESTIONS.md` and ask.
 - Ask questions as **multiple choice** (the AskUserQuestion tool when it
@@ -59,6 +59,7 @@ Read the smallest file that answers the question.
 | `docs/archive/DECISIONS-FOUNDATION-6.md` | D-130 to D-158, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-STAGE-0.2-1.md` | D-159 to D-167, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-MENU.md` | D-177 to D-193, still in force | grep only, never read whole |
+| `docs/archive/DECISIONS-GETTING-AROUND.md` | D-194 to D-200, still in force | grep only, never read whole |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
 | `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
 | `docs/WORLD.md` | regions, ways between rooms, the map (D-170) | before any world, region or map step |

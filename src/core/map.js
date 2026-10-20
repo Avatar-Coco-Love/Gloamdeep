@@ -1,19 +1,22 @@
-// § map: the floor the hero is on, as the map screen shows it (D-176, D-205).
-// Plain data, no drawing. Every room of the floor sits on its grid, found by
-// walking the side openings from the hero's room; each is shown from the
-// tiles the hero remembers, or in full with the dev Reveal map switch, which
-// keeps the memory as it is.
-import { sidesOf, depthOf, tileAt } from './room.js';
+// § map: a floor as the map screen shows it (D-176, D-205), the hero's own
+// or another one the map has turned to (D-206). Plain data, no drawing.
+// Every room of the floor sits on its grid, found by walking the side
+// openings from one of its rooms; each is shown from the tiles the hero
+// remembers, or in full with the dev Reveal map switch, which keeps the
+// memory as it is.
+import { sidesOf, depthOf, tileAt, placeAt, placeBeside } from './room.js';
 import { fresh } from './stairs.js';
 
 const STEP = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 
-// (state, reveal) → { depth, cols, rows, rooms: [{ id, x, y, room, seen }], hero }.
+// (state, reveal, depth) → { depth, cols, rows, rooms: [{ id, x, y, room, seen }], hero }.
 // A room's x, y is its top-left tile on the whole floor; cols, rows the floor's
 // size in tiles. `seen` is null when everything shows (reveal). `hero` is the
-// hero's tile on the floor.
-export function floorPlan(state, reveal = false) {
-  const cells = new Map([[state.place, { x: 0, y: 0 }]]), todo = [state.place];
+// hero's tile on the floor, null on another floor. Depth is the hero's own
+// unless given; another floor must have a room shown (floorsShown).
+export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
+  const start = depth === depthOf(state.place) ? state.place : placeAt(depth);
+  const cells = new Map([[start, { x: 0, y: 0 }]]), todo = [start];
   while (todo.length) {
     const id = todo.shift(), at = cells.get(id);
     for (const [dir, to] of Object.entries(sidesOf(id, state.seed))) {
@@ -28,7 +31,51 @@ export function floorPlan(state, reveal = false) {
   const x1 = Math.max(...all.map((r) => r.at.x)), y1 = Math.max(...all.map((r) => r.at.y));
   const rooms = all.filter((r) => r.p).map(({ id, at, p }) => ({ id, x: (at.x - x0) * w, y: (at.y - y0) * h, room: p.room, seen: reveal ? null : p.seen }));
   const here = rooms.find((r) => r.id === state.place);
-  return { depth: depthOf(state.place), cols: (x1 - x0 + 1) * w, rows: (y1 - y0 + 1) * h, rooms, hero: { x: here.x + state.hero.x, y: here.y + state.hero.y } };
+  return { depth, cols: (x1 - x0 + 1) * w, rows: (y1 - y0 + 1) * h, rooms, hero: here ? { x: here.x + state.hero.x, y: here.y + state.hero.y } : null };
+}
+
+// § floors: the depths the map can turn to (D-206), shallowest first: the
+// hero's own and every floor with a room the hero has been in, or every
+// floor from 1 to DEEPEST with dev Reveal map
+export const DEEPEST = 99; // as deep as the dev Go to depth goes
+export function floorsShown(state, reveal = false) {
+  if (reveal) return Array.from({ length: DEEPEST }, (_, i) => i + 1);
+  const seen = Object.keys(state.elsewhere).filter((id) => state.elsewhere[id].seen.some(Boolean));
+  const all = new Set([state.place, ...seen].map(depthOf));
+  return [...all].sort((a, b) => a - b);
+}
+
+// The floor the map turns to from `depth`, way 'up' or 'down': the next one
+// shown that way, skipping floors never seen, or null (the arrow greyed out)
+export function turnFrom(floors, depth, way) {
+  return (way === 'up' ? floors.filter((d) => d < depth).pop() : floors.find((d) => d > depth)) ?? null;
+}
+
+// § stairs on the map: (plan, x, y, reach) → the found stairs nearest the
+// floor tile x, y (fractions allowed), within reach tiles of its centre, as
+// { depth, room, arrive }: the floor they lead to, the room there, and the
+// kind of the matching stairs in it (D-202). Null when none is that near or
+// they lead nowhere.
+export function stairsNear(plan, x, y, reach, seed) {
+  let best = null, most = reach * reach;
+  for (const { id, x: ox, y: oy, room, seen } of plan.rooms) {
+    for (let ty = 0; ty < room.rows; ty++) for (let tx = 0; tx < room.cols; tx++) {
+      if (markAt(room, seen, tx, ty) !== 'stairs') continue;
+      const d = (ox + tx + 0.5 - x) ** 2 + (oy + ty + 0.5 - y) ** 2;
+      if (d <= most) { most = d; best = { id, tile: tileAt(room, tx, ty) }; }
+    }
+  }
+  const to = best?.tile.leads && placeBeside(best.id, best.tile.leads, seed);
+  return to ? { depth: depthOf(to), room: to, arrive: best.tile.arrive } : null;
+}
+
+// Where the stairs of kind `id` are on the plan's floor, in room `roomId`, as a floor tile, or null
+export function stairsIn(plan, roomId, id) {
+  const r = plan.rooms.find((m) => m.id === roomId);
+  if (r) for (let y = 0; y < r.room.rows; y++) for (let x = 0; x < r.room.cols; x++) {
+    if (tileAt(r.room, x, y).id === id) return { x: r.x + x, y: r.y + y };
+  }
+  return null;
 }
 
 // § marks: (room, seen, x, y) → what the map shows at that tile: 'stairs' for a
@@ -65,6 +112,12 @@ export const fitView = (plan, w, h) => clampView({ k: fitK(plan, w, h), x: 0, y:
 export function clampView(view, plan, w, h) {
   const fit = (at, size, win) => (size <= win ? -Math.floor((win - size) / 2) : Math.max(0, Math.min(size - win, Math.round(at))));
   return { k: view.k, x: fit(view.x, plan.cols * view.k, w), y: fit(view.y, plan.rows * view.k, h) };
+}
+
+// The view at zoom k (at least the whole floor's) with tile x, y in the window's middle
+export function centreView(plan, w, h, k, x, y) {
+  const at = Math.max(fitK(plan, w, h), Math.min(ZOOM_MAX, k));
+  return clampView({ k: at, x: (x + 0.5) * at - w / 2, y: (y + 0.5) * at - h / 2 }, plan, w, h);
 }
 
 // The view scrolled by dx, dy window pixels

@@ -4,11 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.21 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.22 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 47b, the map turns between floors** (D-206). Read D-205,
-D-206, `src/core/map.js` and `src/render/map.js` first.
+**Step 48, the first outside room: woods** (Q-034, D-175). Read
+`docs/WORLD.md`, D-175 and Q-034 first, then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -39,7 +39,7 @@ A region
 - [x] 46 A region's layout from the seed, rooms joined by openings, 0.2.19
 - [x] 46b Stairs line up between floors; depths 4 and 5 as grids, 0.2.20
 - [x] 47 The map screen, and dev Reveal map, 0.2.21
-- [ ] 47b The map turns between floors (D-206)
+- [x] 47b The map turns between floors, 0.2.22
 The surface
 - [ ] 48 The first outside room: woods (Q-034)
 - [ ] 49 A cave entrance down to the first cave (D-175, Q-043)
@@ -60,12 +60,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.19, depth 3 as a grid.** Depth 3 is three cave
-  rooms in an L, from a 2 × 2 grid with one cell empty, joined by
-  one-tile openings. Owner's picks: depth 3 first; the seed picks the
-  stairs room; a flask, rat and herb in the others; depths 4 and 5 wait
-  (D-201). The owner's idea: stairs line up between floors, step 46b
-  (D-202). Playtest: https://claude.ai/artifact/HXDUsvKafDfgcE9791My4V
 - **2026-10-20, 0.2.20, stairs line up.** Stairs down lead to stairs
   up at the same tile in the same cell one floor down; depths 4 and 5
   are L grids too. Owner's picks: stairs down in another room; the seed
@@ -75,3 +69,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   shows the floor you're on, each room drawn from the tiles remembered.
   After the playtest: a box over the veiled room, drag and pinch, a
   close cross (D-205). Next it turns between floors (D-206). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3
+- **2026-10-20, 0.2.22, the map turns.** Arrows beside "DEPTH 3",
+  < and >, Page Up and Page Down, or a tap on found stairs show other
+  floors seen; the hero stays put. Owner's picks: skip floors never seen; a
+  floor opens whole; a generous stairs tap; dim grey arrows (D-207).
+  D-194 to D-200 archived (D-208). Playtest: https://claude.ai/artifact/QpDNN5QC2X5dBshJ2fxxif

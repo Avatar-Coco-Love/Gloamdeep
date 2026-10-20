@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.22 (2026-10-20)
+- The map turns between floors: arrows beside "DEPTH 3", < and >, or
+  Page Up and Page Down show the floor above or below. The hero stays put.
+- Floors never seen are skipped; an arrow greys out when nothing seen
+  lies that way. Dev Reveal map turns through every floor from 1 to 99.
+- Tapping stairs found on the map turns it to the floor they lead to,
+  centred on the matching stairs. The hero's dot shows on their own floor only.
+- D-194 to D-200 moved to `docs/archive/DECISIONS-GETTING-AROUND.md`.
+- Decisions: D-207, D-208.
+
 ## 0.2.21 (2026-10-20)
 - A map: the new map button (left of pause) or the M key shows the
   floor you are on, in a box over the darkened room. Each room is drawn

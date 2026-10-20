@@ -41,7 +41,8 @@ tools to be chosen together later.
   forgets too (D-061, D-062), and resets only the room the hero is in
   (D-136). Rules: `src/core/fog.js`.
 - Reveal map (a switch): the map screen shows every room of the floor
-  in full; the memory is kept (D-176, D-205). Rules: `src/core/map.js`.
+  in full, and turns to any floor from 1 to 99; the memory is kept
+  (D-176, D-205, D-206). Rules: `src/core/map.js`.
 - Refill, Empty and a slider for any amount, no turn passed (D-066,
   D-091).
   Rules: `src/core/oil.js`.
