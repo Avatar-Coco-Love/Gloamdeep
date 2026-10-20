@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.20, stairs line up.** Stairs down lead to stairs
+  up at the same tile in the same cell one floor down; depths 4 and 5
+  are L grids too. Owner's picks: stairs down in another room; the seed
+  picks the room under the crypt; depth 6 and down line up as well
+  (D-203). Later, odd rooms line up by place on the floor (D-204). Playtest: https://claude.ai/artifact/QjizYhRsMhB1eJSom6kKjS
 - **2026-10-20, 0.2.19, depth 3 as a grid.** Depth 3 is three cave
   rooms in an L, from a 2 × 2 grid with one cell empty, joined by
   one-tile openings. Owner's picks: depth 3 first; the seed picks the

@@ -50,7 +50,7 @@ export function drawMap(c, view, t, still, turns) {
   c.fillStyle = LINE;
   c.fillRect(x, y, w, 1); c.fillRect(x, y + h - 1, w, 1);
   c.fillRect(x, y, 1, h); c.fillRect(x + w - 1, y, 1, h);
-  const head = `DEPTH ${plan.depth}`;
+  const head = plan.depth === 0 ? 'SURFACE' : `DEPTH ${plan.depth}`; // as the strip says it (D-209)
   const hx = Math.floor((W - textWidth(head)) / 2);
   drawText(c, head, hx, y + 5, EMBER);
   arrow(c, hx - GAP - 5, y + 7, false, turns.up ? EMBER : DIM);

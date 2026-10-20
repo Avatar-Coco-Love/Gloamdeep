@@ -86,7 +86,8 @@ export function buildPanel(panel, opts, saved, game) {
   }
 
   // § room: Reset room (D-050, D-062) and Forget (D-061), and Go to depth:
-  // pick a depth with − and +, then Go; no turn passes (D-166)
+  // pick a depth with − and +, then Go; no turn passes (D-166). Go outside
+  // goes to the woods on the surface, until a cave mouth leads there (D-209).
   let want = 1, shownPlace = null;
   const depthLabel = el('span', { className: 'dev-depth' });
   const pickDepth = (d) => { want = Math.max(1, Math.min(MAX_DEPTH, d)); setPixelText(depthLabel, String(want)); };
@@ -98,7 +99,7 @@ export function buildPanel(panel, opts, saved, game) {
     depthLabel,
     button('+', () => pickDepth(want + 1)),
     button('Go', () => game.set(game.goTo(want))),
-  ), { className: 'dev-row dev-steps' }));
+  ), { className: 'dev-row dev-steps' }), row(button('Go outside', () => game.set(game.goTo(0)))));
 
   // § oil: a slider for any amount (D-091), Refill and Empty (D-066); no turn passes
   const oil = section('oil', 'Oil');

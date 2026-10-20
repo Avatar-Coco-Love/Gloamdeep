@@ -3,6 +3,7 @@
 import { OUTSIDE } from './tiles.js';
 import { byLetter } from './registry.js';
 import { generateRoom } from './cave.js';
+import { generateWoods } from './woods.js';
 import { seedFor } from './rng.js';
 import { scatter } from './scatter.js';
 import { cellOf, downPlaceIn } from './region.js';
@@ -94,6 +95,9 @@ export const PLACES = {
   first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1, sides: { down: 'south' } },
   second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2, guard: true },
   south: { map: SOUTH_ROOM, start: { x: 5, y: 0 }, lights: SOUTH_LIGHTS, enemies: SOUTH_ENEMIES, items: SOUTH_ITEMS, depth: 1, slot: 1, sides: { up: 'first' } },
+  // The first outside room, on the surface, depth 0, made from the seed in daylight (step 48, D-209).
+  // For now only the dev Go outside button leads there; the cave mouth comes next (D-175).
+  woods: { make: generateWoods, depth: 0, look: 'woods', day: true },
 };
 
 // § depth: the place at each depth, and back. Below the second room every
@@ -107,6 +111,7 @@ export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.le
 export const isGenerated = (id) => !PLACES[id];
 // The hand-made rooms keep their shape; the seed places what is in them (D-192).
 export function placeFor(id, seed = 1) {
+  if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth)) };
   if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)) };
   const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
   return { ...((cell && generateRoom(cell.seed, shape, cell)) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
@@ -136,13 +141,15 @@ export function placeBeside(id, way, seed = 1) {
 // § begin: any place as it begins, from its plan and the game's seed
 export function beginPlace(id, seed) {
   const p = placeFor(id, seed);
-  return { room: makeRoom(p.map, CAVE, p.look), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
+  return { room: makeRoom(p.map, p.day ? DAYLIGHT : CAVE, p.look), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
 }
 
 // § darkness: each place sets how dark never-seen tiles are and how
 // remembered ones look, as light multipliers (D-063). The first room is a
 // cave: pitch black outside the light, with memory a faint grey.
 export const CAVE = { unseen: [0, 0, 0], remembered: [0.095, 0.095, 0.095] };
+// Plain daylight outside (D-209): the whole room lit and seen, no lantern needed (D-025).
+export const DAYLIGHT = { unseen: [1, 1, 1], remembered: [1, 1, 1], day: true };
 
 // § look: how a room's walls and floor are drawn. The first rooms are
 // crypt bricks; generated depths are raw grey rock (D-164) or earth (D-165).

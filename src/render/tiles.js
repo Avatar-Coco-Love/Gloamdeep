@@ -5,6 +5,7 @@ import { isWall, tileAt } from '../core/room.js';
 import { stairsFacing } from '../core/stairs.js';
 import { TILE as T } from './screen.js';
 import { drawRock } from './rock.js';
+import { drawWoods, drawTree } from './woods.js';
 
 const px = (c, x, y, col) => { c.fillStyle = col; c.fillRect(x, y, 1, 1); };
 
@@ -102,17 +103,21 @@ function drawSteps(c, room, tx, ty, up) {
 }
 
 // § room: draw every tile of a room, by registry id (D-048), or a rock
-// room whole, as its edges don't keep to the tiles (D-164)
+// room whole, as its edges don't keep to the tiles (D-164), or the woods whole
+// (D-209). A tree spawned elsewhere stands on that room's floor.
 const DRAW = {
   wall: drawWall, floor: drawFloor,
+  tree: (c, room, x, y) => { drawFloor(c, room, x, y); drawTree(c, room, x, y); },
   stairsDown: (c, room, x, y) => drawSteps(c, room, x, y, false),
   stairsUp: (c, room, x, y) => drawSteps(c, room, x, y, true),
 };
 export function drawRoom(c, room) {
-  const rock = room.look !== 'crypt'; // grey rock or earth (D-164, D-165)
+  const woods = room.look === 'woods';
+  if (woods) drawWoods(c, room);
+  const rock = !woods && room.look !== 'crypt'; // grey rock or earth (D-164, D-165)
   if (rock) drawRock(c, room);
   for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
     const id = tileAt(room, x, y).id;
-    if (!rock || tileAt(room, x, y).leads) DRAW[id](c, room, x, y);
+    if (woods ? id !== 'floor' && id !== 'tree' : !rock || tileAt(room, x, y).leads || id === 'tree') DRAW[id](c, room, x, y);
   }
 }

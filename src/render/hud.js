@@ -64,9 +64,10 @@ function drawHearts(c, health, max, bx, by) {
 
 // § depth: how deep the hero is, "DEPTH 1" for the first room, in the top
 // middle between the hearts and the oil bar, in a box like theirs and the
-// text line's grey (D-146). A null x centres it.
+// text line's grey (D-146). A null x centres it. Outside, depth 0, it says
+// SURFACE until places have names (D-209).
 function drawDepth(c, depth, x, by) {
-  const text = `DEPTH ${depth}`, w = textWidth(text) + 6, h = 7 + 4;
+  const text = depth === 0 ? 'SURFACE' : `DEPTH ${depth}`, w = textWidth(text) + 6, h = 7 + 4;
   const bx = x ?? Math.floor((W - w) / 2);
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
