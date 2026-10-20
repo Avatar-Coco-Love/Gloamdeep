@@ -72,6 +72,12 @@ screen with everything revealed (D-176).
 The owner liked "Gloamwood" but felt it may suit a later place. Other
 ideas shown: Thornmere, The Greyhold. The owner may name it.
 
+**Q-047 · A bestiary** (any time)
+The owner wondered whether how to fight (walk into a rat to hit it,
+D-109) belongs in a "Bestiary" rather than How to play (D-193). Is
+there one, what is it called, where does it open, and what does it
+show?
+
 **Q-046 · Where do the earth burrows go?** (when the first cave gets its bottom)
 D-165 makes depths from 6 down earth burrows, but the first cave now
 ends at depth 5 (D-185). Do burrows move behind the portal, become the

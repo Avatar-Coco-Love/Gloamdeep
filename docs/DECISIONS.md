@@ -185,3 +185,13 @@ places their flask and rat, as generated rooms do (D-149): the flask at
 least 5 steps from the start, the rat at least 3 tiles from the start
 and every stairs, and the second room's rat within 2 tiles of its flask
 (D-138). A fall's new seed places them afresh (extends D-136, D-148).
+
+**D-193 · 2026-10-20 · How to play** (step 58, owner's picks) One page
+per way of playing: Touch, Mouse and Keyboard, headed How to play, the
+page's name between two arrows, then Back. Left, Right, a tap on an
+arrow or picking the name flip the page; it opens on the way last used
+(touch until something is pressed). It lists Walk, Wait, Lantern and
+Pause; how to hit a rat waits for a bestiary (Q-047). Walking by touch
+or mouse follows the Controls switch, so only what works is shown
+(D-178, D-189). On the title it sits under New journey; on the pause
+menu after Settings (D-177). Back, Esc or P return to the menu.
