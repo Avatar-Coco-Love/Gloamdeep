@@ -156,3 +156,11 @@ is blocked it starts on Tap and swipe. It changes only walking in
 play: Tap only stops swipes; Swipe only stops taps toward a side and
 held fingers, though a tap on the hero still waits. Menus always take
 both, so no one is locked out.
+
+**D-190 · 2026-10-20 · How the Motion switch works** (step 55, owner's
+picks) Settings gains a second line under Controls: "Motion: Full" or
+"Motion: Reduced", above Back. Picking it, Left or Right flip it.
+Until it is picked it follows the device's own reduced-motion setting
+and shows what that setting is; once picked, the pick wins and is kept
+on this device. Reduced stills the same things the device setting
+always did: the walking slide, the shake, flames, flicker and fades.

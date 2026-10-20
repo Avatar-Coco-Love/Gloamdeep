@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.9 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.10 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 55, the motion switch.** Read D-179 and D-189. Propose how
-"Motion: Full / Reduced" sits under Controls in Settings and how it
-joins the device's own reduced-motion setting (2 or 3 options).
+**Step 56, the seed.** Read D-179, D-148 and D-190. Propose how
+"Seed: random, or one typed in" sits in Settings, and how a phone types
+a number on the game's canvas (2 or 3 options).
 
 ## Waiting on the owner
 - The starting region's name (Q-045), any time.
@@ -27,7 +27,8 @@ The main menu (D-177 to D-181; step order proposed, may change)
 - [x] 52 A title screen with New journey, the lantern in the dark, 0.2.7
 - [x] 53 The pause menu: Resume, Back to title, 0.2.8
 - [x] 54 Settings, with the tap or swipe switch, 0.2.9
-- [ ] 55 The motion switch · 56 The seed · 57 How to play
+- [x] 55 The motion switch, 0.2.10
+- [ ] 56 The seed · 57 How to play
 Getting around
 - [ ] 43 Stairs must be found: dimmer, only where fog has lifted (D-174)
 - [ ] 44 The camera: a room bigger than the screen scrolls (D-172)
@@ -53,13 +54,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.7, the title screen.** The game opens on the
-  lantern in the dark: the hero on crypt floor, the name carved at
-  double size, New journey with a small flame. Owner's picks: drawn on
-  the game's own canvas; the wrench and lantern button hidden until the
-  journey starts; the carved name, picked from 5 looks (D-186).
-  Playtest:
-  https://claude.ai/artifact/HSUj1xqGshTeVcsy7hJNei
 - **2026-10-20, 0.2.8, the pause menu.** A button with two bars beside
   the lantern button, or Esc or P, opens Resume and Back to title over
   the darkened room. Owner's picks: the button plus keys; drawn over the
@@ -72,3 +66,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   this device; it changes only walking, menus take both (D-189).
   Playtest:
   https://claude.ai/artifact/UWBYLdgQua9oFYhXimdpcP
+- **2026-10-20, 0.2.10, the Motion switch.** Settings gains "Motion:
+  Full / Reduced" under Controls. Owner's picks: under Controls, picked
+  or flipped with Left and Right like Controls; it follows the device's
+  reduced-motion setting until picked, then the pick wins and is kept
+  (D-190). Playtest:
+  https://claude.ai/artifact/U8nbNvay7vcMURLEk9PY6c
