@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.14, stairs must be found.** The stairs' glow stays
+  hidden until the lantern has reached them once. Owner's picks: the
+  stairs tile itself must be found; half as bright, reaching 1 tile; all
+  stairs, the crypt's too; a hidden glow wakes no rat (D-194, answers
+  Q-041). Playtest: https://claude.ai/artifact/56cQtkLqEB6kropucCMpte
 - **2026-10-20, 0.2.13, How to play.** The title and pause menus gain
   How to play. Owner's picks: a page each for Touch, Mouse and Keyboard,
   flipped with Left and Right, opening on the way last used; under New

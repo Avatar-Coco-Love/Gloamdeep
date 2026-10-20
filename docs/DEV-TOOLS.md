@@ -22,6 +22,9 @@ tools to be chosen together later.
 - The panel has sections, View, Spawn, Room, Oil, Hero, Share: fixed buttons
   at the top, one open below, remembered (D-087). Colours: D-093. Code: `src/dev/panel.js`. **A new tool
   goes into a section there**, or a new section.
+- Sideways, the wrench stands left of the picture's top; the panel and
+  the stats line keep to the space left of the room, the panel ending
+  above the stats line (D-199).
 - Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
   spawn pick and pointed tile (D-088). New state joins it as it arrives:
   health, depth, and the seed (D-150).

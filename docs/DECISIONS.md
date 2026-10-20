@@ -122,3 +122,15 @@ screen, when that gives a bigger picture, the row stands beside it: the
 wrench at the top left, the lantern at the top right with pause under it.
 (Changed in this PR: first the boxes turned faint over the hero, then
 the owner moved them out of the room instead.)
+*Partly superseded by D-199 (2026-10-20): the wide-screen layout.*
+
+**D-199 · 2026-10-20 · Sideways, the room uses the sides** (UI step,
+the owner's picks; changes the wide-screen part of D-198) When the
+picture is bigger that way (a phone held sideways, a wide PC window),
+the hearts, depth and oil stack in a column at the room's left, hearts
+on top, then depth, then oil. The dev wrench stands left of the
+picture's top, pause right of it, and the lantern at the bottom right,
+under the thumb. The dev panel and the stats line keep to the space left
+of the picture and never cover the room; the panel ends above the stats
+line and scrolls. Upright nothing changes. Whether the room should fill
+the whole screen sideways waits for a playtest (Q-048).

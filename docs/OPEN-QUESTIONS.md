@@ -65,6 +65,11 @@ How it opens (button, key), what it shows (rooms as boxes, or every
 tile seen), markers or names, and whether dev map mode is the same
 screen with everything revealed (D-176).
 
+**Q-048 · Should the room fill the screen sideways?** (after the 0.2.17 playtest)
+The owner is weighing it. Sideways, the camera could show more tiles to
+the left and right of the hero, or zoom in and scroll more. Either way a
+player would see more, or differently, held sideways than upright.
+
 **Q-045 · The starting region's name** (any time)
 The owner liked "Gloamwood" but felt it may suit a later place. Other
 ideas shown: Thornmere, The Greyhold. The owner may name it.

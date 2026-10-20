@@ -42,7 +42,23 @@ export function createDev(stage, canvas, game, hud) {
   const readout = el('div', { id: 'dev-readout' });
   const tools = buildPanel(panel, opts, () => save(opts), game);
   document.body.append(button, panel, readout);
-  keepPlaced(hud, button, -1, (top, left) => { panel.style.top = top + 52 + 'px'; panel.style.left = left + 'px'; });
+  // under the wrench, ending at the screen's bottom; sideways it keeps to the
+  // space left of the picture and ends above the stats line, which keeps to
+  // that space too (D-199)
+  let beside = false;
+  const fitPanel = () => {
+    const end = beside ? readout.getBoundingClientRect().top : innerHeight;
+    panel.style.maxHeight = Math.max(88, end - 8 - parseFloat(panel.style.top)) + 'px';
+  };
+  keepPlaced(hud, button, -1, (top, left, pic) => {
+    const p = panel.style;
+    beside = left < pic.left;
+    p.top = top + 52 + 'px';
+    p.left = beside ? 'auto' : left + 'px'; p.right = beside ? innerWidth - left - 44 + 'px' : 'auto';
+    p.maxWidth = readout.style.maxWidth = beside ? pic.left - 16 + 'px' : '';
+    fitPanel();
+  });
+  new ResizeObserver(fitPanel).observe(readout);
 
   const showPanel = (show) => {
     panel.hidden = !show;

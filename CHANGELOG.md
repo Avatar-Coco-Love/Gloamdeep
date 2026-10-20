@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.17 (2026-10-20)
+- A phone held sideways (or a wide PC window): the hearts, depth and oil
+  stand in a column at the room's left, so the room can grow. The wrench
+  sits at the top left, pause at the top right, and the lantern at the
+  bottom right, under your thumb. Upright, nothing changes.
+- Sideways, the dev panel and the stats line keep to the space left of
+  the room and never cover it; the panel ends above the stats line and
+  scrolls instead of running off the screen.
+- Decisions: D-199. New question: Q-048 (the room filling the screen).
+
 ## 0.2.16 (2026-10-20)
 - Side openings: the gap in the first room's bottom wall is now a
   doorway. Step out through it into a new crypt room to the south, and

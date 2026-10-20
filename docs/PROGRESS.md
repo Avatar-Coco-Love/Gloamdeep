@@ -4,14 +4,15 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.16 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.17 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 46, a region's layout:** rooms laid out from the seed, joined by
-openings (D-169, D-171). Read `WORLD.md` and Q-037 first. Or first the
-UI and dev tool improvements the owner wished for, if they prefer.
+**U2, the dev side drawer:** a tall strip at the screen's edge, sections
+down its side like tabs, in the game's pixel font (the owner's picks).
+Propose details first. Then step 46 (read `WORLD.md`, Q-037).
 
 ## Waiting on the owner
+- Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
@@ -48,7 +49,9 @@ Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
 kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
 40 levels, 41 first gear.
 
-After the menu, at the owner's wish: UI and dev tool improvements.
+UI and dev tools (the owner's wish, before step 46)
+- [x] U1 Sideways, the room uses the sides, 0.2.17
+- [ ] U2 The dev side drawer, in the pixel font
 
 Ideas for later: menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
@@ -56,11 +59,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.14, stairs must be found.** The stairs' glow stays
-  hidden until the lantern has reached them once. Owner's picks: the
-  stairs tile itself must be found; half as bright, reaching 1 tile; all
-  stairs, the crypt's too; a hidden glow wakes no rat (D-194, answers
-  Q-041). Playtest: https://claude.ai/artifact/56cQtkLqEB6kropucCMpte
 - **2026-10-20, 0.2.15, the camera.** Caves from depth 3 down grow to
   17 × 20 tiles, and the view follows the hero. Owner's picks: the hero
   stays on the middle tile, the camera stops at the room's edges; the
@@ -73,3 +71,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   fade; rats stay behind (D-197). The owner's idea: the hearts, depth
   and oil move to a strip above the room, the wrench joins pause and the
   lantern in a row above that (D-198). Playtest: https://claude.ai/artifact/UCou8cY9RUDJpzNdBPptPB
+- **2026-10-20, 0.2.17, sideways.** Held sideways, the hearts, depth
+  and oil stack in a column left of the room, so it can grow. Owner's
+  picks: wrench top left, pause top right, lantern bottom right; dev
+  panel and stats beside the room (D-199). Filling the screen: Q-048. Playtest: https://claude.ai/artifact/VyFTUUKJ5WB4AwZ98615Ma

@@ -6,14 +6,14 @@ import { enemyAt } from './core/enemies.js';
 import { glowsIn, goToDepth } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
-import { createScreen, TILE, W, H, HUD_H } from './render/screen.js';
+import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
 import { drawHero, drawItems, drawEnemies } from './render/sprites.js';
 import { drawLight, flicker } from './render/light.js';
 import { drawBrackets, torchLights, drawFlames } from './render/torches.js';
 import { LANTERN, LANTERN_AT } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
-import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
+import { drawStatus } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
 import { drawTitle, titleTop } from './render/title.js';
 import { drawPause, lineAt, pauseTop, veil } from './render/menu.js';
@@ -283,7 +283,7 @@ const lights = [], torchGlow = []; // reused every frame (TECH.md)
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
 function frame(t) {
-  hudCtx.fillStyle = '#0e0c16'; hudCtx.fillRect(0, 0, W, HUD_H); // the strip stays empty on the title
+  hudCtx.fillStyle = '#0e0c16'; hudCtx.fillRect(0, 0, hud.width, hud.height); // the strip stays empty on the title
   if (onTitle()) {
     if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, page, settings.controls, chosen, t, still()); }
@@ -350,10 +350,8 @@ function frame(t) {
     ctx.fillStyle = '#0e0c16'; ctx.fillRect(0, 0, W, H);
     ctx.globalAlpha = 1;
   }
-  // § strip: the hearts, depth and oil above the room, covering none of it (D-198)
-  drawOilBar(hudCtx, s.oil);
-  drawHearts(hudCtx, s.health, HERO_HEALTH);
-  drawDepth(hudCtx, depthOf(s.place));
+  // § strip: the hearts, depth and oil above the room or beside it, covering none of it (D-198, D-199)
+  drawStatus(hudCtx, { oil: s.oil, health: s.health, max: HERO_HEALTH, depth: depthOf(s.place) });
   if (screen !== 'play') veil(hudCtx); // dimmed with the room under a menu
   const line = shownLine(state);
   textLine.draw(ctx, line, t, still());
