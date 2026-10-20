@@ -153,3 +153,14 @@ the heading's left half turns up, its right half down.
 **D-208 · 2026-10-20 · The decision log makes room again** (step 47b,
 as D-196) D-194 to D-200 (steps 43 to 45, UI steps U1 and U2) moved
 unchanged to `archive/DECISIONS-GETTING-AROUND.md`. They stay in force.
+
+**D-209 · 2026-10-20 · The first woods room** (step 48, owner's picks
+from a mock-up of three tree looks, https://claude.ai/artifact/7Hh8yfLvKzbSKYpbFziWya;
+part of Q-034 and Q-038) Until the cave mouth (step 49), only a dev
+drawer button, Go outside, leads to it; a new journey still starts in
+the crypt. It is plain daylight: the whole room is lit and remembered,
+no fog and no lantern needed; a lit lantern still burns oil as before.
+One round tree a tile, each with its own crown, trunk and shadow. The
+room is 17 × 20, like the caves, made from the seed: trees all round the
+edge, thick near it and thinner inside, every open tile joined. It is
+depth 0; the strip and the map say SURFACE until places have names.

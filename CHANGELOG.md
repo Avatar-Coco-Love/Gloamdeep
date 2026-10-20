@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.23 (2026-10-20)
+- The first outside room: woods, 17 × 20, made from the seed. Trees stand
+  thick at the edges and thinner inside; they block the way and the view.
+- One round tree a tile, each with its own crown, trunk and shadow.
+- Plain daylight: the whole room is lit and remembered; the lantern isn't
+  needed, but burns oil as before while lit. The strip says SURFACE.
+- For now the dev drawer's Room section has Go outside; the cave mouth
+  comes next (step 49). The map shows the woods as the surface.
+- Decisions: D-209. Questions opened: Q-049.
+
 ## 0.2.22 (2026-10-20)
 - The map turns between floors: arrows beside "DEPTH 3", < and >, or
   Page Up and Page Down show the floor above or below. The hero stays put.

@@ -4,15 +4,17 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.22 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.23 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 48, the first outside room: woods** (Q-034, D-175). Read
-`docs/WORLD.md`, D-175 and Q-034 first, then propose.
+**Step 49, a cave entrance down to the first cave** (D-175, D-184,
+Q-043). Read `docs/regions/starting-region.md`, D-209 and Q-043 first,
+then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
+- A lantern that switches itself, in Settings (Q-049), any time.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
@@ -41,7 +43,7 @@ A region
 - [x] 47 The map screen, and dev Reveal map, 0.2.21
 - [x] 47b The map turns between floors, 0.2.22
 The surface
-- [ ] 48 The first outside room: woods (Q-034)
+- [x] 48 The first outside room: woods, 0.2.23
 - [ ] 49 A cave entrance down to the first cave (D-175, Q-043)
 - [ ] 50 Day and night outside (D-025)
 - [ ] 51 Daylight through the cave mouth (D-173)
@@ -60,11 +62,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.20, stairs line up.** Stairs down lead to stairs
-  up at the same tile in the same cell one floor down; depths 4 and 5
-  are L grids too. Owner's picks: stairs down in another room; the seed
-  picks the room under the crypt; depth 6 and down line up as well
-  (D-203). Later, odd rooms line up by place on the floor (D-204). Playtest: https://claude.ai/artifact/QjizYhRsMhB1eJSom6kKjS
 - **2026-10-20, 0.2.21, the map.** A map button (left of pause) or M
   shows the floor you're on, each room drawn from the tiles remembered.
   After the playtest: a box over the veiled room, drag and pinch, a
@@ -74,3 +71,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   floors seen; the hero stays put. Owner's picks: skip floors never seen; a
   floor opens whole; a generous stairs tap; dim grey arrows (D-207).
   D-194 to D-200 archived (D-208). Playtest: https://claude.ai/artifact/QpDNN5QC2X5dBshJ2fxxif
+- **2026-10-20, 0.2.23, the woods.** The first outside room: woods
+  from the seed, 17 × 20, in plain daylight, with one round tree a tile;
+  dev Go outside leads there and the strip says SURFACE. Owner's picks
+  from a mock-up of three tree looks (D-209). The owner's idea: a
+  lantern that switches itself (Q-049). Playtest: https://claude.ai/artifact/9dRDwGZPLdwZ5mWrc9TVxk

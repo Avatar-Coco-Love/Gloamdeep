@@ -98,13 +98,14 @@ test('zooming keeps the point under the finger in place', () => {
 });
 
 // § turning (D-206): the map shows other floors seen; the hero stays put
-test('floors shown: the hero\'s own and every floor with a tile remembered, or 1 to 99 with reveal', () => {
+test('floors shown: the hero\'s own and every floor with a tile remembered, or the surface to 99 with reveal', () => {
   let s = goToDepth(makeWorld('first', SEED), 3);
   s = goToDepth(remember(s, { x: 8, y: 8, r: 200 }), 9);
   assert.deepEqual(floorsShown(s), [3, 9]); // the first room was never lit
   assert.deepEqual(floorsShown(goToDepth(s, 1)), [1, 3]); // nor depth 9
   assert.deepEqual(floorsShown(goToDepth(remember(s, { x: 8, y: 8, r: 200 }), 1)), [1, 3, 9]);
-  assert.equal(floorsShown(s, true).length, DEEPEST);
+  assert.deepEqual(floorsShown(s, true).slice(0, 2), [0, 1]); // the woods are depth 0 (D-209)
+  assert.equal(floorsShown(s, true).length, DEEPEST + 1);
 });
 
 test('an arrow skips floors never seen, and is greyed out when nothing lies that way', () => {

@@ -36,10 +36,10 @@ export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
 
 // § floors: the depths the map can turn to (D-206), shallowest first: the
 // hero's own and every floor with a room the hero has been in, or every
-// floor from 1 to DEEPEST with dev Reveal map
+// floor from the surface, 0, to DEEPEST with dev Reveal map (D-209)
 export const DEEPEST = 99; // as deep as the dev Go to depth goes
 export function floorsShown(state, reveal = false) {
-  if (reveal) return Array.from({ length: DEEPEST }, (_, i) => i + 1);
+  if (reveal) return Array.from({ length: DEEPEST + 1 }, (_, i) => i);
   const seen = Object.keys(state.elsewhere).filter((id) => state.elsewhere[id].seen.some(Boolean));
   const all = new Set([state.place, ...seen].map(depthOf));
   return [...all].sort((a, b) => a - b);

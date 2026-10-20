@@ -26,5 +26,9 @@ export function remember(state, light) {
   return seen === state.seen ? state : { ...state, seen };
 }
 
+// § daylight: (state) → new state with every tile of the room remembered, as
+// daylight shows it all (D-209). The same state comes back when nothing is new.
+export const rememberAll = (state) => (state.seen.every(Boolean) ? state : { ...state, seen: new Uint8Array(state.seen.length).fill(1) });
+
 // § forget: a blank memory (the dev "Forget" button and "Reset room", D-061, D-062)
 export const forget = (state) => ({ ...state, seen: blankMemory(state.room) });

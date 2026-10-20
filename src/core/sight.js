@@ -30,6 +30,7 @@ export function lightsNow(state) {
 
 // § lit: (state, x, y) → true when any light shining now reaches tile x, y
 export function litAt(state, x, y) {
+  if (state.room.dark.day) return true; // daylight lights every tile (D-209)
   const { room } = state, cw = room.cols * TILE_SIZE / CELL;
   const mx = x * TILE_SIZE + TILE_SIZE / 2, my = y * TILE_SIZE + TILE_SIZE / 2;
   const cell = (my / CELL | 0) * cw + (mx / CELL | 0);

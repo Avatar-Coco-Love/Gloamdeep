@@ -93,6 +93,12 @@ generated depths below them become the first cave under the starting region, rea
 surface. It ends at 5 levels; the endless depths move behind a portal at
 its bottom (D-185).
 
+## The first outside room (D-209)
+A woods room, 17 × 20, made from the seed (`src/core/woods.js`): one
+round tree a tile, thick at the edges. Plain daylight shows and
+remembers it whole. It is depth 0, called SURFACE for now; only dev Go
+outside leads there until the cave mouth (step 49).
+
 ## The starting region
 Its rule sheet is `docs/regions/starting-region.md` (D-182 to D-185):
 3 × 3, home in the centre, mountains in the north row, one cave beside

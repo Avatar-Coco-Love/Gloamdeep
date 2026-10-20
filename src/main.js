@@ -24,7 +24,7 @@ import { PAD, typeKey, entrySeed, moveKey } from './core/seedpad.js';
 import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
 import { shownLine } from './core/lines.js';
-import { remember, forget } from './core/fog.js';
+import { remember, rememberAll, forget } from './core/fog.js';
 import { floorPlan, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
 import { setMap, drawMap, inBox, turnAt, VIEW } from './render/map.js';
 import { lanternFrom } from './core/sight.js';
@@ -192,7 +192,7 @@ function mapFloor(depth, at = (p) => fitView(p, VIEW.w, VIEW.h)) {
   setMap(plan);
   view = at(plan);
   const n = roomsFound(plan), own = plan.hero ? '' : ' The hero is on another floor.';
-  spoken.textContent = `Map of depth ${plan.depth}. ${n} ${n === 1 ? 'room' : 'rooms'} found.${own} Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. M or the close button closes it.`;
+  spoken.textContent = `Map of ${plan.depth === 0 ? 'the surface' : `depth ${plan.depth}`}. ${n} ${n === 1 ? 'room' : 'rooms'} found.${own} Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. M or the close button closes it.`;
 }
 function toggleMap() {
   if (screen === 'map') { show('play'); return; }
@@ -317,7 +317,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
   heal: () => ({ ...state, health: HERO_HEALTH }),
-  goTo: (depth) => goToDepth(state, depth),
+  goTo: (depth) => goToDepth(state, depth), // depth 0 is the woods outside (D-209)
   camera: () => cam,
 }, hud);
 show('title');
@@ -325,8 +325,10 @@ show('title');
 // § memory: once the hero stands still on a tile, the tiles their lantern
 // reaches are remembered (D-059). Again after a dev change to the memory or oil,
 // or when the lantern comes back on. Nothing new is remembered while it is off (D-082).
+// Daylight shows the whole room, so all of it is remembered, lantern or not (D-209).
 let rememberedAt = null, rememberedSeen = null;
 function rememberHere() {
+  if (state.room.dark.day) { state = rememberAll(state); return; }
   if (!state.lit) { rememberedAt = null; return; }
   const key = state.hero.x + ',' + state.hero.y + ',' + state.oil;
   if (key === rememberedAt && state.seen === rememberedSeen) return;
@@ -379,7 +381,7 @@ function frame(t) {
     // § enemies: shaded by the light like the floor, so seen in memory's dim light too (D-153)
     drawEnemies(ctx, s.enemies, t, still(), hit && t < hit.until ? hit.enemy : null, foeAt);
   });
-  const lightOn = !dev.lightOff();
+  const lightOn = !dev.lightOff() && !s.room.dark.day; // daylight needs no lantern (D-025, D-209)
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = sx + nx + LANTERN_AT.x, ly = sy + ny - 2 + LANTERN_AT.y;
