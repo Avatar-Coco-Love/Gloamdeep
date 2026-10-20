@@ -7,8 +7,8 @@ go to the top of `archive/PROGRESS-LOG.md`.
 **Version:** 0.2.21 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 48, the first outside room: woods** (Q-034). Read `WORLD.md`,
-`docs/regions/starting-region.md`, Q-034 and `ART-DIRECTION.md` first.
+**Step 47b, the map turns between floors** (D-206). Read D-205,
+D-206, `src/core/map.js` and `src/render/map.js` first.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -39,6 +39,7 @@ A region
 - [x] 46 A region's layout from the seed, rooms joined by openings, 0.2.19
 - [x] 46b Stairs line up between floors; depths 4 and 5 as grids, 0.2.20
 - [x] 47 The map screen, and dev Reveal map, 0.2.21
+- [ ] 47b The map turns between floors (D-206)
 The surface
 - [ ] 48 The first outside room: woods (Q-034)
 - [ ] 49 A cave entrance down to the first cave (D-175, Q-043)
@@ -74,4 +75,5 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   shows the floor you're on, each room drawn from the tiles remembered.
   Owner's picks: button and M key; tiles; the hero's dot, found stairs
   and depth; dev Reveal map. After the playtest: a box over the veiled
-  room, drag and pinch, the button turns into a cross (D-205). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3
+  room, drag and pinch, the button turns into a cross (D-205). Next,
+  the map turns between floors, step 47b (D-206). Playtest: https://claude.ai/artifact/KsUTZH1eMvX62nMqKDC9o3

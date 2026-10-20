@@ -29,7 +29,8 @@ Entry format:
   pinch or the mouse wheel to zoom. The map button becomes a cross that
   closes it; M, Esc or a tap outside the box close it too. No turn passes.
 - Dev tools: a Reveal map switch shows every room of the floor in full.
-- Decisions: D-205. Questions closed: Q-042.
+- Written down for the next step: the map will turn between floors.
+- Decisions: D-205, D-206. Questions closed: Q-042.
 
 ## 0.2.20 (2026-10-20)
 - The stairs line up between floors: the stairs up on a floor are at
