@@ -1,13 +1,16 @@
 // § map moves: dragging scrolls the map, two fingers pinch it and the mouse
 // wheel zooms it (D-205). Thin layer, on only while active() is true: it
 // reports onPan(dx, dy) and onZoom(by, x, y) in game pixels, the zoom about
-// that point. Taps and arrow keys still go through input.js.
+// that point. Taps and arrow keys still go through input.js; dragged() says
+// whether the last press moved the map, so its tap is not a tap (D-206).
 const PINCH = 1.25; // fingers this much farther apart (or nearer) zoom one step
 const WHEEL = 100; // this much wheel turning zooms one step
+const STILL = 2; // a press that moves less than this many game pixels is a tap
 
 export function createMapMoves(area, canvas, { active, onPan, onZoom }) {
   const down = new Map(); // pointer id → its last point, in game pixels
   let spread = 0; // the two fingers' distance at the last pinch step
+  let moved = 0; // how far the fingers have moved since the first went down
   const at = (ev) => {
     const r = canvas.getBoundingClientRect();
     return { x: (ev.clientX - r.left) / r.width * canvas.width, y: (ev.clientY - r.top) / r.height * canvas.height };
@@ -16,13 +19,16 @@ export function createMapMoves(area, canvas, { active, onPan, onZoom }) {
 
   area.addEventListener('pointerdown', (ev) => {
     if (!active()) return;
+    if (!down.size) moved = 0;
     down.set(ev.pointerId, at(ev));
+    if (down.size === 2) moved = Infinity;
     if (down.size === 2) spread = pair().d;
   });
   area.addEventListener('pointermove', (ev) => {
     const last = down.get(ev.pointerId);
     if (!last || !active()) return;
     const now = at(ev);
+    moved += Math.hypot(last.x - now.x, last.y - now.y);
     if (down.size === 1) onPan(last.x - now.x, last.y - now.y);
     down.set(ev.pointerId, now);
     if (down.size !== 2 || !spread) return;
@@ -44,4 +50,5 @@ export function createMapMoves(area, canvas, { active, onPan, onZoom }) {
     onZoom(turned < 0 ? 1 : -1, p.x, p.y);
     turned = 0;
   }, { passive: false });
+  return { dragged: () => moved >= STILL };
 }

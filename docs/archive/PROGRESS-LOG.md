@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.19, depth 3 as a grid.** Depth 3 is three cave
+  rooms in an L, from a 2 × 2 grid with one cell empty, joined by
+  one-tile openings. Owner's picks: depth 3 first; the seed picks the
+  stairs room; a flask, rat and herb in the others; depths 4 and 5 wait
+  (D-201). The owner's idea: stairs line up between floors, step 46b
+  (D-202). Playtest: https://claude.ai/artifact/HXDUsvKafDfgcE9791My4V
 - **2026-10-20, 0.2.18, the dev drawer.** The dev tools slide out from
   the left edge, sections stacked as tabs, all words in the pixel font.
   Owner's picks: left, full height; a word per tab; 44 px rows; the

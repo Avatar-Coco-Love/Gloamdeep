@@ -25,8 +25,8 @@ import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
-import { floorPlan, roomsFound, fitView, panView, zoomView } from './core/map.js';
-import { setMap, drawMap, inBox, VIEW } from './render/map.js';
+import { floorPlan, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
+import { setMap, drawMap, inBox, turnAt, VIEW } from './render/map.js';
 import { lanternFrom } from './core/sight.js';
 import { cameraAt } from './core/camera.js';
 import { createInput } from './input/input.js';
@@ -148,6 +148,7 @@ const stage = document.getElementById('stage');
 // from either menu on the way of playing last used, and returns there the same way (D-193).
 // In play, the map button or M opens the map; the button (a cross while it is open), M, Esc,
 // P or a tap outside its box closes it. Drags, pinches, the wheel and arrows move it (D-205).
+// Its heading's arrows, < and >, Page Up and Page Down, or a tap on stairs found turn it a floor (D-206).
 let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto' or 'map'
 let pageFrom = 'title'; // the menu Settings or How to play was opened from
 let page = 'touch'; // How to play's page
@@ -177,21 +178,42 @@ const backTo = (id) => () => show(pageFrom, menuOf(pageFrom).findIndex((l) => l.
 const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
 function openHowTo() { page = input.kind(); show('howto'); }
 function flipPage(back = false) { page = nextPage(page, back); spoken.textContent = howtoWords(page, settings.controls); }
-// § map: the floor the hero is on, worked out once as it opens; no turn passes (D-205)
-let plan = null, view = null;
+// § map: the floor the hero is on, worked out once as it opens; no turn passes
+// (D-205). It turns to other floors seen; the hero stays put (D-206).
+let plan = null, view = null, floors = [];
 const PAN = 8; // game pixels an arrow key scrolls the map
+const STAIRS_REACH = 8; // game pixels from found stairs' centre that a tap still picks them
 const panMap = (dx, dy) => { view = panView(view, plan, VIEW.w, VIEW.h, dx, dy); };
 const zoomMap = (by, x, y) => { view = zoomView(view, plan, VIEW.w, VIEW.h, by, x - VIEW.x, y - VIEW.y); };
+const turns = () => ({ up: turnFrom(floors, plan.depth, 'up') !== null, down: turnFrom(floors, plan.depth, 'down') !== null });
+// The map on floor `depth`, its view from at(plan), and its words for the screen reader
+function mapFloor(depth, at = (p) => fitView(p, VIEW.w, VIEW.h)) {
+  plan = floorPlan(state, dev.revealedMap(), depth);
+  setMap(plan);
+  view = at(plan);
+  const n = roomsFound(plan), own = plan.hero ? '' : ' The hero is on another floor.';
+  spoken.textContent = `Map of depth ${plan.depth}. ${n} ${n === 1 ? 'room' : 'rooms'} found.${own} Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. M or the close button closes it.`;
+}
 function toggleMap() {
   if (screen === 'map') { show('play'); return; }
   if (screen !== 'play') return;
   queued = null;
-  plan = floorPlan(state, dev.revealedMap());
-  setMap(plan);
-  view = fitView(plan, VIEW.w, VIEW.h);
+  floors = floorsShown(state, dev.revealedMap());
   show('map');
-  const n = roomsFound(plan);
-  spoken.textContent = `Map of depth ${plan.depth}. ${n} ${n === 1 ? 'room' : 'rooms'} found. Drag or use the arrows to scroll, pinch or the wheel to zoom. M or the close button closes it.`;
+  mapFloor(depthOf(state.place));
+}
+function turnMap(way) {
+  const to = screen === 'map' && turnFrom(floors, plan.depth, way);
+  if (to) mapFloor(to);
+}
+// A tap on found stairs turns the map to the floor they lead to, centred on the matching stairs
+function tapStairs(px, py) {
+  const k = view.k, near = stairsNear(plan, (px - VIEW.x + view.x) / k, (py - VIEW.y + view.y) / k, STAIRS_REACH / k, state.seed);
+  if (!near || !floors.includes(near.depth)) return;
+  mapFloor(near.depth, (p) => {
+    const at = stairsIn(p, near.room, near.arrive);
+    return at ? centreView(p, VIEW.w, VIEW.h, k, at.x, at.y) : fitView(p, VIEW.w, VIEW.h);
+  });
 }
 function pause() {
   if (screen === 'map') show('play');
@@ -265,7 +287,12 @@ const onDir = (dir, how) => {
 };
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
-  if (screen === 'map') { if (!held && !inBox(px, py)) show('play'); return; }
+  if (screen === 'map') {
+    if (held || mapMoves.dragged()) return;
+    const way = turnAt(px, py);
+    if (way) turnMap(way); else if (!inBox(px, py)) show('play'); else tapStairs(px, py);
+    return;
+  }
   if (screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { chosen = k; choose(k); } return; }
   if (screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { chosen = 0; flipPage(at === 'prev'); } return; }
   const i = lineAt(py, menuOf(screen).length, menuTop());
@@ -273,8 +300,8 @@ const onPoint = (px, py, held) => {
 };
 const onWait = () => { if (screen === 'play') tryStep('wait'); else if (screen !== 'map') choose(); };
 const onChoose = () => { if (screen !== 'play' && screen !== 'map') choose(); };
-const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onMap: toggleMap, onType });
-createMapMoves(stage, canvas, { active: () => screen === 'map', onPan: panMap, onZoom: zoomMap });
+const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onMap: toggleMap, onFloor: turnMap, onType });
+const mapMoves = createMapMoves(stage, canvas, { active: () => screen === 'map', onPan: panMap, onZoom: zoomMap });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   still,
@@ -390,7 +417,7 @@ function frame(t) {
   else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
   else if (screen === 'seed') drawSeedPad(ctx, entry, chosen, t, still());
   else if (screen === 'howto') drawHowTo(ctx, page, settings.controls, chosen, t, still());
-  else if (screen === 'map') drawMap(ctx, view, t, still());
+  else if (screen === 'map') drawMap(ctx, view, t, still(), turns());
   else dev.draw(ctx, state, cam);
   requestAnimationFrame(frame);
 }
