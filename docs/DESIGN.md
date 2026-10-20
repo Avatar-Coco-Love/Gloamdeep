@@ -35,6 +35,10 @@ Every idea is checked against these. An idea that serves none is cut.
 - Every biome has one or more **portals**. Each leads into a generated
   depth, a darker, twisted version of that biome with rarer loot, made
   anew on every visit. A dive plays like a roguelite run. [D-019, D-032]
+- The world is split into regions, each a grid of rooms with its own
+  rules, joined by stairs, side openings, water and secret ways. Light
+  comes through openings, and a world map is uncovered as you go. Details
+  in `WORLD.md`. [D-169 to D-176]
 
 ## Light
 - The lantern is your main light. Oil sets how far its light reaches,

@@ -46,7 +46,7 @@ tools to be chosen together later.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage); the owner wants it next (D-154)
-- Reveal the whole floor (when there are floors)
+- Reveal the whole map, and a map mode (D-176)
 - Step enemies one turn at a time
 - Collision overlay (the grid and coordinates part is built, D-046)
 - Show light radius and line-of-sight overlay
