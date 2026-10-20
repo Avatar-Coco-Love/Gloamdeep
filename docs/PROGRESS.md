@@ -4,10 +4,10 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.11 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.12 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 57, How to play.** Read D-179 and D-189 to D-191. Propose a
+**Step 58, How to play.** Read D-179 and D-189 to D-191. Propose a
 page of the controls for touch, mouse and keyboard, where it sits on
 the title and pause menus, and how it reads (2 or 3 options).
 
@@ -27,8 +27,9 @@ The main menu (D-177 to D-181; step order proposed, may change)
 - [x] 52 A title screen with New journey, the lantern in the dark, 0.2.7
 - [x] 53 The pause menu: Resume, Back to title, 0.2.8
 - [x] 54 Settings, with the tap or swipe switch, 0.2.9
-- [x] 55 The motion switch, 0.2.10 · 56 The seed, 0.2.11
-- [ ] 57 How to play
+- [x] 55 The motion switch, 0.2.10 · 56 The seed, 0.2.11 · 57 The first
+  rooms change with the seed, 0.2.12
+- [ ] 58 How to play
 Getting around
 - [ ] 43 Stairs must be found: dimmer, only where fog has lifted (D-174)
 - [ ] 44 The camera: a room bigger than the screen scrolls (D-172)
@@ -54,12 +55,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.9, Settings.** Settings joins the title and pause
-  menus: a page with "Controls: Tap and swipe" and Back. Owner's picks:
-  one line that cycles (Left and Right too); on both menus; kept on
-  this device; it changes only walking, menus take both (D-189).
-  Playtest:
-  https://claude.ai/artifact/UWBYLdgQua9oFYhXimdpcP
 - **2026-10-20, 0.2.10, the Motion switch.** Settings gains "Motion:
   Full / Reduced" under Controls. Owner's picks: under Controls, picked
   or flipped with Left and Right like Controls; it follows the device's
@@ -71,3 +66,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   style; a typed seed stays until set back to Random; from the pause
   menu, Random names this journey's seed (D-191). Playtest:
   https://claude.ai/artifact/URrtmYoVAoC6VdShbanKLK
+- **2026-10-20, 0.2.12, every room changes with the seed.** Owner's
+  note: the first levels looked the same each world. Owner's picks: a
+  standing rule that every room takes something from the seed, some
+  hand-made with seeded parts, some wholly generated; the crypt rooms
+  keep their shape, the seed places the flask and the rat (D-192).
+  Playtest: https://claude.ai/artifact/EfiGHjpCzfiriucdqGc4Zn

@@ -20,6 +20,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.12 (2026-10-20)
+- The first two rooms now change with the seed: their shape stays, but
+  the flask and the rat start in different places each world, and again
+  after a fall. A new rule: every room takes something from the seed.
+- Decisions: D-192.
+
 ## 0.2.11 (2026-10-20)
 - Settings has a Seed line under Motion. Pick it to open a number pad
   drawn in the game's style (tap, arrows, or a keyboard's digits): type

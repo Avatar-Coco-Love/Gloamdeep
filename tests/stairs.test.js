@@ -1,7 +1,8 @@
 // § stairs: the stairs down, the second room and back up (D-130 to D-136)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tileAt, makeRoom, SECOND_ENEMIES, SECOND_ITEMS, SECOND_LIGHTS } from '../src/core/room.js';
+import { tileAt, makeRoom, placeFor, SECOND_LIGHTS } from '../src/core/room.js';
+import { nextSeed } from '../src/core/rng.js';
 import { stairsFacing } from '../src/core/stairs.js';
 import { makeWorld, step, wait, switchLantern, FIRST_START, HERO_HEALTH } from '../src/core/turn.js';
 import { OIL, burnOil } from '../src/core/oil.js';
@@ -31,7 +32,7 @@ test('stepping onto the stairs down: the second room, on its stairs up, one turn
   assert.equal(n.turn, 1);
   assert.equal(n.oil, burnOil(OIL.start));
   assert.equal(shownLine(n).text, 'You go down the stairs.');
-  assert.deepEqual(n.enemies, SECOND_ENEMIES);
+  assert.deepEqual(n.enemies, placeFor('second').enemies);
   assert.deepEqual(n.lights, SECOND_LIGHTS);
 });
 
@@ -76,7 +77,7 @@ test('rats in the room the hero arrives in take their turn', () => {
   assert.equal(shownLine(n).text, 'The rat bites you.');
 });
 
-test('falling in the second room wakes the hero at the first room\'s start, every room as it began', () => {
+test('falling in the second room wakes the hero at the first room\'s start, every room begun afresh with the new seed', () => {
   let s = down();
   s = spawn(s, 'wall', 3, 3);
   s = { ...s, seen: s.seen.map(() => 1), health: 1, enemies: [{ id: 'rat', x: 1, y: 2 }] };
@@ -85,11 +86,14 @@ test('falling in the second room wakes the hero at the first room\'s start, ever
   assert.equal(n.place, 'first');
   assert.deepEqual(n.hero, FIRST_START);
   assert.equal(n.health, HERO_HEALTH);
-  assert.ok(enemyAt(n, 2, 10));
+  const seed = nextSeed(s.seed), first = placeFor('first', seed), again = placeFor('second', seed);
+  assert.ok(enemyAt(n, first.enemies[0].x, first.enemies[0].y));
+  assert.deepEqual(n.items, first.items);
   const second = n.elsewhere.second;
   assert.equal(tileAt(second.room, 3, 3).id, 'floor');
-  assert.deepEqual(second.enemies, SECOND_ENEMIES);
-  assert.deepEqual(second.items, SECOND_ITEMS);
+  assert.deepEqual(second.enemies, again.enemies);
+  assert.deepEqual(second.items, again.items);
+  assert.deepEqual(n.home.places.second.items, again.items); // a later fall or reset starts from these
   assert.ok(second.seen.every((v) => v === 1)); // the map stays remembered
 });
 

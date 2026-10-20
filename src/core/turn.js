@@ -34,10 +34,16 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = [], 
 // they began, for a fall (D-136) and the dev reset. Generated depths begin
 // only when first reached (stairs.js, D-147).
 export function makeWorld(first = 'first', seed = 1) {
-  const begun = {};
-  for (const id of Object.keys(PLACES)) begun[id] = beginPlace(id);
+  const begun = beginAll(seed);
   const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies, here.items, seed);
   return { ...state, place: first, elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
+}
+
+// Every hand-made place as it begins with this seed
+function beginAll(seed) {
+  const begun = {};
+  for (const id of Object.keys(PLACES)) begun[id] = beginPlace(id, seed);
+  return begun;
 }
 
 // The places other than `here` as they began, with the memory in `seen` kept
@@ -131,15 +137,18 @@ function chaseStep(state, e) {
 // § fall: back to the start of the first room, every room as it began, with
 // full health and the starting oil. The map stays remembered (D-119, D-136,
 // D-021), but the depths below the second room get a new seed and new
-// layouts, and their maps are forgotten (D-148).
+// layouts, and their maps are forgotten (D-148). The new seed places the
+// hand-made rooms' items and rats afresh (D-192).
 function fall(state) {
-  const { place, hero } = state.home, begun = state.home.places || { [place]: state.home };
+  const seed = nextSeed(state.seed), { place, hero } = state.home;
+  const begun = state.home.places ? beginAll(seed) : { [place]: state.home };
   const seen = { [state.place]: state.seen };
   for (const [id, p] of Object.entries(state.elsewhere)) seen[id] = p.seen;
   for (const id of Object.keys(seen)) if (isGenerated(id)) delete seen[id];
   const { room, lights, enemies, items = [] } = begun[place];
   const woke = { room, hero, lights, enemies, items, seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
-  return say({ ...state, ...woke, seed: nextSeed(state.seed), health: HERO_HEALTH, oil: OIL.start }, 'fall');
+  const home = state.home.places ? { ...state.home, ...begun[place], hero, places: begun } : state.home;
+  return say({ ...state, ...woke, home, seed, health: HERO_HEALTH, oil: OIL.start }, 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109).

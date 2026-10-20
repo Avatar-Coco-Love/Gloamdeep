@@ -176,3 +176,12 @@ typed seed starts every New journey until set back to Random, and is
 kept on this device. A journey under way goes on as it is. From the
 pause menu a Random line names this journey's seed: "Seed: Random (this
 one 4071)".
+
+**D-192 · 2026-10-20 · Every room changes with the seed** (step 57,
+owner's picks) A standing rule: every room takes something from the
+seed. Some are hand-made with seeded parts, others wholly generated.
+The two crypt rooms (depths 1 and 2) stay hand-made in shape; the seed
+places their flask and rat, as generated rooms do (D-149): the flask at
+least 5 steps from the start, the rat at least 3 tiles from the start
+and every stairs, and the second room's rat within 2 tiles of its flask
+(D-138). A fall's new seed places them afresh (extends D-136, D-148).
