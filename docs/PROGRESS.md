@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.6 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.7 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 52, the title screen.** Read D-177 to D-181, `TECH.md` and
-`ART-DIRECTION.md`. Propose how it is built (2 or 3 options), then build
-the title screen with New journey, in the lantern in the dark look.
+**Step 53, the pause menu.** Read D-177, D-178 and D-186. Propose how
+play is paused and how the menu opens (2 or 3 options), then build it
+with Resume and Back to title.
 
 ## Waiting on the owner
 - The starting region's name (Q-045), any time.
@@ -24,7 +24,7 @@ a step when merged and add its version.
   kind, 0.2.1
 - [x] 42 Design the starting region, 0.2.6
 The main menu (D-177 to D-181; step order proposed, may change)
-- [ ] 52 A title screen with New journey, the lantern in the dark (D-181)
+- [x] 52 A title screen with New journey, the lantern in the dark, 0.2.7
 - [ ] 53 The pause menu: Resume, Back to title
 - [ ] 54 Settings, with the tap or swipe switch
 - [ ] 55 The motion switch · 56 The seed · 57 How to play
@@ -53,13 +53,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-19, 0.2.4, the world planned.** The owner's ideas for the
-  world: regions as grids of rooms with their own rules, ways between
-  rooms that line up, rooms of every size with a following camera,
-  light through openings, stairs that must be found, a world map. Owner's
-  picks: stage 0.3 is the world, next; today's game becomes the first
-  cave. Written in `WORLD.md` (D-168 to D-176, Q-036 to Q-043). The
-  owner approved the stage 0.3 order and asked for a main menu soon.
 - **2026-10-20, 0.2.5, the main menu planned.** Owner's picks: a title
   screen with the menu on it and a pause menu in play; buttons only for
   what works; Settings holds a tap or swipe switch, a motion switch and
@@ -74,3 +67,10 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   cave ends at 5 levels, a portal to the endless depths at its bottom
   (D-182 to D-185). Name still open (Q-045). Burrows past the bottom:
   Q-046. Rule sheet: `docs/regions/starting-region.md`.
+- **2026-10-20, 0.2.7, the title screen.** The game opens on the
+  lantern in the dark: the hero on crypt floor, the name carved at
+  double size, New journey with a small flame. Owner's picks: drawn on
+  the game's own canvas; the wrench and lantern button hidden until the
+  journey starts; the carved name, picked from 5 looks (D-186).
+  Playtest:
+  https://claude.ai/artifact/HSUj1xqGshTeVcsy7hJNei

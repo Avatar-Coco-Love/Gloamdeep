@@ -201,3 +201,10 @@ Ways to other regions wait for the second region (Q-037).
 owner's picks, answers Q-043) The first cave has a bottom: the 2 crypt
 rooms and depths 3 to 5. The endless depths move behind a portal at the
 bottom (D-019, D-032).
+
+**D-186 · 2026-10-20 · How the title screen is built** (step 52, owner's
+picks) Drawn on the game's own canvas as a second screen, picked with
+arrows, Enter, Space, a tap or a click. The name is the pixel font at
+double size, carved: gold, a dark outline, an ember edge underneath
+(changed after seeing 5 looks: glow → carved). The wrench and the
+lantern button stay hidden until the journey starts.
