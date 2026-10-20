@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.6 (2026-10-20)
+- Nothing new to play. The starting region is designed: a 3 × 3 grid,
+  all rooms used, home in the centre, mountains along the north and
+  woods elsewhere, and the first cave's entrance next to home. The first
+  cave ends at 5 levels, with the endless depths behind a portal at the
+  bottom. The region's name is still open. Rule sheet in
+  `docs/regions/starting-region.md`.
+- Decisions: D-182 to D-185. Questions closed: Q-036, Q-043. Questions
+  opened: Q-045, Q-046.
+
 ## 0.2.5 (2026-10-20)
 - Nothing new to play. The main menu is planned: a title screen with the
   menu on it, and a pause menu during play. Buttons appear only when

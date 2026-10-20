@@ -77,15 +77,14 @@ the same map players see. What it shows and how it opens: Q-042.
 ## Where today's game goes (D-175)
 The two crypt rooms and the generated depths below them become the first
 cave under the starting region, reached by a cave entrance on the
-surface. Whether that cave has a bottom and the endless depths move
-behind a portal (D-019, D-032): Q-043.
+surface. It ends at 5 levels; the endless depths move behind a portal at
+its bottom (D-185).
 
 ## The starting region
-Not designed yet (Q-036). It is woods and mountains (D-028) and holds
-landmarks, cave entrances and NPC houses. Each cave in it has its own
-rule sheet too. We design it together, one rule at a time, in its own
-file, `docs/regions/` (one file per region, under 8 KB each), made when
-the first region is designed.
+Its rule sheet is `docs/regions/starting-region.md` (D-182 to D-185):
+3 × 3, home in the centre, mountains in the north row, one cave beside
+home. Each cave gets its own rule sheet too. One file per region in
+`docs/regions/`, under 8 KB each.
 
 ## Rule sheet template
 For each region file:

@@ -4,16 +4,15 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.5 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.6 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 42, design the starting region.** Read `WORLD.md`, then Q-036,
-Q-037, Q-038 and Q-043. With the owner, one multiple choice round at a
-time: its name, grid size, used cells, kinds of room, landmarks, cave
-entrances, NPC houses, promises for every seed. Write its rule sheet in
-`docs/regions/`. Docs only, build nothing.
+**Step 52, the title screen.** Read D-177 to D-181, `TECH.md` and
+`ART-DIRECTION.md`. Propose how it is built (2 or 3 options), then build
+the title screen with New journey, in the lantern in the dark look.
 
 ## Waiting on the owner
+- The starting region's name (Q-045), any time.
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
 
@@ -23,7 +22,7 @@ a step when merged and add its version.
 
 - [x] 31 Plan 0.2, 0.1.27 · 32 Natural caves, 0.2.0 · 33 Depths change
   kind, 0.2.1
-- [ ] 42 Design the starting region (docs only)
+- [x] 42 Design the starting region, 0.2.6
 The main menu (D-177 to D-181; step order proposed, may change)
 - [ ] 52 A title screen with New journey, the lantern in the dark (D-181)
 - [ ] 53 The pause menu: Resume, Back to title
@@ -54,13 +53,6 @@ lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-19, 0.2.3, ideas from a surface sketch.** At the owner's
-  request, a sketch (not in the game) of a woods clearing with a cave
-  mouth, at morning, noon, dusk or night. Owner's notes: trees need
-  work, and a lantern shadow should follow a tree's shape, not its whole
-  tile; tree kinds, wind, weather and sun or moon shadows are for later
-  (Q-034, Q-035). Sketch:
-  https://claude.ai/artifact/NNdk6rD2Cgg1FkNguoaKg4
 - **2026-10-19, 0.2.4, the world planned.** The owner's ideas for the
   world: regions as grids of rooms with their own rules, ways between
   rooms that line up, rooms of every size with a following camera,
@@ -75,3 +67,10 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   the lantern in the dark, drawn with the game's own art (D-177 to
   D-181). Mock-up of the looks shown:
   https://claude.ai/artifact/5cKubwaAFaAoH6ot3JAm7A
+- **2026-10-20, 0.2.6, the starting region designed.** Owner's picks:
+  3 × 3, all 9 cells used, home in the centre; mountains in the north
+  row, woods elsewhere; one cave, its entrance beside home (side from
+  the seed); no NPC houses yet; ways to other regions later; the first
+  cave ends at 5 levels, a portal to the endless depths at its bottom
+  (D-182 to D-185). Name still open (Q-045). Burrows past the bottom:
+  Q-046. Rule sheet: `docs/regions/starting-region.md`.
