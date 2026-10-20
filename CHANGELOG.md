@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.18 (2026-10-20)
+- The dev tools are now a drawer that slides out from the left edge,
+  from under the wrench down to the stats line. The sections (View,
+  Spawn, Room, Oil, Hero, Share) are stacked down its left side, and the
+  open one's tools sit beside them. Tap the open section again and the
+  drawer narrows to just its tabs.
+- All dev words, the stats line too, are in the game's pixel font. The
+  font gains +, % and a middle dot.
+- Decisions: D-200.
+
 ## 0.2.17 (2026-10-20)
 - A phone held sideways (or a wide PC window): the hearts, depth and oil
   stand in a column at the room's left, so the room can grow. The wrench

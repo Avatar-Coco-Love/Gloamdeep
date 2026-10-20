@@ -1,9 +1,10 @@
-// § panel: the dev panel's tools, in sections (D-087): a fixed grid of
-// section buttons, the open section below; which one is saved. A new tool
-// adds a section here.
+// § panel: the dev drawer's tools, in sections (D-087, D-200): the section
+// tabs stacked down its left side, the open section beside them; which one
+// is saved. Words are in the pixel font. A new tool adds a section here.
 import { ALL } from '../core/registry.js';
 import { roomCode } from '../core/roomcode.js';
 import { depthOf } from '../core/room.js';
+import { setPixelText } from './pixeltext.js';
 
 const MAX_DEPTH = 99; // the deepest Go to depth goes
 
@@ -12,19 +13,22 @@ export function el(tag, props) {
 }
 
 const button = (text, onClick, className = '') => {
-  const b = el('button', { type: 'button', textContent: text, className });
+  const b = el('button', { type: 'button', className });
+  setPixelText(b, text);
   b.addEventListener('click', onClick);
   return b;
 };
 const row = (...kids) => { const r = el('div', { className: 'dev-row' }); r.append(...kids); return r; };
+const pixel = (tag, className, text) => { const e = el(tag, { className }); setPixelText(e, text); return e; };
 
 // Builds the sections into `panel`. `opts` holds the switches and the open
 // sections, `saved()` stores them. Returns flip(name) for the keys, picked()
 // for the spawn tool and sync(state), called each frame.
 export function buildPanel(panel, opts, saved, game) {
-  // § sections: View, Spawn, Room, Oil, Hero, Share. Their buttons sit in a fixed
-  // grid at the top and the open section shows below, so nothing moves under
-  // the finger. One open at a time; tap it again to fold it (D-087).
+  // § sections: View, Spawn, Room, Oil, Hero, Share. Their tabs stand in a
+  // column at the left and the open section shows beside them, so nothing
+  // moves under the finger. One open at a time; tap it again to fold it,
+  // and the drawer narrows to its tabs (D-087, D-200).
   const tabs = el('div', { className: 'dev-tabs' });
   panel.append(tabs);
   const sections = [];
@@ -57,7 +61,7 @@ export function buildPanel(panel, opts, saved, game) {
   const views = [['grid', 'Grid', 'G'], ['coords', 'Coords', 'C'], ['noLight', 'No light', ''], ['reveal', 'Reveal', 'R']];
   view.append(row(...views.map(([name, label, key]) => {
     switches[name] = button(label, () => flip(name), 'dev-switch');
-    if (key) switches[name].append(el('kbd', { textContent: key }));
+    if (key) switches[name].append(pixel('kbd', '', key));
     switches[name].setAttribute('aria-pressed', String(opts[name]));
     return switches[name];
   })));
@@ -69,7 +73,7 @@ export function buildPanel(panel, opts, saved, game) {
   let picked = null;
   const chips = [];
   for (const kind of new Set(ALL.map((e) => e.kind))) {
-    spawn.append(el('div', { className: 'dev-kind', textContent: kind === 'enemy' ? 'enemies' : kind + 's' }));
+    spawn.append(pixel('div', 'dev-kind', (kind === 'enemy' ? 'enemies' : kind + 's').toUpperCase()));
     spawn.append(row(...ALL.filter((e) => e.kind === kind).map((entry) => {
       const chip = button(entry.name, () => {
         picked = picked === entry ? null : entry;
@@ -85,12 +89,12 @@ export function buildPanel(panel, opts, saved, game) {
   // pick a depth with − and +, then Go; no turn passes (D-166)
   let want = 1, shownPlace = null;
   const depthLabel = el('span', { className: 'dev-depth' });
-  const pickDepth = (d) => { want = Math.max(1, Math.min(MAX_DEPTH, d)); depthLabel.textContent = want; };
+  const pickDepth = (d) => { want = Math.max(1, Math.min(MAX_DEPTH, d)); setPixelText(depthLabel, String(want)); };
   section('room', 'Room').append(row(
     button('Reset room', () => game.set(game.reset()), 'dev-undo'),
     button('Forget', () => game.set(game.forget()), 'dev-undo'),
-  ), el('div', { className: 'dev-kind', textContent: 'go to depth' }), Object.assign(row(
-    button('−', () => pickDepth(want - 1)),
+  ), pixel('div', 'dev-kind', 'GO TO DEPTH'), Object.assign(row(
+    button('-', () => pickDepth(want - 1)),
     depthLabel,
     button('+', () => pickDepth(want + 1)),
     button('Go', () => game.set(game.goTo(want))),
@@ -127,9 +131,9 @@ export function buildPanel(panel, opts, saved, game) {
     if (ok) { box.hidden = true; said('Copied!'); } else said('Copy from the box');
   });
   const said = (text) => {
-    copy.textContent = text;
+    setPixelText(copy, text);
     clearTimeout(copyTimer);
-    copyTimer = setTimeout(() => { copy.textContent = 'Copy room'; }, 1500);
+    copyTimer = setTimeout(() => setPixelText(copy, 'Copy room'), 1500);
   };
   share.append(row(copy), box);
 
@@ -143,7 +147,7 @@ export function buildPanel(panel, opts, saved, game) {
       shownOil = state.oil;
       const pct = Math.round(state.oil * 100);
       slider.value = pct;
-      amount.textContent = pct + '%';
+      setPixelText(amount, pct + '%');
     },
   };
 }
