@@ -77,8 +77,3 @@ screen with everything revealed (D-176).
 D-019 keeps the world fixed and puts endless, renewed depths behind
 portals (D-032). Should the first cave (D-175) end at a set depth, with
 today's endless depths moved behind a portal, or keep going down?
-
-**Q-044 · How the main menu looks** (step 52, before building it)
-The menu's structure is settled (D-177 to D-180). Which look: the
-lantern in the dark, the crypt behind, or stairs down? Shown at
-https://claude.ai/artifact/5cKubwaAFaAoH6ot3JAm7A

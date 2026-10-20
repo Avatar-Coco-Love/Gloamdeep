@@ -172,3 +172,11 @@ its own page of the controls for touch, mouse and keyboard.
 **D-180 · 2026-10-20 · The menu comes after step 42** (owner's pick,
 part of Q-044) The menu steps follow the starting region's design
 (step 42), before the world steps from 43 on.
+
+**D-181 · 2026-10-20 · The menu's look: the lantern in the dark**
+(owner's pick, answers Q-044) Pitch black, the hero on crypt floor in
+the lantern's dithered light, the name glowing warm above and a small
+flame marking the chosen line. Drawn with the game's own tiles, sprites,
+light and font, so it matches the game exactly, not the mock-up's
+simplified copies. Picking themes, a changing or moving background and
+a moving hero may come later.

@@ -14,7 +14,6 @@ entrances, NPC houses, promises for every seed. Write its rule sheet in
 `docs/regions/`. Docs only, build nothing.
 
 ## Waiting on the owner
-- Pick the main menu's look (Q-044): see the mock-up in the 0.2.5 log.
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
 
@@ -25,8 +24,8 @@ a step when merged and add its version.
 - [x] 31 Plan 0.2, 0.1.27 · 32 Natural caves, 0.2.0 · 33 Depths change
   kind, 0.2.1
 - [ ] 42 Design the starting region (docs only)
-The main menu (D-177 to D-180; step order proposed, may change)
-- [ ] 52 A title screen with New journey, in the picked look (Q-044)
+The main menu (D-177 to D-181; step order proposed, may change)
+- [ ] 52 A title screen with New journey, the lantern in the dark (D-181)
 - [ ] 53 The pause menu: Resume, Back to title
 - [ ] 54 Settings, with the tap or swipe switch
 - [ ] 55 The motion switch · 56 The seed · 57 How to play
@@ -49,7 +48,7 @@ kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
 
 After the menu, at the owner's wish: UI and dev tool improvements.
 
-Ideas for later: landmarks, NPC houses, special items, a second region,
+Ideas for later: menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); sounds; scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
@@ -72,6 +71,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 - **2026-10-20, 0.2.5, the main menu planned.** Owner's picks: a title
   screen with the menu on it and a pause menu in play; buttons only for
   what works; Settings holds a tap or swipe switch, a motion switch and
-  a seed, plus How to play; the menu comes after step 42 (D-177 to
-  D-180). Three looks to pick from (Q-044), mock-up:
+  a seed, plus How to play; the menu comes after step 42; its look is
+  the lantern in the dark, drawn with the game's own art (D-177 to
+  D-181). Mock-up of the looks shown:
   https://claude.ai/artifact/5cKubwaAFaAoH6ot3JAm7A
