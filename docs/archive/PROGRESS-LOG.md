@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.22, the map turns.** Arrows beside "DEPTH 3",
+  < and >, Page Up and Page Down, or a tap on found stairs show other
+  floors seen; the hero stays put. Owner's picks: skip floors never seen; a
+  floor opens whole; a generous stairs tap; dim grey arrows (D-207).
+  D-194 to D-200 archived (D-208). Playtest: https://claude.ai/artifact/QpDNN5QC2X5dBshJ2fxxif
 - **2026-10-20, 0.2.21, the map.** A map button (left of pause) or M
   shows the floor you're on, each room drawn from the tiles remembered.
   After the playtest: a box over the veiled room, drag and pinch, a

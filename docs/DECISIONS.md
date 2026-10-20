@@ -173,3 +173,27 @@ lantern goes out as the hero comes into daylight and lights again as they
 leave it, only at that moment, so the player's own switch between holds.
 For now it reacts to daylight only; night (step 50) will join it. No line
 is said. Later, a choice of oil levels at which it goes out (an idea).
+
+**D-211 · 2026-10-20 · The cave mouth** (step 49, owner's picks from a
+mock-up of three looks, https://claude.ai/artifact/KsSQEcYgn71XLjaYAzVn8G;
+builds on D-184) For now the mouth sits on an edge of the one woods room,
+standing in for D-184's side cell until the region's 3 × 3 grid is
+built: the seed picks the edge (north, east, south or west) and a spot
+along it, kept from the corners. It is mock-up C: trees along the edge,
+a mound of grey rock either side of a dark mouth, an arch on the north
+edge, and the tile in front worn to earth. Walking through it, the hero
+arrives on the crypt's facing side, at a gap in its wall (the owner's
+rule: go in up, arrive at the bottom): going up, the south room's bottom,
+then on up into the first room; going down, left or right, the first
+room. Walking back out arrives on the mouth. A new journey still starts
+in the crypt, and dev Go outside stays. Daylight through the mouth waits
+for step 51.
+
+**D-212 · 2026-10-20 · A doorway keeps the depth; stairs change it**
+(the owner's idea; for step 49b) A way in through a doorway or mouth
+stays on the same level, and only stairs go down. So the two crypt rooms
+become depth 0, like the woods, and every depth below moves up one: the
+second room is depth 1, the generated floors 2, 3 and 4, still 5 levels
+in all (D-185), and the deeper kinds move up one with them. The strip
+says SURFACE in the crypt, until places have names. Built in its own
+step, 49b, after the mouth.

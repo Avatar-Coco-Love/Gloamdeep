@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.25 (2026-10-20)
+- The woods now has a cave mouth: a dark opening between two grey rocks
+  on one edge, with worn earth in front. The seed picks the edge and the
+  spot along it.
+- Walk through it and you arrive on the crypt's facing side, through a
+  new gap in its wall: going up, the bottom of the south room; going
+  down, left or right, the first room. Walk back out and you are on the
+  mouth again. A new journey still starts in the crypt.
+- Decisions: D-211, D-212 (for step 49b).
+
 ## 0.2.24 (2026-10-20)
 - Settings gains "Lantern: By hand" under Seed. Picked, or Left and Right,
   it flips to "By itself": the lantern then goes out as you step into

@@ -7,6 +7,7 @@ import { generateWoods } from './woods.js';
 import { seedFor } from './rng.js';
 import { scatter } from './scatter.js';
 import { cellOf, downPlaceIn } from './region.js';
+import { mouthOf, mouthSides, withGap } from './mouth.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
 // its water as floor, and the study's stairs down at 1,1 (D-130). The gap in
@@ -95,9 +96,9 @@ export const PLACES = {
   first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1, sides: { down: 'south' } },
   second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2, guard: true },
   south: { map: SOUTH_ROOM, start: { x: 5, y: 0 }, lights: SOUTH_LIGHTS, enemies: SOUTH_ENEMIES, items: SOUTH_ITEMS, depth: 1, slot: 1, sides: { up: 'first' } },
-  // The first outside room, on the surface, depth 0, made from the seed in daylight (step 48, D-209).
-  // For now only the dev Go outside button leads there; the cave mouth comes next (D-175).
-  woods: { make: generateWoods, depth: 0, look: 'woods', day: true },
+  // The first outside room, on the surface, depth 0, made from the seed in daylight (step 48, D-209),
+  // with the first cave's mouth on one edge (step 49, D-211). The dev Go outside button leads there too.
+  woods: { make: (s, seed) => generateWoods(s, mouthOf(seed)), depth: 0, look: 'woods', day: true },
 };
 
 // § depth: the place at each depth, and back. Below the second room every
@@ -109,16 +110,18 @@ const DEEPER = 'second';
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.length), 10);
 export const isGenerated = (id) => !PLACES[id];
-// The hand-made rooms keep their shape; the seed places what is in them (D-192).
+// The hand-made rooms keep their shape; the seed places what is in them (D-192),
+// and cuts the gap from the cave mouth into one of them (D-211).
 export function placeFor(id, seed = 1) {
-  if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth)) };
-  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)) };
+  if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth), seed) };
+  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)), map: withGap(id, PLACES[id].map, seed) };
   const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
   return { ...((cell && generateRoom(cell.seed, shape, cell)) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
 }
 
-// The room beyond each edge of a place with openings, by direction (D-197, D-201)
-export const sidesOf = (id, seed) => PLACES[id]?.sides || (isGenerated(id) && cellOf(seed, id, depthOf(id))?.sides) || {};
+// The room beyond each edge of a place with openings, by direction (D-197,
+// D-201), and the way through the cave mouth (D-211)
+export const sidesOf = (id, seed) => ({ ...(PLACES[id]?.sides || (isGenerated(id) && cellOf(seed, id, depthOf(id))?.sides) || {}), ...mouthSides(id, seed) });
 
 // § kinds: the kind of place at each generated depth, from the depth it
 // starts at (D-165): grey rock chambers, then earth burrows from depth 6.

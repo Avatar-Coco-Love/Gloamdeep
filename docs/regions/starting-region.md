@@ -30,7 +30,8 @@ may leave cells empty).
   you wake here after dying (D-020).
 - **The first cave's entrance** in one of the four side cells next to
   home: north, east, south or west, picked by the seed (D-184). If north,
-  it is a mountain room.
+  it is a mountain room. Until the grid is built, the mouth sits on that
+  edge of the one woods room (D-211).
 
 ## Caves (D-184, D-185)
 - One cave entrance for now: the first cave. The sheet leaves room for

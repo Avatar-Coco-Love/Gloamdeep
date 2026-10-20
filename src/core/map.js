@@ -1,7 +1,8 @@
 // § map: a floor as the map screen shows it (D-176, D-205), the hero's own
 // or another one the map has turned to (D-206). Plain data, no drawing.
 // Every room of the floor sits on its grid, found by walking the side
-// openings from one of its rooms; each is shown from the tiles the hero
+// openings from one of its rooms, but not the cave mouth, which leads to
+// another floor (D-211); each is shown from the tiles the hero
 // remembers, or in full with the dev Reveal map switch, which keeps the
 // memory as it is.
 import { sidesOf, depthOf, tileAt, placeAt, placeBeside } from './room.js';
@@ -20,7 +21,7 @@ export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
   while (todo.length) {
     const id = todo.shift(), at = cells.get(id);
     for (const [dir, to] of Object.entries(sidesOf(id, state.seed))) {
-      if (!cells.has(to)) { cells.set(to, { x: at.x + STEP[dir][0], y: at.y + STEP[dir][1] }); todo.push(to); }
+      if (depthOf(to) === depth && !cells.has(to)) { cells.set(to, { x: at.x + STEP[dir][0], y: at.y + STEP[dir][1] }); todo.push(to); }
     }
   }
   const known = (id) => (id === state.place ? state : state.elsewhere[id]) || (reveal && fresh(id, state.seed));
