@@ -26,14 +26,15 @@
     position: fixed; right: max(8px, env(safe-area-inset-right)); bottom: max(6px, env(safe-area-inset-bottom));
     font: 11px/1 ui-monospace, "Courier New", monospace; opacity: .7; pointer-events: none;
   }
-  /* The lantern switch (src/input/lantern.js, D-080): placed by script next to the oil bar. */
-  #lantern-button {
+  /* The lantern switch (src/input/lantern.js, D-080) and the pause button (src/input/pause.js,
+     D-187): placed by script next to the oil bar. */
+  #lantern-button, #pause-button {
     position: fixed; z-index: 1; top: 8px; left: 8px;
     width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
     border: 1px solid #3a3446; border-radius: 4px; background: rgba(11,10,16,.85); cursor: pointer;
   }
   #lantern-button[aria-pressed="true"] { border-color: #a8642c; }
-  #lantern-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
+  #lantern-button canvas, #pause-button canvas { width: 25px; height: 25px; image-rendering: pixelated; image-rendering: crisp-edges; background: none; }
   /* Dev tools (src/dev/dev.js, panel.js): on for everyone (D-086). Game palette
      (ART-DIRECTION.md): violet for the section buttons, stone for the tools
      below, lantern gold for what is on, the hostile red for what undoes (D-093). */

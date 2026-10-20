@@ -15,21 +15,25 @@ import { LANTERN, LANTERN_AT } from './core/light.js';
 import { reach, setOil } from './core/oil.js';
 import { drawOilBar, drawHearts, drawDepth } from './render/hud.js';
 import { createTextLine } from './render/textline.js';
-import { drawTitle, lineAt } from './render/title.js';
-import { TITLE_MENU, moveChoice } from './core/menu.js';
+import { drawTitle, MENU_Y } from './render/title.js';
+import { drawPause, lineAt, pauseTop } from './render/menu.js';
+import { TITLE_MENU, PAUSE_MENU, moveChoice } from './core/menu.js';
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { lanternFrom } from './core/sight.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
+import { createPauseButton } from './input/pause.js';
 import { createDev } from './dev/dev.js';
 
 const canvas = document.getElementById('game');
 const ctx = createScreen(canvas);
 document.getElementById('version').textContent = VERSION;
 
-// The one Math.random: the first seed, a new game each time the page opens (D-148)
-let state = makeWorld('first', Math.floor(Math.random() * SEED_MAX) + 1);
+// The only Math.random: a new seed each time the page opens (D-148), and again
+// when Back to title ends a journey (D-187)
+const newWorld = () => makeWorld('first', Math.floor(Math.random() * SEED_MAX) + 1);
+let state = newWorld();
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const textLine = createTextLine();
@@ -111,27 +115,51 @@ const stepToward = (px, py, held = false) => {
 };
 
 // § switch: the lantern button and the L key, free at any time in play (D-080, D-081)
-const switchIt = () => { if (!onTitle) state = switchLantern(state); };
+const switchIt = () => { if (screen === 'play') state = switchLantern(state); };
 const lanternButton = createLanternButton(canvas, { onSwitch: switchIt });
+const pauseButton = createPauseButton(canvas, { onPause: () => pause() });
 
 const stage = document.getElementById('stage');
-// § title: the game opens on the title screen (D-177). Arrows and swipes move
-// the flame, Enter, Space or a tap on a line picks it.
-let onTitle = true, chosen = 0;
-function choose(i = chosen) {
-  if (TITLE_MENU[i]?.id !== 'new') return;
-  onTitle = false; // New journey: the world made at boot, with its random seed
-  lanternButton.hide(false); dev.hide(false);
-  spokenLine = null; spoken.textContent = '';
+// § screens: the game opens on the title screen (D-177); in play, the pause button,
+// Esc or P open the pause menu over the room (D-187). On a menu, arrows and swipes
+// move the flame; Enter, Space or a tap on a line picks it.
+let screen = 'title', chosen = 0; // screen: 'title', 'play' or 'paused'
+const MENUS = { title: TITLE_MENU, paused: PAUSE_MENU };
+const menuTop = () => (screen === 'title' ? MENU_Y : pauseTop(PAUSE_MENU.length));
+const TITLE_WORDS = 'Gloamdeep. New journey: press Enter, or tap it.';
+function show(next) {
+  screen = next; chosen = 0;
+  const playing = next === 'play';
+  lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
+  spokenLine = null;
+  spoken.textContent = next === 'title' ? TITLE_WORDS : next === 'paused' ? 'Paused. Resume, or Back to title.' : '';
 }
-const onDir = (dir) => { if (onTitle) chosen = moveChoice(chosen, dir, TITLE_MENU.length); else tryStep(dir); };
+function pause() {
+  if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
+  else if (screen === 'paused') show('play'); // Esc or P again resumes
+}
+// § journey: Back to title ends it; the next New journey starts in a new world (D-187)
+function endJourney() {
+  state = newWorld();
+  shown.x = state.hero.x; shown.y = state.hero.y;
+  queued = nudge = hit = bitten = travel = null; foeShown = new Map();
+  drawnRoom = null; rememberedAt = rememberedSeen = null;
+  show('title');
+}
+function choose(i = chosen) {
+  const id = MENUS[screen]?.[i]?.id;
+  if (id === 'new' || id === 'resume') show('play');
+  else if (id === 'title') endJourney();
+}
+const onDir = (dir) => { if (screen === 'play') tryStep(dir); else chosen = moveChoice(chosen, dir, MENUS[screen].length); };
 const onPoint = (px, py, held) => {
-  if (!onTitle) { stepToward(px, py, held); return; }
-  const i = lineAt(py, TITLE_MENU.length);
+  if (screen === 'play') { stepToward(px, py, held); return; }
+  const i = lineAt(py, MENUS[screen].length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
-const onWait = () => { if (onTitle) choose(); else tryStep('wait'); };
-const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose: () => { if (onTitle) choose(); } });
+const onWait = () => { if (screen === 'play') tryStep('wait'); else choose(); };
+const onChoose = () => { if (screen !== 'play') choose(); };
+const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   set: (s) => { // a new place shows at once, with no slide (Go to depth)
@@ -148,8 +176,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   heal: () => ({ ...state, health: HERO_HEALTH }),
   goTo: (depth) => goToDepth(state, depth),
 });
-lanternButton.hide(true); dev.hide(true);
-spoken.textContent = 'Gloamdeep. New journey: press Enter, or tap it.';
+show('title');
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
 // reaches are remembered (D-059). Again after a dev change to the memory or oil,
@@ -168,7 +195,7 @@ const lights = [], torchGlow = []; // reused every frame (TECH.md)
 // § loop: move the shown hero toward the real one, then draw
 function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
 function frame(t) {
-  if (onTitle) { drawTitle(ctx, TITLE_MENU, chosen, t, reduceMotion.matches); requestAnimationFrame(frame); return; }
+  if (screen === 'title') { drawTitle(ctx, TITLE_MENU, chosen, t, reduceMotion.matches); requestAnimationFrame(frame); return; }
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)
   if (travel && t >= travel.mid && travel.from) { travel.from = null; shown.x = state.hero.x; shown.y = state.hero.y; foeShown = new Map(); }
   if (travel && t >= travel.end) travel = null;
@@ -176,7 +203,7 @@ function frame(t) {
   shown.x = approach(shown.x, s.hero.x);
   shown.y = approach(shown.y, s.hero.y);
   for (const e of s.enemies) { const p = foeAt(e); p.x = approach(p.x, e.x); p.y = approach(p.y, e.y); }
-  if (settled()) {
+  if (settled() && screen === 'play') { // paused, no turn is taken
     rememberHere();
     if (queued) { const d = queued; queued = null; tryStep(d); }
     else {
@@ -227,7 +254,8 @@ function frame(t) {
   textLine.draw(ctx, line, t, reduceMotion.matches);
   if (line !== spokenLine) { spokenLine = line; if (line) spoken.textContent = line.text; }
   lanternButton.show(state.lit);
-  dev.draw(ctx, state);
+  if (screen === 'paused') drawPause(ctx, PAUSE_MENU, chosen, t, reduceMotion.matches);
+  else dev.draw(ctx, state);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

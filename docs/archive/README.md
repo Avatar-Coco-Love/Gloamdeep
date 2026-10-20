@@ -29,5 +29,7 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
 - `DECISIONS-FOUNDATION-6.md`: D-130 to D-158 (steps 25 to 30), moved
   unchanged from `DECISIONS.md` at step 31, when the foundation stage
   ended (D-161). Still in force.
+- `DECISIONS-STAGE-0.2-1.md`: D-159 to D-167 (steps 31 to 33), moved
+  unchanged from `DECISIONS.md` at step 53 (D-188). Still in force.
 - The foundation build plan (steps 7 to 30) is at the top of
   `PROGRESS-LOG.md`.

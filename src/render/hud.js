@@ -71,3 +71,9 @@ export function drawLanternIcon(c, lit) {
     if (pal[ch]) { c.fillStyle = pal[ch]; c.fillRect(x, y, 1, 1); }
   }));
 }
+
+// § pause icon: two bars in the lantern icon's stone grey, a 5 × 5 map (D-187)
+export function drawPauseIcon(c) {
+  c.clearRect(0, 0, 5, 5);
+  c.fillStyle = '#9790a4'; c.fillRect(1, 0, 1, 5); c.fillRect(3, 0, 1, 5);
+}

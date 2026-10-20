@@ -8,6 +8,20 @@ import { drawLanternIcon } from '../render/hud.js';
 const SIZE = 44, GAP = 8; // a 44 px tap target (TECH.md), 8 px from the picture
 const BAR_BOTTOM = 12; // game pixels from the picture's top to below the oil bar (hud.js)
 
+// § place: the button's spot in the row by the oil bar (0 the lantern, 1 the
+// pause button to its left, or under it when the row stands beside the picture),
+// again whenever the page or the picture changes size
+export function keepPlaced(canvas, button, i) {
+  const place = () => {
+    const r = canvas.getBoundingClientRect(), s = button.style, step = i * (SIZE + GAP);
+    if (r.top >= SIZE + 2 * GAP) { s.top = r.top - SIZE - GAP + 'px'; s.left = r.right - SIZE - step + 'px'; }
+    else if (innerWidth - r.right >= SIZE + 2 * GAP) { s.top = r.top + step + 'px'; s.left = r.right + GAP + 'px'; }
+    else { s.top = r.top + BAR_BOTTOM * r.height / canvas.height + 'px'; s.left = r.right - SIZE - 2 - step + 'px'; }
+  };
+  const watch = new ResizeObserver(place);
+  watch.observe(document.documentElement); watch.observe(canvas);
+}
+
 export function createLanternButton(canvas, { onSwitch }) {
   const button = document.createElement('button');
   button.id = 'lantern-button';
@@ -20,15 +34,7 @@ export function createLanternButton(canvas, { onSwitch }) {
   button.addEventListener('click', (ev) => { onSwitch(); if (ev.detail) button.blur(); }); // a tap or click lets go of the focus; Enter or Space keeps it
   document.body.append(button);
 
-  // § place: again whenever the page or the picture changes size
-  const place = () => {
-    const r = canvas.getBoundingClientRect(), s = button.style;
-    if (r.top >= SIZE + 2 * GAP) { s.top = r.top - SIZE - GAP + 'px'; s.left = r.right - SIZE + 'px'; }
-    else if (innerWidth - r.right >= SIZE + 2 * GAP) { s.top = r.top + 'px'; s.left = r.right + GAP + 'px'; }
-    else { s.top = r.top + BAR_BOTTOM * r.height / canvas.height + 'px'; s.left = r.right - SIZE - 2 + 'px'; }
-  };
-  const watch = new ResizeObserver(place);
-  watch.observe(document.documentElement); watch.observe(canvas);
+  keepPlaced(canvas, button, 0);
 
   let shown = null;
   return {
