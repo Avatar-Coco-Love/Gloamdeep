@@ -25,6 +25,7 @@ Entry format:
   corner left empty by the seed, so the rooms make an L. The corner room
   joins the other two through a one-tile gap in the shared edge; walk
   out through it and you come in at the same spot in the next room.
+  The rock is drawn open right up to the edge there, so the gap shows.
 - The seed picks which of the three holds the stairs up and down and the
   torch. The other two each hold a flask, a rat and a herb, in the dark.
 - Depths 4 and 5 stay one room each, and every other depth is as before.

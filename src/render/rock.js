@@ -27,16 +27,20 @@ const STONES = 0.5; // the share of earth floor tiles with a stone
 
 // § mask: 1 for rock, for every pixel. Tile middles are 1 (wall) or 0, mixed
 // between middles and cut at a level that wobbles in 3-pixel steps, so edges
-// stay chunky pixel art.
+// stay chunky pixel art. An opening in the room's edge stays clear to the
+// edge: the tile beyond it counts as floor, and its own tile has no rock (D-201).
 function mask(room, wobble) {
-  const W = room.cols * T, H = room.rows * T, m = new Uint8Array(W * H), wall = (x, y) => +isWall(room, x, y);
+  const W = room.cols * T, H = room.rows * T, m = new Uint8Array(W * H);
+  const inside = (x, y) => x >= 0 && y >= 0 && x < room.cols && y < room.rows;
+  const gap = (x, y) => !isWall(room, x, y) && (x === 0 || y === 0 || x === room.cols - 1 || y === room.rows - 1);
+  const wall = (x, y) => inside(x, y) ? +isWall(room, x, y) : +!gap(Math.max(0, Math.min(room.cols - 1, x)), Math.max(0, Math.min(room.rows - 1, y)));
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const tx = x / T | 0, ty = y / T | 0, ix = x % T, iy = y % T;
     const fx = (x + 0.5) / T - 0.5, fy = (y + 0.5) / T - 0.5, x0 = Math.floor(fx), y0 = Math.floor(fy), ax = fx - x0, ay = fy - y0;
     const v = (wall(x0, y0) * (1 - ax) + wall(x0 + 1, y0) * ax) * (1 - ay) + (wall(x0, y0 + 1) * (1 - ax) + wall(x0 + 1, y0 + 1) * ax) * ay;
     let rock = v > 0.5 - (hash(x / 3 | 0, y / 3 | 0, 7) - 0.5) * wobble;
     if (isWall(room, tx, ty) && v > 0.95) rock = true;
-    if (!isWall(room, tx, ty) && (tileAt(room, tx, ty).leads || ix > 3 && ix < 12 && iy > 3 && iy < 12)) rock = false;
+    if (!isWall(room, tx, ty) && (tileAt(room, tx, ty).leads || gap(tx, ty) || ix > 3 && ix < 12 && iy > 3 && iy < 12)) rock = false;
     m[y * W + x] = rock ? 1 : 0;
   }
   return m;
