@@ -7,7 +7,8 @@ import { rng, int, pick } from './rng.js';
 // follows the hero (D-195). The chambers (D-162): how many, their half-widths
 // and half-heights in tiles, and how far apart their middles are. Counts of
 // chambers and open tiles grew with the room's area from the 11 × 13 ones.
-export const COLS = 17, ROWS = 20;
+export const COLS = 17;
+export const ROWS = 20;
 const CAVES = [5, 10], CAVE_R = [1.3, 3], CAVE_GAP = 4;
 // At least this many open tiles, 45 in an 11 × 13 room (D-147)
 const MIN_OPEN = 107;

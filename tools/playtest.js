@@ -34,9 +34,15 @@ function visit(file, path = []) {
 }
 
 // § wrap: one module as `__gd['src/x.js'] = (() => { …; return { … }; })();`
+// Every name imported must be one the packer found exported, so a form it
+// misses (`export const a = 1, b = 2`) stops it instead of packing undefined.
+const exportsOf = {};
 function wrap({ file, text, imports }) {
   let body = text;
   for (const { line, names, file: dep } of imports) {
+    for (const n of names.split(',').map((n) => n.trim().split(/\s+/)[0]).filter(Boolean)) {
+      if (!exportsOf[dep].includes(n)) throw new Error(`${file}: imports ${n}, which the packer found no export of in ${dep}`);
+    }
     const fields = names.split(',').map((n) => n.trim()).filter(Boolean)
       .map((n) => n.replace(/^(\w+)\s+as\s+(\w+)$/, '$1: $2')).join(', ');
     body = body.replace(line, `const { ${fields} } = __gd['${dep}'];`);
@@ -48,6 +54,7 @@ function wrap({ file, text, imports }) {
   });
   const left = body.match(/^\s*(import|export)\b.*$/m);
   if (left) throw new Error(`${file}: can't pack this line: ${left[0].trim()}`);
+  exportsOf[file] = exported;
   return `__gd['${file}'] = (() => {\n${body}\nreturn { ${exported.join(', ')} };\n})();`;
 }
 
