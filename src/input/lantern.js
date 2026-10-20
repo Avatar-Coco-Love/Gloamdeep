@@ -1,30 +1,34 @@
 // § lantern button: the on-screen lantern switch, in the buttons' row just
-// outside the game picture: above it, or beside it when the picture is wider
-// that way, and just under the top strip inside the picture when neither fits
-// (D-080, D-198). Thin layer: a tap or
+// outside the game picture: above it, or beside it when the picture stands
+// sideways, and just under the top strip inside the picture when neither
+// fits (D-080, D-198, D-199). Thin layer: a tap or
 // click only calls onSwitch(); show(lit) redraws its icon and tells screen
 // readers whether it is on; hide(on) takes it away on the title screen.
 import { drawLanternIcon } from '../render/hud.js';
 import { BUTTON as SIZE, BUTTON_GAP as GAP } from '../render/screen.js';
 
-// § place: the button's spot in the row (D-198): slot 0 the lantern at the
-// right end, 1 the pause button to its left, -1 the dev wrench at the left
-// end. Above the picture the row runs along its top; beside it, the wrench
-// stands at the left and the others at the right, pause under the lantern.
-// `hud` is the strip at the picture's top. Placed again whenever the page or
-// the picture changes size; then(top, left) hears where it went.
+// § place: the button's spot (D-198, D-199): slot 0 the lantern, 1 the
+// pause button, -1 the dev wrench. Above the picture they make one row,
+// the wrench at the left end, the lantern at the right end with pause to
+// its left. Sideways (the strip is a column at the room's left), the wrench
+// stands left of the picture's top, pause right of it, and the lantern at
+// the bottom right, under the thumb. `hud` is the strip; the picture is it
+// and the room's canvas beside it. Placed again whenever the page or the
+// picture changes size; then(top, left, picture) hears where it went.
 export function keepPlaced(hud, button, slot, then) {
+  const room = hud.parentElement.querySelector('#game');
   const place = () => {
-    const r = hud.getBoundingClientRect(), s = button.style, left = slot < 0, step = Math.max(slot, 0) * (SIZE + GAP);
+    const h = hud.getBoundingClientRect(), g = room.getBoundingClientRect(), s = button.style, left = slot < 0;
+    const r = { top: h.top, left: h.left, right: g.right, bottom: g.bottom }, step = Math.max(slot, 0) * (SIZE + GAP);
     let top, x;
-    if (r.top >= SIZE + GAP) { top = r.top - SIZE - GAP; x = left ? r.left : r.right - SIZE - step; }
-    else if (r.left >= SIZE + 2 * GAP) { top = r.top + step; x = left ? r.left - SIZE - GAP : r.right + GAP; }
-    else { top = r.bottom + 2; x = left ? r.left + 2 : r.right - SIZE - 2 - step; }
+    if (h.bottom > g.top + 1) { top = slot === 0 ? r.bottom - SIZE : r.top; x = left ? r.left - SIZE - GAP : r.right + GAP; }
+    else if (r.top >= SIZE + GAP) { top = r.top - SIZE - GAP; x = left ? r.left : r.right - SIZE - step; }
+    else { top = h.bottom + 2; x = left ? r.left + 2 : r.right - SIZE - 2 - step; }
     s.top = top + 'px'; s.left = x + 'px';
-    then?.(top, x);
+    then?.(top, x, r);
   };
   const watch = new ResizeObserver(place);
-  watch.observe(document.documentElement); watch.observe(hud);
+  watch.observe(document.documentElement); watch.observe(hud); watch.observe(room);
 }
 
 export function createLanternButton(hud, { onSwitch }) {

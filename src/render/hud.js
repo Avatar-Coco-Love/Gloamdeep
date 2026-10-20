@@ -1,21 +1,37 @@
-// § hud: the hearts, depth and oil, drawn in the strip above the room (D-198), and the buttons' icons.
+// § hud: the hearts, depth and oil, drawn in the strip above the room (D-198)
+// or in the column beside it (D-199), and the buttons' icons.
 import { W } from './screen.js';
 import { drawText, textWidth } from './font.js';
+
+// § status: the three boxes in the strip, hearts left, depth middle, oil
+// right; or stacked in the column at the room's left when the strip is
+// that narrow one (D-199): hearts, depth, oil from the top, 2 pixels apart.
+export function drawStatus(c, { oil, health, max, depth }) {
+  if (c.canvas.width === W) {
+    drawHearts(c, health, max, 2, BOX_Y);
+    drawDepth(c, depth, null, BOX_Y);
+    drawOilBar(c, oil, W - BOX_W - 2, BOX_Y);
+  } else {
+    drawHearts(c, health, max, 2, 2);
+    drawDepth(c, depth, 2, 12);
+    drawOilBar(c, oil, 2, 25);
+  }
+}
 
 // § oil bar: style study 1's 10 amber segments (study lines 37–40, 522), drawn
 // in pixels in the top right corner, away from the dev wrench (D-065). A
 // segment is lit while the oil is above its share, as in the study.
 const SEG_W = 3, SEG_H = 4, GAP = 1, SEGS = 10;
 const BOX_W = SEGS * SEG_W + (SEGS - 1) * GAP + 4, BOX_H = SEG_H + 4;
-const BOX_X = W - BOX_W - 2, BOX_Y = 2;
+const BOX_Y = 2;
 
-export function drawOilBar(c, oil) {
-  c.fillStyle = '#0e0c16'; c.fillRect(BOX_X, BOX_Y, BOX_W, BOX_H);
+function drawOilBar(c, oil, bx, by) {
+  c.fillStyle = '#0e0c16'; c.fillRect(bx, by, BOX_W, BOX_H);
   c.fillStyle = '#2a2636'; // the study's --line, its border
-  c.fillRect(BOX_X, BOX_Y, BOX_W, 1); c.fillRect(BOX_X, BOX_Y + BOX_H - 1, BOX_W, 1);
-  c.fillRect(BOX_X, BOX_Y, 1, BOX_H); c.fillRect(BOX_X + BOX_W - 1, BOX_Y, 1, BOX_H);
+  c.fillRect(bx, by, BOX_W, 1); c.fillRect(bx, by + BOX_H - 1, BOX_W, 1);
+  c.fillRect(bx, by, 1, BOX_H); c.fillRect(bx + BOX_W - 1, by, 1, BOX_H);
   for (let i = 0; i < SEGS; i++) {
-    const x = BOX_X + 2 + i * (SEG_W + GAP), y = BOX_Y + 2;
+    const x = bx + 2 + i * (SEG_W + GAP), y = by + 2;
     if (oil > i / SEGS + 0.001) {
       c.fillStyle = '#ffc65c'; c.fillRect(x, y, SEG_W, SEG_H - 1); // --amber
       c.fillStyle = '#a8642c'; c.fillRect(x, y + SEG_H - 1, SEG_W, 1); // --amber-deep, its lower edge
@@ -29,8 +45,8 @@ export function drawOilBar(c, oil) {
 // box like the oil bar's (D-116). A full heart is the hostile red with the
 // study's deeper red (PAL p, R) under it; an empty one is an empty oil segment's colour.
 const HEART = ['.x.x.', 'xxxxx', '.xxx.', '..x..'], HEART_W = 5;
-export function drawHearts(c, health, max) {
-  const w = max * HEART_W + (max - 1) * GAP + 4, h = HEART.length + 4, bx = 2, by = BOX_Y;
+function drawHearts(c, health, max, bx, by) {
+  const w = max * HEART_W + (max - 1) * GAP + 4, h = HEART.length + 4;
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
@@ -48,10 +64,10 @@ export function drawHearts(c, health, max) {
 
 // § depth: how deep the hero is, "DEPTH 1" for the first room, in the top
 // middle between the hearts and the oil bar, in a box like theirs and the
-// text line's grey (D-146).
-export function drawDepth(c, depth) {
+// text line's grey (D-146). A null x centres it.
+function drawDepth(c, depth, x, by) {
   const text = `DEPTH ${depth}`, w = textWidth(text) + 6, h = 7 + 4;
-  const bx = Math.floor((W - w) / 2), by = BOX_Y;
+  const bx = x ?? Math.floor((W - w) / 2);
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);

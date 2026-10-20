@@ -51,7 +51,7 @@
     width: min(17em, calc(100% - 16px)); box-sizing: border-box; padding: 6px;
     border: 1px solid #3a3446; border-radius: 6px; background: rgba(14,12,22,.95);
     box-shadow: 0 6px 20px rgba(0,0,0,.55);
-    max-height: calc(100% - 100px); overflow-y: auto; /* fits a phone held sideways */
+    overflow-y: auto; /* its height is set by script, down to the screen's bottom (D-199) */
   }
   #dev-panel[hidden] { display: none; }
   #dev-panel button { min-height: 44px; padding: 0 8px; font: inherit; color: inherit; border-radius: 4px; cursor: pointer; }
