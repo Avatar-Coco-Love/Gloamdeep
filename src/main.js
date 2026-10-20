@@ -26,6 +26,7 @@ import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, taps
 import { shownLine } from './core/lines.js';
 import { remember, forget } from './core/fog.js';
 import { lanternFrom } from './core/sight.js';
+import { cameraAt } from './core/camera.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
@@ -52,10 +53,11 @@ const textLine = createTextLine();
 const spoken = document.getElementById('line'); // the same words for screen readers
 let spokenLine = null;
 
-// The room is drawn onto a hidden canvas, again only when it changes (a dev spawn).
+// The room is drawn onto a hidden canvas, again only when it changes (a dev spawn),
+// as big as the whole room; the camera shows the screen's part of it (D-195).
 const base = document.createElement('canvas');
-base.width = W; base.height = H;
 let drawnRoom = null;
+let cam = { x: 0, y: 0 }; // the room pixel at the screen's top-left (src/core/camera.js)
 
 // § moving: the hero slides to its new tile (D-043); one step or wait waits in line
 // so a quick second tap or key is not lost.
@@ -120,7 +122,7 @@ function nudgeToward(dir) {
 // A tap on the hero waits a turn; a finger held on the hero does nothing (D-085).
 // With Swipe only, taps toward a side and held fingers don't walk; a tap on the hero still waits (D-189).
 const stepToward = (px, py, held = false) => {
-  const h = state.hero, tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
+  const h = state.hero, tx = Math.floor((px + cam.x) / TILE), ty = Math.floor((py + cam.y) / TILE);
   if (dev.place(tx, ty)) return; // a picked spawn takes the tap (D-049)
   const dir = toward(h.x, h.y, tx, ty);
   if (dir) { if (tapsWalk(settings.controls)) tryStep(dir); }
@@ -260,6 +262,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   setOil: (oil) => setOil(state, oil),
   heal: () => ({ ...state, health: HERO_HEALTH }),
   goTo: (depth) => goToDepth(state, depth),
+  camera: () => cam,
 });
 show('title');
 
@@ -303,34 +306,43 @@ function frame(t) {
   }
   let nx = 0, ny = 0;
   if (nudge && t < nudge.until && !still()) { nx = nudge.dx; ny = nudge.dy; }
-  if (s.room !== drawnRoom) { drawnRoom = s.room; drawRoom(base.getContext('2d'), drawnRoom); }
-  ctx.drawImage(base, 0, 0);
-  drawBrackets(ctx, s.room, s.lights);
-  drawItems(ctx, s.items, t, still());
-  const hx = Math.round(shown.x * TILE) + nx, hy = Math.round(shown.y * TILE) + ny;
-  drawHero(ctx, hx, hy, !!bitten && t < bitten.until);
-  // § enemies: shaded by the light like the floor, so seen in memory's dim light too (D-153)
+  if (s.room !== drawnRoom) {
+    drawnRoom = s.room;
+    base.width = drawnRoom.cols * TILE; base.height = drawnRoom.rows * TILE;
+    drawRoom(base.getContext('2d'), drawnRoom);
+  }
+  // § camera: centred on the sliding hero, a bump's nudge left out (D-195)
+  const sx = Math.round(shown.x * TILE), sy = Math.round(shown.y * TILE);
+  cam = cameraAt(sx, sy, s.room, W, H);
+  ctx.drawImage(base, cam.x, cam.y, W, H, 0, 0, W, H);
+  inRoom(() => {
+    drawBrackets(ctx, s.room, s.lights);
+    drawItems(ctx, s.items, t, still());
+    drawHero(ctx, sx + nx, sy + ny, !!bitten && t < bitten.until);
+    // § enemies: shaded by the light like the floor, so seen in memory's dim light too (D-153)
+    drawEnemies(ctx, s.enemies, t, still(), hit && t < hit.until ? hit.enemy : null, foeAt);
+  });
   const lightOn = !dev.lightOff();
-  const flashing = hit && t < hit.until ? hit.enemy : null;
-  drawEnemies(ctx, s.enemies, t, still(), flashing, foeAt);
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
-  const lx = hx + LANTERN_AT.x, ly = hy - 2 + LANTERN_AT.y;
+  const lx = sx + nx + LANTERN_AT.x, ly = sy + ny - 2 + LANTERN_AT.y;
   if (lightOn) {
     const r = s.lit ? reach(s.oil) * (still() ? 1 : flicker(t, 1.7, 0.035)) : 0;
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
     lights.push(...torchLights(s.room, s.lights, t, still(), torchGlow), ...glowsIn(s.room, dev.revealed() ? null : s.seen));
-    drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen);
+    drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen, cam);
   }
-  drawFlames(ctx, s.room, s.lights, t, still());
-  if (s.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
+  inRoom(() => {
+    drawFlames(ctx, s.room, s.lights, t, still());
+    if (s.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
+  });
   // § shake: the room jumps a pixel left and right after a hit; none with reduced motion (study line 432, D-105)
   // A bite shakes it the same way (D-118).
   if (((hit && t < hit.shakeUntil) || (bitten && t < bitten.shakeUntil)) && !still()) {
-    const sx = Math.floor(t / 30) % 2 ? 1 : -1;
-    ctx.drawImage(canvas, 0, 0, W, H, sx, 0, W, H);
-    ctx.fillStyle = '#0e0c16'; ctx.fillRect(sx > 0 ? 0 : W - 1, 0, 1, H);
+    const jx = Math.floor(t / 30) % 2 ? 1 : -1;
+    ctx.drawImage(canvas, 0, 0, W, H, jx, 0, W, H);
+    ctx.fillStyle = '#0e0c16'; ctx.fillRect(jx > 0 ? 0 : W - 1, 0, 1, H);
   }
   if (travel) { // the room dims to the deepest dark and back; the hearts and oil stay
     ctx.globalAlpha = Math.max(0, 1 - Math.abs(t - travel.mid) / FADE_MS);
@@ -348,7 +360,15 @@ function frame(t) {
   else if (screen === 'settings') drawPause(ctx, menuOf(screen), chosen, t, still(), 'Settings');
   else if (screen === 'seed') drawSeedPad(ctx, entry, chosen, t, still());
   else if (screen === 'howto') drawHowTo(ctx, page, settings.controls, chosen, t, still());
-  else dev.draw(ctx, state);
+  else dev.draw(ctx, state, cam);
   requestAnimationFrame(frame);
+}
+// Draws in room pixels, moved by the camera and kept off the text strip below the room
+function inRoom(draw) {
+  ctx.save();
+  ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
+  ctx.translate(-cam.x, -cam.y);
+  draw();
+  ctx.restore();
 }
 requestAnimationFrame(frame);

@@ -50,8 +50,9 @@ Two passes, both run from the save's seed:
 
 ## Shapes and sizes (D-172)
 Rooms differ in shape and size by kind: tunnels are narrow, deserts are
-vast. A room bigger than the screen scrolls: the camera follows the hero.
-Today every room is 11 × 13 tiles, one screen. Which kinds, how big, and
+vast. A room bigger than the screen scrolls: the camera keeps the hero in
+the middle and stops at the room's edges (D-195). The crypt rooms are
+11 × 13 tiles, one screen; the generated caves are 17 × 20 (D-195). Which kinds, how big, and
 whether shapes come from hand-made templates or are generated: Q-038.
 
 ## Light between rooms (D-173)

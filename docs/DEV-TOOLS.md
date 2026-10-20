@@ -26,7 +26,7 @@ tools to be chosen together later.
   spawn pick and pointed tile (D-088). New state joins it as it arrives:
   health, depth, and the seed (D-150).
 - PC keys: ` the panel; G, C, R the View switches (D-090).
-- Grid and coordinates overlay (D-046). Drawing: `src/render/overlay.js`.
+- Grid and coordinates overlay (D-046); both move with the camera (D-195). Drawing: `src/render/overlay.js`.
 - Spawn: chips grouped by registry kind; tap one, then tap tiles; tap it
   again to drop it (D-048 to D-050, D-079, D-089). Torches, lit or unlit (D-123), go only where
   they can sit (D-100, D-102). Stairs can be spawned; they lead only where

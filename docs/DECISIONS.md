@@ -203,3 +203,13 @@ before and reaches 1 tile, the stairs and a touch beside them. All
 stairs, the crypt's too. A glow not yet found is no light, so it wakes
 no rat; once found it counts as light as before (D-134). Dev Reveal
 shows every glow (D-174).
+
+**D-195 · 2026-10-20 · The camera, and bigger caves** (step 44, owner's
+picks) In a room bigger than the screen the camera keeps the hero on the
+middle tile and glides with each step; at the room's edges it stops, so
+nothing beyond the room shows. One-screen rooms never move. The
+generated caves (depth 3 down) grow to about 1.5 screens, 17 × 20 tiles;
+the crypt rooms stay 11 × 13. Their chamber counts and open tiles grow
+with the area (chambers 5 to 10, at least 107 open; burrows 119 to 138),
+and no torch sits on the top row, where the hearts, depth and oil boxes
+could hide it.

@@ -3,16 +3,15 @@
 // a rat guarding it (D-149), and a herb (D-155). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 
-// § sizes: the first rooms' 11 × 13, and the chambers (D-162): how many,
-// their half-widths and half-heights in tiles, and how far apart their middles are
-const COLS = 11, ROWS = 13;
-const CAVES = [2, 4], CAVE_R = [1.3, 3], CAVE_GAP = 4;
-// At least this many open tiles, near the second room's 67 (D-147)
-const MIN_OPEN = 45;
+// § sizes: about 1.5 screens, 17 × 20, bigger than the screen, so the camera
+// follows the hero (D-195). The chambers (D-162): how many, their half-widths
+// and half-heights in tiles, and how far apart their middles are. Counts of
+// chambers and open tiles grew with the room's area from the 11 × 13 ones.
+export const COLS = 17, ROWS = 20;
+const CAVES = [5, 10], CAVE_R = [1.3, 3], CAVE_GAP = 4;
+// At least this many open tiles, 45 in an 11 × 13 room (D-147)
+const MIN_OPEN = 107;
 const TRIES = 200;
-// The top row's tiles a torch can use, clear of the hearts, depth and oil
-// bar boxes, as the first rooms' torches are (D-101)
-const TOP_ROW_TORCH = [2, 3, 7];
 
 // (seed, shape) → { map, start, lights, enemies, items }, or null if no try
 // worked. The shape is 'chambers' or 'burrows' (D-165).
@@ -58,8 +57,10 @@ function fill(r, g) {
   const down = pick(r, downs.filter((f) => far.get(key(f)) >= most - 2));
   g[up.y][up.x] = '<'; g[down.y][down.x] = '>';
 
-  // § torch: on a wall face near the stairs up, not right above them
-  const faces = tilesWhere(g, (x, y) => g[y][x] === '#' && y + 1 < ROWS && g[y + 1][x] === '.' && (y > 0 || TOP_ROW_TORCH.includes(x)));
+  // § torch: on a wall face near the stairs up, not right above them, and
+  // not on the top row, where the hearts, depth and oil bar boxes could hide
+  // it wherever the camera stands (D-101, D-195)
+  const faces = tilesWhere(g, (x, y) => g[y][x] === '#' && y > 0 && y + 1 < ROWS && g[y + 1][x] === '.');
   const near = faces.filter((t) => dist(t, up) <= 3 && !(t.x === up.x && t.y === up.y - 1));
   if (!near.length) return null;
   const torch = pick(r, near);
@@ -91,7 +92,7 @@ function fill(r, g) {
   };
 }
 
-// § chambers: 2 to 4 roundish chambers, their middles well apart (D-162)
+// § chambers: 5 to 10 roundish chambers, their middles well apart (D-162)
 function placeCaves(r) {
   const want = int(r, CAVES[0], CAVES[1]), caves = [];
   for (let i = 0; i < 60 && caves.length < want; i++) {
@@ -145,13 +146,14 @@ function joinCaves(r, g, caves) {
 }
 
 // § burrows: a digger starts near the middle and wanders, mostly keeping its
-// way, carving as it goes until 50 to 58 tiles are open: twisty tunnels,
-// loops and dead ends (D-163, D-165). Its path is one piece, so all is joined.
-const DIG_OPEN = [50, 58], DIG_TURN = 0.35, DIG_STEPS = 4000;
+// way, carving as it goes until 119 to 138 tiles are open (50 to 58 in an
+// 11 × 13 room): twisty tunnels, loops and dead ends (D-163, D-165, D-195).
+// Its path is one piece, so all is joined.
+const DIG_OPEN = [119, 138], DIG_TURN = 0.35, DIG_STEPS = 4000;
 const WAYS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 function burrows(r) {
   const g = walls(), want = int(r, DIG_OPEN[0], DIG_OPEN[1]);
-  let x = int(r, 3, 7), y = int(r, 3, 9), [dx, dy] = pick(r, WAYS), open = 0;
+  let x = int(r, 5, 11), y = int(r, 5, 14), [dx, dy] = pick(r, WAYS), open = 0;
   for (let i = 0; i < DIG_STEPS && open < want; i++) {
     if (g[y][x] === '#') { g[y][x] = '.'; open++; }
     if (r() < DIG_TURN) [dx, dy] = pick(r, WAYS);

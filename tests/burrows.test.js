@@ -26,8 +26,8 @@ test('every seed gives a burrow, the same each time, with the usual contents', (
     assert.deepEqual(b, generateRoom(seed, 'burrows'));
     assert.equal(count(b.map, '<'), 1);
     assert.equal(count(b.map, '>'), 1);
-    assert.ok(count(b.map, '.') + 2 >= 45, `seed ${seed} is too small`);
-    makeRoom(b.map); // every letter known, every row 11 wide
+    assert.ok(count(b.map, '.') + 2 >= 107, `seed ${seed} is too small`);
+    makeRoom(b.map); // every letter known, every row 17 wide
     assert.deepEqual(b.items.map((it) => it.id), ['flask', 'herb']);
     assert.equal(b.enemies.length, 1);
   }

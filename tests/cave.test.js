@@ -42,15 +42,15 @@ test('the same seed gives the same room', () => {
   assert.notDeepEqual(generateRoom(4127).map, generateRoom(4128).map);
 });
 
-test('every seed gives an 11 × 13 room with one stairs up and one stairs down', () => {
+test('every seed gives a 17 × 20 room, bigger than the screen (D-195), with one stairs up and one stairs down', () => {
   for (const seed of SEEDS) {
     const g = generateRoom(seed);
     assert.ok(g, `seed ${seed} gave no room`);
     const room = makeRoom(g.map); // checks the size and the letters
-    assert.equal(room.cols, 11); assert.equal(room.rows, 13);
+    assert.equal(room.cols, 17); assert.equal(room.rows, 20);
     assert.equal(count(g.map, '<'), 1); assert.equal(count(g.map, '>'), 1);
     assert.equal(tileAt(room, g.start.x, g.start.y).id, 'stairsUp');
-    assert.ok(g.map[0].split('').every((ch) => ch === '#') && g.map[12].split('').every((ch) => ch === '#'));
+    assert.ok(g.map[0].split('').every((ch) => ch === '#') && g.map[19].split('').every((ch) => ch === '#'));
   }
 });
 

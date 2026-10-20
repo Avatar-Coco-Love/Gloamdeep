@@ -6,7 +6,7 @@ import { tileAt, depthOf } from '../core/room.js';
 import { get } from '../core/registry.js';
 import { itemAt } from '../core/turn.js';
 import { spawn } from '../core/spawn.js';
-import { COLS, ROWS, TILE } from '../render/screen.js';
+import { W, H, TILE } from '../render/screen.js';
 import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 import { buildPanel, el } from './panel.js';
 
@@ -22,7 +22,8 @@ function save(opts) {
 
 // `game` gives tools the state: get() reads it, set(s) replaces it, reset()
 // gives the state with the starting room back, forget() with a blank memory,
-// setOil(amount) with that much oil, heal() with full hearts.
+// setOil(amount) with that much oil, heal() with full hearts; camera() is the
+// room pixel at the screen's top-left (D-195).
 export function createDev(stage, canvas, game) {
   // every switch starts off (D-047); only View starts open (D-087)
   const opts = { grid: false, coords: false, noLight: false, reveal: false, open: ['view'], ...load() };
@@ -64,13 +65,14 @@ export function createDev(stage, canvas, game) {
     if (name) tools.flip(name);
   });
 
-  // § pointing: the tile under the mouse, or under the finger (kept after it lifts)
+  // § pointing: the room tile under the mouse, or under the finger (kept after it lifts)
   let pointed = null;
   const point = (ev) => {
-    const r = canvas.getBoundingClientRect();
-    const tx = Math.floor((ev.clientX - r.left) / r.width * COLS);
-    const ty = Math.floor((ev.clientY - r.top) / r.height * canvas.height / TILE); // the text strip is no tile
-    pointed = tx >= 0 && ty >= 0 && tx < COLS && ty < ROWS ? { x: tx, y: ty } : null;
+    const r = canvas.getBoundingClientRect(), cam = game.camera(), { room } = game.get();
+    const px = (ev.clientX - r.left) / r.width * W, py = (ev.clientY - r.top) / r.height * canvas.height;
+    const tx = Math.floor((px + cam.x) / TILE), ty = Math.floor((py + cam.y) / TILE);
+    const onRoom = px >= 0 && py >= 0 && px < W && py < H; // the text strip is no tile
+    pointed = onRoom && tx < room.cols && ty < room.rows ? { x: tx, y: ty } : null;
   };
   stage.addEventListener('pointerdown', point);
   stage.addEventListener('pointermove', point);
@@ -91,9 +93,13 @@ export function createDev(stage, canvas, game) {
       game.set(spawn(game.get(), picked.id, x, y));
       return true;
     },
-    draw(ctx, state) {
-      if (opts.grid) drawGrid(ctx);
-      if (opts.coords && pointed) drawPointed(ctx, pointed.x, pointed.y);
+    draw(ctx, state, cam) {
+      if (opts.grid) drawGrid(ctx, cam);
+      if (opts.coords && pointed) {
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip(); // off the text strip
+        drawPointed(ctx, pointed.x - cam.x / TILE, pointed.y - cam.y / TILE);
+        ctx.restore();
+      }
       tools.sync(state);
       // § stats: always on; a second line for the pick and the pointed tile (D-088)
       const h = state.hero, picked = tools.picked();

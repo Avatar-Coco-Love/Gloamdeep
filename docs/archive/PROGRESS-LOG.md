@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.12, every room changes with the seed.** Owner's
+  note: the first levels looked the same each world. Owner's picks: a
+  standing rule that every room takes something from the seed, some
+  hand-made with seeded parts, some wholly generated; the crypt rooms
+  keep their shape, the seed places the flask and the rat (D-192).
+  Playtest: https://claude.ai/artifact/EfiGHjpCzfiriucdqGc4Zn
 - **2026-10-20, 0.2.11, the seed.** Settings gains "Seed: Random"
   and a drawn seed pad. Owner's picks: a number pad in the game's own
   style; a typed seed stays until set back to Random; from the pause

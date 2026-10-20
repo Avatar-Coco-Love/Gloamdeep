@@ -7,7 +7,7 @@
 // tiles.js draws the stairs on top.
 import { hash } from '../core/noise.js';
 import { isWall, tileAt } from '../core/room.js';
-import { TILE as T, W, H } from './screen.js';
+import { TILE as T } from './screen.js';
 
 // § palette: grey is the study's cool blue-greys, as rock; earth is packed
 // brown earth with banded strata (ART-DIRECTION.md)
@@ -29,7 +29,7 @@ const STONES = 0.5; // the share of earth floor tiles with a stone
 // between middles and cut at a level that wobbles in 3-pixel steps, so edges
 // stay chunky pixel art.
 function mask(room, wobble) {
-  const m = new Uint8Array(W * H), wall = (x, y) => +isWall(room, x, y);
+  const W = room.cols * T, H = room.rows * T, m = new Uint8Array(W * H), wall = (x, y) => +isWall(room, x, y);
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const tx = x / T | 0, ty = y / T | 0, ix = x % T, iy = y % T;
     const fx = (x + 0.5) / T - 0.5, fy = (y + 0.5) / T - 0.5, x0 = Math.floor(fx), y0 = Math.floor(fy), ax = fx - x0, ay = fy - y0;
@@ -87,6 +87,7 @@ const RGB = new Map();
 const toRgb = (h) => RGB.get(h) || (RGB.set(h, rgb(h)), RGB.get(h));
 
 export function drawRock(c, room) {
+  const W = room.cols * T, H = room.rows * T; // the whole room, which can be bigger than the screen (D-195)
   const look = LOOKS[room.look] || LOOKS.rock, m = mask(room, look.wobble), rock = (x, y) => x < 0 || y < 0 || x >= W || y >= H || m[y * W + x] === 1;
   const img = c.createImageData(W, H), d = img.data;
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
