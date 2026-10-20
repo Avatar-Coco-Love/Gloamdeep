@@ -20,6 +20,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.20 (2026-10-20)
+- The stairs line up between floors: the stairs up on a floor are at
+  the same spot, in the same room of the grid, as the stairs down on the
+  floor above. Each cave room is carved to fit.
+- Depths 4 and 5 are now three rooms in an L too, like depth 3. On all
+  three, the stairs down are in a different room from the stairs up, so
+  you go through an opening to get deeper. The torch stays by the
+  stairs up.
+- Depth 6 and deeper are still one room each, lined up the same way.
+- Decisions: D-203.
+
 ## 0.2.19 (2026-10-20)
 - Depth 3 is now three cave rooms instead of one: a 2 × 2 grid with one
   corner left empty by the seed, so the rooms make an L. The corner room

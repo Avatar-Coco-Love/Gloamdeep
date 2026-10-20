@@ -41,7 +41,9 @@ The first one joins the first crypt room's bottom doorway to a crypt room
 south of it (D-197). Generated rooms get one-tile openings at a spot the
 seed picks along their shared edge (D-201).
 Stairs line up too: stairs down in a cell at a tile lead to stairs up in
-the same cell at the same tile one floor down (D-202, step 46b).
+the same cell at the same tile one floor down (D-202). Depths 3 to 5 are
+three-room grids with the stairs down in another room than the stairs
+up; deeper one-room floors line up the same way (D-203).
 
 ## How a region is generated (proposed, confirmed at its step, Q-037)
 Two passes, both run from the save's seed:

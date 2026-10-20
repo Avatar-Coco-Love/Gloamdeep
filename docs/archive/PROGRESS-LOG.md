@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.17, sideways.** Held sideways, the hearts, depth
+  and oil stack in a column left of the room, so it can grow. Owner's
+  picks: wrench top left, pause top right, lantern bottom right; dev
+  panel and stats beside the room (D-199). Filling the screen: Q-048. Playtest: https://claude.ai/artifact/VyFTUUKJ5WB4AwZ98615Ma
 - **2026-10-20, 0.2.16, side openings.** The first room's bottom gap
   is a doorway into a new crypt room south of it. Owner's picks: a
   hand-made one-screen crypt room at depth 1, its flask and rat from the

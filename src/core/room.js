@@ -5,7 +5,7 @@ import { byLetter } from './registry.js';
 import { generateRoom } from './cave.js';
 import { seedFor } from './rng.js';
 import { scatter } from './scatter.js';
-import { cellOf } from './region.js';
+import { cellOf, downPlaceIn } from './region.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
 // its water as floor, and the study's stairs down at 1,1 (D-130). The gap in
@@ -100,7 +100,7 @@ export const PLACES = {
 // depth is generated, with ids depth3, depth4…, from the game's seed (D-147,
 // D-148); the second room is the fallback if a seed ever gives no room. A
 // depth laid out as a grid (region.js, D-201) adds rooms depth3:x,y beside
-// depth3, which holds its stairs.
+// depth3, which holds its stairs up.
 const DEEPER = 'second';
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.length), 10);
@@ -109,9 +109,7 @@ export const isGenerated = (id) => !PLACES[id];
 export function placeFor(id, seed = 1) {
   if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)) };
   const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
-  if (!cell) return { ...(generateRoom(seedFor(seed, depth), shape) || PLACES[DEEPER]), depth, look };
-  const made = generateRoom(cell.seed, shape, cell) || generateRoom(cell.seed, shape, { stairs: cell.stairs });
-  return { ...(made || PLACES[DEEPER]), depth, look, sides: cell.sides };
+  return { ...((cell && generateRoom(cell.seed, shape, cell)) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
 }
 
 // The room beyond each edge of a place with openings, by direction (D-197, D-201)
@@ -126,10 +124,13 @@ const KINDS = [
 ];
 export const kindAt = (depth) => KINDS.findLast((k) => depth >= k.from);
 
-// The place one depth up or down from `id` (a stair's `leads`), or null above the first
-export function placeBeside(id, way) {
+// The place one depth up or down from `id` (a stair's `leads`), or null above
+// the first: down to the room with the stairs up there, up to the room with
+// the stairs down, the same cell of the grid (D-202)
+export function placeBeside(id, way, seed = 1) {
   const depth = depthOf(id) + (way === 'down' ? 1 : -1);
-  return depth >= 1 ? placeAt(depth) : null;
+  if (depth < 1) return null;
+  return way === 'up' && isGenerated(placeAt(depth)) ? downPlaceIn(seed, depth) : placeAt(depth);
 }
 
 // § begin: any place as it begins, from its plan and the game's seed

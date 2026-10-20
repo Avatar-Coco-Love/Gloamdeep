@@ -162,3 +162,12 @@ above and below it: stairs down in a cell at a tile lead to stairs up in
 the same cell at the same tile one floor down, and generation makes each
 floor fit. The crypt's stairs down line up with depth 3's stairs up by
 the same tile numbers, which fit inside the bigger cave room.
+
+**D-203 · 2026-10-20 · Lined-up floors, depths 3 to 5 as grids** (step
+46b, the owner's picks, builds D-202) Depths 4 and 5 are laid out like
+depth 3: a 2 × 2 grid with one cell empty, three rooms in an L. On these
+floors the stairs down are in another room than the stairs up. Under the
+crypt the seed picks depth 3's stairs-up room, at the crypt's tile
+numbers; below that, the cell under the stairs down is never the empty
+one. Everything sits on the same grid: depth 6 and deeper, still one
+room each, line up too, at the same tile.

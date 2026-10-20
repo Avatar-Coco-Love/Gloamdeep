@@ -5,7 +5,7 @@ import { generateRoom } from '../src/core/cave.js';
 import { kindAt, placeFor, placeAt, makeRoom, tileAt } from '../src/core/room.js';
 import { goToDepth } from '../src/core/stairs.js';
 import { makeWorld } from '../src/core/turn.js';
-import { seedFor } from '../src/core/rng.js';
+import { layoutAt } from '../src/core/region.js';
 
 const SEEDS = Array.from({ length: 500 }, (_, i) => i + 1);
 const count = (map, ch) => map.join('').split(ch).length - 1;
@@ -15,7 +15,8 @@ test('depths 3 to 5 are grey rock chambers, 6 and down earth burrows', () => {
   assert.deepEqual([6, 7, 40].map((d) => kindAt(d)), Array(3).fill({ from: 6, shape: 'burrows', look: 'earth' }));
   const p = placeFor('depth6', 4127);
   assert.equal(p.look, 'earth');
-  assert.deepEqual(p.map, generateRoom(seedFor(4127, 6), 'burrows').map);
+  const c = layoutAt(4127, 6).cells[0];
+  assert.deepEqual(p.map, generateRoom(c.seed, 'burrows', c).map);
   assert.equal(placeFor('depth5', 4127).look, 'rock');
 });
 

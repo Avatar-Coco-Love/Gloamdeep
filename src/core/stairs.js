@@ -13,7 +13,7 @@ import { say } from './lines.js';
 // spawn tool in the first room, or stairs with no match where they lead).
 export function takeStairs(state) {
   const { hero } = state, entry = tileAt(state.room, hero.x, hero.y);
-  const to = entry.leads && placeBeside(state.place, entry.leads);
+  const to = entry.leads && placeBeside(state.place, entry.leads, state.seed);
   const there = to && (state.elsewhere[to] || fresh(to, state.seed));
   const spot = there && find(there.room, entry.arrive);
   if (!spot) return null;
