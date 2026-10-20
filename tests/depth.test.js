@@ -4,6 +4,8 @@ import assert from 'node:assert/strict';
 import { tileAt, depthOf, placeAt, placeBeside, placeFor } from '../src/core/room.js';
 import { makeWorld, step, wait, FIRST_START, DIRS } from '../src/core/turn.js';
 import { nextSeed } from '../src/core/rng.js';
+import { downPlaceIn } from '../src/core/region.js';
+import { arrive, fresh } from '../src/core/stairs.js';
 import { shownLine } from '../src/core/lines.js';
 
 // Room 2's stairs down are at 1,11; 2,11 is the tile beside them. Its stairs up at 1,1.
@@ -39,8 +41,11 @@ test('down from the second room: a generated room, depth 3, on its stairs up', (
   assert.deepEqual(n.elsewhere.second.enemies, []); // depth 2 stays as left
 });
 
-// From anywhere in a generated room: onto the tile beside its stairs down, then onto them
+// From anywhere at a generated depth: into the room with its stairs down
+// (D-203), onto the tile beside them, then onto them
 function deeper(s) {
+  const id = depthOf(s.place) >= 3 && downPlaceIn(s.seed, depthOf(s.place));
+  if (id && id !== s.place) s = arrive(s, id, fresh(id, s.seed), { x: 0, y: 0 });
   const at2 = find(s.room, 'stairsDown');
   for (const [dir, [dx, dy]] of Object.entries(DIRS)) {
     const x = at2.x - dx, y = at2.y - dy;

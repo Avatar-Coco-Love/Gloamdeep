@@ -48,7 +48,8 @@ stairs or cave mouths between the surface and the regions below?
 **Q-038 · Kinds of room, shapes and sizes** (stage 0.3)
 Which kinds (tunnel, clearing, house, marsh, desert…), how big each is,
 and whether shapes come from hand-made templates, are generated, or both
-(D-172). The owner mentioned "predefined tiles" for the shapes. So far
+(D-172). The owner mentioned "predefined tiles" for the shapes. Rooms
+of other sizes line up their stairs by place on the floor (D-204). So far
 the generated caves are 17 × 20 and the crypt rooms 11 × 13 (D-195).
 
 **Q-039 · Swimming** (later)
@@ -64,7 +65,11 @@ lit room is (D-173).
 **Q-042 · The map screen** (stage 0.3)
 How it opens (button, key), what it shows (rooms as boxes, or every
 tile seen), markers or names, and whether dev map mode is the same
-screen with everything revealed (D-176).
+screen with everything revealed (D-176). The owner asked again at
+0.2.20: player-ready means uncovered as you go; devs need it revealed.
+Proposed: one floor at a time on its grid (D-203), each visited room
+drawn from the tiles the hero remembers, the rest dark; dev Reveal map
+draws the same screen with every room of the floor in full.
 
 **Q-048 · Should the room fill the screen sideways?** (after the 0.2.17 playtest)
 The owner is weighing it. Sideways, the camera could show more tiles to

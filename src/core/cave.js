@@ -16,12 +16,13 @@ const TRIES = 200;
 
 // (seed, shape, ways) → { map, start, lights, enemies, items }, or null if no
 // try worked. The shape is 'chambers' or 'burrows' (D-165). `ways.doors` are
-// openings to carve at the edges, as { dir, at } (region.js, D-201), and
-// `ways.stairs` false leaves the stairs and their torch out.
-export function generateRoom(seed, shape = 'chambers', { doors = [], stairs = true } = {}) {
+// openings to carve at the edges, as { dir, at } (region.js, D-201).
+// `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
+// floors line up (D-202); true lets the room pick, null leaves them out.
+export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true } = {}) {
   const r = rng(seed), carve = shape === 'burrows' ? burrows : chambers;
   for (let i = 0; i < TRIES; i++) {
-    const g = carve(r), room = g && fill(r, openDoors(r, g, doors), stairs);
+    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors), up, down), up, down);
     if (room) return room;
   }
   return null;
@@ -43,6 +44,19 @@ function openDoors(r, g, doors) {
   return g;
 }
 
+// § stairs to fit: each stairs tile set is opened, with a tunnel to the
+// nearest open tile, and the stairs up get their wall above (D-143, D-202)
+function openStairs(r, g, up, down) {
+  for (const t of [up, down]) {
+    if (typeof t !== 'object' || !t) continue;
+    const inside = tilesWhere(g, (x, y) => g[y][x] === '.' && !same({ x, y }, t));
+    g[t.y][t.x] = '.';
+    if (inside.length) tunnel(r, g, t, inside.reduce((a, b) => (dist(b, t) < dist(a, t) ? b : a)));
+  }
+  if (up && typeof up === 'object') g[up.y - 1][up.x] = '#';
+  return g;
+}
+
 // Round chambers joined by tunnels, as a grid of '#' and '.', or null
 function chambers(r) {
   let g = walls();
@@ -58,36 +72,50 @@ function chambers(r) {
 }
 
 // The stairs, torch, flask, rat and herb in a carved grid, or null if they
-// don't fit. With no stairs, the room has only the flask, rat and herb, the
-// way in through its first door standing for the stairs up (D-201).
-function fill(r, g, stairs = true) {
+// don't fit. With no stairs up, the way in through the room's first door
+// stands for them (D-201), and there is no torch.
+function fill(r, g, up = true, down = true) {
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
   const doors = g.doors || [];
-  if (!stairs) return finds(r, g, floors, reach(g, doors[0]), doors[0], null, null, doors);
 
   // § stairs: up on a floor tile with wall above, so the steps sink into it
-  // (D-143); down as far along the way as can be. Neither may cut the room
-  // in two, so the hero never has to cross a stair to get somewhere.
+  // (D-143); down as far along the way as can be, unless set. Neither may cut
+  // the room in two, so the hero never has to cross a stair to get somewhere.
   const free = (x, y, cut) => reach(g, floors.find((f) => !cut.some((c) => c.x === f.x && c.y === f.y)), cut).size === floors.length - cut.length;
-  const ups = floors.filter((f) => !onEdge(f) && g[f.y - 1][f.x] === '#' && free(f.x, f.y, [f]));
-  if (!ups.length) return null;
-  const up = pick(r, ups);
-  const far = reach(g, up);
-  const downs = floors.filter((f) => !onEdge(f) && far.get(key(f)) >= 8 && free(f.x, f.y, [up, f]));
-  if (!downs.length) return null;
-  const most = Math.max(...downs.map((f) => far.get(key(f))));
-  const down = pick(r, downs.filter((f) => far.get(key(f)) >= most - 2));
-  g[up.y][up.x] = '<'; g[down.y][down.x] = '>';
+  const canUp = (f) => !onEdge(f) && g[f.y - 1][f.x] === '#' && free(f.x, f.y, [f]);
+  let at = null;
+  if (up === true) {
+    const ups = floors.filter(canUp);
+    if (!ups.length) return null;
+    at = pick(r, ups);
+  } else if (up) {
+    if (!canUp(up)) return null;
+    at = up;
+  }
+  const from = at || doors[0], far = reach(g, from), cut = at ? [at] : [];
+  let to = null;
+  if (down === true) {
+    const downs = floors.filter((f) => !onEdge(f) && far.get(key(f)) >= 8 && free(f.x, f.y, [...cut, f]));
+    if (!downs.length) return null;
+    const most = Math.max(...downs.map((f) => far.get(key(f))));
+    to = pick(r, downs.filter((f) => far.get(key(f)) >= most - 2));
+  } else if (down) {
+    if (!far.has(key(down)) || !free(down.x, down.y, [...cut, down])) return null;
+    to = down;
+  }
+  if (at) g[at.y][at.x] = '<';
+  if (to) g[to.y][to.x] = '>';
+  if (!at) return finds(r, g, floors, far, from, to, null, doors);
 
   // § torch: on a wall face near the stairs up, not right above them, and
   // not on the top row, where the hearts, depth and oil bar boxes could hide
   // it wherever the camera stands (D-101, D-195)
   const faces = tilesWhere(g, (x, y) => g[y][x] === '#' && y > 0 && y + 1 < ROWS && g[y + 1][x] === '.');
-  const near = faces.filter((t) => dist(t, up) <= 3 && !(t.x === up.x && t.y === up.y - 1));
+  const near = faces.filter((t) => dist(t, at) <= 3 && !(t.x === at.x && t.y === at.y - 1));
   if (!near.length) return null;
   const torch = pick(r, near);
-  return finds(r, g, floors, far, up, down, torch, doors);
+  return finds(r, g, floors, far, at, to, torch, doors);
 }
 
 // The flask, rat and herb, `far` steps from `up`, the way in; with `down` and

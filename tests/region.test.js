@@ -1,8 +1,9 @@
-// § region: depth 3 as a 2 × 2 grid of rooms joined by openings (D-201)
+// § region: depths 3 to 5 as 2 × 2 grids of rooms joined by openings (D-201),
+// their stairs lined up floor to floor (D-202, D-203)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { layoutAt } from '../src/core/region.js';
-import { placeFor, tileAt, depthOf } from '../src/core/room.js';
+import { placeFor, placeBeside, tileAt, depthOf } from '../src/core/room.js';
 import { makeWorld, step } from '../src/core/turn.js';
 import { goToDepth } from '../src/core/stairs.js';
 
@@ -10,18 +11,38 @@ const SEEDS = Array.from({ length: 60 }, (_, i) => i + 1);
 const EDGE = { up: (at) => ({ x: at, y: 0 }), down: (at) => ({ x: at, y: 19 }), left: (at) => ({ x: 0, y: at }), right: (at) => ({ x: 16, y: at }) };
 const BACK = { up: 'down', down: 'up', left: 'right', right: 'left' };
 
-test('depth 3 is three cells of a 2 × 2 grid in an L, one empty; other depths are one room', () => {
-  const empties = new Set();
-  for (const seed of SEEDS) {
-    const { cells } = layoutAt(seed, 3);
-    assert.equal(cells.length, 3);
-    empties.add([0, 1, 2, 3].find((i) => !cells.some((c) => c.y * 2 + c.x === i)));
-    assert.equal(cells.filter((c) => c.stairs).length, 1);
-    assert.equal(cells.find((c) => c.stairs).id, 'depth3');
-    assert.equal(cells.reduce((n, c) => n + c.doors.length, 0), 4); // two joins, both sides
+test('depths 3 to 5 are three cells of a 2 × 2 grid in an L, one empty; deeper depths are one room', () => {
+  for (const depth of [3, 4, 5]) {
+    const empties = new Set();
+    for (const seed of SEEDS) {
+      const { cells } = layoutAt(seed, depth);
+      assert.equal(cells.length, 3);
+      empties.add([0, 1, 2, 3].find((i) => !cells.some((c) => c.y * 2 + c.x === i)));
+      assert.equal(cells.filter((c) => c.up).length, 1);
+      assert.equal(cells.filter((c) => c.down).length, 1);
+      assert.equal(cells.find((c) => c.up).id, `depth${depth}`);
+      assert.notEqual(cells.find((c) => c.up), cells.find((c) => c.down)); // another room (D-203)
+      assert.equal(cells.reduce((n, c) => n + c.doors.length, 0), 4); // two joins, both sides
+    }
+    assert.equal(empties.size, 4);
   }
-  assert.equal(empties.size, 4);
-  assert.equal(layoutAt(1, 4), null);
+  assert.equal(layoutAt(1, 6).cells.length, 1);
+  assert.equal(layoutAt(1, 2), null);
+});
+
+test('stairs down lead to stairs up in the same cell, at the same tile, one floor down', () => {
+  const where = (map, ch) => { const y = map.findIndex((row) => row.includes(ch)); return { x: map[y].indexOf(ch), y }; };
+  for (const seed of SEEDS.slice(0, 20)) {
+    let above = where(placeFor('second', seed).map, '>'), cell = null;
+    for (let depth = 3; depth <= 8; depth++) {
+      const L = layoutAt(seed, depth), up = L.cells.find((c) => c.up), down = L.cells.find((c) => c.down);
+      assert.deepEqual(where(placeFor(up.id, seed).map, '<'), above, `seed ${seed} depth ${depth}`);
+      if (cell) assert.deepEqual({ x: up.x, y: up.y }, cell);
+      above = where(placeFor(down.id, seed).map, '>'); cell = { x: down.x, y: down.y };
+      assert.equal(placeBeside(up.id, 'up', seed), depth === 3 ? 'second' : layoutAt(seed, depth - 1).cells.find((c) => c.down).id);
+      assert.equal(placeBeside(down.id, 'down', seed), `depth${depth + 1}`);
+    }
+  }
 });
 
 test('every opening is open on both sides, at the same spot', () => {
@@ -36,18 +57,19 @@ test('every opening is open on both sides, at the same spot', () => {
   }
 });
 
-test('only the stairs room has stairs and a torch; each room has a flask, a rat and a herb', () => {
+test('stairs up and their torch, and stairs down, each in one room; each room has a flask, a rat and a herb', () => {
   for (const seed of SEEDS) for (const c of layoutAt(seed, 3).cells) {
     const p = placeFor(c.id, seed), all = p.map.join('');
-    assert.equal(all.includes('<') && all.includes('>'), c.stairs);
-    assert.equal(p.lights.length, c.stairs ? 1 : 0);
+    assert.equal(all.includes('<'), !!c.up);
+    assert.equal(all.includes('>'), !!c.down);
+    assert.equal(p.lights.length, c.up ? 1 : 0);
     assert.deepEqual(p.items.map((it) => it.id), ['flask', 'herb']);
     assert.deepEqual(p.enemies.map((e) => e.id), ['rat']);
   }
 });
 
 test('walking out through an opening and back: the room beyond, then the same room as left', () => {
-  const s = goToDepth(makeWorld(), 3), c = layoutAt(s.seed, 3).cells.find((x) => x.stairs), d = c.doors[0];
+  const s = goToDepth(makeWorld(), 3), c = layoutAt(s.seed, 3).cells.find((x) => x.up), d = c.doors[0];
   const at = EDGE[d.dir](d.at), n = step({ ...s, hero: at, enemies: [] }, d.dir);
   assert.equal(n.place, c.sides[d.dir]);
   assert.deepEqual(n.hero, EDGE[BACK[d.dir]](d.at));
