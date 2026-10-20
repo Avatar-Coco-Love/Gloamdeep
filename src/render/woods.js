@@ -3,6 +3,7 @@
 import { hash } from '../core/noise.js';
 import { tileAt } from '../core/room.js';
 import { TILE as T } from './screen.js';
+import { paintMouths } from './mouth.js';
 
 // Value noise: hash at whole points, mixed between them
 function noise(x, y, s) {
@@ -47,6 +48,7 @@ export function drawWoods(c, room) {
   for (let ty = 0; ty < room.rows; ty++) for (let tx = 0; tx < room.cols; tx++) {
     if (tileAt(room, tx, ty).id === 'tree') paintTree(put, shade, tx, ty);
   }
+  paintMouths(room, d, put, shade); // the cave mouth and its rocks (D-211)
   c.putImageData(img, 0, 0);
 }
 

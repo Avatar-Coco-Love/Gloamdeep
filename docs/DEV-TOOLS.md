@@ -49,7 +49,8 @@ tools to be chosen together later.
 - Hero: Refill hearts, back to full health, no turn passed (D-154).
 - Room: Go to depth, 1 to 99 with − and +, onto that depth's stairs up,
   no turn passed (D-166). Rules: `goToDepth` in `src/core/stairs.js`.
-  Go outside goes to the woods, depth 0, the same way (D-209).
+  Go outside goes to the woods, depth 0, the same way (D-209); the cave
+  mouth there leads back into the crypt (D-211).
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 

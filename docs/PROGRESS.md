@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.24 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.25 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 49, a cave entrance down to the first cave** (D-175, D-184,
-Q-043). Read `docs/regions/starting-region.md`, D-209 and Q-043 first,
-then propose.
+**Step 49b, depths move up one** (D-212): the crypt becomes depth 0
+and says SURFACE, the second room depth 1, the generated floors 2 to 4.
+Read D-212, D-185 and `src/core/region.js` first, then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -22,9 +22,7 @@ then propose.
 Steps 1 to 30 are done; the list is in `archive/PROGRESS-LOG.md`. Tick
 a step when merged and add its version.
 
-- [x] 31 Plan 0.2, 0.1.27 · 32 Natural caves, 0.2.0 · 33 Depths change
-  kind, 0.2.1
-- [x] 42 Design the starting region, 0.2.6
+- [x] 31 to 33, 0.1.27 to 0.2.1 · 42 The starting region, 0.2.6
 The main menu (D-177 to D-181; step order proposed, may change)
 - [x] 52 A title screen with New journey, the lantern in the dark, 0.2.7
 - [x] 53 The pause menu: Resume, Back to title, 0.2.8
@@ -44,7 +42,8 @@ A region
 The surface
 - [x] 48b A lantern that switches itself, in Settings, 0.2.24
 - [x] 48 The first outside room: woods, 0.2.23
-- [ ] 49 A cave entrance down to the first cave (D-175, Q-043)
+- [x] 49 A cave entrance into the first cave, 0.2.25
+- [ ] 49b Depths move up one: the crypt is depth 0 (D-212)
 - [ ] 50 Day and night outside (D-025)
 - [ ] 51 Daylight through the cave mouth (D-173)
 
@@ -56,18 +55,13 @@ UI and dev tools (the owner's wish, before step 46)
 - [x] U1 Sideways, the room uses the sides, 0.2.17
 - [x] U2 The dev side drawer, in the pixel font, 0.2.18
 
-Ideas for later: menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
+Ideas for later: a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
 low oil (D-210); sounds; scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.22, the map turns.** Arrows beside "DEPTH 3",
-  < and >, Page Up and Page Down, or a tap on found stairs show other
-  floors seen; the hero stays put. Owner's picks: skip floors never seen; a
-  floor opens whole; a generous stairs tap; dim grey arrows (D-207).
-  D-194 to D-200 archived (D-208). Playtest: https://claude.ai/artifact/QpDNN5QC2X5dBshJ2fxxif
 - **2026-10-20, 0.2.23, the woods.** The first outside room: woods
   from the seed, 17 × 20, in plain daylight, with one round tree a tile;
   dev Go outside leads there and the strip says SURFACE. Owner's picks
@@ -78,3 +72,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   into daylight and lights again back in the dark, only at that moment.
   Owner's picks: daylight only, By hand until picked, your switch
   holds, no line (D-210). Playtest: https://claude.ai/artifact/1Mh56fEwSg9iVqd6Awtn7Q
+- **2026-10-20, 0.2.25, the cave mouth.** A dark mouth between two grey
+  rocks on a woods edge the seed picks; walk through and you arrive on
+  the crypt's facing side (up: the south room's bottom). Owner's picks
+  from a mock-up of three looks (D-211). The owner's idea: a doorway
+  keeps the depth, so the crypt becomes depth 0 next (D-212). Playtest: https://claude.ai/artifact/SAtpqZnboGwGDmHL9vZHWK

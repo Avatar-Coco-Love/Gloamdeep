@@ -104,10 +104,13 @@ function drawSteps(c, room, tx, ty, up) {
 
 // § room: draw every tile of a room, by registry id (D-048), or a rock
 // room whole, as its edges don't keep to the tiles (D-164), or the woods whole
-// (D-209). A tree spawned elsewhere stands on that room's floor.
+// (D-209), its cave mouth and rocks with it (D-211). A tree spawned elsewhere
+// stands on that room's floor; a rock spawned elsewhere is a wall, a cave mouth a dark pit.
+const WOODS = ['floor', 'tree', 'caveMouth', 'outcrop'];
 const DRAW = {
-  wall: drawWall, floor: drawFloor,
+  wall: drawWall, floor: drawFloor, outcrop: drawWall,
   tree: (c, room, x, y) => { drawFloor(c, room, x, y); drawTree(c, room, x, y); },
+  caveMouth: (c, room, x, y) => { c.fillStyle = '#0c0b12'; c.fillRect(x * T, y * T, T, T); },
   stairsDown: (c, room, x, y) => drawSteps(c, room, x, y, false),
   stairsUp: (c, room, x, y) => drawSteps(c, room, x, y, true),
 };
@@ -118,6 +121,6 @@ export function drawRoom(c, room) {
   if (rock) drawRock(c, room);
   for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
     const id = tileAt(room, x, y).id;
-    if (woods ? id !== 'floor' && id !== 'tree' : !rock || tileAt(room, x, y).leads || id === 'tree') DRAW[id](c, room, x, y);
+    if (woods ? !WOODS.includes(id) : !rock || id !== 'floor' && id !== 'wall') DRAW[id](c, room, x, y);
   }
 }
