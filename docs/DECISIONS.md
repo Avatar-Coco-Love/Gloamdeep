@@ -124,3 +124,19 @@ of place (crypt, cave, dungeon, any underground place) has its own set
 of rules for how it is made. The rules are settled with a mock-up at the
 next step. More rats come from the grids now (one a room) and from step
 34 (more rats deeper) later.
+
+**D-224 · 2026-10-21 · Rooms apart on the map, doorways bridged** (owner's
+pick from a mock-up of three ways; step 51c) On the map screens, in the
+game and the Seed Explorer, rooms side by side are drawn one tile apart,
+a dark seam between them, so a floor no longer reads as one big room. A
+pale blue line (the cloak's `#a6e0e4`) fills the seam tile of each
+doorway once the hero remembers the floor on either side of it, or all of
+them with Reveal map. The cave mouth gets one too, between the woods and
+the crypt.
+
+**D-225 · 2026-10-21 · The doorway line in the game, then step 59**
+(owner's pick, option A of a mock-up of three marks) As its own step
+(51d), a thin pale blue line in the same colour marks each doorway in the
+game, across the doorway tile's outer edge where you step through. It
+pulses gently, and holds still with reduced motion. Step 59 (D-223)
+comes after it.

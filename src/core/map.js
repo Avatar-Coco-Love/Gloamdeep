@@ -5,29 +5,34 @@
 // crypt are both depth 0, two parts joined at the mouth as in the Seed
 // Explorer once the hero has been in both, else the part they know (D-216,
 // D-222). It is shown from the tiles the hero remembers, or in full with the
-// dev Reveal map switch, which keeps the memory as it is.
+// dev Reveal map switch, which keeps the memory as it is. Rooms are drawn
+// a tile apart, a dark seam between them, and each doorway found bridges
+// its seam (D-224).
 import { sidesOf, depthOf, tileAt, placeAt, placeBeside } from './room.js';
 import { mouthSpot, mouthOf } from './mouth.js';
 import { fresh } from './stairs.js';
 
 const STEP = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 
-// (state, reveal, depth) → { depth, cols, rows, rooms: [{ id, x, y, room, seen }], hero }.
+// (state, reveal, depth) → { depth, cols, rows, rooms: [{ id, x, y, room, seen }], hero, doors }.
 // A room's x, y is its top-left tile on the whole floor; cols, rows the floor's
-// size in tiles. `seen` is null when everything shows (reveal). `hero` is the
+// size in tiles, seams included. `doors` are the seam tiles a found doorway
+// bridges, [{ x, y }]. `seen` is null when everything shows (reveal). `hero` is the
 // hero's tile on the floor, null on another floor. Depth is the hero's own
 // unless given; another floor must have a room shown (floorsShown), and it
 // opens on the part its stairs lead to, if seen, else on a part that is.
 export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
   const both = depth === 0 && joinedSurface(state, reveal);
-  if (both) return both;
+  if (both) return withDoors(both);
   const seen = (id) => reveal || state.elsewhere[id]?.seen.some(Boolean);
   const start = depth === depthOf(state.place) ? state.place
     : [placeAt(depth), ...Object.keys(state.elsewhere)].find((id) => depthOf(id) === depth && seen(id)) || placeAt(depth);
-  return partPlan(state, reveal, depth, start);
+  return withDoors(partPlan(state, reveal, depth, start));
 }
 
-// The part of floor `depth` that holds room `start`, laid out on its grid
+// The part of floor `depth` that holds room `start`, laid out on its grid,
+// with `seams`: every seam tile between two cells side by side, and the edge
+// tile on each side of it, whether those rooms are known or not
 function partPlan(state, reveal, depth, start) {
   const cells = new Map([[start, { x: 0, y: 0 }]]), todo = [start];
   while (todo.length) {
@@ -38,31 +43,57 @@ function partPlan(state, reveal, depth, start) {
   }
   const known = (id) => (id === state.place ? state : state.elsewhere[id]) || (reveal && fresh(id, state.seed));
   const all = [...cells].map(([id, at]) => ({ id, at, p: known(id) }));
-  // The grid's cell is as big as the floor's biggest room; rooms line up, so they match
+  // The grid's cell is as big as the floor's biggest room; rooms line up, so they match.
+  // Cells sit a seam tile apart.
   const w = Math.max(...all.filter((r) => r.p).map((r) => r.p.room.cols)), h = Math.max(...all.filter((r) => r.p).map((r) => r.p.room.rows));
   const x0 = Math.min(...all.map((r) => r.at.x)), y0 = Math.min(...all.map((r) => r.at.y));
   const x1 = Math.max(...all.map((r) => r.at.x)), y1 = Math.max(...all.map((r) => r.at.y));
-  const rooms = all.filter((r) => r.p).map(({ id, at, p }) => ({ id, x: (at.x - x0) * w, y: (at.y - y0) * h, room: p.room, seen: reveal ? null : p.seen }));
+  const left = (at) => (at.x - x0) * (w + 1), top = (at) => (at.y - y0) * (h + 1);
+  const rooms = all.filter((r) => r.p).map(({ id, at, p }) => ({ id, x: left(at), y: top(at), room: p.room, seen: reveal ? null : p.seen }));
   const here = rooms.find((r) => r.id === state.place);
-  return { depth, cols: (x1 - x0 + 1) * w, rows: (y1 - y0 + 1) * h, rooms, hero: here ? { x: here.x + state.hero.x, y: here.y + state.hero.y } : null };
+  const seams = [];
+  for (const { at } of all) {
+    const has = (dx, dy) => all.some((r) => r.at.x === at.x + dx && r.at.y === at.y + dy);
+    if (has(1, 0)) for (let y = 0; y < h; y++) seams.push(seam(left(at) + w, top(at) + y, 1, 0));
+    if (has(0, 1)) for (let x = 0; x < w; x++) seams.push(seam(left(at) + x, top(at) + h, 0, 1));
+  }
+  return {
+    depth, cols: (x1 - x0 + 1) * (w + 1) - 1, rows: (y1 - y0 + 1) * (h + 1) - 1, rooms, seams,
+    hero: here ? { x: here.x + state.hero.x, y: here.y + state.hero.y } : null,
+  };
+}
+// The seam tile x, y, with the edge tiles before and after it the way dx, dy
+const seam = (x, y, dx, dy) => ({ x, y, ends: [[x - dx, y - dy], [x + dx, y + dy]] });
+
+// The plan with its `doors`: the seams with a floor shown at either end (D-224)
+function withDoors(plan) {
+  const shownFloor = ([fx, fy]) => plan.rooms.some(({ x, y, room, seen }) => fx >= x && fy >= y && fx < x + room.cols && fy < y + room.rows && markAt(room, seen, fx - x, fy - y) === 'floor');
+  const { seams, ...rest } = plan;
+  return { ...rest, doors: seams.filter((s) => s.ends.some(shownFloor)).map(({ x, y }) => ({ x, y })) };
 }
 
 // § whole surface: the woods and the crypt on one map, in the Seed Explorer
 // only (D-214). The crypt sits where walking through the mouth takes you, the
-// mouth's tile beside the gap in the crypt's wall (D-216); all revealed, no hero.
+// mouth's tile a seam apart from the gap in the crypt's wall (D-216, D-224);
+// all revealed, no hero.
 export function wholeSurface(state) {
+  return withDoors(surfaceParts(state));
+}
+function surfaceParts(state) {
   const m = mouthOf(state.seed), woods = partPlan(state, true, 0, 'woods'), crypt = partPlan(state, true, 0, m.room);
   const at = (plan, id) => plan.rooms.find((r) => r.id === id);
-  const dx = at(woods, 'woods').x + m.tile.x + STEP[m.dir][0] - at(crypt, m.room).x - m.gap.x;
-  const dy = at(woods, 'woods').y + m.tile.y + STEP[m.dir][1] - at(crypt, m.room).y - m.gap.y;
+  const [sx, sy] = STEP[m.dir], mx = at(woods, 'woods').x + m.tile.x, my = at(woods, 'woods').y + m.tile.y;
+  const dx = mx + 2 * sx - at(crypt, m.room).x - m.gap.x, dy = my + 2 * sy - at(crypt, m.room).y - m.gap.y;
   const all = [...woods.rooms, ...crypt.rooms.map((r) => ({ ...r, x: r.x + dx, y: r.y + dy }))];
+  const seams = [...woods.seams, ...crypt.seams.map((s) => move(s, dx, dy)), seam(mx + sx, my + sy, sx, sy)];
   const x0 = Math.min(0, dx), y0 = Math.min(0, dy);
   return {
     depth: 0, hero: null,
     cols: Math.max(woods.cols, dx + crypt.cols) - x0, rows: Math.max(woods.rows, dy + crypt.rows) - y0,
-    rooms: all.map((r) => ({ ...r, x: r.x - x0, y: r.y - y0 })),
+    rooms: all.map((r) => ({ ...r, x: r.x - x0, y: r.y - y0 })), seams: seams.map((s) => move(s, -x0, -y0)),
   };
 }
+const move = ({ x, y, ends }, dx, dy) => ({ x: x + dx, y: y + dy, ends: ends.map(([ex, ey]) => [ex + dx, ey + dy]) });
 
 // The game's surface map: the whole surface laid out as in the Explorer, with
 // only the rooms the hero knows and the hero on it (D-222). Null until the
@@ -72,7 +103,7 @@ function joinedSurface(state, reveal) {
   const visited = (id) => id === state.place || state.elsewhere[id]?.seen.some(Boolean);
   const crypt = partPlan(state, true, 0, mouthOf(state.seed).room).rooms.map((r) => r.id);
   if (!reveal && !(visited('woods') && crypt.some(visited))) return null;
-  const whole = wholeSurface(state);
+  const whole = surfaceParts(state);
   const rooms = whole.rooms.filter((r) => reveal || been(r.id)).map((r) => ({ ...r, seen: reveal ? null : been(r.id).seen }));
   const here = rooms.find((r) => r.id === state.place);
   return { ...whole, rooms, hero: here ? { x: here.x + state.hero.x, y: here.y + state.hero.y } : null };

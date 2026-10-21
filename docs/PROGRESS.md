@@ -4,11 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.31 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.32 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 59, deeper floors as grids with variety** (D-223). Read D-201
-to D-203, D-223 and Q-038, then mock up each kind of place's rules.
+**Step 51d, the doorway line in the game** (D-225, option A of its
+mock-up). Then step 59, deeper floors as grids (D-223).
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -30,16 +30,15 @@ Getting around, a region
 - [x] 46 to 47b: a region's layout, stairs lining up, the map screen,
   turning floors, 0.2.19 to 0.2.22
 The surface
-- [x] 48b A lantern that switches itself, in Settings, 0.2.24
-- [x] 48 The first outside room: woods, 0.2.23
+- [x] 48, 48b The woods; a lantern that switches itself, 0.2.23, 0.2.24
 - [x] 49 A cave entrance into the first cave, 0.2.25
 - [x] 49b Depths move up one: the crypt is depth 0, 0.2.26
 The Seed Explorer (D-214, before step 50)
 - [x] E1 The Explorer: the map, all revealed, the seed and its buttons, 0.2.27
 - [x] E2 The whole surface on the Explorer's map, 0.2.28
-- [x] 50 Day and night outside, 0.2.29
-- [x] 51 Daylight through the cave mouth, 0.2.30
-- [x] 51b Hold to walk around walls; the map joins the surface, 0.2.31
+- [x] 50 to 51c: day and night, daylight through the mouth, hold to
+  walk, rooms apart on the map, 0.2.29 to 0.2.32
+- [ ] 51d The doorway line in the game (D-225)
 - [ ] 59 Deeper floors as grids, each kind of place with its own rules (D-223)
 
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
@@ -57,11 +56,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.29, day and night outside.** A day is 300 turns:
-  full day, a 30-turn dusk, night, a 30-turn dawn. At night the woods are
-  dark like a cave, memory a moonlit blue; By itself lights the lantern
-  at dusk. No clock, only the light. Dev TIME +10 and +50 (D-217).
-  Playtest: https://claude.ai/artifact/NwZb81B6ztLxqggsaqfztk
 - **2026-10-21, 0.2.30, daylight through the mouth.** The crypt gap the
   mouth leads to lets in 3 tiles of pale daylight, real light like a
   torch; it shrinks and warms through dusk, gone at night. Owner's picks
@@ -73,3 +67,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   (D-221). After the playtest: the map joins the surface (D-222);
   deeper floors next (D-223).
   Playtest: https://claude.ai/artifact/85ZXk2u227YhA3qM45JUu1
+- **2026-10-21, 0.2.32, rooms apart on the map.** On both map screens
+  rooms sit a tile apart with a dark seam, and a pale blue line bridges
+  each doorway found, the cave mouth too (D-224). Owner's picks: the same
+  line at doorways in the game next, then step 59 (D-225).
+  Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD

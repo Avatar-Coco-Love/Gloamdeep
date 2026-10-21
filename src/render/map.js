@@ -4,7 +4,9 @@
 // else greyed (D-206). Each room is
 // drawn small from the tiles remembered: floors in the floor's grey, walls
 // beside them in the brick's top edge, found stairs in their violet, the
-// hero a blinking gold dot on their own floor (still with reduced motion). It scrolls and zooms
+// hero a blinking gold dot on their own floor (still with reduced motion).
+// Rooms sit a tile apart, a dark seam between them, and a pale blue line
+// bridges each doorway found (D-224). It scrolls and zooms
 // in its window (the view, core/map.js); a tap outside the box closes it (main.js).
 // In the Seed Explorer (D-214) a bar at the box's bottom shows the seed, with
 // Back on its left and Type and Reseed on its right; the window is shorter.
@@ -15,6 +17,7 @@ import { markAt } from '../core/map.js';
 
 const K = '#0e0c16', LINE = '#2a2636', EMBER = '#f39a3b', GOLD = '#ffd66b', DIM = '#46405a';
 const SHOWN = { floor: '#363b48', wall: '#69748b', stairs: '#a58ce0' }; // ART-DIRECTION.md
+const DOOR = '#a6e0e4'; // the cloak's pale blue, not the stairs' violet or the lantern's amber
 // The box, 8 pixels in from the picture's edges, and the map's window inside it, under the heading
 export const BOX = { x: 8, y: 8, w: W - 16, h: SCREEN_H - 16 };
 export const VIEW = { x: BOX.x + 4, y: BOX.y + 16, w: BOX.w - 8, h: BOX.h - 20 };
@@ -58,6 +61,8 @@ function redraw(at) {
       if (mark) { c.fillStyle = SHOWN[mark]; c.fillRect((ox + x) * k, (oy + y) * k, k, k); }
     }
   }
+  c.fillStyle = DOOR;
+  for (const { x, y } of plan.doors) c.fillRect(x * k, y * k, k, k);
 }
 
 // The Explorer's bar: bar.seed the seed shown, bar.back whether Back has a seed to go to
