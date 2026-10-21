@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.34, a clear line to notice.** A rat in light notices
+  the hero only with no wall between them; the owner saw a torchlit rat
+  come from behind a wall (D-226). Step 59 is next.
+  Playtest: https://claude.ai/artifact/FRSoNAgUzYPdrKZER9tcY6
 - **2026-10-21, 0.2.33, the doorway line.** A thin pale blue line
   pulses across each doorway's outer edge in the game, the cave mouth
   too, once its tile is seen (D-225). Step 59 is next.

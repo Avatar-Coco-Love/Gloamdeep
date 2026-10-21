@@ -168,3 +168,9 @@ The stairs down are in the room farthest from the stairs up. Each room is
 one-tile corridors that turn once, with the usual torch, flask, rat and
 herb. It uses the crypt's bricks for now; darker, colder bricks are the
 owner's wish if they are not hard to do.
+
+**D-229 · 2026-10-21 · Darker, colder dungeon bricks** (step 59c, the
+owner's wish in D-228, option B of the step 59b mock-up) The dungeon is
+drawn with the crypt's brick and slab art, every colour's red, green and
+blue multiplied by 0.72, 0.78 and 0.95: deeper and bluer. The stairs keep
+the crypt's colours. The crypt rooms at the top don't change.

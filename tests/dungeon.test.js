@@ -10,9 +10,9 @@ const SEEDS = Array.from({ length: 60 }, (_, i) => i + 1);
 const count = (map, ch) => map.join('').split(ch).length - 1;
 
 test('from depth 8 every depth is dungeon halls in the crypt look', () => {
-  assert.deepEqual([8, 9, 40].map((d) => kindAt(d)), Array(3).fill({ from: 8, shape: 'halls', look: 'crypt' }));
+  assert.deepEqual([8, 9, 40].map((d) => kindAt(d)), Array(3).fill({ from: 8, shape: 'halls', look: 'dungeon' }));
   assert.equal(kindAt(7).shape, 'burrows');
-  assert.equal(placeFor('depth8', 4127).look, 'crypt');
+  assert.equal(placeFor('depth8', 4127).look, 'dungeon');
 });
 
 // The rooms reachable from `start` through the openings, with how many joins away each is
