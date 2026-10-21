@@ -24,6 +24,7 @@ import { PAD, typeKey, entrySeed, moveKey } from './core/seedpad.js';
 import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js';
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText, lanternText, nextLantern } from './core/settings.js';
 import { shownLine } from './core/lines.js';
+import { deeper, recordText, loadDeepest, saveDeepest } from './core/record.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { daylight, inDaylight, darkNow, passTime } from './core/daytime.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
@@ -57,6 +58,12 @@ const newWorld = () => {
   return makeWorld('first', journeySeed);
 };
 let state = newWorld();
+// The deepest depth walked to, kept on this device (D-021, D-232); a dev jump stops this journey counting
+let deepest = loadDeepest(), jumped = false;
+function keepDeepest() {
+  const d = deeper(deepest, depthOf(state.place), jumped);
+  if (d !== deepest) { deepest = d; saveDeepest(d); }
+}
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 // Motion follows the device until the Motion switch is picked (D-190)
 const still = () => stillMotion(settings.motion, reduceMotion.matches);
@@ -114,6 +121,7 @@ function tryStep(dir) {
     travel = { from: { ...before, hero: to }, mid: now + FADE_MS, end: now + 2 * FADE_MS };
   } else if (fell || went || still()) { shown.x = state.hero.x; shown.y = state.hero.y; if (went) foeShown = new Map(); }
   else followFoes(before.enemies, state.enemies);
+  if (went) keepDeepest();
 }
 
 // § enemies sliding: a rat slides to its new tile like the hero (D-128).
@@ -210,7 +218,8 @@ function show(next, at = 0) {
   mapButton.hide(!playing && !mapOpen); mapButton.closes(mapOpen);
   spokenLine = null;
   spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
-    : next === 'howto' ? howtoWords(page, settings.controls) : WORDS[next];
+    : next === 'howto' ? howtoWords(page, settings.controls)
+    : next === 'title' && deepest ? `${WORDS.title} ${recordText(deepest)}.` : WORDS[next];
 }
 const backTo = (id) => () => show(pageFrom, menuOf(pageFrom).findIndex((l) => l.id === id));
 const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
@@ -343,7 +352,7 @@ const onType = (key) => {
 };
 // § journey: New journey starts in a new world; Back to title ends it (D-187)
 function newJourney() {
-  state = newWorld();
+  state = newWorld(); jumped = false;
   shown.x = state.hero.x; shown.y = state.hero.y;
   queued = nudge = hit = bitten = travel = null; foeShown = new Map();
   drawnRoom = null; rememberedAt = rememberedSeen = null;
@@ -414,7 +423,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   setOil: (oil) => setOil(state, oil),
   heal: () => ({ ...state, health: HERO_HEALTH }),
   passTime: (turns) => passTime(state, turns), // the clock only (D-217)
-  goTo: (depth) => goToDepth(state, depth), // depth 0 is the crypt (D-212)
+  goTo: (depth) => { jumped = true; return goToDepth(state, depth); }, // depth 0 is the crypt (D-212)
   goOutside: () => goToPlace(state, 'woods'), // the woods, on the surface too (D-209)
   camera: () => cam,
 }, hud);
@@ -448,7 +457,7 @@ function frame(t) {
     if (screen === 'explore') { drawTitle(ctx, [], 0, t, still()); drawMap(ctx, view, t, still(), turns(), { seed: shownSeed(seeds), back: canGoBack(seeds) }); }
     else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, page, settings.controls, chosen, t, still()); }
-    else drawTitle(ctx, menuOf(screen), chosen, t, still(), screen === 'settings' ? 'Settings' : null);
+    else drawTitle(ctx, menuOf(screen), chosen, t, still(), screen === 'settings' ? 'Settings' : null, screen === 'title' ? recordText(deepest) : null);
     requestAnimationFrame(frame); return;
   }
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)

@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.39 (2026-10-21)
+- The game remembers the deepest depth the hero has walked to, on this
+  device, across journeys. The title screen shows it in grey under the
+  menu ("Deepest: depth 7") once the hero has gone below the surface.
+- A dev Go to depth jump stops the journey counting until a New journey.
+- Decisions: D-232.
+
 ## 0.2.38 (2026-10-21)
 - Deeper floors hold more rats: from depth 5 down every room has two, one
   guarding the flask and one anywhere in the dark. Depths 2 to 4 keep one
