@@ -28,7 +28,8 @@ Entry format:
 - The surface map shows the part you're in: the woods, or the crypt.
 - Dev: Go to depth goes from 0 (the crypt); Go outside still leads to the woods.
 - D-201 to D-208 moved to `docs/archive/DECISIONS-REGION.md`.
-- Decisions: D-213.
+- Planned next: a Seed Explorer on the title menu (D-214).
+- Decisions: D-213, D-214.
 
 ## 0.2.25 (2026-10-20)
 - The woods now has a cave mouth: a dark opening between two grey rocks

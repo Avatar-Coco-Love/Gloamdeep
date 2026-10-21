@@ -135,3 +135,14 @@ rooms, both headed SURFACE; the second room's stairs up lead to the
 crypt. Dev Go to depth goes from 0, the crypt, and Go outside still goes
 to the woods. D-201 to D-208 moved unchanged to
 `archive/DECISIONS-REGION.md`; they stay in force.
+
+**D-214 · 2026-10-21 · A Seed Explorer** (the owner's idea, owner's
+picks) A dev entry on the title menu that opens the map screen instead
+of the game, with everything revealed and the seed it shows written on
+it. Easy-to-reach buttons: Reseed (a random seed each tap), type a seed
+(the seed pad), and back to the last seed; floors turn as on the map.
+On the surface it shows the woods and the crypt together, in the
+Explorer only; the game's map keeps D-213. Built next, before step 50:
+first the Explorer, then the whole surface on it. Later, as their own
+steps: a button that fits places far apart on one depth, painting
+rooms, and saving them to a file for Claude to build into the game.
