@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.33, the doorway line.** A thin pale blue line
+  pulses across each doorway's outer edge in the game, the cave mouth
+  too, once its tile is seen (D-225). Step 59 is next.
+  Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD
 - **2026-10-21, 0.2.32, rooms apart on the map.** On both map screens
   rooms sit a tile apart with a dark seam, and a pale blue line bridges
   each doorway found, the cave mouth too (D-224). Owner's picks: the same

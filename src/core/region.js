@@ -2,8 +2,9 @@
 // Plain data, no drawing. Depths 2 to 4 are each a 2 × 2 grid with one cell
 // left empty by the seed, so their three rooms make an L, each joined to the
 // corner room by a one-tile opening at a spot along their shared edge the
-// seed picks. From depth 5 each depth is a warren: five rooms in a 3 × 3
-// grid, grown as a winding chain (D-227).
+// seed picks. Depths 5 to 7 are warrens: five rooms in a 3 × 3 grid, grown
+// as a winding chain (D-227). From depth 8 each is a dungeon: six rooms
+// grown the same way, with one more opening that makes a loop (D-228).
 // § lining up (D-202, D-203): every floor sits on the same grid. The stairs
 // up are in the same cell, at the same tile, as the stairs down one floor
 // above; the stairs down in another room than them, at a tile the seed
@@ -16,9 +17,11 @@ import { rng, int, pick, seedFor } from './rng.js';
 import { COLS, ROWS } from './cave.js';
 
 // Depths 2 to 4 are L-shaped 2 × 2 grids (D-203); from depth 5, where the
-// earth burrows start (room.js, D-165), every depth is a warren (D-227).
+// earth burrows start (room.js, D-165), warrens (D-227); from depth 8, where
+// the dungeon starts, dungeon floors (D-228).
 const SIZE = 2;
 const WARRENS = 5, WARREN = { size: 3, rooms: 5 };
+const DUNGEONS = 8, DUNGEON = { size: 3, rooms: 6 };
 // The first generated depth, and the crypt's stairs down above it (SECOND_ROOM in room.js)
 const FIRST = 2;
 const CRYPT_DOWN = { x: 1, y: 11 };
@@ -42,7 +45,7 @@ function lay(seed, depth) {
   const base = seedAt(seed, depth), r = rng(base ^ 0x2c1b3c6d), above = layoutAt(seed, depth - 1);
   const upAt = above ? above.down : CRYPT_DOWN, under = above?.down.cell;
   const warren = depth >= WARRENS;
-  const { cells, ups, joins } = warren ? warrenCells(r, under) : ellCells(r, under);
+  const { cells, ups, joins } = depth >= DUNGEONS ? dungeonCells(r, under) : warren ? warrenCells(r, under, WARREN) : ellCells(r, under);
   ups.up = tile(upAt);
   cells.forEach((c, i) => {
     c.id = c === ups ? `depth${depth}` : `depth${depth}:${c.x},${c.y}`;
@@ -54,7 +57,8 @@ function lay(seed, depth) {
     else join(a, b, 'down', 'up', door(r, COLS, a, b, (n) => [{ x: n, y: ROWS - 2 }, { x: n, y: 1 }]));
   }
   // § stairs down: in another room than the stairs up, anywhere 2 tiles in from
-  // its edges; in a warren, the room farthest from the stairs up (D-227)
+  // its edges; in a warren or a dungeon, the room farthest from the stairs up
+  // (D-227, D-228)
   const downs = pick(r, warren ? farthest(cells, joins, ups) : cells.filter((c) => c !== ups));
   downs.down = spot(r, () => false);
   return { cells, up: { ...tile(upAt), cell: tile(ups) }, down: { ...downs.down, cell: tile(downs) } };
@@ -78,20 +82,34 @@ function ellCells(r, under) {
 // § the warren (D-227): a 3 × 3 grid, 5 rooms grown one at a time from the
 // cell under the stairs down above, each joined only to the room it grew
 // from, so there are dead ends and one way through
-function warrenCells(r, under) {
+function warrenCells(r, under, { size, rooms }) {
   const ups = cellAt(under.x, under.y), cells = [ups], joins = [];
   const has = (x, y) => cells.some((c) => c.x === x && c.y === y);
-  while (cells.length < WARREN.rooms) {
+  while (cells.length < rooms) {
     const ways = [];
     for (const c of cells) for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const x = c.x + dx, y = c.y + dy;
-      if (x >= 0 && y >= 0 && x < WARREN.size && y < WARREN.size && !has(x, y)) ways.push([c, x, y]);
+      if (x >= 0 && y >= 0 && x < size && y < size && !has(x, y)) ways.push([c, x, y]);
     }
     const [from, x, y] = pick(r, ways), to = cellAt(x, y);
     cells.push(to);
     joins.push(to.x > from.x || to.y > from.y ? [from, to] : [to, from]);
   }
   return { cells, ups, joins };
+}
+
+// § the dungeon (D-228): 6 rooms grown as the warren's are, then one more
+// opening between two rooms side by side that aren't joined yet, so one way
+// round makes a loop. A chain with no such pair is grown again.
+function dungeonCells(r, under) {
+  for (;;) {
+    const grown = warrenCells(r, under, DUNGEON), { cells, joins } = grown, loops = [];
+    for (const a of cells) for (const b of cells) {
+      const beside = (b.x === a.x + 1 && b.y === a.y) || (b.y === a.y + 1 && b.x === a.x);
+      if (beside && !joins.some(([u, v]) => u === a && v === b)) loops.push([a, b]);
+    }
+    if (loops.length) { joins.push(pick(r, loops)); return grown; }
+  }
 }
 
 // The rooms the most joins away from `start`

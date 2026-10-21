@@ -46,7 +46,7 @@ of other sizes line up their stairs by place on the floor (D-204). So far
 the generated caves are 17 × 20 and the crypt rooms 11 × 13 (D-195).
 Narrowed by D-223: each kind of place has its own rules, and deeper
 floors become grids; which rules each kind has is still open. Burrow
-floors are warrens (D-227); the dungeon's rules come at its own step.
+floors are warrens (D-227), and from depth 8 dungeon halls (D-228).
 
 **Q-039 · Swimming** (later)
 How the hero learns to swim, where they may jump into water, what water

@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.36 (2026-10-21)
+- A new kind of place, the dungeon, from depth 8 down: six rooms in a
+  3 × 3 grid, grown like the warren with one extra doorway, so one way
+  round makes a loop. The stairs down are in the room farthest away.
+- Each dungeon room is 3 or 4 straight-walled halls joined by one-tile
+  corridors that turn once, in the crypt's bricks. Earth warrens now stop
+  at depth 7.
+- Decisions: D-228. Questions narrowed: Q-038.
+
 ## 0.2.35 (2026-10-21)
 - From depth 5 down, each earth burrow floor is now a warren: five rooms
   in a 3 × 3 grid, grown as a winding chain with dead ends and one way

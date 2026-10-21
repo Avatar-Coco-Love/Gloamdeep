@@ -15,29 +15,30 @@ const MIN_OPEN = 107;
 const TRIES = 200;
 
 // (seed, shape, ways) → { map, start, lights, enemies, items }, or null if no
-// try worked. The shape is 'chambers' or 'burrows' (D-165). `ways.doors` are
+// try worked. The shape is 'chambers', 'burrows' (D-165) or 'halls' (D-228). `ways.doors` are
 // openings to carve at the edges, as { dir, at } (region.js, D-201).
 // `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
 // floors line up (D-202); true lets the room pick, null leaves them out.
 export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true } = {}) {
-  const r = rng(seed), carve = shape === 'burrows' ? burrows : chambers;
+  const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
   for (let i = 0; i < TRIES; i++) {
-    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors), up, down), up, down);
+    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down);
     if (room) return room;
   }
   return null;
 }
 
 // § doors: each opening is a gap in the edge, with a tunnel in from it to the
-// nearest open tile (D-201). The tile just inside is where the hero comes in.
+// nearest open tile (D-201), straight in halls (D-228). The tile just inside
+// is where the hero comes in.
 const EDGE = { up: (at) => [{ x: at, y: 0 }, { x: at, y: 1 }], down: (at) => [{ x: at, y: ROWS - 1 }, { x: at, y: ROWS - 2 }],
   left: (at) => [{ x: 0, y: at }, { x: 1, y: at }], right: (at) => [{ x: COLS - 1, y: at }, { x: COLS - 2, y: at }] };
-function openDoors(r, g, doors) {
+function openDoors(r, g, doors, dig) {
   const inside = tilesWhere(g, (x, y) => g[y][x] === '.');
   const out = doors.map(({ dir, at }) => {
     const [edge, inner] = EDGE[dir](at), to = inside.reduce((a, b) => (dist(b, inner) < dist(a, inner) ? b : a));
     g[edge.y][edge.x] = '.'; g[inner.y][inner.x] = '.';
-    tunnel(r, g, inner, to);
+    dig(r, g, inner, to);
     return inner;
   });
   g.doors = out;
@@ -46,12 +47,12 @@ function openDoors(r, g, doors) {
 
 // § stairs to fit: each stairs tile set is opened, with a tunnel to the
 // nearest open tile, and the stairs up get their wall above (D-143, D-202)
-function openStairs(r, g, up, down) {
+function openStairs(r, g, up, down, dig) {
   for (const t of [up, down]) {
     if (typeof t !== 'object' || !t) continue;
     const inside = tilesWhere(g, (x, y) => g[y][x] === '.' && !same({ x, y }, t));
     g[t.y][t.x] = '.';
-    if (inside.length) tunnel(r, g, t, inside.reduce((a, b) => (dist(b, t) < dist(a, t) ? b : a)));
+    if (inside.length) dig(r, g, t, inside.reduce((a, b) => (dist(b, t) < dist(a, t) ? b : a)));
   }
   if (up && typeof up === 'object') g[up.y - 1][up.x] = '#';
   return g;
@@ -222,6 +223,41 @@ function burrows(r) {
   }
   return g;
 }
+
+// § halls: 3 or 4 straight-walled halls, 4 to 7 tiles wide and 4 to 6 tall,
+// with wall between them, each joined to the one before by a one-tile
+// corridor that turns once (D-228). Built stone, so nothing wanders.
+const HALLS = [3, 4], HALL_W = [4, 7], HALL_H = [4, 6];
+function halls(r) {
+  const g = walls(), want = int(r, HALLS[0], HALLS[1]), hs = [];
+  for (let i = 0; i < 100 && hs.length < want; i++) {
+    const w = int(r, HALL_W[0], HALL_W[1]), h = int(r, HALL_H[0], HALL_H[1]);
+    const hall = { x: int(r, 2, COLS - 2 - w), y: int(r, 2, ROWS - 2 - h), w, h };
+    if (!hs.some((o) => hall.x <= o.x + o.w && o.x <= hall.x + hall.w && hall.y <= o.y + o.h && o.y <= hall.y + hall.h)) hs.push(hall);
+  }
+  if (hs.length < HALLS[0]) return null;
+  const mid = (h) => ({ x: h.x + (h.w >> 1), y: h.y + (h.h >> 1) });
+  hs.forEach((h, i) => {
+    for (let y = h.y; y < h.y + h.h; y++) for (let x = h.x; x < h.x + h.w; x++) g[y][x] = '.';
+    if (i) lane(r, g, mid(hs[i - 1]), mid(h));
+  });
+  return g;
+}
+
+// A one-tile corridor from `from` to `to`, along one way and then the other
+function lane(r, g, from, to) {
+  let { x, y } = from;
+  const across = r() < 0.5;
+  for (const way of across ? ['x', 'y'] : ['y', 'x']) {
+    while (way === 'x' ? x !== to.x : y !== to.y) {
+      g[y][x] = '.';
+      if (way === 'x') x += Math.sign(to.x - x); else y += Math.sign(to.y - y);
+    }
+  }
+  g[y][x] = '.';
+}
+
+const SHAPES = { chambers, burrows, halls };
 
 // § helpers
 const walls = () => Array.from({ length: ROWS }, () => Array(COLS).fill('#'));
