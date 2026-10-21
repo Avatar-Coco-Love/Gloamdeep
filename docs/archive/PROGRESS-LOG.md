@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.32, rooms apart on the map.** On both map screens
+  rooms sit a tile apart with a dark seam, and a pale blue line bridges
+  each doorway found, the cave mouth too (D-224). Owner's picks: the same
+  line at doorways in the game next, then step 59 (D-225).
+  Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD
 - **2026-10-21, 0.2.31, hold to walk.** A held finger walks around
   walls over remembered tiles: an amber frame on the target, a "!" stop
   when something comes into view (D-220). Surface decisions archived
