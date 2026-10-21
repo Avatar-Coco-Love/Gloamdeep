@@ -4,12 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.35 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.36 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**The dungeon, a new kind of place** (D-227). Mock up its floor plan,
-look and the depths it takes, from the step 59 sketch:
-https://claude.ai/artifact/6A17JMM7ng4VZAUJLn1fKS
+**59c Darker, colder bricks for the dungeon** (the owner's wish, D-228):
+the crypt's brick and slab drawing in deeper, bluer colours, as shown in
+option B of the step 59b mock-up:
+https://claude.ai/artifact/HX1bY1PqqJhe6JWdBFqfEa
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -40,7 +41,8 @@ The Seed Explorer (D-214, before step 50)
 - [x] 50 to 51d: day and night, daylight through the mouth, hold to
   walk, rooms apart on the map, the doorway line, 0.2.29 to 0.2.33
 - [x] 59 Deeper floors as grids: burrow floors are warrens, 0.2.35 (D-227)
-- [ ] 59b The dungeon, its own kind of place (D-227)
+- [x] 59b The dungeon from depth 8: six halls, one loop, 0.2.36 (D-228)
+- [ ] 59c Darker, colder bricks for the dungeon
 
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
 kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
@@ -57,10 +59,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.33, the doorway line.** A thin pale blue line
-  pulses across each doorway's outer edge in the game, the cave mouth
-  too, once its tile is seen (D-225). Step 59 is next.
-  Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD
 - **2026-10-21, 0.2.34, a clear line to notice.** A rat in light notices
   the hero only with no wall between them; the owner saw a torchlit rat
   come from behind a wall (D-226). Step 59 is next.
@@ -69,3 +67,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   rooms in a 3 × 3 grid, a winding chain, the stairs down farthest away.
   Owner's pick from a mock-up (D-227); the dungeon gets its own step.
   Playtest: https://claude.ai/artifact/FRSoNAgUzYPdrKZER9tcY6
+- **2026-10-21, 0.2.36, the dungeon.** From depth 8 each floor is 6
+  rooms of crypt-brick halls in a 3 × 3 grid with one loop, the stairs
+  down farthest away; warrens stop at depth 7. Owner's picks (D-228).
+  Mock-up: https://claude.ai/artifact/HX1bY1PqqJhe6JWdBFqfEa
+  Playtest: https://claude.ai/artifact/FG2ANbbk8f5q6vmVkBTQZ1

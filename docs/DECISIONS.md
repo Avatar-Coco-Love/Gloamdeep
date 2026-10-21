@@ -157,3 +157,14 @@ are dead ends and one way through. The stairs down are in the room
 farthest from the stairs up. Each room keeps the burrow's own digger, a
 flask, a rat and a herb. The dungeon, a new kind of built stone halls,
 gets its own step later; its plan, look and depths are settled there.
+
+**D-228 · 2026-10-21 · The dungeon** (step 59b, owner's picks from a
+mock-up of three ways each; part of Q-038) From depth 8 down every floor
+is a dungeon; the earth warrens are depths 5 to 7. A dungeon floor is 6
+rooms in a 3 × 3 grid, grown one at a time like the warren, plus one more
+opening between two rooms side by side, so one way round makes a loop.
+The stairs down are in the room farthest from the stairs up. Each room is
+3 or 4 straight-walled halls (4 to 7 tiles wide, 4 to 6 tall) joined by
+one-tile corridors that turn once, with the usual torch, flask, rat and
+herb. It uses the crypt's bricks for now; darker, colder bricks are the
+owner's wish if they are not hard to do.

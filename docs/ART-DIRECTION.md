@@ -70,6 +70,10 @@ a small stone.
 | Floor, light, dark, pebble | `#3d3229` `#47392e` `#2e251e` `#544435` |
 | Stone, its lit top | `#544435` `#6a5848` |
 
+## Dungeon (depth 8 and down, D-228)
+The crypt's bricks and slabs as they are, drawn by `src/render/tiles.js`.
+Darker, colder bricks are the next step (59c).
+
 ## Stairs in grey rock and earth (D-167)
 Code: `src/render/tiles.js` (drawSteps). The crypt's five steps and
 violet lips, with pale stone steps (light to dark, floor side first;

@@ -10,9 +10,9 @@ import { layoutAt } from '../src/core/region.js';
 const SEEDS = Array.from({ length: 500 }, (_, i) => i + 1);
 const count = (map, ch) => map.join('').split(ch).length - 1;
 
-test('depths 2 to 4 are grey rock chambers, 5 and down earth burrows (D-212)', () => {
+test('depths 2 to 4 are grey rock chambers, 5 to 7 earth burrows (D-212, D-228)', () => {
   assert.deepEqual([2, 3, 4].map((d) => kindAt(d).look), ['rock', 'rock', 'rock']);
-  assert.deepEqual([5, 6, 40].map((d) => kindAt(d)), Array(3).fill({ from: 5, shape: 'burrows', look: 'earth' }));
+  assert.deepEqual([5, 6, 7].map((d) => kindAt(d)), Array(3).fill({ from: 5, shape: 'burrows', look: 'earth' }));
   const p = placeFor('depth5', 4127);
   assert.equal(p.look, 'earth');
   const c = layoutAt(4127, 5).cells[0];

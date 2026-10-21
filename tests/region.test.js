@@ -41,8 +41,8 @@ function away(cells, start) {
   return out;
 }
 
-test('from depth 5 each depth is a warren: 5 rooms in a 3 × 3 grid, joined as a chain, the stairs down farthest (D-227)', () => {
-  for (const seed of SEEDS) for (const depth of [5, 6, 9]) {
+test('depths 5 to 7 are warrens: 5 rooms in a 3 × 3 grid, joined as a chain, the stairs down farthest (D-227)', () => {
+  for (const seed of SEEDS) for (const depth of [5, 6, 7]) {
     const { cells } = layoutAt(seed, depth), up = cells.find((c) => c.up), down = cells.find((c) => c.down);
     assert.equal(cells.length, 5);
     assert.ok(cells.every((c) => c.x >= 0 && c.y >= 0 && c.x < 3 && c.y < 3));

@@ -126,11 +126,13 @@ export function placeFor(id, seed = 1) {
 export const sidesOf = (id, seed) => ({ ...(PLACES[id]?.sides || (isGenerated(id) && cellOf(seed, id, depthOf(id))?.sides) || {}), ...mouthSides(id, seed) });
 
 // § kinds: the kind of place at each generated depth, from the depth it
-// starts at (D-165), moved up one (D-212): grey rock chambers, then earth burrows from depth 5.
+// starts at (D-165), moved up one (D-212): grey rock chambers, then earth burrows from depth 5,
+// then the dungeon's halls from depth 8, in the crypt's bricks (D-228).
 // A later kind adds a line further down.
 const KINDS = [
   { from: 2, shape: 'chambers', look: 'rock' },
   { from: 5, shape: 'burrows', look: 'earth' },
+  { from: 8, shape: 'halls', look: 'crypt' },
 ];
 export const kindAt = (depth) => KINDS.findLast((k) => depth >= k.from);
 

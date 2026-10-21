@@ -43,8 +43,10 @@ seed picks along their shared edge (D-201).
 Stairs line up too: stairs down in a cell at a tile lead to stairs up in
 the same cell at the same tile one floor down (D-202). Depths 2 to 4 are
 three-room grids with the stairs down in another room than the stairs
-up (D-203). From depth 5 each floor is a warren: 5 rooms in a 3 × 3
-grid, a winding chain with the stairs down farthest away (D-227).
+up (D-203). Depths 5 to 7 are warrens: 5 rooms in a 3 × 3 grid, a
+winding chain with the stairs down farthest away (D-227). From depth 8
+each floor is a dungeon: 6 rooms of straight-walled halls in a 3 × 3
+grid, grown the same way plus one loop, in the crypt's bricks (D-228).
 A doorway or mouth keeps the depth, only stairs change it: the woods
 and the crypt are both depth 0, the second room depth 1 (D-212). Each
 place keeps the seed numbers it had before, so a seed keeps its rooms;
