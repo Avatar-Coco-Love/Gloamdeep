@@ -20,6 +20,20 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.31 (2026-10-21)
+- Hold a finger or the mouse button on a tile you remember and the hero
+  walks there around walls, about 4 steps a second. A small amber frame
+  marks the tile; slide to move it, lift to stop.
+- When a creature or an item comes into view, the hero stops and a "!"
+  shows over them. Lift and hold again to go on. Taking stairs stops the
+  walk too.
+- Held on a dark tile, or one no remembered way leads to, the hero steps
+  straight toward it, as before.
+- The map joins the woods and the crypt at the cave mouth, as the Seed
+  Explorer does, once you have been in both.
+- Decisions: D-220, D-221 (the surface decisions move to the archive),
+  D-222, D-223 (deeper floors as grids, next). Q-038 narrowed.
+
 ## 0.2.30 (2026-10-21)
 - Daylight comes in through the cave mouth: in the crypt room the mouth
   leads to, the gap in the wall lets in a pale light that reaches about 3

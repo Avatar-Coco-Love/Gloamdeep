@@ -4,12 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.30 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.31 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 51b, hold to walk around walls** (D-219): a held finger or mouse
-finds a way to the tile under it. Read D-042 to D-044, D-179 and D-219
-first, then show the owner a mock-up of how the walk looks and stops.
+**Step 59, deeper floors as grids with variety** (D-223). Read D-201
+to D-203, D-223 and Q-038, then mock up each kind of place's rules.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -40,7 +39,8 @@ The Seed Explorer (D-214, before step 50)
 - [x] E2 The whole surface on the Explorer's map, 0.2.28
 - [x] 50 Day and night outside, 0.2.29
 - [x] 51 Daylight through the cave mouth, 0.2.30
-- [ ] 51b Hold to walk around walls (D-219)
+- [x] 51b Hold to walk around walls; the map joins the surface, 0.2.31
+- [ ] 59 Deeper floors as grids, each kind of place with its own rules (D-223)
 
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
 kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
@@ -57,10 +57,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.28, the whole surface.** The Explorer's surface map
-  shows the woods and the crypt together, the crypt where walking
-  through the cave mouth takes you. Owner's picks from a mock-up of
-  three layouts: joined at the mouth, the mouth plain floor (D-216). Playtest: https://claude.ai/artifact/D9KGuEKFcvxk9vpCHJS6np
 - **2026-10-21, 0.2.29, day and night outside.** A day is 300 turns:
   full day, a 30-turn dusk, night, a 30-turn dawn. At night the woods are
   dark like a cave, memory a moonlit blue; By itself lights the lantern
@@ -71,3 +67,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   torch; it shrinks and warms through dusk, gone at night. Owner's picks
   (D-218), and hold to walk around walls is next (D-219, answers Q-026).
   Playtest: https://claude.ai/artifact/WdRHRAQxhk8KRkSg3g55Xk
+- **2026-10-21, 0.2.31, hold to walk.** A held finger walks around
+  walls over remembered tiles: an amber frame on the target, a "!" stop
+  when something comes into view (D-220). Surface decisions archived
+  (D-221). After the playtest: the map joins the surface (D-222);
+  deeper floors next (D-223).
+  Playtest: https://claude.ai/artifact/85ZXk2u227YhA3qM45JUu1

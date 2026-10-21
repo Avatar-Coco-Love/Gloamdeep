@@ -44,6 +44,8 @@ and whether shapes come from hand-made templates, are generated, or both
 (D-172). The owner mentioned "predefined tiles" for the shapes. Rooms
 of other sizes line up their stairs by place on the floor (D-204). So far
 the generated caves are 17 × 20 and the crypt rooms 11 × 13 (D-195).
+Narrowed by D-223: each kind of place has its own rules, and deeper
+floors become grids; which rules each kind has is still open.
 
 **Q-039 · Swimming** (later)
 How the hero learns to swim, where they may jump into water, what water
