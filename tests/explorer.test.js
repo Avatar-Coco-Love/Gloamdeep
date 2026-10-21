@@ -42,7 +42,9 @@ test('the whole surface: the woods and the crypt joined at the mouth, for each w
     assert.deepEqual(p.rooms.map((r) => r.id).sort(), ['first', 'south', 'woods']);
     assert.equal(p.hero, null);
     const w = at('woods'), c = at(m.room);
-    assert.deepEqual([w.x + m.tile.x + STEP[m.dir][0], w.y + m.tile.y + STEP[m.dir][1]], [c.x + m.gap.x, c.y + m.gap.y]);
+    const [sx, sy] = STEP[m.dir]; // a seam tile apart, the doorway line on it (D-224)
+    assert.deepEqual([w.x + m.tile.x + 2 * sx, w.y + m.tile.y + 2 * sy], [c.x + m.gap.x, c.y + m.gap.y]);
+    assert.ok(p.doors.some((d) => d.x === w.x + m.tile.x + sx && d.y === w.y + m.tile.y + sy));
     // every room inside the map, none over another
     for (const r of p.rooms) assert.ok(r.x >= 0 && r.y >= 0 && r.x + r.room.cols <= p.cols && r.y + r.room.rows <= p.rows);
     assert.equal(Math.min(...p.rooms.map((r) => r.x)), 0);

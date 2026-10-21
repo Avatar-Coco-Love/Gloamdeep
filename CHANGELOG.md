@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.32 (2026-10-21)
+- On the map screens, in the game and the Seed Explorer, rooms side by
+  side are drawn one tile apart, with a dark seam between them, so each
+  room shows as its own.
+- A pale blue line bridges each doorway the hero has found, and the cave
+  mouth between the woods and the crypt. Reveal map shows them all.
+- Decisions: D-224, D-225.
+
 ## 0.2.31 (2026-10-21)
 - Hold a finger or the mouse button on a tile you remember and the hero
   walks there around walls, about 4 steps a second. A small amber frame

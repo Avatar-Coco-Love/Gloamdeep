@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.29, day and night outside.** A day is 300 turns:
+  full day, a 30-turn dusk, night, a 30-turn dawn. At night the woods are
+  dark like a cave, memory a moonlit blue; By itself lights the lantern
+  at dusk. No clock, only the light. Dev TIME +10 and +50 (D-217).
+  Playtest: https://claude.ai/artifact/NwZb81B6ztLxqggsaqfztk
 - **2026-10-21, 0.2.28, the whole surface.** The Explorer's surface map
   shows the woods and the crypt together, the crypt where walking
   through the cave mouth takes you. Owner's picks from a mock-up of
