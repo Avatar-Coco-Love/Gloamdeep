@@ -86,3 +86,31 @@ test('the lantern by itself lights as the hero walks in from the daylight', () =
   const m = mouthOf(6), s = { ...makeWorld('woods', 6), hero: { ...m.tile }, lit: false };
   assert.equal(followDaylight(s, step(s, m.dir)).lit, true);
 });
+
+// § daylight in (step 51, D-218)
+import { mouthLight } from '../src/core/mouth.js';
+import { passTime } from '../src/core/daytime.js';
+import { litAt } from '../src/core/sight.js';
+import { goToPlace } from '../src/core/stairs.js';
+
+test('daylight through the mouth reaches 3 tiles into its crypt room by day, none at night', () => {
+  for (const seed of [1, 7, 4127]) {
+    const { room, gap } = mouthOf(seed);
+    const s = { ...goToPlace(makeWorld('first', seed), room), lit: false };
+    const sun = mouthLight(s);
+    assert.equal(sun.r, 3 * 16);
+    assert.deepEqual([sun.x, sun.y], [gap.x * 16 + 8, gap.y * 16 + 8]);
+    assert.ok(litAt(s, gap.x, gap.y));
+    assert.equal(mouthLight(passTime(s, 220)), null);
+    assert.ok(!litAt(passTime(s, 220), gap.x, gap.y));
+    const other = goToPlace(makeWorld('first', seed), room === 'first' ? 'second' : 'first');
+    assert.equal(mouthLight(other), null);
+  }
+});
+
+test('through dusk the light shrinks and warms toward the torch orange', () => {
+  const { room } = mouthOf(1), s = goToPlace(makeWorld('first', 1), room);
+  const day = mouthLight(s), dusk = mouthLight(passTime(s, 185));
+  assert.equal(dusk.r, day.r / 2);
+  assert.ok(dusk.cb < day.cb && dusk.cr > day.cr);
+});

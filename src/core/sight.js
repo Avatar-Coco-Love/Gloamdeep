@@ -1,4 +1,4 @@
-// § sight: which tiles are lit now, by the lantern, a burning torch or a glow (D-134). Plain
+// § sight: which tiles are lit now, by the lantern, a burning torch, a glow (D-134) or daylight through the mouth (D-218). Plain
 // data, no drawing. An enemy on a lit tile sees the hero (D-126); it is
 // drawn in memory's dim light too (D-153). A tile counts as lit by the rule that remembers it (D-059):
 // the light reaches its centre, inside 95% of its reach. Torches count at
@@ -10,6 +10,7 @@ import { mountAt } from './mount.js';
 import { LIGHT_AT } from './lights.js';
 import { glowsIn } from './stairs.js';
 import { inDaylight } from './daytime.js';
+import { mouthLight } from './mouth.js';
 
 const TILE_SIZE = 16;
 const NEAR = 0.95;
@@ -26,6 +27,8 @@ export function lightsNow(state) {
     const [ax, ay] = LIGHT_AT[m];
     out.push({ x: l.x * TILE_SIZE + ax, y: l.y * TILE_SIZE + ay, r: r * TILE_SIZE });
   }
+  const sun = mouthLight(state); // daylight through the cave mouth (D-218)
+  if (sun) out.push(sun);
   return out.concat(glowsIn(state.room, state.seen)); // a glow not yet found is no light (D-194)
 }
 

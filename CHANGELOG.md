@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.30 (2026-10-21)
+- Daylight comes in through the cave mouth: in the crypt room the mouth
+  leads to, the gap in the wall lets in a pale light that reaches about 3
+  tiles, like a torch. Tiles it reaches are remembered, and a creature
+  standing in it can see you.
+- It follows the time of day: through dusk it shrinks and warms to
+  orange, at night it is gone, and at dawn it comes back the same way.
+- Decisions: D-218, D-219. Questions closed: Q-026. Q-040 narrowed.
+
 ## 0.2.29 (2026-10-21)
 - Day and night pass outside with your turns: a day is 300 turns, 170 of
   full day, a 30-turn dusk, 70 of night and a 30-turn dawn. The clock
