@@ -195,3 +195,11 @@ device for good, across journeys. It shows first on the title screen, a
 grey line under the menu ("Deepest: depth 7"), hidden until the hero has
 gone below the surface. Dev jumps don't count: after Go to depth, the
 journey stops counting until a New journey.
+
+**D-233 · 2026-10-21 · The map names the area** (the owner's idea and
+picks) The map and the Seed Explorer show a floor's area after its depth,
+"DEPTH 9 · DUNGEON": Crypt at depth 1, Cave at 2 to 4, Warren at 5 to 7,
+Dungeon from 8. The surface stays SURFACE, since it holds both the woods
+and the crypt. Each room's walls on the map take its area's colour (crypt
+brick, cave grey, warren brown, dungeon blue, woods green), and the area's
+name in the heading takes its floor's colour.

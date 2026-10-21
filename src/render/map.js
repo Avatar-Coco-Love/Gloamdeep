@@ -14,9 +14,14 @@ import { W, SCREEN_H } from './screen.js';
 import { drawText, textWidth } from './font.js';
 import { veil } from './menu.js';
 import { markAt } from '../core/map.js';
+import { areaAt } from '../core/room.js';
 
 const K = '#0e0c16', LINE = '#2a2636', EMBER = '#f39a3b', GOLD = '#ffd66b', DIM = '#46405a';
 const SHOWN = { floor: '#363b48', wall: '#69748b', stairs: '#a58ce0' }; // ART-DIRECTION.md
+// Walls in each room's own tone, and the heading's area name in its floor's (D-233):
+// crypt brick, cave rock, warren earth, the dungeon's cold blue (D-229), woods green
+const TONE = { crypt: '#69748b', rock: '#7a8396', earth: '#8e7a62', dungeon: '#4c5a84', woods: '#4f8a3f' };
+const wallOf = (room) => TONE[room.look] || SHOWN.wall;
 const DOOR = '#a6e0e4'; // the cloak's pale blue, not the stairs' violet or the lantern's amber
 // The box, 8 pixels in from the picture's edges, and the map's window inside it, under the heading
 export const BOX = { x: 8, y: 8, w: W - 16, h: SCREEN_H - 16 };
@@ -58,7 +63,7 @@ function redraw(at) {
   for (const { x: ox, y: oy, room, seen } of plan.rooms) {
     for (let y = 0; y < room.rows; y++) for (let x = 0; x < room.cols; x++) {
       const mark = markAt(room, seen, x, y);
-      if (mark) { c.fillStyle = SHOWN[mark]; c.fillRect((ox + x) * k, (oy + y) * k, k, k); }
+      if (mark) { c.fillStyle = mark === 'wall' ? wallOf(room) : SHOWN[mark]; c.fillRect((ox + x) * k, (oy + y) * k, k, k); }
     }
   }
   c.fillStyle = DOOR;
@@ -89,9 +94,12 @@ export function drawMap(c, view, t, still, turns, bar = null) {
   c.fillStyle = LINE;
   c.fillRect(x, y, w, 1); c.fillRect(x, y + h - 1, w, 1);
   c.fillRect(x, y, 1, h); c.fillRect(x + w - 1, y, 1, h);
-  const head = plan.depth === 0 ? 'SURFACE' : `DEPTH ${plan.depth}`; // as the strip says it (D-209)
+  // As the strip says it (D-209), then the area's name in its tone (D-233)
+  const depth = plan.depth === 0 ? 'SURFACE' : `DEPTH ${plan.depth}`, area = areaAt(plan.depth);
+  const name = area ? ` · ${area.area}` : '', head = depth + name;
   const hx = Math.floor((W - textWidth(head)) / 2);
-  drawText(c, head, hx, y + 5, EMBER);
+  drawText(c, depth, hx, y + 5, EMBER);
+  if (area) drawText(c, name, hx + textWidth(depth), y + 5, TONE[area.look]);
   arrow(c, hx - GAP - 5, y + 7, false, turns.up ? EMBER : DIM);
   arrow(c, hx + textWidth(head) + GAP, y + 7, true, turns.down ? EMBER : DIM);
   if (bar) drawBar(c, bar);

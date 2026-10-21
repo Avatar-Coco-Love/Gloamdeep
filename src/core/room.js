@@ -132,13 +132,16 @@ export const sidesOf = (id, seed) => ({ ...(PLACES[id]?.sides || (isGenerated(id
 // § kinds: the kind of place at each generated depth, from the depth it
 // starts at (D-165), moved up one (D-212): grey rock chambers, then earth burrows from depth 5,
 // then the dungeon's halls from depth 8, the crypt's bricks deeper and bluer (D-228, D-229).
-// A later kind adds a line further down.
+// A later kind adds a line further down. `area` is its name on the map (D-233).
 const KINDS = [
-  { from: 2, shape: 'chambers', look: 'rock' },
-  { from: 5, shape: 'burrows', look: 'earth' },
-  { from: 8, shape: 'halls', look: 'dungeon' },
+  { from: 2, shape: 'chambers', look: 'rock', area: 'CAVE' },
+  { from: 5, shape: 'burrows', look: 'earth', area: 'WARREN' },
+  { from: 8, shape: 'halls', look: 'dungeon', area: 'DUNGEON' },
 ];
 export const kindAt = (depth) => KINDS.findLast((k) => depth >= k.from);
+// § area: what a floor is called beside its depth on the map, and its look (D-233).
+// The surface (depth 0) is woods and crypt together, so it has none; depth 1 is the crypt.
+export const areaAt = (depth) => (depth === 0 ? null : kindAt(depth) || { area: 'CRYPT', look: 'crypt' });
 
 // The place one depth up or down from `id` (a stair's `leads`), or null above
 // the first: down to the room with the stairs up there, up to the room with
