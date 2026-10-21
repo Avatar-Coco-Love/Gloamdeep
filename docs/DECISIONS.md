@@ -179,3 +179,21 @@ until halfway through dusk and from halfway through dawn; the lantern set
 to By itself lights and goes out at those moments. No clock on screen,
 only the light. Dev: TIME, +10 and +50 in the Room tab move the clock
 only, and the status line shows the turn of the day.
+
+**D-218 · 2026-10-21 · Daylight through the cave mouth** (step 51,
+owner's picks; builds on D-173, D-211, D-217; part of Q-040) The gap the
+mouth leads to in the crypt is a light, like a torch: by day it reaches
+3 tiles in a pale daylight, through dusk it shrinks with the daylight and
+warms toward the torches' orange, at night it is gone, and dawn brings it
+back the same way. It is real light: tiles it reaches are remembered,
+lantern or not, and a creature standing in it sees the hero. Weather
+waits for Q-035.
+
+**D-219 · 2026-10-21 · Hold to walk around walls** (the owner's idea;
+answers Q-026; step 51b, next) Holding a finger or the mouse button walks
+the hero toward the tile under it now, finding a way around walls, at the
+held pace (D-044). Sliding moves the target; lifting stops at once. The
+way uses only tiles the hero remembers. Each step is still one turn, oil
+burns as usual, and the walk stops by itself when a creature or an item
+comes into view. Taps, swipes and keys stay as they are. How it looks is
+shown in a mock-up first.

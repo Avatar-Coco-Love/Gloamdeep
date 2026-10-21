@@ -30,6 +30,7 @@ import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floors
 import { setMap, drawMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from './render/map.js';
 import { startSeeds, shownSeed, addSeed, canGoBack, backSeed, explorerWorld } from './core/explorer.js';
 import { lanternFrom } from './core/sight.js';
+import { mouthLight } from './core/mouth.js';
 import { cameraAt } from './core/camera.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
@@ -400,9 +401,12 @@ show('title');
 // or when the lantern comes back on. Nothing new is remembered while it is off (D-082).
 // Daylight shows the whole room, so all of it is remembered, lantern or not (D-209);
 // at night under the sky the lantern remembers as below ground (D-217).
-let rememberedAt = null, rememberedSeen = null;
+// Daylight through the cave mouth remembers what it reaches, lantern or not (D-218).
+let rememberedAt = null, rememberedSeen = null, sunAt = null, sunSeen = null;
 function rememberHere() {
   if (inDaylight(state)) { state = rememberAll(state); return; }
+  const sun = mouthLight(state), when = state.place + ',' + state.turn;
+  if (sun && (when !== sunAt || state.seen !== sunSeen)) { state = remember(state, sun); sunAt = when; sunSeen = state.seen; }
   if (!state.lit) { rememberedAt = null; return; }
   const key = state.hero.x + ',' + state.hero.y + ',' + state.oil;
   if (key === rememberedAt && state.seen === rememberedSeen) return;
@@ -466,6 +470,8 @@ function frame(t) {
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
     lights.push(...torchLights(s.room, s.lights, t, still(), torchGlow), ...glowsIn(s.room, dev.revealed() ? null : s.seen));
+    const sunIn = mouthLight(s); // daylight through the cave mouth, steady, no flicker (D-218)
+    if (sunIn) lights.push(sunIn);
     drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen, cam, darkNow(s.room, s.turn), 1 - sun);
   }
   inRoom(() => {

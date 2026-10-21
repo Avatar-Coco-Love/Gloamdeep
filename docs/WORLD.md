@@ -75,7 +75,8 @@ An opening lets in the light of the room on its other side.
   follows the time of day (D-025) and the weather (Q-035).
 - Underground: an open entrance to a lit room you haven't found yet
   glows faintly, so you can tell a lit space lies ahead.
-How far, how bright and what colour: Q-040.
+Through the cave mouth: 3 tiles of pale daylight, shrinking and warming
+through dusk, none at night (D-218). The rest: Q-040.
 
 ## Finding stairs (D-174)
 Stairs glow more dimly than now (D-134), and their glow shows only once

@@ -98,7 +98,7 @@ test('falling in the second room wakes the hero at the first room\'s start, ever
 });
 
 // The first room with its torches out and the lantern off: only the stairs' glow is left
-const dark = (seen) => switchLantern({ ...at(5, 11), lights: [], ...(seen && { seen }) });
+const dark = (seen) => switchLantern({ ...at(5, 11), lights: [], turn: 220, ...(seen && { seen }) }); // at night, so no daylight comes through the mouth (D-218)
 const found = (s, x, y) => { const seen = s.seen.slice(); seen[y * s.room.cols + x] = 1; return seen; };
 
 test('stairs not yet found give no light, so a rat on them sees nothing (D-174, D-194)', () => {

@@ -6,6 +6,7 @@
 // left or right, the first room. And back out onto the mouth.
 import { rng, int, pick, seedFor } from './rng.js';
 import { COLS, ROWS } from './cave.js';
+import { daylight } from './daytime.js';
 
 // The crypt room and its gap, by the way the hero walks into the mouth
 const INTO = {
@@ -51,4 +52,17 @@ export function withGap(id, map, seed) {
   const { room, gap } = mouthOf(seed);
   if (id !== room) return map;
   return map.map((line, y) => (y === gap.y ? line.slice(0, gap.x) + '.' + line.slice(gap.x + 1) : line));
+}
+
+// § daylight in: the light the mouth lets into its crypt room from the gap
+// (step 51, D-173, D-218), as { x, y, r, cr, cg, cb } in pixels, or null.
+// By day it reaches 3 tiles, a pale daylight; through dusk it shrinks and
+// warms to the torches' orange, gone at night, and back the same way at dawn.
+const TILE_SIZE = 16, REACH = 3;
+const PALE = [1, 0.97, 0.86], WARM = [1.2, 0.78, 0.42]; // WARM is the torch's colour (core/lights.js)
+export function mouthLight(state) {
+  const { room, gap } = mouthOf(state.seed), k = daylight(state.turn);
+  if (state.place !== room || k <= 0) return null;
+  const [cr, cg, cb] = PALE.map((c, i) => WARM[i] + (c - WARM[i]) * k);
+  return { x: gap.x * TILE_SIZE + TILE_SIZE / 2, y: gap.y * TILE_SIZE + TILE_SIZE / 2, r: REACH * k * TILE_SIZE, cr, cg, cb };
 }

@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.27, the Seed Explorer.** "Seed Explorer", the
+  title's last line, opens a seed's map, all floors in full, no hero; a
+  bar at the bottom shows the seed with Back, Type and Reseed. Owner's
+  picks: the plain last line, the bottom bar, the Settings seed else a
+  random one, Back through every seed (D-215). Playtest: https://claude.ai/artifact/MdzkiLPyfsTdW7CK24K7ZH
 - **2026-10-21, 0.2.26, depths move up one.** The crypt is depth 0 and
   says SURFACE, the second room depth 1, the rock grids 2 to 4, earth
   from 5. Owner's picks: a seed keeps its rooms, the surface map shows

@@ -10,13 +10,6 @@ else entirely.
 
 ---
 
-**Q-026 · Walking around walls to a held finger** (pathfinding, later)
-A held finger now steps straight toward the finger and bumps any wall in
-the way (D-044). Should the hero find a way around walls to reach it,
-like style study 1 did for a tapped tile? Should a tap do the same, and
-should the walk stop when something comes into view? When in the build
-plan?
-
 **Q-027 · Darkness outside, and the moon** (when outside places exist)
 Each place sets its own darkness (D-063). Outside at night, remembered
 tiles use the study's cold blue as moonlight (D-217). Should moon phases
@@ -58,8 +51,8 @@ does to the lantern and oil, and how rivers and underground streams
 carry them into rooms reached no other way (D-171).
 
 **Q-040 · Light through openings** (when outside places exist)
-How far daylight reaches in through a cave mouth or stairs, its colour
-by hour, how weather dims it, and how strong the glow from an unfound
+The cave mouth is settled (D-218). Still open: daylight down stairs from
+outside, how weather dims it, and how strong the glow from an unfound
 lit room is (D-173).
 
 **Q-048 · Should the room fill the screen sideways?** (after the 0.2.17 playtest)
