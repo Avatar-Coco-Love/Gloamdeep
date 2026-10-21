@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.33 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.34 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
 **Step 59, deeper floors as grids with variety** (D-223). Read D-201
@@ -55,12 +55,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.31, hold to walk.** A held finger walks around
-  walls over remembered tiles: an amber frame on the target, a "!" stop
-  when something comes into view (D-220). Surface decisions archived
-  (D-221). After the playtest: the map joins the surface (D-222);
-  deeper floors next (D-223).
-  Playtest: https://claude.ai/artifact/85ZXk2u227YhA3qM45JUu1
 - **2026-10-21, 0.2.32, rooms apart on the map.** On both map screens
   rooms sit a tile apart with a dark seam, and a pale blue line bridges
   each doorway found, the cave mouth too (D-224). Owner's picks: the same
@@ -70,3 +64,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   pulses across each doorway's outer edge in the game, the cave mouth
   too, once its tile is seen (D-225). Step 59 is next.
   Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD
+- **2026-10-21, 0.2.34, a clear line to notice.** A rat in light notices
+  the hero only with no wall between them; the owner saw a torchlit rat
+  come from behind a wall (D-226). Step 59 is next.
+  Playtest: https://claude.ai/artifact/FRSoNAgUzYPdrKZER9tcY6

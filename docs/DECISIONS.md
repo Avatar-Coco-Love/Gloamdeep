@@ -140,3 +140,10 @@ the crypt.
 game, across the doorway tile's outer edge where you step through. It
 pulses gently, and holds still with reduced motion. Step 59 (D-223)
 comes after it.
+
+**D-226 · 2026-10-21 · A rat needs a clear line to notice** (owner's
+pick, after the owner saw a torchlit rat come from behind a wall;
+supersedes part of D-126) A rat on a lit tile notices the hero only when
+the straight line between their tiles' centres crosses nothing that
+blocks light. Distance doesn't matter. A bite or a hit still makes it
+notice (D-157), and one that has noticed keeps coming (D-127).

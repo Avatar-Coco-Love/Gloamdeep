@@ -1,5 +1,5 @@
 // § sight: which tiles are lit now, by the lantern, a burning torch, a glow (D-134) or daylight through the mouth (D-218). Plain
-// data, no drawing. An enemy on a lit tile sees the hero (D-126); it is
+// data, no drawing. An enemy on a lit tile with a clear line to the hero sees them (D-126, D-226); it is
 // drawn in memory's dim light too (D-153). A tile counts as lit by the rule that remembers it (D-059):
 // the light reaches its centre, inside 95% of its reach. Torches count at
 // their full reach, without their flicker.
@@ -11,6 +11,7 @@ import { LIGHT_AT } from './lights.js';
 import { glowsIn } from './stairs.js';
 import { inDaylight } from './daytime.js';
 import { mouthLight } from './mouth.js';
+import { tileAt } from './room.js';
 
 const TILE_SIZE = 16;
 const NEAR = 0.95;
@@ -42,4 +43,17 @@ export function litAt(state, x, y) {
     if (Math.hypot(mx - L.x, my - L.y) >= L.r * NEAR) return false;
     return seenCells(room, L.x, L.y, L.r, new Uint8Array(cw * room.rows * TILE_SIZE / CELL))[cell] === 1;
   });
+}
+
+// § clear line: (room, a, b) → true when no tile that blocks light stands on
+// the straight line between the centres of tiles a and b (D-226). It walks
+// the line in 3 pixel steps, as a light's ray does (light.js).
+export function clearLine(room, a, b) {
+  const x = a.x * TILE_SIZE + TILE_SIZE / 2, y = a.y * TILE_SIZE + TILE_SIZE / 2;
+  const dx = (b.x - a.x) * TILE_SIZE, dy = (b.y - a.y) * TILE_SIZE, steps = Math.ceil(Math.hypot(dx, dy) / 3);
+  for (let s = 1; s < steps; s++) {
+    const tx = (x + dx * s / steps) >> 4, ty = (y + dy * s / steps) >> 4;
+    if (tileAt(room, tx, ty).blocksLight) return false;
+  }
+  return true;
 }

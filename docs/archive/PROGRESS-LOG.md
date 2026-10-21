@@ -2,6 +2,12 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.31, hold to walk.** A held finger walks around
+  walls over remembered tiles: an amber frame on the target, a "!" stop
+  when something comes into view (D-220). Surface decisions archived
+  (D-221). After the playtest: the map joins the surface (D-222);
+  deeper floors next (D-223).
+  Playtest: https://claude.ai/artifact/85ZXk2u227YhA3qM45JUu1
 - **2026-10-21, 0.2.30, daylight through the mouth.** The crypt gap the
   mouth leads to lets in 3 tiles of pale daylight, real light like a
   torch; it shrinks and warms through dusk, gone at night. Owner's picks

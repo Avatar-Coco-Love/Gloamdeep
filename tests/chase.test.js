@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, FIRST_ENEMIES } from '../src/core/room.js';
 import { makeState, step, wait, switchLantern, FIRST_START } from '../src/core/turn.js';
-import { litAt } from '../src/core/sight.js';
+import { litAt, clearLine } from '../src/core/sight.js';
 
 const room = makeRoom(FIRST_ROOM);
 const start = () => makeState(room, FIRST_START, FIRST_LIGHTS, FIRST_ENEMIES);
@@ -27,8 +27,21 @@ test('a rat in the dark does not notice a hero with the lantern off', () => {
 });
 
 test('a rat in torchlight notices them with the lantern off too', () => {
-  const s = switchLantern(with_({ x: 9, y: 11 }, [{ id: 'rat', x: 4, y: 5 }]));
-  assert.deepEqual(rats(wait(s)), [[4, 6]]); // six down, five across
+  const s = switchLantern(with_({ x: 4, y: 11 }, [{ id: 'rat', x: 4, y: 5 }]));
+  assert.deepEqual(rats(wait(s)), [[4, 6]]); // straight down, nothing between
+});
+
+test('a rat in torchlight with a wall between does not notice them (D-226)', () => {
+  const s = switchLantern(with_({ x: 9, y: 11 }, [{ id: 'rat', x: 4, y: 5 }])); // the wall at 7,9 is on the line
+  const n = wait(s);
+  assert.deepEqual(rats(n), [[4, 5]]);
+  assert.equal(n.enemies[0].chasing, undefined);
+});
+
+test('a clear line: open floor yes, a wall between no', () => {
+  assert.equal(clearLine(room, { x: 4, y: 5 }, { x: 4, y: 11 }), true);
+  assert.equal(clearLine(room, { x: 4, y: 5 }, { x: 9, y: 11 }), false);
+  assert.equal(clearLine(room, { x: 1, y: 5 }, { x: 1, y: 3 }), false, 'the wall at 1,4');
 });
 
 test('once it has noticed, it keeps coming in the dark', () => {
