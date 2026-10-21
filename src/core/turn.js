@@ -9,7 +9,7 @@ import { say, oilLine } from './lines.js';
 import { enemyAt, hitEnemy, biters } from './enemies.js';
 import { lightAt, openSide } from './lights.js';
 import { mountAt } from './mount.js';
-import { litAt } from './sight.js';
+import { litAt, clearLine } from './sight.js';
 import { inDaylight } from './daytime.js';
 import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
@@ -108,7 +108,8 @@ function enemiesAct(state) {
   return health > 0 ? enemiesMove(bitten) : fall(bitten);
 }
 
-// § enemies move: an enemy on a lit tile notices the hero (D-126) and keeps
+// § enemies move: an enemy on a lit tile with a clear line to the hero, no
+// wall between, notices them (D-126, D-226) and keeps
 // coming until it dies or the hero falls (D-127). Each turn it steps one tile
 // toward them, the farther side first, else the other side, else it stays
 // (D-128). One that steps next to the hero bites on the next turn (D-129).
@@ -117,7 +118,7 @@ function enemiesAct(state) {
 function enemiesMove(state) {
   let enemies = state.enemies;
   for (const e of state.enemies) {
-    const chasing = e.chasing || litAt(state, e.x, e.y);
+    const chasing = e.chasing || (litAt(state, e.x, e.y) && clearLine(state.room, e, state.hero));
     if (!chasing) continue;
     const near = Math.abs(e.x - state.hero.x) + Math.abs(e.y - state.hero.y) === 1;
     const to = near ? e : chaseStep({ ...state, enemies }, e) || e;

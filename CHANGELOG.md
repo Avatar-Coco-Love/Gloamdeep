@@ -20,6 +20,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.34 (2026-10-21)
+- A rat in light now notices you only if it has a clear straight line to
+  you, with no wall between. A torchlit rat behind a wall stays put.
+  Distance still doesn't matter, and a bite or a hit still makes it notice.
+- Decisions: D-226 (supersedes part of D-126).
+
 ## 0.2.33 (2026-10-21)
 - In the game, a thin pale blue line marks each doorway, across its outer
   edge where you step through to the next room, the cave mouth too. It
