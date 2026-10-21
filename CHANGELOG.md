@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.40 (2026-10-21)
+- The map and the Seed Explorer name each floor's area beside its depth:
+  "DEPTH 9 · DUNGEON", with Crypt, Cave and Warren above it. The surface
+  stays SURFACE.
+- Walls on the map take their area's colour: crypt brick, cave grey,
+  warren brown, dungeon blue, woods green. The area's name in the heading
+  is in the same colour.
+- Decisions: D-233.
+
 ## 0.2.39 (2026-10-21)
 - The game remembers the deepest depth the hero has walked to, on this
   device, across journeys. The title screen shows it in grey under the

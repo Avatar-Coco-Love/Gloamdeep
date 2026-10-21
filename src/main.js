@@ -4,7 +4,7 @@ import { makeWorld, step, wait, switchLantern, followDaylight, toward, DIRS, HER
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { glowsIn, goToDepth, goToPlace } from './core/stairs.js';
-import { beginPlace, depthOf } from './core/room.js';
+import { beginPlace, depthOf, areaAt } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
 import { drawRoom } from './render/tiles.js';
@@ -242,7 +242,7 @@ function mapFloor(depth, at = (p) => fitView(p, win().w, win().h)) {
   setMap(plan);
   view = at(plan);
   const n = roomsFound(plan), own = plan.hero || explore ? '' : ' The hero is on another floor.';
-  const where = `${plan.depth === 0 ? 'the surface' : `depth ${plan.depth}`}. ${n} ${n === 1 ? 'room' : 'rooms'}`;
+  const area = areaAt(plan.depth), where = `${plan.depth === 0 ? 'the surface' : `depth ${plan.depth}, ${area.area.toLowerCase()}`}. ${n} ${n === 1 ? 'room' : 'rooms'}`;
   spoken.textContent = explore
     ? `Seed Explorer, seed ${shownSeed(seeds)}. Map of ${where}. Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. R reseeds, T types a seed, B goes back to the last seed. Esc or the close button returns to the title.`
     : `Map of ${where} found.${own} Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. M or the close button closes it.`;

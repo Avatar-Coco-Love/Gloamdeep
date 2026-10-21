@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.39 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.40 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
 **36 A proper fall** (stage 0.2, D-168): what happens when the hero's
@@ -41,6 +41,7 @@ The Seed Explorer (D-214, before step 50)
 - [x] 59c Darker, colder bricks for the dungeon, 0.2.37 (D-229)
 - [x] 34 More rats deeper: two a room from depth 5, 0.2.38 (D-231)
 - [x] 35 Deepest depth kept, on the title screen, 0.2.39 (D-232)
+- [x] M1 The map names the area, in its colour, 0.2.40 (D-233)
 
 Stage 0.2 steps waiting (D-168): 36 a proper
 fall, 37 saving, 38 a second creature, 39 experience, 40 levels, 41a the
@@ -57,10 +58,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.37, colder dungeon bricks.** The dungeon's bricks and
-  slabs are drawn deeper and bluer, as in mock-up option B (D-229). Step 34,
-  more rats deeper, is next.
-  Playtest: https://claude.ai/artifact/1rJumAHwkzS2m2sQXSkvbx
 - **2026-10-21, 0.2.38, more rats deeper.** From depth 5 every room has
   two rats, one by the flask and one anywhere in the dark (D-231). The
   owner's wish list and research on Hoplite and similar games are in
@@ -70,3 +67,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   deepest depth walked to, on this device, and the title screen shows it
   under the menu; dev jumps don't count (D-232). Step 36 is next.
   Playtest: https://claude.ai/artifact/KT9HBosAuBtexwPMmcnVT4
+- **2026-10-21, 0.2.40, the map names the area.** The map and the Seed
+  Explorer say "DEPTH 9 · DUNGEON", and walls take their area's colour
+  (D-233, the owner's idea). Step 36 is still next.
+  Playtest: https://claude.ai/artifact/KrUG8Eo7XTiWXw2nYCdfTo

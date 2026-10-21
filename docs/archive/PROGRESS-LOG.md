@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.37, colder dungeon bricks.** The dungeon's bricks and
+  slabs are drawn deeper and bluer, as in mock-up option B (D-229). Step 34,
+  more rats deeper, is next.
+  Playtest: https://claude.ai/artifact/1rJumAHwkzS2m2sQXSkvbx
 - **2026-10-21, 0.2.36, the dungeon.** From depth 8 each floor is 6
   rooms of crypt-brick halls in a 3 × 3 grid with one loop, the stairs
   down farthest away; warrens stop at depth 7. Owner's picks (D-228).

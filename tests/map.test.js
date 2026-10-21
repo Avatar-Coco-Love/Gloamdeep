@@ -6,7 +6,7 @@ import { makeWorld, step } from '../src/core/turn.js';
 import { goToDepth, goToPlace } from '../src/core/stairs.js';
 import { remember } from '../src/core/fog.js';
 import { layoutAt } from '../src/core/region.js';
-import { tileAt } from '../src/core/room.js';
+import { tileAt, areaAt } from '../src/core/room.js';
 
 const SEED = 7;
 
@@ -165,4 +165,10 @@ test('centring a view puts the tile in the window\'s middle, inside the floor\'s
   const p = floorPlan(goToDepth(makeWorld('first', SEED), 2), true), v = centreView(p, 40, 40, 4, 10, 10);
   assert.deepEqual(v, { k: 4, x: 10 * 4 + 2 - 20, y: 10 * 4 + 2 - 20 });
   assert.deepEqual(centreView(p, 40, 40, 4, 0, 0), { k: 4, x: 0, y: 0 });
+});
+
+test('each floor below the surface names its area beside its depth (D-233)', () => {
+  assert.equal(areaAt(0), null); // the surface: woods and crypt together
+  assert.deepEqual([1, 2, 4, 5, 7, 8, 40].map((d) => areaAt(d).area), ['CRYPT', 'CAVE', 'CAVE', 'WARREN', 'WARREN', 'DUNGEON', 'DUNGEON']);
+  assert.deepEqual([1, 3, 6, 9].map((d) => areaAt(d).look), ['crypt', 'rock', 'earth', 'dungeon']);
 });
