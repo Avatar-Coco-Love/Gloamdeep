@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.35 (2026-10-21)
+- From depth 5 down, each earth burrow floor is now a warren: five rooms
+  in a 3 × 3 grid, grown as a winding chain with dead ends and one way
+  through. The stairs down are in the room farthest from the stairs up.
+  Depths 2 to 4 are unchanged, and every seed keeps its rooms there.
+- Decisions: D-227 (supersedes part of D-203).
+
 ## 0.2.34 (2026-10-21)
 - A rat in light now notices you only if it has a clear straight line to
   you, with no wall between. A torchlit rat behind a wall stays put.

@@ -147,3 +147,13 @@ supersedes part of D-126) A rat on a lit tile notices the hero only when
 the straight line between their tiles' centres crosses nothing that
 blocks light. Distance doesn't matter. A bite or a hit still makes it
 notice (D-157), and one that has noticed keeps coming (D-127).
+
+**D-227 · 2026-10-21 · Burrow floors are warrens** (step 59, owner's
+pick from a mock-up of three plans; builds D-223, supersedes part of
+D-203) From depth 5 down, where the earth burrows are, each floor is a
+3 × 3 grid with 5 rooms, grown one at a time from the room under the
+stairs down above. Each room joins only the room it grew from, so there
+are dead ends and one way through. The stairs down are in the room
+farthest from the stairs up. Each room keeps the burrow's own digger, a
+flask, a rat and a herb. The dungeon, a new kind of built stone halls,
+gets its own step later; its plan, look and depths are settled there.

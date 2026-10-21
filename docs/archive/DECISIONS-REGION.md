@@ -31,7 +31,8 @@ floors the stairs down are in another room than the stairs up. Under the
 crypt the seed picks depth 3's stairs-up room, at the crypt's tile
 numbers; below that, the cell under the stairs down is never the empty
 one. Everything sits on the same grid: depth 6 and deeper, still one
-room each, line up too, at the same tile.
+room each, line up too, at the same tile. *Partly superseded by D-227
+(2026-10-21): from depth 5 every floor is a warren.*
 
 **D-204 · 2026-10-20 · Stairs line up by their place on the floor**
 (the owner's point, step 46b; written down now, built later) Lining up

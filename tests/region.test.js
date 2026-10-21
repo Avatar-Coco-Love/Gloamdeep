@@ -1,4 +1,5 @@
 // § region: depths 2 to 4 as 2 × 2 grids of rooms joined by openings (D-201),
+// deeper ones as warrens (D-227),
 // their stairs lined up floor to floor (D-202, D-203)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,7 +13,7 @@ const SEEDS = Array.from({ length: 60 }, (_, i) => i + 1);
 const EDGE = { up: (at) => ({ x: at, y: 0 }), down: (at) => ({ x: at, y: 19 }), left: (at) => ({ x: 0, y: at }), right: (at) => ({ x: 16, y: at }) };
 const BACK = { up: 'down', down: 'up', left: 'right', right: 'left' };
 
-test('depths 2 to 4 are three cells of a 2 × 2 grid in an L, one empty; deeper depths are one room', () => {
+test('depths 2 to 4 are three cells of a 2 × 2 grid in an L, one empty', () => {
   for (const depth of [2, 3, 4]) {
     const empties = new Set();
     for (const seed of SEEDS) {
@@ -27,8 +28,41 @@ test('depths 2 to 4 are three cells of a 2 × 2 grid in an L, one empty; deeper 
     }
     assert.equal(empties.size, 4);
   }
-  assert.equal(layoutAt(1, 5).cells.length, 1);
   assert.equal(layoutAt(1, 1), null);
+});
+
+// The rooms reachable from `start` through the openings, with how many joins away each is
+function away(cells, start) {
+  const out = new Map([[start.id, 0]]), todo = [start];
+  while (todo.length) {
+    const c = todo.shift();
+    for (const id of Object.values(c.sides)) if (!out.has(id)) { out.set(id, out.get(c.id) + 1); todo.push(cells.find((x) => x.id === id)); }
+  }
+  return out;
+}
+
+test('from depth 5 each depth is a warren: 5 rooms in a 3 × 3 grid, joined as a chain, the stairs down farthest (D-227)', () => {
+  for (const seed of SEEDS) for (const depth of [5, 6, 9]) {
+    const { cells } = layoutAt(seed, depth), up = cells.find((c) => c.up), down = cells.find((c) => c.down);
+    assert.equal(cells.length, 5);
+    assert.ok(cells.every((c) => c.x >= 0 && c.y >= 0 && c.x < 3 && c.y < 3));
+    assert.equal(new Set(cells.map((c) => `${c.x},${c.y}`)).size, 5);
+    assert.equal(cells.reduce((n, c) => n + c.doors.length, 0), 8); // four joins, both sides: no loops
+    const steps = away(cells, up);
+    assert.equal(steps.size, 5, `seed ${seed} depth ${depth}: every room reached`);
+    assert.equal(steps.get(down.id), Math.max(...steps.values()));
+    assert.equal(up.id, `depth${depth}`);
+  }
+});
+
+test('every warren room is made, not the fallback, with its stairs and contents', () => {
+  for (const seed of SEEDS.slice(0, 30)) for (const depth of [5, 6]) for (const c of layoutAt(seed, depth).cells) {
+    const p = placeFor(c.id, seed), all = p.map.join('');
+    assert.equal(p.map.length, 20, `seed ${seed} ${c.id}`);
+    assert.equal(all.includes('<'), !!c.up);
+    assert.equal(all.includes('>'), !!c.down);
+    assert.deepEqual(p.enemies.map((e) => e.id), ['rat']);
+  }
 });
 
 test('stairs down lead to stairs up in the same cell, at the same tile, one floor down', () => {
@@ -47,9 +81,9 @@ test('stairs down lead to stairs up in the same cell, at the same tile, one floo
 });
 
 test('every opening is open on both sides, at the same spot', () => {
-  for (const seed of SEEDS) for (const c of layoutAt(seed, 2).cells) {
+  for (const seed of SEEDS) for (const depth of [2, 5]) for (const c of layoutAt(seed, depth).cells) {
     const room = placeFor(c.id, seed);
-    assert.equal(depthOf(c.id), 2);
+    assert.equal(depthOf(c.id), depth);
     for (const d of c.doors) {
       const p = EDGE[d.dir](d.at), there = placeFor(c.sides[d.dir], seed), q = EDGE[BACK[d.dir]](d.at);
       assert.equal(room.map[p.y][p.x], '.', `seed ${seed} ${c.id} ${d.dir}`);
