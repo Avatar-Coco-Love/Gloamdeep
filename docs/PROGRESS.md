@@ -4,12 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.25 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.26 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 49b, depths move up one** (D-212): the crypt becomes depth 0
-and says SURFACE, the second room depth 1, the generated floors 2 to 4.
-Read D-212, D-185 and `src/core/region.js` first, then propose.
+**Step 50, day and night outside** (D-025): the woods' daylight turns
+to night and back. Read D-025, D-209 and D-210 first, then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -24,12 +23,8 @@ a step when merged and add its version.
 
 - [x] 31 to 33, 0.1.27 to 0.2.1 · 42 The starting region, 0.2.6
 The main menu (D-177 to D-181; step order proposed, may change)
-- [x] 52 A title screen with New journey, the lantern in the dark, 0.2.7
-- [x] 53 The pause menu: Resume, Back to title, 0.2.8
-- [x] 54 Settings, with the tap or swipe switch, 0.2.9
-- [x] 55 The motion switch, 0.2.10 · 56 The seed, 0.2.11 · 57 The first
-  rooms change with the seed, 0.2.12
-- [x] 58 How to play, 0.2.13
+- [x] 52 to 58: title screen, pause menu, Settings, motion, the seed,
+  seeded first rooms, How to play, 0.2.7 to 0.2.13
 Getting around
 - [x] 43 Stairs must be found: dimmer, only where fog has lifted, 0.2.14
 - [x] 44 The camera: a room bigger than the screen scrolls, 0.2.15
@@ -43,7 +38,7 @@ The surface
 - [x] 48b A lantern that switches itself, in Settings, 0.2.24
 - [x] 48 The first outside room: woods, 0.2.23
 - [x] 49 A cave entrance into the first cave, 0.2.25
-- [ ] 49b Depths move up one: the crypt is depth 0 (D-212)
+- [x] 49b Depths move up one: the crypt is depth 0, 0.2.26
 - [ ] 50 Day and night outside (D-025)
 - [ ] 51 Daylight through the cave mouth (D-173)
 
@@ -62,11 +57,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.23, the woods.** The first outside room: woods
-  from the seed, 17 × 20, in plain daylight, with one round tree a tile;
-  dev Go outside leads there and the strip says SURFACE. Owner's picks
-  from a mock-up of three tree looks (D-209). The owner's idea: a
-  lantern that switches itself (Q-049). Playtest: https://claude.ai/artifact/9dRDwGZPLdwZ5mWrc9TVxk
 - **2026-10-20, 0.2.24, the lantern by itself.** Settings gains
   "Lantern: By hand"; set to By itself, the lantern goes out as you step
   into daylight and lights again back in the dark, only at that moment.
@@ -77,3 +67,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   the crypt's facing side (up: the south room's bottom). Owner's picks
   from a mock-up of three looks (D-211). The owner's idea: a doorway
   keeps the depth, so the crypt becomes depth 0 next (D-212). Playtest: https://claude.ai/artifact/SAtpqZnboGwGDmHL9vZHWK
+- **2026-10-21, 0.2.26, depths move up one.** The crypt is depth 0 and
+  says SURFACE, the second room depth 1, the rock grids 2 to 4, earth
+  from 5. Owner's picks: a seed keeps its rooms, the surface map shows
+  the part you're in, dev Go to depth from 0 (D-213). D-201 to D-208
+  archived. Playtest: https://claude.ai/artifact/9vZTdyesaddiWDq9hvgsNv

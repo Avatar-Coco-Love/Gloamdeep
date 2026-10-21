@@ -3,7 +3,7 @@ import { VERSION } from './core/version.js';
 import { makeWorld, step, wait, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
-import { glowsIn, goToDepth } from './core/stairs.js';
+import { glowsIn, goToDepth, goToPlace } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
 import { createScreen, TILE, W, H } from './render/screen.js';
@@ -327,7 +327,8 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
   heal: () => ({ ...state, health: HERO_HEALTH }),
-  goTo: (depth) => goToDepth(state, depth), // depth 0 is the woods outside (D-209)
+  goTo: (depth) => goToDepth(state, depth), // depth 0 is the crypt (D-212)
+  goOutside: () => goToPlace(state, 'woods'), // the woods, on the surface too (D-209)
   camera: () => cam,
 }, hud);
 show('title');

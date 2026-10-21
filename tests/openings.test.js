@@ -55,8 +55,8 @@ test('a rat left behind does not follow through the doorway', () => {
   assert.equal(n.health, s.health);
 });
 
-test('the south room is at depth 1, and its stairs-free doorway room changes with the seed', () => {
-  assert.equal(goToDepth(out(), 1).place, 'first');
+test('the south room is at depth 0, and its stairs-free doorway room changes with the seed', () => {
+  assert.equal(goToDepth(out(), 0).place, 'first');
   const spots = new Set();
   for (let seed = 1; seed <= 200; seed++) {
     const p = placeFor('south', seed);

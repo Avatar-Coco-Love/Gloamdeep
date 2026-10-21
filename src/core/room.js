@@ -6,7 +6,7 @@ import { generateRoom } from './cave.js';
 import { generateWoods } from './woods.js';
 import { seedFor } from './rng.js';
 import { scatter } from './scatter.js';
-import { cellOf, downPlaceIn } from './region.js';
+import { cellOf, downPlaceIn, seedAt } from './region.js';
 import { mouthOf, mouthSides, withGap } from './mouth.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
@@ -93,19 +93,21 @@ export const SOUTH_ENEMIES = [{ id: 'rat', x: 1, y: 9 }];
 // the one its stairs lead to; a room beside it takes a `slot`, so the seed
 // places its things apart from its neighbour's.
 export const PLACES = {
-  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 1, sides: { down: 'south' } },
-  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 2, guard: true },
-  south: { map: SOUTH_ROOM, start: { x: 5, y: 0 }, lights: SOUTH_LIGHTS, enemies: SOUTH_ENEMIES, items: SOUTH_ITEMS, depth: 1, slot: 1, sides: { up: 'first' } },
+  first: { map: FIRST_ROOM, start: { x: 5, y: 11 }, lights: FIRST_LIGHTS, enemies: FIRST_ENEMIES, items: FIRST_ITEMS, depth: 0, sides: { down: 'south' } },
+  second: { map: SECOND_ROOM, start: { x: 1, y: 1 }, lights: SECOND_LIGHTS, enemies: SECOND_ENEMIES, items: SECOND_ITEMS, depth: 1, guard: true },
+  south: { map: SOUTH_ROOM, start: { x: 5, y: 0 }, lights: SOUTH_LIGHTS, enemies: SOUTH_ENEMIES, items: SOUTH_ITEMS, depth: 0, slot: 1, sides: { up: 'first' } },
   // The first outside room, on the surface, depth 0, made from the seed in daylight (step 48, D-209),
   // with the first cave's mouth on one edge (step 49, D-211). The dev Go outside button leads there too.
   woods: { make: (s, seed) => generateWoods(s, mouthOf(seed)), depth: 0, look: 'woods', day: true },
 };
 
-// § depth: the place at each depth, and back. Below the second room every
-// depth is generated, with ids depth3, depth4…, from the game's seed (D-147,
+// § depth: the place at each depth, and back. The crypt is depth 0 with the
+// woods, the second room depth 1 (D-212); a depth's stairs lead to its first
+// place, so the crypt is listed before the woods. Below the second room every
+// depth is generated, with ids depth2, depth3…, from the game's seed (D-147,
 // D-148); the second room is the fallback if a seed ever gives no room. A
-// depth laid out as a grid (region.js, D-201) adds rooms depth3:x,y beside
-// depth3, which holds its stairs up.
+// depth laid out as a grid (region.js, D-201) adds rooms depth2:x,y beside
+// depth2, which holds its stairs up.
 const DEEPER = 'second';
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.length), 10);
@@ -114,7 +116,7 @@ export const isGenerated = (id) => !PLACES[id];
 // and cuts the gap from the cave mouth into one of them (D-211).
 export function placeFor(id, seed = 1) {
   if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth), seed) };
-  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedFor(seed, PLACES[id].depth) + (PLACES[id].slot || 0)), map: withGap(id, PLACES[id].map, seed) };
+  if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedAt(seed, PLACES[id].depth) + (PLACES[id].slot || 0)), map: withGap(id, PLACES[id].map, seed) };
   const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
   return { ...((cell && generateRoom(cell.seed, shape, cell)) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
 }
@@ -124,11 +126,11 @@ export function placeFor(id, seed = 1) {
 export const sidesOf = (id, seed) => ({ ...(PLACES[id]?.sides || (isGenerated(id) && cellOf(seed, id, depthOf(id))?.sides) || {}), ...mouthSides(id, seed) });
 
 // § kinds: the kind of place at each generated depth, from the depth it
-// starts at (D-165): grey rock chambers, then earth burrows from depth 6.
+// starts at (D-165), moved up one (D-212): grey rock chambers, then earth burrows from depth 5.
 // A later kind adds a line further down.
 const KINDS = [
-  { from: 3, shape: 'chambers', look: 'rock' },
-  { from: 6, shape: 'burrows', look: 'earth' },
+  { from: 2, shape: 'chambers', look: 'rock' },
+  { from: 5, shape: 'burrows', look: 'earth' },
 ];
 export const kindAt = (depth) => KINDS.findLast((k) => depth >= k.from);
 
@@ -137,7 +139,7 @@ export const kindAt = (depth) => KINDS.findLast((k) => depth >= k.from);
 // the stairs down, the same cell of the grid (D-202)
 export function placeBeside(id, way, seed = 1) {
   const depth = depthOf(id) + (way === 'down' ? 1 : -1);
-  if (depth < 1) return null;
+  if (depth < 0) return null;
   return way === 'up' && isGenerated(placeAt(depth)) ? downPlaceIn(seed, depth) : placeAt(depth);
 }
 

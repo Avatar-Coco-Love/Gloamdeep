@@ -5,7 +5,7 @@ import { generateWoods } from '../src/core/woods.js';
 import { COLS, ROWS } from '../src/core/cave.js';
 import { makeRoom, tileAt, placeAt, depthOf, beginPlace } from '../src/core/room.js';
 import { makeWorld, step } from '../src/core/turn.js';
-import { goToDepth } from '../src/core/stairs.js';
+import { goToPlace } from '../src/core/stairs.js';
 import { litAt } from '../src/core/sight.js';
 import { rememberAll } from '../src/core/fog.js';
 import { floorPlan } from '../src/core/map.js';
@@ -45,7 +45,7 @@ test('woods: the same seed gives the same room, and seeds differ', () => {
 });
 
 test('woods: depth 0, in daylight, with nothing in it yet', () => {
-  assert.equal(placeAt(0), 'woods');
+  assert.equal(placeAt(0), 'first'); // the crypt is depth 0 too, and the stairs lead there (D-212)
   assert.equal(depthOf('woods'), 0);
   const p = beginPlace('woods', 7);
   assert.equal(p.room.look, 'woods');
@@ -54,7 +54,7 @@ test('woods: depth 0, in daylight, with nothing in it yet', () => {
 });
 
 test('Go outside: the hero stands in the woods, every tile lit; trees block a step', () => {
-  const s = goToDepth(makeWorld('first', 7), 0);
+  const s = goToPlace(makeWorld('first', 7), 'woods');
   assert.equal(s.place, 'woods');
   assert.equal(tileAt(s.room, s.hero.x, s.hero.y).id, 'floor');
   assert.ok(litAt(s, 1, 1));
@@ -63,7 +63,7 @@ test('Go outside: the hero stands in the woods, every tile lit; trees block a st
 });
 
 test('daylight remembers the whole room, and the map shows it as the surface', () => {
-  const s = rememberAll(goToDepth(makeWorld('first', 7), 0));
+  const s = rememberAll(goToPlace(makeWorld('first', 7), 'woods'));
   assert.ok(s.seen.every(Boolean));
   assert.equal(rememberAll(s), s);
   const plan = floorPlan(s);

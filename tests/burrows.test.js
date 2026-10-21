@@ -1,4 +1,4 @@
-// § burrows: earth burrows from depth 6 (D-165) and the dev Go to depth (D-166)
+// § burrows: earth burrows from depth 5 (D-165, D-212) and the dev Go to depth (D-166)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { generateRoom } from '../src/core/cave.js';
@@ -10,14 +10,14 @@ import { layoutAt } from '../src/core/region.js';
 const SEEDS = Array.from({ length: 500 }, (_, i) => i + 1);
 const count = (map, ch) => map.join('').split(ch).length - 1;
 
-test('depths 3 to 5 are grey rock chambers, 6 and down earth burrows', () => {
-  assert.deepEqual([3, 4, 5].map((d) => kindAt(d).look), ['rock', 'rock', 'rock']);
-  assert.deepEqual([6, 7, 40].map((d) => kindAt(d)), Array(3).fill({ from: 6, shape: 'burrows', look: 'earth' }));
-  const p = placeFor('depth6', 4127);
+test('depths 2 to 4 are grey rock chambers, 5 and down earth burrows (D-212)', () => {
+  assert.deepEqual([2, 3, 4].map((d) => kindAt(d).look), ['rock', 'rock', 'rock']);
+  assert.deepEqual([5, 6, 40].map((d) => kindAt(d)), Array(3).fill({ from: 5, shape: 'burrows', look: 'earth' }));
+  const p = placeFor('depth5', 4127);
   assert.equal(p.look, 'earth');
-  const c = layoutAt(4127, 6).cells[0];
+  const c = layoutAt(4127, 5).cells[0];
   assert.deepEqual(p.map, generateRoom(c.seed, 'burrows', c).map);
-  assert.equal(placeFor('depth5', 4127).look, 'rock');
+  assert.equal(placeFor('depth4', 4127).look, 'rock');
 });
 
 test('every seed gives a burrow, the same each time, with the usual contents', () => {
@@ -46,10 +46,10 @@ test('Go to depth: on the stairs up there, no turn passes, the room left waits',
   assert.equal(n.room.look, 'earth');
   assert.equal(n.turn, s.turn);
   assert.ok(n.elsewhere.first);
-  const back = goToDepth(n, 1);
+  const back = goToDepth(n, 0); // the crypt (D-213)
   assert.equal(back.place, 'first');
   assert.deepEqual(back.hero, placeFor('first').start); // no stairs up in the first room
   assert.ok(back.elsewhere.depth7);
-  assert.equal(goToDepth(back, 1), back);
-  assert.equal(placeAt(2), goToDepth(back, 2).place);
+  assert.equal(goToDepth(back, 0), back);
+  assert.equal(placeAt(1), goToDepth(back, 1).place);
 });

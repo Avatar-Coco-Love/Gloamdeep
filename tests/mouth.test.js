@@ -5,6 +5,7 @@ import { mouthOf } from '../src/core/mouth.js';
 import { beginPlace, tileAt, PLACES } from '../src/core/room.js';
 import { makeWorld, step, followDaylight } from '../src/core/turn.js';
 import { floorPlan } from '../src/core/map.js';
+import { goToDepth } from '../src/core/stairs.js';
 import { COLS, ROWS } from '../src/core/cave.js';
 
 const SEEDS = Array.from({ length: 300 }, (_, i) => i + 1);
@@ -72,11 +73,12 @@ test('the rocks beside the mouth are solid: nothing changes, no turn', () => {
   assert.equal(step(s, 'right'), s);
 });
 
-test('the map keeps each floor to itself: the surface is the woods, depth 1 the crypt', () => {
+test('the woods and the crypt are both depth 0, and the map shows the part the hero is in (D-212, D-213)', () => {
   for (const seed of [1, 4]) {
     const s = makeWorld('woods', seed);
     assert.deepEqual(floorPlan(s, true).rooms.map((r) => r.id), ['woods']);
-    assert.deepEqual(floorPlan(s, true, 1).rooms.map((r) => r.id).sort(), ['first', 'south']);
+    assert.deepEqual(floorPlan(makeWorld('first', seed), true).rooms.map((r) => r.id).sort(), ['first', 'south']);
+    assert.deepEqual(floorPlan(goToDepth(s, 1), true, 0).rooms.map((r) => r.id).sort(), ['first', 'south']); // the way the stairs lead
   }
 });
 
