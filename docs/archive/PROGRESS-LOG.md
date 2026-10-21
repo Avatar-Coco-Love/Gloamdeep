@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.25, the cave mouth.** A dark mouth between two grey
+  rocks on a woods edge the seed picks; walk through and you arrive on
+  the crypt's facing side (up: the south room's bottom). Owner's picks
+  from a mock-up of three looks (D-211). The owner's idea: a doorway
+  keeps the depth, so the crypt becomes depth 0 next (D-212). Playtest: https://claude.ai/artifact/SAtpqZnboGwGDmHL9vZHWK
 - **2026-10-20, 0.2.24, the lantern by itself.** Settings gains
   "Lantern: By hand"; set to By itself, the lantern goes out as you step
   into daylight and lights again back in the dark, only at that moment.

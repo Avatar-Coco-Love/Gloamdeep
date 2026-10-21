@@ -4,9 +4,10 @@
 // openings from one of its rooms, but not the cave mouth: the woods and the
 // crypt are both depth 0, yet each shows as its own part (D-211, D-213); each is shown from the tiles the hero
 // remembers, or in full with the dev Reveal map switch, which keeps the
-// memory as it is.
+// memory as it is. The Seed Explorer shows the whole surface instead, the two
+// parts joined at the mouth (D-214, D-216).
 import { sidesOf, depthOf, tileAt, placeAt, placeBeside } from './room.js';
-import { mouthSpot } from './mouth.js';
+import { mouthSpot, mouthOf } from './mouth.js';
 import { fresh } from './stairs.js';
 
 const STEP = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -21,6 +22,11 @@ export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
   const seen = (id) => reveal || state.elsewhere[id]?.seen.some(Boolean);
   const start = depth === depthOf(state.place) ? state.place
     : [placeAt(depth), ...Object.keys(state.elsewhere)].find((id) => depthOf(id) === depth && seen(id)) || placeAt(depth);
+  return partPlan(state, reveal, depth, start);
+}
+
+// The part of floor `depth` that holds room `start`, laid out on its grid
+function partPlan(state, reveal, depth, start) {
   const cells = new Map([[start, { x: 0, y: 0 }]]), todo = [start];
   while (todo.length) {
     const id = todo.shift(), at = cells.get(id);
@@ -37,6 +43,23 @@ export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
   const rooms = all.filter((r) => r.p).map(({ id, at, p }) => ({ id, x: (at.x - x0) * w, y: (at.y - y0) * h, room: p.room, seen: reveal ? null : p.seen }));
   const here = rooms.find((r) => r.id === state.place);
   return { depth, cols: (x1 - x0 + 1) * w, rows: (y1 - y0 + 1) * h, rooms, hero: here ? { x: here.x + state.hero.x, y: here.y + state.hero.y } : null };
+}
+
+// § whole surface: the woods and the crypt on one map, in the Seed Explorer
+// only (D-214). The crypt sits where walking through the mouth takes you, the
+// mouth's tile beside the gap in the crypt's wall (D-216); all revealed, no hero.
+export function wholeSurface(state) {
+  const m = mouthOf(state.seed), woods = partPlan(state, true, 0, 'woods'), crypt = partPlan(state, true, 0, m.room);
+  const at = (plan, id) => plan.rooms.find((r) => r.id === id);
+  const dx = at(woods, 'woods').x + m.tile.x + STEP[m.dir][0] - at(crypt, m.room).x - m.gap.x;
+  const dy = at(woods, 'woods').y + m.tile.y + STEP[m.dir][1] - at(crypt, m.room).y - m.gap.y;
+  const all = [...woods.rooms, ...crypt.rooms.map((r) => ({ ...r, x: r.x + dx, y: r.y + dy }))];
+  const x0 = Math.min(0, dx), y0 = Math.min(0, dy);
+  return {
+    depth: 0, hero: null,
+    cols: Math.max(woods.cols, dx + crypt.cols) - x0, rows: Math.max(woods.rows, dy + crypt.rows) - y0,
+    rooms: all.map((r) => ({ ...r, x: r.x - x0, y: r.y - y0 })),
+  };
 }
 
 // § floors: the depths the map can turn to (D-206), shallowest first: the

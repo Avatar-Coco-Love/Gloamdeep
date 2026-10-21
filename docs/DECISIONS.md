@@ -158,3 +158,11 @@ first, and is greyed out when none is left. Proposed with the build:
 Reseed, Back and a typed seed keep the floor shown; the seed pad starts
 empty there, OK with nothing typed keeps the seed, Random shows a random
 one; R, T and B are the keys.
+
+**D-216 · 2026-10-21 · The whole surface in the Explorer** (step E2,
+owner's picks from a mock-up of three layouts,
+https://claude.ai/artifact/Qtjc4ZR6V9EDrekCgEBQQU) On the Explorer's
+surface map the crypt sits where walking through the cave mouth takes
+you: the mouth's tile right beside the gap in the crypt's wall, so it
+moves with the mouth's edge. The mouth stays plain floor on the map, with
+no mark of its own. The game's map keeps D-213.
