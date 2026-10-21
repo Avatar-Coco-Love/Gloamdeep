@@ -12,7 +12,7 @@ import { drawLight, flicker } from './light.js';
 import { drawText, textWidth, FONT_H } from './font.js';
 import { drawLines, drawHeading, LINE_GAP } from './menu.js';
 
-const K = '#0e0c16', GOLD = '#ffd66b', EMBER = '#f39a3b', CORE = '#fff5d6';
+const K = '#0e0c16', GOLD = '#ffd66b', EMBER = '#f39a3b', CORE = '#fff5d6', GREY = '#9790a4';
 const NAME = 'Gloamdeep', NAME_Y = 28, NAME_SCALE = 2; // the name at double size
 const HERO = { x: 5, y: 6 }; // the middle of the room, in tiles
 const LIGHT_OIL = 0.5; // a half-full lantern: the light stays between the name and the menu
@@ -40,8 +40,9 @@ function paint() {
 }
 
 const lights = [{ ...LANTERN, x: 0, y: 0, r: 0 }]; // reused every frame (TECH.md)
-// menu: [{ text }]; chosen: its index; still: prefers-reduced-motion; heading: a page's name (Settings)
-export function drawTitle(c, menu, chosen, t, still, heading = null) {
+// menu: [{ text }]; chosen: its index; still: prefers-reduced-motion; heading: a page's name (Settings);
+// note: a grey line in the strip under the menu, the deepest depth (D-232)
+export function drawTitle(c, menu, chosen, t, still, heading = null, note = null) {
   if (!floor) paint();
   c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H);
   c.drawImage(floor, 0, 0);
@@ -56,4 +57,5 @@ export function drawTitle(c, menu, chosen, t, still, heading = null) {
   const top = titleTop(menu.length);
   if (heading) drawHeading(c, heading, top);
   drawLines(c, menu, chosen, top, t, still);
+  if (note) drawText(c, note, Math.floor((W - textWidth(note)) / 2), H + 2, GREY); // where the text line speaks in play
 }

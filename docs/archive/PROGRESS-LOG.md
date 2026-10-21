@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.36, the dungeon.** From depth 8 each floor is 6
+  rooms of crypt-brick halls in a 3 × 3 grid with one loop, the stairs
+  down farthest away; warrens stop at depth 7. Owner's picks (D-228).
+  Mock-up: https://claude.ai/artifact/HX1bY1PqqJhe6JWdBFqfEa
+  Playtest: https://claude.ai/artifact/FG2ANbbk8f5q6vmVkBTQZ1
 - **2026-10-21, 0.2.35, burrow warrens.** From depth 5 each floor is 5
   rooms in a 3 × 3 grid, a winding chain, the stairs down farthest away.
   Owner's pick from a mock-up (D-227); the dungeon gets its own step.

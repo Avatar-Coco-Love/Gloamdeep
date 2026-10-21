@@ -188,3 +188,10 @@ stays at two until the hero can grow stronger. The first rat guards the
 flask as before; the second sits anywhere open by the same rules (at
 least 5 steps in, 3 tiles from the stairs, out of the torch's light), and
 the rest of a seed's room doesn't change.
+
+**D-232 · 2026-10-21 · Deepest depth kept** (step 35, owner's picks;
+builds D-021) The deepest depth the hero has walked to is kept on this
+device for good, across journeys. It shows first on the title screen, a
+grey line under the menu ("Deepest: depth 7"), hidden until the hero has
+gone below the surface. Dev jumps don't count: after Go to depth, the
+journey stops counting until a New journey.

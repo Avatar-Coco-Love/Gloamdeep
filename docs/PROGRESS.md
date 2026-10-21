@@ -4,12 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.38 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.39 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**35 Deepest depth kept** (stage 0.2, D-168, D-021): the game
-remembers the deepest depth the hero has reached. Propose where it shows
-first; read D-021 and D-168 before starting.
+**36 A proper fall** (stage 0.2, D-168): what happens when the hero's
+health runs out. Read D-119 and D-136 before proposing.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -41,8 +40,9 @@ The Seed Explorer (D-214, before step 50)
 - [x] 59b The dungeon from depth 8: six halls, one loop, 0.2.36 (D-228)
 - [x] 59c Darker, colder bricks for the dungeon, 0.2.37 (D-229)
 - [x] 34 More rats deeper: two a room from depth 5, 0.2.38 (D-231)
+- [x] 35 Deepest depth kept, on the title screen, 0.2.39 (D-232)
 
-Stage 0.2 steps waiting (D-168): 35 deepest depth kept, 36 a proper
+Stage 0.2 steps waiting (D-168): 36 a proper
 fall, 37 saving, 38 a second creature, 39 experience, 40 levels, 41a the
 inventory (D-230), 41 first gear.
 
@@ -57,11 +57,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.36, the dungeon.** From depth 8 each floor is 6
-  rooms of crypt-brick halls in a 3 × 3 grid with one loop, the stairs
-  down farthest away; warrens stop at depth 7. Owner's picks (D-228).
-  Mock-up: https://claude.ai/artifact/HX1bY1PqqJhe6JWdBFqfEa
-  Playtest: https://claude.ai/artifact/FG2ANbbk8f5q6vmVkBTQZ1
 - **2026-10-21, 0.2.37, colder dungeon bricks.** The dungeon's bricks and
   slabs are drawn deeper and bluer, as in mock-up option B (D-229). Step 34,
   more rats deeper, is next.
@@ -71,3 +66,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   owner's wish list and research on Hoplite and similar games are in
   `RESEARCH.md`; an inventory step comes before first gear (D-230).
   Playtest: https://claude.ai/artifact/4VcKCb33zw9T8EXDibHfgU
+- **2026-10-21, 0.2.39, deepest depth kept.** The game remembers the
+  deepest depth walked to, on this device, and the title screen shows it
+  under the menu; dev jumps don't count (D-232). Step 36 is next.
+  Playtest: https://claude.ai/artifact/KT9HBosAuBtexwPMmcnVT4
