@@ -20,6 +20,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.37 (2026-10-21)
+- The dungeon (depth 8 down) now has its own look: the crypt's bricks and
+  slabs in deeper, colder, bluer colours, as in option B of the step 59b
+  mock-up. The stairs keep their colours. The crypt at the top is unchanged.
+- Decisions: D-229.
+
 ## 0.2.36 (2026-10-21)
 - A new kind of place, the dungeon, from depth 8 down: six rooms in a
   3 × 3 grid, grown like the warren with one extra doorway, so one way
