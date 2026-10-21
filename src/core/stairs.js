@@ -23,8 +23,10 @@ export function takeStairs(state) {
 // § go to: (state, depth) → the state at that depth, on its stairs up, or
 // where the place starts if it has none (the first room). A dev tool (D-166):
 // no turn passes, and the room left waits as stairs leave it.
-export function goToDepth(state, depth) {
-  const to = placeAt(depth);
+export const goToDepth = (state, depth) => goToPlace(state, placeAt(depth));
+
+// The same for one place, by id: Go outside goes to the woods, as the crypt is depth 0 too (D-212)
+export function goToPlace(state, to) {
   if (to === state.place) return state;
   const there = state.elsewhere[to] || fresh(to, state.seed);
   return arrive(state, to, there, find(there.room, 'stairsUp') || placeFor(to, state.seed).start);

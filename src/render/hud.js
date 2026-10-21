@@ -62,7 +62,7 @@ function drawHearts(c, health, max, bx, by) {
   }
 }
 
-// § depth: how deep the hero is, "DEPTH 1" for the first room, in the top
+// § depth: how deep the hero is, "DEPTH 1" for the second room, in the top
 // middle between the hearts and the oil bar, in a box like theirs and the
 // text line's grey (D-146). A null x centres it. Outside, depth 0, it says
 // SURFACE until places have names (D-209).

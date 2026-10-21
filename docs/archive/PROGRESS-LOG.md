@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.23, the woods.** The first outside room: woods
+  from the seed, 17 × 20, in plain daylight, with one round tree a tile;
+  dev Go outside leads there and the strip says SURFACE. Owner's picks
+  from a mock-up of three tree looks (D-209). The owner's idea: a
+  lantern that switches itself (Q-049). Playtest: https://claude.ai/artifact/9dRDwGZPLdwZ5mWrc9TVxk
 - **2026-10-20, 0.2.22, the map turns.** Arrows beside "DEPTH 3",
   < and >, Page Up and Page Down, or a tap on found stairs show other
   floors seen; the hero stays put. Owner's picks: skip floors never seen; a

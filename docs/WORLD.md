@@ -41,9 +41,13 @@ The first one joins the first crypt room's bottom doorway to a crypt room
 south of it (D-197). Generated rooms get one-tile openings at a spot the
 seed picks along their shared edge (D-201).
 Stairs line up too: stairs down in a cell at a tile lead to stairs up in
-the same cell at the same tile one floor down (D-202). Depths 3 to 5 are
+the same cell at the same tile one floor down (D-202). Depths 2 to 4 are
 three-room grids with the stairs down in another room than the stairs
 up; deeper one-room floors line up the same way (D-203).
+A doorway or mouth keeps the depth, only stairs change it: the woods
+and the crypt are both depth 0, the second room depth 1 (D-212). Each
+place keeps the seed numbers it had before, so a seed keeps its rooms;
+the map shows the part of the surface the hero is in (D-213).
 
 ## How a region is generated (proposed, confirmed at its step, Q-037)
 Two passes, both run from the save's seed:
@@ -54,7 +58,7 @@ Two passes, both run from the save's seed:
    its kind's own rules (cave chambers, burrows, woods…). Each room gets
    its own seed from the save's seed, so it can be built the first time
    the hero walks in and still be the same every time.
-The first built: depth 3 is a 2 × 2 grid, one cell empty, three rooms in
+The first built: depth 2 (depth 3 before D-212) is a 2 × 2 grid, one cell empty, three rooms in
 an L; the seed picks the stairs room (D-201, `src/core/region.js`).
 
 ## Shapes and sizes (D-172)

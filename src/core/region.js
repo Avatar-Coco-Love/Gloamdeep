@@ -1,5 +1,5 @@
 // § region: a generated depth laid out as a grid of rooms (D-169, D-201).
-// Plain data, no drawing. Depths 3 to 5 are each a 2 × 2 grid with one cell
+// Plain data, no drawing. Depths 2 to 4 are each a 2 × 2 grid with one cell
 // left empty by the seed, so their three rooms make an L, each joined to the
 // corner room by a one-tile opening at a spot along their shared edge the
 // seed picks. Deeper depths are one room, for now.
@@ -7,16 +7,18 @@
 // up are in the same cell, at the same tile, as the stairs down one floor
 // above; the stairs down in another room than them, at a tile the seed
 // picks, which the floor below then fits. Under the crypt the seed picks the
-// cell. The room with the stairs up keeps the depth's own id (depth3), the
-// others are depth3:x,y.
+// cell. The room with the stairs up keeps the depth's own id (depth2), the
+// others are depth2:x,y.
+// § seeds: the depths moved up one (D-212), but every place below the
+// surface keeps the numbers of its old depth, so a seed keeps its rooms (D-213).
 import { rng, int, pick, seedFor } from './rng.js';
 import { COLS, ROWS } from './cave.js';
 
 // The depths laid out as grids; the rest are one room each, for now (D-203)
-const GRIDS = [3, 4, 5];
+const GRIDS = [2, 3, 4];
 const SIZE = 2;
 // The first generated depth, and the crypt's stairs down above it (SECOND_ROOM in room.js)
-const FIRST = 3;
+const FIRST = 2;
 const CRYPT_DOWN = { x: 1, y: 11 };
 // On a one-room floor, the stairs down are at least this many steps from the stairs up (cave.js)
 const APART = 8;
@@ -28,6 +30,7 @@ const APART = 8;
 // (the column or row along that edge); `sides` the room beyond each, by
 // direction, as openings.js reads them. Worked out once per seed and depth.
 const laid = new Map();
+export const seedAt = (seed, depth) => seedFor(seed, depth + 1);
 export function layoutAt(seed, depth) {
   if (depth < FIRST) return null;
   const k = `${seed}:${depth}`;
@@ -36,7 +39,7 @@ export function layoutAt(seed, depth) {
 }
 
 function lay(seed, depth) {
-  const base = seedFor(seed, depth), r = rng(base ^ 0x2c1b3c6d), above = layoutAt(seed, depth - 1);
+  const base = seedAt(seed, depth), r = rng(base ^ 0x2c1b3c6d), above = layoutAt(seed, depth - 1);
   const upAt = above ? above.down : CRYPT_DOWN;
   if (!GRIDS.includes(depth)) {
     const { cell } = above.down, down = spot(r, (t) => dist(t, upAt) < APART);

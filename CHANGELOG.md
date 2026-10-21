@@ -20,6 +20,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.26 (2026-10-21)
+- Step 49b, depths move up one (D-212): the two crypt rooms are depth 0
+  and the strip says SURFACE there, the second room is depth 1, the grey
+  rock grids depths 2 to 4, and earth burrows start at depth 5.
+- A seed keeps its rooms: each place keeps the numbers of its old depth.
+- The surface map shows the part you're in: the woods, or the crypt.
+- Dev: Go to depth goes from 0 (the crypt); Go outside still leads to the woods.
+- D-201 to D-208 moved to `docs/archive/DECISIONS-REGION.md`.
+- Planned next: a Seed Explorer on the title menu (D-214).
+- Decisions: D-213, D-214.
+
 ## 0.2.25 (2026-10-20)
 - The woods now has a cave mouth: a dark opening between two grey rocks
   on one edge, with worn earth in front. The seed picks the edge and the
