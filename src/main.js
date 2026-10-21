@@ -26,7 +26,8 @@ import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, taps
 import { shownLine } from './core/lines.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { floorPlan, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
-import { setMap, drawMap, inBox, turnAt, VIEW } from './render/map.js';
+import { setMap, drawMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from './render/map.js';
+import { startSeeds, shownSeed, addSeed, canGoBack, backSeed, explorerWorld } from './core/explorer.js';
 import { lanternFrom } from './core/sight.js';
 import { cameraAt } from './core/camera.js';
 import { createInput } from './input/input.js';
@@ -44,8 +45,9 @@ let settings = loadSettings(); // kept on this device (D-189)
 // The only Math.random: a new seed for each journey (D-148, D-187), unless a
 // seed is typed in Settings (D-191). journeySeed: the one this journey began on.
 let journeySeed = 0;
+const randomSeed = () => Math.floor(Math.random() * SEED_MAX) + 1; // the Seed Explorer's Reseed too (D-214)
 const newWorld = () => {
-  journeySeed = settings.seed || Math.floor(Math.random() * SEED_MAX) + 1;
+  journeySeed = settings.seed || randomSeed();
   return makeWorld('first', journeySeed);
 };
 let state = newWorld();
@@ -152,29 +154,36 @@ const stage = document.getElementById('stage');
 // In play, the map button or M opens the map; the button (a cross while it is open), M, Esc,
 // P or a tap outside its box closes it. Drags, pinches, the wheel and arrows move it (D-205).
 // Its heading's arrows, < and >, Page Up and Page Down, or a tap on stairs found turn it a floor (D-206).
-let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto' or 'map'
+// Seed Explorer on the title opens the same map for any seed, all revealed, with no
+// hero (D-214); the cross, Esc, P, M or a tap outside the box return to the title.
+let screen = 'title', chosen = 0; // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map' or 'explore'
 let pageFrom = 'title'; // the menu Settings or How to play was opened from
 let page = 'touch'; // How to play's page
 let entry = ''; // the digits typed on the seed pad
+let padFrom = 'settings'; // the screen the seed pad was opened from: Settings or the Explorer
+let seeds = []; // the seeds the Explorer has shown this visit, the last one on screen
 const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU
   : settingsMenu(settings, reduceMotion.matches, pageFrom === 'paused' ? journeySeed : null));
-const onTitle = () => screen === 'title' || (!['play', 'paused', 'map'].includes(screen) && pageFrom === 'title');
+const exploring = () => screen === 'explore' || (screen === 'seed' && padFrom === 'explore');
+const onTitle = () => screen === 'title' || exploring() || (!['play', 'paused', 'map'].includes(screen) && pageFrom === 'title');
 const menuTop = () => (onTitle() ? titleTop(menuOf(screen).length) : pauseTop(menuOf(screen).length, screen === 'settings'));
 const WORDS = {
-  title: 'Gloamdeep. New journey, How to play or Settings: press Enter, or tap one.',
+  title: 'Gloamdeep. New journey, How to play, Settings or Seed Explorer: press Enter, or tap one.',
   paused: 'Paused. Resume, Settings, How to play, or Back to title.',
   play: '',
 };
 const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -1).map((l) => l.text).join('. ')}. Pick one to change it. Back.`;
 const SEED_WORDS = 'Seed. Type up to 5 digits, then OK. Random gives a new world each journey. Esc leaves it unchanged.';
+const EXPLORE_PAD_WORDS = 'Seed. Type up to 5 digits, then OK to see that seed. Random shows a random one. Esc leaves it unchanged.';
 function show(next, at = 0) {
   if ((next === 'settings' && screen !== 'seed') || next === 'howto') pageFrom = screen;
   screen = next; chosen = at;
   const playing = next === 'play';
   lanternButton.hide(!playing); pauseButton.hide(!playing); dev.hide(!playing);
-  mapButton.hide(!playing && next !== 'map'); mapButton.closes(next === 'map');
+  const mapOpen = next === 'map' || next === 'explore';
+  mapButton.hide(!playing && !mapOpen); mapButton.closes(mapOpen);
   spokenLine = null;
-  spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? SEED_WORDS
+  spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
     : next === 'howto' ? howtoWords(page, settings.controls) : WORDS[next];
 }
 const backTo = (id) => () => show(pageFrom, menuOf(pageFrom).findIndex((l) => l.id === id));
@@ -186,19 +195,26 @@ function flipPage(back = false) { page = nextPage(page, back); spoken.textConten
 let plan = null, view = null, floors = [];
 const PAN = 8; // game pixels an arrow key scrolls the map
 const STAIRS_REACH = 8; // game pixels from found stairs' centre that a tap still picks them
-const panMap = (dx, dy) => { view = panView(view, plan, VIEW.w, VIEW.h, dx, dy); };
-const zoomMap = (by, x, y) => { view = zoomView(view, plan, VIEW.w, VIEW.h, by, x - VIEW.x, y - VIEW.y); };
+const win = () => (screen === 'explore' ? EXPLORE_VIEW : VIEW); // the map's window, shorter in the Explorer
+const world = () => (screen === 'explore' ? explorerWorld(shownSeed(seeds)) : state); // the world the map shows
+const panMap = (dx, dy) => { view = panView(view, plan, win().w, win().h, dx, dy); };
+const zoomMap = (by, x, y) => { view = zoomView(view, plan, win().w, win().h, by, x - win().x, y - win().y); };
 const turns = () => ({ up: turnFrom(floors, plan.depth, 'up') !== null, down: turnFrom(floors, plan.depth, 'down') !== null });
 // The map on floor `depth`, its view from at(plan), and its words for the screen reader
-function mapFloor(depth, at = (p) => fitView(p, VIEW.w, VIEW.h)) {
-  plan = floorPlan(state, dev.revealedMap(), depth);
+function mapFloor(depth, at = (p) => fitView(p, win().w, win().h)) {
+  const explore = screen === 'explore';
+  plan = floorPlan(world(), explore || dev.revealedMap(), depth);
   setMap(plan);
   view = at(plan);
-  const n = roomsFound(plan), own = plan.hero ? '' : ' The hero is on another floor.';
-  spoken.textContent = `Map of ${plan.depth === 0 ? 'the surface' : `depth ${plan.depth}`}. ${n} ${n === 1 ? 'room' : 'rooms'} found.${own} Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. M or the close button closes it.`;
+  const n = roomsFound(plan), own = plan.hero || explore ? '' : ' The hero is on another floor.';
+  const where = `${plan.depth === 0 ? 'the surface' : `depth ${plan.depth}`}. ${n} ${n === 1 ? 'room' : 'rooms'}`;
+  spoken.textContent = explore
+    ? `Seed Explorer, seed ${shownSeed(seeds)}. Map of ${where}. Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. R reseeds, T types a seed, B goes back to the last seed. Esc or the close button returns to the title.`
+    : `Map of ${where} found.${own} Drag or use the arrows to scroll, pinch or the wheel to zoom. Page Up and Page Down turn a floor. M or the close button closes it.`;
 }
 function toggleMap() {
   if (screen === 'map') { show('play'); return; }
+  if (screen === 'explore') { closeExplorer(); return; }
   if (screen !== 'play') return;
   queued = null;
   floors = floorsShown(state, dev.revealedMap());
@@ -206,20 +222,40 @@ function toggleMap() {
   mapFloor(depthOf(state.place));
 }
 function turnMap(way) {
-  const to = screen === 'map' && turnFrom(floors, plan.depth, way);
+  const to = (screen === 'map' || screen === 'explore') && turnFrom(floors, plan.depth, way);
   if (to) mapFloor(to);
 }
 // A tap on found stairs turns the map to the floor they lead to, centred on the matching stairs
 function tapStairs(px, py) {
-  const k = view.k, near = stairsNear(plan, (px - VIEW.x + view.x) / k, (py - VIEW.y + view.y) / k, STAIRS_REACH / k, state.seed);
+  const k = view.k, near = stairsNear(plan, (px - win().x + view.x) / k, (py - win().y + view.y) / k, STAIRS_REACH / k, world().seed);
   if (!near || !floors.includes(near.depth)) return;
   mapFloor(near.depth, (p) => {
     const at = stairsIn(p, near.room, near.arrive);
-    return at ? centreView(p, VIEW.w, VIEW.h, k, at.x, at.y) : fitView(p, VIEW.w, VIEW.h);
+    return at ? centreView(p, win().w, win().h, k, at.x, at.y) : fitView(p, win().w, win().h);
   });
+}
+// § explorer (D-214): opens on the Settings seed, else a random one, on the surface;
+// Reseed, a typed seed and Back keep the floor shown, fitted whole. Settings never changes.
+function openExplorer() {
+  seeds = startSeeds(settings.seed || randomSeed());
+  floors = floorsShown(null, true);
+  show('explore');
+  mapFloor(0);
+}
+const closeExplorer = () => show('title', TITLE_MENU.findIndex((l) => l.id === 'explore'));
+function showSeeds(next) {
+  if (next === seeds) return;
+  seeds = next;
+  mapFloor(plan.depth);
+}
+function pressBar(id) {
+  if (id === 'back') showSeeds(backSeed(seeds));
+  else if (id === 'reseed') showSeeds(addSeed(seeds, randomSeed()));
+  else if (id === 'type') openPad('explore');
 }
 function pause() {
   if (screen === 'map') show('play');
+  else if (screen === 'explore') closeExplorer();
   else if (screen === 'play') { queued = null; show('paused'); } // a step waiting in line is dropped
   else if (screen === 'paused') show('play'); // Esc or P again resumes
   else if (screen === 'settings') closeSettings();
@@ -243,10 +279,23 @@ function changeLantern() {
 }
 // § seed pad (D-191): OK keeps the typed seed, or Random when none is typed; Random
 // keeps Random. Either starts the next New journey; this one goes on as it is.
-function openPad() { entry = settings.seed ? String(settings.seed) : ''; show('seed'); }
-const closePad = () => show('settings', menuOf('settings').findIndex((l) => l.id === 'seed'));
+// From the Explorer it starts empty; OK shows the seed typed, or keeps the one shown
+// when none is typed, and Random shows a random one (D-214).
+function openPad(from = 'settings') {
+  padFrom = from;
+  entry = from === 'settings' && settings.seed ? String(settings.seed) : '';
+  show('seed');
+}
+function closePad() {
+  if (padFrom === 'explore') { show('explore'); mapFloor(plan.depth, () => view); }
+  else show('settings', menuOf('settings').findIndex((l) => l.id === 'seed'));
+}
 function pressKey(id) {
-  if (id === 'ok' || id === 'random') {
+  if (padFrom === 'explore' && (id === 'ok' || id === 'random')) {
+    const seed = id === 'ok' ? entrySeed(entry) : randomSeed();
+    closePad();
+    if (seed) showSeeds(addSeed(seeds, seed));
+  } else if (id === 'ok' || id === 'random') {
     settings = { ...settings, seed: id === 'ok' ? entrySeed(entry) : null };
     saveSettings(settings);
     closePad();
@@ -254,7 +303,13 @@ function pressKey(id) {
   } else { entry = typeKey(entry, id); spoken.textContent = entry || 'nothing typed'; }
 }
 // Digits and Backspace type on the seed pad from a keyboard; the flame moves to OK, so Enter keeps it
+// In the Explorer, R reseeds, T types a seed and B goes back (D-214)
 const onType = (key) => {
+  if (screen === 'explore') {
+    const id = { r: 'reseed', t: 'type', b: 'back' }[key];
+    if (id) pressBar(id);
+    return !!id;
+  }
   if (screen !== 'seed') return false;
   pressKey(key === 'backspace' ? 'del' : key);
   chosen = PAD.findIndex((k) => k.id === 'ok');
@@ -277,6 +332,7 @@ function choose(i = chosen) {
   else if (id === 'title') show('title');
   else if (id === 'settings') show('settings');
   else if (id === 'howto') openHowTo();
+  else if (id === 'explore') openExplorer();
   else if (id === 'controls') changeControls();
   else if (id === 'motion') changeMotion();
   else if (id === 'seed') openPad();
@@ -286,7 +342,7 @@ function choose(i = chosen) {
 // Menus take swipes always; in play the Controls switch can turn swipes off (D-189).
 const onDir = (dir, how) => {
   if (screen === 'play') { if (how !== 'swipe' || swipesWalk(settings.controls)) tryStep(dir); return; }
-  if (screen === 'map') { if (how !== 'swipe') panMap(...{ up: [0, -PAN], down: [0, PAN], left: [-PAN, 0], right: [PAN, 0] }[dir]); return; }
+  if (screen === 'map' || screen === 'explore') { if (how !== 'swipe') panMap(...{ up: [0, -PAN], down: [0, PAN], left: [-PAN, 0], right: [PAN, 0] }[dir]); return; }
   if (screen === 'seed') { chosen = moveKey(chosen, dir); return; }
   if (screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else chosen = moveChoice(chosen, dir, HOWTO_LINES.length); return; }
   const id = menuOf(screen)[chosen]?.id;
@@ -297,10 +353,13 @@ const onDir = (dir, how) => {
 };
 const onPoint = (px, py, held) => {
   if (screen === 'play') { stepToward(px, py, held); return; }
-  if (screen === 'map') {
+  if (screen === 'map' || screen === 'explore') {
     if (held || mapMoves.dragged()) return;
-    const way = turnAt(px, py);
-    if (way) turnMap(way); else if (!inBox(px, py)) show('play'); else tapStairs(px, py);
+    const way = turnAt(px, py), button = screen === 'explore' && barAt(px, py);
+    if (way) turnMap(way);
+    else if (button) pressBar(button);
+    else if (!inBox(px, py)) pause(); // closes the map, or the Explorer to the title
+    else if (screen === 'map' || py < win().y + win().h) tapStairs(px, py); // not through the Explorer's bar
     return;
   }
   if (screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { chosen = k; choose(k); } return; }
@@ -308,10 +367,11 @@ const onPoint = (px, py, held) => {
   const i = lineAt(py, menuOf(screen).length, menuTop());
   if (i >= 0) { chosen = i; choose(i); }
 };
-const onWait = () => { if (screen === 'play') tryStep('wait'); else if (screen !== 'map') choose(); };
-const onChoose = () => { if (screen !== 'play' && screen !== 'map') choose(); };
+const onMapScreen = () => screen === 'map' || screen === 'explore';
+const onWait = () => { if (screen === 'play') tryStep('wait'); else if (!onMapScreen()) choose(); };
+const onChoose = () => { if (screen !== 'play' && !onMapScreen()) choose(); };
 const input = createInput(stage, canvas, { onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: pause, onMap: toggleMap, onFloor: turnMap, onType });
-const mapMoves = createMapMoves(stage, canvas, { active: () => screen === 'map', onPan: panMap, onZoom: zoomMap });
+const mapMoves = createMapMoves(stage, canvas, { active: onMapScreen, onPan: panMap, onZoom: zoomMap });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)
   get: () => state,
   still,
@@ -354,7 +414,8 @@ function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math
 function frame(t) {
   hudCtx.fillStyle = '#0e0c16'; hudCtx.fillRect(0, 0, hud.width, hud.height); // the strip stays empty on the title
   if (onTitle()) {
-    if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
+    if (screen === 'explore') { drawTitle(ctx, [], 0, t, still()); drawMap(ctx, view, t, still(), turns(), { seed: shownSeed(seeds), back: canGoBack(seeds) }); }
+    else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, entry, chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, page, settings.controls, chosen, t, still()); }
     else drawTitle(ctx, menuOf(screen), chosen, t, still(), screen === 'settings' ? 'Settings' : null);
     requestAnimationFrame(frame); return;

@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.27 (2026-10-21)
+- Step E1, the Seed Explorer (D-214): a new last line on the title menu
+  opens the map of a seed, every floor in full, with no hero.
+- A bar at the bottom of the map shows the seed, with Back, Type and
+  Reseed; R, T and B do the same on a keyboard. Floors turn as on the map.
+- It opens on the seed typed in Settings, else a random one, on the
+  surface (the crypt rooms for now), and never changes Settings.
+- Decisions: D-215.
+
 ## 0.2.26 (2026-10-21)
 - Step 49b, depths move up one (D-212): the two crypt rooms are depth 0
   and the strip says SURFACE there, the second room is depth 1, the grey

@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-20, 0.2.24, the lantern by itself.** Settings gains
+  "Lantern: By hand"; set to By itself, the lantern goes out as you step
+  into daylight and lights again back in the dark, only at that moment.
+  Owner's picks: daylight only, By hand until picked, your switch
+  holds, no line (D-210). Playtest: https://claude.ai/artifact/1Mh56fEwSg9iVqd6Awtn7Q
 - **2026-10-20, 0.2.23, the woods.** The first outside room: woods
   from the seed, 17 × 20, in plain daylight, with one round tree a tile;
   dev Go outside leads there and the strip says SURFACE. Owner's picks

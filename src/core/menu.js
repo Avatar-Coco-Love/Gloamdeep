@@ -2,7 +2,8 @@
 // Continue joins with saving (step 37). Plain data, no drawing.
 import { controlsText, motionText, seedText, lanternText } from './settings.js';
 
-export const TITLE_MENU = [{ id: 'new', text: 'New journey' }, { id: 'howto', text: 'How to play' }, { id: 'settings', text: 'Settings' }];
+// The Seed Explorer, a dev tool, is its last line (D-214)
+export const TITLE_MENU = [{ id: 'new', text: 'New journey' }, { id: 'howto', text: 'How to play' }, { id: 'settings', text: 'Settings' }, { id: 'explore', text: 'Seed Explorer' }];
 // The pause menu during play (D-177, D-187, D-193)
 export const PAUSE_MENU = [{ id: 'resume', text: 'Resume' }, { id: 'settings', text: 'Settings' }, { id: 'howto', text: 'How to play' }, { id: 'title', text: 'Back to title' }];
 // Settings, from the title or the pause menu (D-189, D-190, D-210): picking a switch moves it to the next choice.
