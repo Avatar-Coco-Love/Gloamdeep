@@ -25,7 +25,7 @@ import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText, lanternText, nextLantern } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, rememberAll, forget } from './core/fog.js';
-import { floorPlan, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
+import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
 import { setMap, drawMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from './render/map.js';
 import { startSeeds, shownSeed, addSeed, canGoBack, backSeed, explorerWorld } from './core/explorer.js';
 import { lanternFrom } from './core/sight.js';
@@ -203,7 +203,7 @@ const turns = () => ({ up: turnFrom(floors, plan.depth, 'up') !== null, down: tu
 // The map on floor `depth`, its view from at(plan), and its words for the screen reader
 function mapFloor(depth, at = (p) => fitView(p, win().w, win().h)) {
   const explore = screen === 'explore';
-  plan = floorPlan(world(), explore || dev.revealedMap(), depth);
+  plan = explore && depth === 0 ? wholeSurface(world()) : floorPlan(world(), explore || dev.revealedMap(), depth);
   setMap(plan);
   view = at(plan);
   const n = roomsFound(plan), own = plan.hero || explore ? '' : ' The hero is on another floor.';

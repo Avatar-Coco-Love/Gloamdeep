@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.28 (2026-10-21)
+- Step E2, the whole surface in the Seed Explorer (D-214): its surface
+  map shows the woods and the crypt together, joined where the cave
+  mouth meets the gap in the crypt wall.
+- The game's own map still shows only the part you're in (D-213).
+- Decisions: D-216.
+
 ## 0.2.27 (2026-10-21)
 - Step E1, the Seed Explorer (D-214): a new last line on the title menu
   opens the map of a seed, every floor in full, with no hero.

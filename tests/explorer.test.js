@@ -1,8 +1,9 @@
 // § explorer: the Seed Explorer's seeds and its world (D-214)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { mouthOf } from '../src/core/mouth.js';
 import { startSeeds, shownSeed, addSeed, canGoBack, backSeed, explorerWorld } from '../src/core/explorer.js';
-import { floorPlan, floorsShown } from '../src/core/map.js';
+import { floorPlan, floorsShown, wholeSurface } from '../src/core/map.js';
 import { makeWorld } from '../src/core/turn.js';
 
 test('it opens on one seed, with nothing to go back to', () => {
@@ -31,6 +32,25 @@ test('its map shows the same rooms as the game\'s revealed map, with no hero', (
     assert.deepEqual(p.rooms.map((r) => [r.id, r.x, r.y]), game.rooms.map((r) => [r.id, r.x, r.y]));
     assert.equal(p.hero, null);
   }
+});
+
+test('the whole surface: the woods and the crypt joined at the mouth, for each way it faces (D-216)', () => {
+  const STEP = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }, ways = new Set();
+  for (let seed = 1; seed <= 40; seed++) {
+    const p = wholeSurface(explorerWorld(seed)), m = mouthOf(seed), at = (id) => p.rooms.find((r) => r.id === id);
+    ways.add(m.dir);
+    assert.deepEqual(p.rooms.map((r) => r.id).sort(), ['first', 'south', 'woods']);
+    assert.equal(p.hero, null);
+    const w = at('woods'), c = at(m.room);
+    assert.deepEqual([w.x + m.tile.x + STEP[m.dir][0], w.y + m.tile.y + STEP[m.dir][1]], [c.x + m.gap.x, c.y + m.gap.y]);
+    // every room inside the map, none over another
+    for (const r of p.rooms) assert.ok(r.x >= 0 && r.y >= 0 && r.x + r.room.cols <= p.cols && r.y + r.room.rows <= p.rows);
+    assert.equal(Math.min(...p.rooms.map((r) => r.x)), 0);
+    assert.equal(Math.min(...p.rooms.map((r) => r.y)), 0);
+    const over = (a, b) => a.x < b.x + b.room.cols && b.x < a.x + a.room.cols && a.y < b.y + b.room.rows && b.y < a.y + a.room.rows;
+    assert.ok(!over(w, at('first')) && !over(w, at('south')));
+  }
+  assert.equal(ways.size, 4);
 });
 
 test('every floor from the surface down can be turned to', () => {

@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.27 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.28 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step E2, the whole surface on the Explorer's map** (D-214): the woods
-and the crypt together, in the Explorer only. Read D-213, D-214, D-211
-and `src/core/map.js` first, then propose.
+**Step 50, day and night outside** (D-025): time of day passing with
+your turns in the woods. Read D-025, D-209, D-210 and `docs/WORLD.md`
+first, then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -37,7 +37,7 @@ The surface
 - [x] 49b Depths move up one: the crypt is depth 0, 0.2.26
 The Seed Explorer (D-214, before step 50)
 - [x] E1 The Explorer: the map, all revealed, the seed and its buttons, 0.2.27
-- [ ] E2 The whole surface on the Explorer's map
+- [x] E2 The whole surface on the Explorer's map, 0.2.28
 - [ ] 50 Day and night outside (D-025)
 - [ ] 51 Daylight through the cave mouth (D-173)
 
@@ -56,11 +56,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.25, the cave mouth.** A dark mouth between two grey
-  rocks on a woods edge the seed picks; walk through and you arrive on
-  the crypt's facing side (up: the south room's bottom). Owner's picks
-  from a mock-up of three looks (D-211). The owner's idea: a doorway
-  keeps the depth, so the crypt becomes depth 0 next (D-212). Playtest: https://claude.ai/artifact/SAtpqZnboGwGDmHL9vZHWK
 - **2026-10-21, 0.2.26, depths move up one.** The crypt is depth 0 and
   says SURFACE, the second room depth 1, the rock grids 2 to 4, earth
   from 5. Owner's picks: a seed keeps its rooms, the surface map shows
@@ -71,3 +66,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   bar at the bottom shows the seed with Back, Type and Reseed. Owner's
   picks: the plain last line, the bottom bar, the Settings seed else a
   random one, Back through every seed (D-215). Playtest: https://claude.ai/artifact/MdzkiLPyfsTdW7CK24K7ZH
+- **2026-10-21, 0.2.28, the whole surface.** The Explorer's surface map
+  shows the woods and the crypt together, the crypt where walking
+  through the cave mouth takes you. Owner's picks from a mock-up of
+  three layouts: joined at the mouth, the mouth plain floor (D-216). Playtest: https://claude.ai/artifact/D9KGuEKFcvxk9vpCHJS6np
