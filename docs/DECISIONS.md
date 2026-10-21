@@ -166,3 +166,16 @@ surface map the crypt sits where walking through the cave mouth takes
 you: the mouth's tile right beside the gap in the crypt's wall, so it
 moves with the mouth's edge. The mouth stays plain floor on the map, with
 no mark of its own. The game's map keeps D-213.
+
+**D-217 · 2026-10-21 · Day and night outside** (step 50, owner's picks;
+builds on D-025, D-209, D-210; part of Q-027) A day is 300 turns from
+morning: 170 of full day, a 30-turn dusk, 70 of night, a 30-turn dawn
+(day 200, night 100). A journey starts in the morning and the clock runs
+below ground too; only rooms under the sky show it. Dusk and dawn fade
+the light. At night the woods are like a cave: only lights show tiles,
+never-seen ones are black, remembered ones a dim moonlit blue, the
+study's cold blue (D-060). Daylight lights and remembers the whole room
+until halfway through dusk and from halfway through dawn; the lantern set
+to By itself lights and goes out at those moments. No clock on screen,
+only the light. Dev: TIME, +10 and +50 in the Room tab move the clock
+only, and the status line shows the turn of the day.

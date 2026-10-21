@@ -11,6 +11,7 @@ import { drawGrid, drawPointed, drawWrench } from '../render/overlay.js';
 import { buildPanel, el } from './panel.js';
 import { setPixelText } from './pixeltext.js';
 import { keepPlaced } from '../input/lantern.js';
+import { DAY_TURNS } from '../core/daytime.js';
 
 const KEY = 'gloamdeep-dev'; // localStorage: the switches and the open sections
 
@@ -125,7 +126,7 @@ export function createDev(stage, canvas, game, hud) {
       tools.sync(state);
       // § stats: always on; a second line for the pick and the pointed tile (D-088)
       const h = state.hero, picked = tools.picked();
-      let next = `turn ${state.turn} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · hero ${h.x},${h.y} · depth ${depthOf(state.place)} · seed ${state.seed}`;
+      let next = `turn ${state.turn} · day ${state.turn % DAY_TURNS}/${DAY_TURNS} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · hero ${h.x},${h.y} · depth ${depthOf(state.place)} · seed ${state.seed}`;
       const more = [];
       if (picked) more.push(`placing ${picked.name}`);
       if (opts.coords && pointed) {

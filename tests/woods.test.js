@@ -49,7 +49,7 @@ test('woods: depth 0, in daylight, with nothing in it yet', () => {
   assert.equal(depthOf('woods'), 0);
   const p = beginPlace('woods', 7);
   assert.equal(p.room.look, 'woods');
-  assert.ok(p.room.dark.day);
+  assert.ok(p.room.dark.sky);
   assert.deepEqual([p.lights, p.enemies, p.items], [[], [], []]);
 });
 

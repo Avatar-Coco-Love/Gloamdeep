@@ -18,8 +18,8 @@ should the walk stop when something comes into view? When in the build
 plan?
 
 **Q-027 · Darkness outside, and the moon** (when outside places exist)
-Each place sets its own darkness (D-063). The owner sees the study's cold
-blue as moonlight. Should outside at night use it? Should moon phases
+Each place sets its own darkness (D-063). Outside at night, remembered
+tiles use the study's cold blue as moonlight (D-217). Should moon phases
 make some nights darker than others? The owner isn't sure the moon will
 be in the game. Each biome's darkness is asked when it arrives.
 
