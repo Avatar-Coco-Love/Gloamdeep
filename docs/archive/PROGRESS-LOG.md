@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.30, daylight through the mouth.** The crypt gap the
+  mouth leads to lets in 3 tiles of pale daylight, real light like a
+  torch; it shrinks and warms through dusk, gone at night. Owner's picks
+  (D-218), and hold to walk around walls is next (D-219, answers Q-026).
+  Playtest: https://claude.ai/artifact/WdRHRAQxhk8KRkSg3g55Xk
 - **2026-10-21, 0.2.29, day and night outside.** A day is 300 turns:
   full day, a 30-turn dusk, night, a 30-turn dawn. At night the woods are
   dark like a cave, memory a moonlit blue; By itself lights the lantern

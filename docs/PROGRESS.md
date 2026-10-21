@@ -4,11 +4,11 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.32 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.33 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 51d, the doorway line in the game** (D-225, option A of its
-mock-up). Then step 59, deeper floors as grids (D-223).
+**Step 59, deeper floors as grids with variety** (D-223). Read D-201
+to D-203, D-223 and Q-038, then mock up each kind of place's rules.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -36,9 +36,8 @@ The surface
 The Seed Explorer (D-214, before step 50)
 - [x] E1 The Explorer: the map, all revealed, the seed and its buttons, 0.2.27
 - [x] E2 The whole surface on the Explorer's map, 0.2.28
-- [x] 50 to 51c: day and night, daylight through the mouth, hold to
-  walk, rooms apart on the map, 0.2.29 to 0.2.32
-- [ ] 51d The doorway line in the game (D-225)
+- [x] 50 to 51d: day and night, daylight through the mouth, hold to
+  walk, rooms apart on the map, the doorway line, 0.2.29 to 0.2.33
 - [ ] 59 Deeper floors as grids, each kind of place with its own rules (D-223)
 
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
@@ -56,11 +55,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.30, daylight through the mouth.** The crypt gap the
-  mouth leads to lets in 3 tiles of pale daylight, real light like a
-  torch; it shrinks and warms through dusk, gone at night. Owner's picks
-  (D-218), and hold to walk around walls is next (D-219, answers Q-026).
-  Playtest: https://claude.ai/artifact/WdRHRAQxhk8KRkSg3g55Xk
 - **2026-10-21, 0.2.31, hold to walk.** A held finger walks around
   walls over remembered tiles: an amber frame on the target, a "!" stop
   when something comes into view (D-220). Surface decisions archived
@@ -71,4 +65,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   rooms sit a tile apart with a dark seam, and a pale blue line bridges
   each doorway found, the cave mouth too (D-224). Owner's picks: the same
   line at doorways in the game next, then step 59 (D-225).
+  Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD
+- **2026-10-21, 0.2.33, the doorway line.** A thin pale blue line
+  pulses across each doorway's outer edge in the game, the cave mouth
+  too, once its tile is seen (D-225). Step 59 is next.
   Playtest: https://claude.ai/artifact/N5HDsqoBVcUkLEvjWgtmbD

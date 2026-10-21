@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { tileAt, placeFor, SOUTH_LIGHTS } from '../src/core/room.js';
 import { makeWorld, step, wait } from '../src/core/turn.js';
 import { OIL, burnOil } from '../src/core/oil.js';
-import { goToDepth } from '../src/core/stairs.js';
+import { goToDepth, goToPlace } from '../src/core/stairs.js';
 
 // The doorway is at 5,12 in the first room, and 5,0 in the south room.
 const at = (x, y, s = makeWorld()) => ({ ...s, hero: { x, y } });
@@ -69,4 +69,20 @@ test('the south room is at depth 0, and its stairs-free doorway room changes wit
 
 test('waiting in the south room\'s doorway keeps you there', () => {
   assert.equal(wait(out()).place, 'south');
+});
+
+test('doorways: the edge tiles that lead to the room beside, the mouth\'s alone on its way (D-225)', async () => {
+  const { doorways } = await import('../src/core/openings.js');
+  const { mouthOf } = await import('../src/core/mouth.js');
+  const s = makeWorld('first', 7);
+  const first = doorways('first', s.room, 7);
+  assert.ok(first.some((d) => d.x === 5 && d.y === 12 && d.dir === 'down'), 'the bottom doorway into the south room');
+  for (const d of first) assert.equal(tileAt(s.room, d.x, d.y).solid, false);
+  for (let seed = 1; seed <= 20; seed++) {
+    const w = makeWorld('first', seed), out = goToPlace(w, 'woods'), mo = mouthOf(seed);
+    assert.deepEqual(doorways('woods', out.room, seed), [{ ...mo.tile, dir: mo.dir }], 'only the mouth in the woods');
+  }
+  const deep = goToDepth(s, 2), ds = doorways(deep.place, deep.room, 7);
+  assert.ok(ds.length >= 1, 'a grid room has a doorway');
+  for (const d of ds) assert.ok(step({ ...deep, hero: { x: d.x, y: d.y } }, d.dir).place !== deep.place, 'each one walks off into the next room');
 });
