@@ -23,3 +23,20 @@ export function walkOff(state, dir) {
   if (tileAt(there.room, spot.x, spot.y).solid) return null;
   return arrive(state, to, there, spot);
 }
+
+// § doorways: (place, room, seed) → the edge tiles that walk off into the
+// room beside, [{ x, y, dir }], for the line drawn across each (D-225). An
+// open edge tile with a room that way is one, but on the cave mouth's way
+// only the mouth's own tile, or the gap it leads to, is.
+export function doorways(place, room, seed) {
+  const out = [], { cols, rows } = room;
+  for (const [dir, to] of Object.entries(sidesOf(place, seed))) {
+    const only = mouthSpot(seed, to, place);
+    const edge = { up: (i) => [i, 0], down: (i) => [i, rows - 1], left: (i) => [0, i], right: (i) => [cols - 1, i] }[dir];
+    for (let i = 0; i < (dir === 'up' || dir === 'down' ? cols : rows); i++) {
+      const [x, y] = edge(i);
+      if (only ? x === only.x && y === only.y : !tileAt(room, x, y).solid) out.push({ x, y, dir });
+    }
+  }
+  return out;
+}

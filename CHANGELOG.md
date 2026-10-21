@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.33 (2026-10-21)
+- In the game, a thin pale blue line marks each doorway, across its outer
+  edge where you step through to the next room, the cave mouth too. It
+  pulses gently, and holds still with reduced motion. It shows once the
+  doorway's tile has been seen, so it stays in memory's dim light.
+- Decisions: D-225 (built).
+
 ## 0.2.32 (2026-10-21)
 - On the map screens, in the game and the Seed Explorer, rooms side by
   side are drawn one tile apart, with a dark seam between them, so each

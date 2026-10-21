@@ -34,6 +34,8 @@ import { mouthLight } from './core/mouth.js';
 import { cameraAt } from './core/camera.js';
 import { wayStep, cameIntoView } from './core/walk.js';
 import { drawMark, drawAlert } from './render/walk.js';
+import { doorways } from './core/openings.js';
+import { drawDoors } from './render/doors.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
@@ -66,7 +68,7 @@ let spokenLine = null;
 // The room is drawn onto a hidden canvas, again only when it changes (a dev spawn),
 // as big as the whole room; the camera shows the screen's part of it (D-195).
 const base = document.createElement('canvas');
-let drawnRoom = null;
+let drawnRoom = null, doors = []; // the room drawn into `base`, and its doorways (D-225)
 let cam = { x: 0, y: 0 }; // the room pixel at the screen's top-left (src/core/camera.js)
 
 // § moving: the hero slides to its new tile (D-043); one step or wait waits in line
@@ -465,7 +467,7 @@ function frame(t) {
   let nx = 0, ny = 0;
   if (nudge && t < nudge.until && !still()) { nx = nudge.dx; ny = nudge.dy; }
   if (s.room !== drawnRoom) {
-    drawnRoom = s.room;
+    drawnRoom = s.room; doors = doorways(s.place, s.room, s.seed);
     base.width = drawnRoom.cols * TILE; base.height = drawnRoom.rows * TILE;
     drawRoom(base.getContext('2d'), drawnRoom);
   }
@@ -497,6 +499,7 @@ function frame(t) {
   inRoom(() => {
     drawFlames(ctx, s.room, s.lights, t, still());
     if (s.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
+    drawDoors(ctx, doors, dev.revealed() ? null : s.seen, s.room.cols, t, still()); // over the light, so remembered ones show (D-225)
     if (walk && !walk.stopped && !travel) drawMark(ctx, walk.tx, walk.ty, t, still());
     if (t < alertUntil) drawAlert(ctx, sx + nx, sy + ny);
   });
