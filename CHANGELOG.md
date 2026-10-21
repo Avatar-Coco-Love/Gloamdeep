@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.38 (2026-10-21)
+- Deeper floors hold more rats: from depth 5 down every room has two, one
+  guarding the flask and one anywhere in the dark. Depths 2 to 4 keep one
+  a room. Everything else in a seed's rooms stays where it was.
+- New `docs/RESEARCH.md`: the owner's wish list, and what Hoplite and
+  similar games do well, with the ideas the owner wants kept for later.
+- An inventory step is planned just before first gear (step 41).
+- Decisions: D-230, D-231. Questions opened: Q-049.
+
 ## 0.2.37 (2026-10-21)
 - The dungeon (depth 8 down) now has its own look: the crypt's bricks and
   slabs in deeper, colder, bluer colours, as in option B of the step 59b

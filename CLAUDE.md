@@ -63,6 +63,7 @@ Read the smallest file that answers the question.
 | `docs/archive/DECISIONS-REGION.md` | D-201 to D-208, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-SURFACE.md` | D-209 to D-218, still in force | grep only, never read whole |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
+| `docs/RESEARCH.md` | the owner's wish list, similar games, ideas kept | when proposing a feature |
 | `docs/DESIGN.md` | the one-page design brief | before proposing any feature |
 | `docs/WORLD.md` | regions, ways between rooms, the map (D-170) | before any world, region or map step |
 | `docs/regions/` | one rule sheet per region, once designed | only the region a step touches |
