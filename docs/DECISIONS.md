@@ -146,3 +146,15 @@ Explorer only; the game's map keeps D-213. Built next, before step 50:
 first the Explorer, then the whole surface on it. Later, as their own
 steps: a button that fits places far apart on one depth, painting
 rooms, and saving them to a file for Claude to build into the game.
+
+**D-215 · 2026-10-21 · How the Seed Explorer looks** (step E1, owner's
+picks) "Seed Explorer" is the title menu's last line, like the others.
+A bar along the map box's bottom shows "SEED 48213" with Back on its
+left and Type and Reseed on its right; the cross where the map button
+sits, Esc or a tap outside the box return to the title. It opens on the
+seed typed in Settings, else a random one, on the surface, and never
+changes Settings. Back steps through every seed shown this visit, newest
+first, and is greyed out when none is left. Proposed with the build:
+Reseed, Back and a typed seed keep the floor shown; the seed pad starts
+empty there, OK with nothing typed keeps the seed, Random shows a random
+one; R, T and B are the keys.

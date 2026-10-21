@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.26 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.27 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step E1, the Seed Explorer** (D-214): a title menu entry opens the
-map, all revealed, with the seed and the three seed buttons. Read D-214,
-D-205, D-207 and `src/core/map.js` first, then propose.
+**Step E2, the whole surface on the Explorer's map** (D-214): the woods
+and the crypt together, in the Explorer only. Read D-213, D-214, D-211
+and `src/core/map.js` first, then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -36,7 +36,7 @@ The surface
 - [x] 49 A cave entrance into the first cave, 0.2.25
 - [x] 49b Depths move up one: the crypt is depth 0, 0.2.26
 The Seed Explorer (D-214, before step 50)
-- [ ] E1 The Explorer: the map, all revealed, the seed and its buttons
+- [x] E1 The Explorer: the map, all revealed, the seed and its buttons, 0.2.27
 - [ ] E2 The whole surface on the Explorer's map
 - [ ] 50 Day and night outside (D-025)
 - [ ] 51 Daylight through the cave mouth (D-173)
@@ -56,11 +56,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-20, 0.2.24, the lantern by itself.** Settings gains
-  "Lantern: By hand"; set to By itself, the lantern goes out as you step
-  into daylight and lights again back in the dark, only at that moment.
-  Owner's picks: daylight only, By hand until picked, your switch
-  holds, no line (D-210). Playtest: https://claude.ai/artifact/1Mh56fEwSg9iVqd6Awtn7Q
 - **2026-10-20, 0.2.25, the cave mouth.** A dark mouth between two grey
   rocks on a woods edge the seed picks; walk through and you arrive on
   the crypt's facing side (up: the south room's bottom). Owner's picks
@@ -71,3 +66,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   from 5. Owner's picks: a seed keeps its rooms, the surface map shows
   the part you're in, dev Go to depth from 0 (D-213). D-201 to D-208
   archived. Playtest: https://claude.ai/artifact/9vZTdyesaddiWDq9hvgsNv
+- **2026-10-21, 0.2.27, the Seed Explorer.** "Seed Explorer", the
+  title's last line, opens a seed's map, all floors in full, no hero; a
+  bar at the bottom shows the seed with Back, Type and Reseed. Owner's
+  picks: the plain last line, the bottom bar, the Settings seed else a
+  random one, Back through every seed (D-215). Playtest: https://claude.ai/artifact/MdzkiLPyfsTdW7CK24K7ZH

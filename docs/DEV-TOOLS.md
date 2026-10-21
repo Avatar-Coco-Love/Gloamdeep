@@ -53,6 +53,9 @@ tools to be chosen together later.
   mouth there leads back into the crypt (D-211).
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
+- Seed Explorer, the title menu's last line: any seed's map, every floor
+  in full, with Back, Type and Reseed; R, T, B (D-214, D-215). Code:
+  `src/core/explorer.js`.
 
 ## Candidates (the owner picks; record each pick as a decision)
 - God mode (no damage); the owner wants it next (D-154)

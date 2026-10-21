@@ -7,8 +7,8 @@ import { lineAt, pauseTop, LINE_GAP } from '../src/render/menu.js';
 import { SCREEN_H, W } from '../src/render/screen.js';
 import { textWidth } from '../src/render/font.js';
 
-test('the title menu offers New journey first, then How to play, then Settings', () => {
-  assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'howto', 'settings']);
+test('the title menu offers New journey first, then How to play, Settings, and the Seed Explorer last (D-214)', () => {
+  assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'howto', 'settings', 'explore']);
 });
 
 test('Up and Down move the choice and stop at the ends', () => {
