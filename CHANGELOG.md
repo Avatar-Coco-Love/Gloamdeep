@@ -20,6 +20,19 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.29 (2026-10-21)
+- Day and night pass outside with your turns: a day is 300 turns, 170 of
+  full day, a 30-turn dusk, 70 of night and a 30-turn dawn. The clock
+  keeps running below ground too.
+- At night the woods are dark like a cave: you see what your lantern
+  lights, and tiles already seen stay in a dim moonlit blue. Dusk and
+  dawn fade the light slowly. No clock on screen, only the light.
+- The lantern set to By itself lights as dusk falls and goes out as dawn
+  comes.
+- Dev: the Room tab gets TIME, +10 and +50, which move the clock only;
+  the status line shows the turn of the day.
+- Decisions: D-217.
+
 ## 0.2.28 (2026-10-21)
 - Step E2, the whole surface in the Seed Explorer (D-214): its surface
   map shows the woods and the crypt together, joined where the cave

@@ -26,9 +26,11 @@ function blend(cells, x, y) {
 // torches (D-101). r 0 is no light at all, the lantern switched off (D-082).
 // `memory`: one byte per tile, 1 when remembered; null shows every tile remembered.
 // `cam`: the room pixel at the screen's top-left (src/core/camera.js).
+// `dark`: the darkness now, the room's own unless the sky's changes it (core/daytime.js);
+// `lamp`: how much the lights add, less as daylight outshines them (D-217).
 const NO_SHIFT = { x: 0, y: 0 }; // a screen-sized room, as on the title
 let seenBy = []; // one cell buffer per light, reused every frame
-export function drawLight(ctx, room, lights, memory, cam = NO_SHIFT) {
+export function drawLight(ctx, room, lights, memory, cam = NO_SHIFT, dark = room.dark, lamp = 1) {
   if (room.cols * TILE / CELL !== CW || room.rows * TILE / CELL !== CH) { // a new room size: new buffers
     CW = room.cols * TILE / CELL; CH = room.rows * TILE / CELL;
     known = new Uint8Array(CW * CH); seenBy = [];
@@ -44,7 +46,7 @@ export function drawLight(ctx, room, lights, memory, cam = NO_SHIFT) {
     known[cy * CW + cx] = memory ? memory[(cy >> 2) * room.cols + (cx >> 2)] : 1;
   }
   const img = ctx.getImageData(0, 0, W, H), d = img.data;
-  const { unseen, remembered } = room.dark;
+  const { unseen, remembered } = dark;
   for (let sy = 0; sy < H; sy++) for (let sx = 0; sx < W; sx++) {
     const x = sx + cam.x, y = sy + cam.y; // the room pixel; the dither keeps to the room, not the screen
     const th = BAYER[((y & 3) << 2) | (x & 3)];
@@ -57,7 +59,7 @@ export function drawLight(ctx, room, lights, memory, cam = NO_SHIFT) {
       const s = blend(cells, x, y);
       if (s <= 0) continue;
       f = Math.floor(Math.pow(f, 1.25) * s * BANDS + th) / BANDS;
-      lr += f * L.cr; lg += f * L.cg; lb += f * L.cb;
+      lr += f * L.cr * lamp; lg += f * L.cg * lamp; lb += f * L.cb * lamp;
     }
     const k = (sy * W + sx) * 4;
     d[k] = Math.min(255, d[k] * (amb[0] + lr));

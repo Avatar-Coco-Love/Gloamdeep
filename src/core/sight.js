@@ -9,6 +9,7 @@ import { get } from './registry.js';
 import { mountAt } from './mount.js';
 import { LIGHT_AT } from './lights.js';
 import { glowsIn } from './stairs.js';
+import { inDaylight } from './daytime.js';
 
 const TILE_SIZE = 16;
 const NEAR = 0.95;
@@ -30,7 +31,7 @@ export function lightsNow(state) {
 
 // § lit: (state, x, y) → true when any light shining now reaches tile x, y
 export function litAt(state, x, y) {
-  if (state.room.dark.day) return true; // daylight lights every tile (D-209)
+  if (inDaylight(state)) return true; // daylight lights every tile (D-209), until dusk (D-217)
   const { room } = state, cw = room.cols * TILE_SIZE / CELL;
   const mx = x * TILE_SIZE + TILE_SIZE / 2, my = y * TILE_SIZE + TILE_SIZE / 2;
   const cell = (my / CELL | 0) * cw + (mx / CELL | 0);

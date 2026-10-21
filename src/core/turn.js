@@ -10,6 +10,7 @@ import { enemyAt, hitEnemy, biters } from './enemies.js';
 import { lightAt, openSide } from './lights.js';
 import { mountAt } from './mount.js';
 import { litAt } from './sight.js';
+import { inDaylight } from './daytime.js';
 import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
 
@@ -196,10 +197,11 @@ const endTurn = (before, after) => {
 // no turn passes and no oil burns (D-015, D-080, D-081).
 export const switchLantern = (state) => ({ ...state, lit: !state.lit });
 // With the lantern set to By itself (D-210): out as the hero comes into daylight,
-// lit again as they leave it; else the state as it is. Only at that change, so
-// the player's own switch between holds. It is free, like the switch.
+// or dawn comes, lit again as they leave it, or dusk falls (D-217); else the state
+// as it is. Only at that change, so the player's own switch between holds. It is
+// free, like the switch.
 export function followDaylight(before, after) {
-  const was = !!before.room.dark.day, now = !!after.room.dark.day;
+  const was = inDaylight(before), now = inDaylight(after);
   return was === now || after.lit === was ? after : { ...after, lit: was };
 }
 

@@ -25,6 +25,7 @@ import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from './core/menu.js
 import { loadSettings, saveSettings, nextControl, controlsText, swipesWalk, tapsWalk, stillMotion, motionText, nextMotion, seedText, lanternText, nextLantern } from './core/settings.js';
 import { shownLine } from './core/lines.js';
 import { remember, rememberAll, forget } from './core/fog.js';
+import { daylight, inDaylight, darkNow, passTime } from './core/daytime.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from './core/map.js';
 import { setMap, drawMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from './render/map.js';
 import { startSeeds, shownSeed, addSeed, canGoBack, backSeed, explorerWorld } from './core/explorer.js';
@@ -387,6 +388,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   forget: () => forget(state),
   setOil: (oil) => setOil(state, oil),
   heal: () => ({ ...state, health: HERO_HEALTH }),
+  passTime: (turns) => passTime(state, turns), // the clock only (D-217)
   goTo: (depth) => goToDepth(state, depth), // depth 0 is the crypt (D-212)
   goOutside: () => goToPlace(state, 'woods'), // the woods, on the surface too (D-209)
   camera: () => cam,
@@ -396,10 +398,11 @@ show('title');
 // § memory: once the hero stands still on a tile, the tiles their lantern
 // reaches are remembered (D-059). Again after a dev change to the memory or oil,
 // or when the lantern comes back on. Nothing new is remembered while it is off (D-082).
-// Daylight shows the whole room, so all of it is remembered, lantern or not (D-209).
+// Daylight shows the whole room, so all of it is remembered, lantern or not (D-209);
+// at night under the sky the lantern remembers as below ground (D-217).
 let rememberedAt = null, rememberedSeen = null;
 function rememberHere() {
-  if (state.room.dark.day) { state = rememberAll(state); return; }
+  if (inDaylight(state)) { state = rememberAll(state); return; }
   if (!state.lit) { rememberedAt = null; return; }
   const key = state.hero.x + ',' + state.hero.y + ',' + state.oil;
   if (key === rememberedAt && state.seen === rememberedSeen) return;
@@ -453,7 +456,8 @@ function frame(t) {
     // § enemies: shaded by the light like the floor, so seen in memory's dim light too (D-153)
     drawEnemies(ctx, s.enemies, t, still(), hit && t < hit.until ? hit.enemy : null, foeAt);
   });
-  const lightOn = !dev.lightOff() && !s.room.dark.day; // daylight needs no lantern (D-025, D-209)
+  // Full daylight needs no lantern (D-025, D-209); dusk dims the sky and the lights show more (D-217)
+  const sun = s.room.dark.sky ? daylight(s.turn) : 0, lightOn = !dev.lightOff() && sun < 1;
   // § light: the lantern's flame is the light's centre, oil sets its reach (D-053 to D-056, D-064).
   // Switched off, the lantern gives no light: only torchlight and remembered tiles show (D-082, D-101).
   const lx = sx + nx + LANTERN_AT.x, ly = sy + ny - 2 + LANTERN_AT.y;
@@ -462,7 +466,7 @@ function frame(t) {
     lights[0] = { ...LANTERN, x: lx, y: ly, r };
     lights.length = 1;
     lights.push(...torchLights(s.room, s.lights, t, still(), torchGlow), ...glowsIn(s.room, dev.revealed() ? null : s.seen));
-    drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen, cam);
+    drawLight(ctx, s.room, lights, dev.revealed() ? null : s.seen, cam, darkNow(s.room, s.turn), 1 - sun);
   }
   inRoom(() => {
     drawFlames(ctx, s.room, s.lights, t, still());

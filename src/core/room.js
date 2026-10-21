@@ -98,7 +98,7 @@ export const PLACES = {
   south: { map: SOUTH_ROOM, start: { x: 5, y: 0 }, lights: SOUTH_LIGHTS, enemies: SOUTH_ENEMIES, items: SOUTH_ITEMS, depth: 0, slot: 1, sides: { up: 'first' } },
   // The first outside room, on the surface, depth 0, made from the seed in daylight (step 48, D-209),
   // with the first cave's mouth on one edge (step 49, D-211). The dev Go outside button leads there too.
-  woods: { make: (s, seed) => generateWoods(s, mouthOf(seed)), depth: 0, look: 'woods', day: true },
+  woods: { make: (s, seed) => generateWoods(s, mouthOf(seed)), depth: 0, look: 'woods', sky: true },
 };
 
 // § depth: the place at each depth, and back. The crypt is depth 0 with the
@@ -146,15 +146,16 @@ export function placeBeside(id, way, seed = 1) {
 // § begin: any place as it begins, from its plan and the game's seed
 export function beginPlace(id, seed) {
   const p = placeFor(id, seed);
-  return { room: makeRoom(p.map, p.day ? DAYLIGHT : CAVE, p.look), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
+  return { room: makeRoom(p.map, p.sky ? SKY : CAVE, p.look), start: p.start, lights: p.lights, enemies: p.enemies, items: p.items || [] };
 }
 
 // § darkness: each place sets how dark never-seen tiles are and how
 // remembered ones look, as light multipliers (D-063). The first room is a
 // cave: pitch black outside the light, with memory a faint grey.
 export const CAVE = { unseen: [0, 0, 0], remembered: [0.095, 0.095, 0.095] };
-// Plain daylight outside (D-209): the whole room lit and seen, no lantern needed (D-025).
-export const DAYLIGHT = { unseen: [1, 1, 1], remembered: [1, 1, 1], day: true };
+// Under the sky (D-209): plain daylight, the whole room lit and seen, no lantern
+// needed, until night falls with the turns (D-025, D-217; core/daytime.js).
+export const SKY = { unseen: [1, 1, 1], remembered: [1, 1, 1], sky: true };
 
 // § look: how a room's walls and floor are drawn. The first rooms are
 // crypt bricks; generated depths are raw grey rock (D-164) or earth (D-165).

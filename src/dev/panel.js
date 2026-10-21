@@ -87,7 +87,8 @@ export function buildPanel(panel, opts, saved, game) {
 
   // § room: Reset room (D-050, D-062) and Forget (D-061), and Go to depth:
   // pick a depth with − and +, then Go; no turn passes (D-166). Depth 0 is
-  // the crypt (D-212, D-213); Go outside goes to the woods (D-209).
+  // the crypt (D-212, D-213); Go outside goes to the woods (D-209). Time: +10
+  // and +50 move the clock only, for dusk and night (D-217).
   let want = 1, shownPlace = null;
   const depthLabel = el('span', { className: 'dev-depth' });
   const pickDepth = (d) => { want = Math.max(0, Math.min(MAX_DEPTH, d)); setPixelText(depthLabel, String(want)); };
@@ -99,7 +100,11 @@ export function buildPanel(panel, opts, saved, game) {
     depthLabel,
     button('+', () => pickDepth(want + 1)),
     button('Go', () => game.set(game.goTo(want))),
-  ), { className: 'dev-row dev-steps' }), row(button('Go outside', () => game.set(game.goOutside()))));
+  ), { className: 'dev-row dev-steps' }), row(button('Go outside', () => game.set(game.goOutside()))),
+  pixel('div', 'dev-kind', 'TIME'), row(
+    button('+10', () => game.set(game.passTime(10))),
+    button('+50', () => game.set(game.passTime(50))),
+  ));
 
   // § oil: a slider for any amount (D-091), Refill and Empty (D-066); no turn passes
   const oil = section('oil', 'Oil');

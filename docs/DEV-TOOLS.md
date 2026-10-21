@@ -50,7 +50,8 @@ tools to be chosen together later.
 - Room: Go to depth, 1 to 99 with − and +, onto that depth's stairs up,
   no turn passed (D-166). Rules: `goToDepth` in `src/core/stairs.js`.
   Go outside goes to the woods, depth 0, the same way (D-209); the cave
-  mouth there leads back into the crypt (D-211).
+  mouth there leads back into the crypt (D-211). TIME: +10 and +50
+  move the clock only; the status line shows the turn of the day (D-217).
 - Copy room: the room and the hero's tile to the clipboard as one line,
   to hand to Claude (D-051, D-052). Code: `src/core/roomcode.js`.
 - Seed Explorer, the title menu's last line: any seed's map, every floor

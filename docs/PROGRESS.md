@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.28 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.29 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**Step 50, day and night outside** (D-025): time of day passing with
-your turns in the woods. Read D-025, D-209, D-210 and `docs/WORLD.md`
-first, then propose.
+**Step 51, daylight through the cave mouth** (D-173): the mouth lets
+the woods' light into the crypt, following the time of day (D-217).
+Read D-173, D-211, D-217, Q-040 and `docs/WORLD.md` first, then propose.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -38,7 +38,7 @@ The surface
 The Seed Explorer (D-214, before step 50)
 - [x] E1 The Explorer: the map, all revealed, the seed and its buttons, 0.2.27
 - [x] E2 The whole surface on the Explorer's map, 0.2.28
-- [ ] 50 Day and night outside (D-025)
+- [x] 50 Day and night outside, 0.2.29
 - [ ] 51 Daylight through the cave mouth (D-173)
 
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
@@ -56,11 +56,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.26, depths move up one.** The crypt is depth 0 and
-  says SURFACE, the second room depth 1, the rock grids 2 to 4, earth
-  from 5. Owner's picks: a seed keeps its rooms, the surface map shows
-  the part you're in, dev Go to depth from 0 (D-213). D-201 to D-208
-  archived. Playtest: https://claude.ai/artifact/9vZTdyesaddiWDq9hvgsNv
 - **2026-10-21, 0.2.27, the Seed Explorer.** "Seed Explorer", the
   title's last line, opens a seed's map, all floors in full, no hero; a
   bar at the bottom shows the seed with Back, Type and Reseed. Owner's
@@ -70,3 +65,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   shows the woods and the crypt together, the crypt where walking
   through the cave mouth takes you. Owner's picks from a mock-up of
   three layouts: joined at the mouth, the mouth plain floor (D-216). Playtest: https://claude.ai/artifact/D9KGuEKFcvxk9vpCHJS6np
+- **2026-10-21, 0.2.29, day and night outside.** A day is 300 turns:
+  full day, a 30-turn dusk, night, a 30-turn dawn. At night the woods are
+  dark like a cave, memory a moonlit blue; By itself lights the lantern
+  at dusk. No clock, only the light. Dev TIME +10 and +50 (D-217).
+  Playtest: https://claude.ai/artifact/NwZb81B6ztLxqggsaqfztk

@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.26, depths move up one.** The crypt is depth 0 and
+  says SURFACE, the second room depth 1, the rock grids 2 to 4, earth
+  from 5. Owner's picks: a seed keeps its rooms, the surface map shows
+  the part you're in, dev Go to depth from 0 (D-213). D-201 to D-208
+  archived. Playtest: https://claude.ai/artifact/9vZTdyesaddiWDq9hvgsNv
 - **2026-10-20, 0.2.25, the cave mouth.** A dark mouth between two grey
   rocks on a woods edge the seed picks; walk through and you arrive on
   the crypt's facing side (up: the south room's bottom). Owner's picks
