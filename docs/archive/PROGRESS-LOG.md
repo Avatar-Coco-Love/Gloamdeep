@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.28, the whole surface.** The Explorer's surface map
+  shows the woods and the crypt together, the crypt where walking
+  through the cave mouth takes you. Owner's picks from a mock-up of
+  three layouts: joined at the mouth, the mouth plain floor (D-216). Playtest: https://claude.ai/artifact/D9KGuEKFcvxk9vpCHJS6np
 - **2026-10-21, 0.2.27, the Seed Explorer.** "Seed Explorer", the
   title's last line, opens a seed's map, all floors in full, no hero; a
   bar at the bottom shows the seed with Back, Type and Reseed. Owner's

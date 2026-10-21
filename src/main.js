@@ -32,6 +32,8 @@ import { startSeeds, shownSeed, addSeed, canGoBack, backSeed, explorerWorld } fr
 import { lanternFrom } from './core/sight.js';
 import { mouthLight } from './core/mouth.js';
 import { cameraAt } from './core/camera.js';
+import { wayStep, cameIntoView } from './core/walk.js';
+import { drawMark, drawAlert } from './render/walk.js';
 import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
@@ -73,6 +75,11 @@ const SLIDE = 0.18; // tiles per frame, as in the study
 const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
 const shown = { x: state.hero.x, y: state.hero.y };
 let queued = null, nudge = null, lastHeldStep = 0; // nudge: { dx, dy, until } after bumping a wall
+// The held walk (D-219, D-220): its target tile, set where the finger lands and moved only when it slides,
+// as the camera follows the hero; `stopped` once something came into view, until the finger lifts.
+let walk = null; // { px, py, tx, ty, stopped }
+let alertUntil = 0; // the "!" over the hero after a stop
+const ALERT_MS = 900;
 let hit = null; // { enemy, until, shakeUntil } after attacking an enemy (D-105, D-109)
 let bitten = null; // { until, shakeUntil } after a bite: the hero flashes red (D-118)
 let travel = null; // { from, mid, end } while taking stairs: the old room fades out, the new one in (D-135)
@@ -137,6 +144,21 @@ const stepToward = (px, py, held = false) => {
   if (dir) { if (tapsWalk(settings.controls)) tryStep(dir); }
   else if (!held) tryStep('wait');
 };
+// § held walk: one step on the remembered way to the held tile, else one step toward it,
+// as a held finger walked before (D-044, D-220). A creature or item coming into view stops it (D-219).
+function walkOn() {
+  const before = state, h = state.hero, dir = wayStep(state, walk.tx, walk.ty) || toward(h.x, h.y, walk.tx, walk.ty);
+  if (!dir) return;
+  tryStep(dir);
+  if (state !== before && cameIntoView(before, state)) { walk.stopped = true; alertUntil = performance.now() + ALERT_MS; }
+  else if (state.place !== before.place) walk.stopped = true; // the held tile was in the room left behind
+}
+// The held point in game pixels → the walk's target, kept while the finger stays put
+function holdAt(p) {
+  if (!p || screen !== 'play' || dev.armed() || !tapsWalk(settings.controls)) { walk = null; return; }
+  if (walk && walk.px === p[0] && walk.py === p[1]) return;
+  walk = { px: p[0], py: p[1], tx: Math.floor((p[0] + cam.x) / TILE), ty: Math.floor((p[1] + cam.y) / TILE), stopped: walk?.stopped || false };
+}
 
 // The lantern set to By itself follows the daylight as the hero comes and goes (D-210)
 const byItself = (before, after) => (settings.lantern === 'self' ? followDaylight(before, after) : after);
@@ -434,13 +456,11 @@ function frame(t) {
   shown.x = approach(shown.x, s.hero.x);
   shown.y = approach(shown.y, s.hero.y);
   for (const e of s.enemies) { const p = foeAt(e); p.x = approach(p.x, e.x); p.y = approach(p.y, e.y); }
+  holdAt(input.held());
   if (settled() && screen === 'play') { // paused, no turn is taken
     rememberHere();
     if (queued) { const d = queued; queued = null; tryStep(d); }
-    else {
-      const p = input.held();
-      if (p && !dev.armed() && tapsWalk(settings.controls) && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; stepToward(...p, true); }
-    }
+    else if (walk && !walk.stopped && t - lastHeldStep >= HOLD_STEP_MS) { lastHeldStep = t; walkOn(); }
   }
   let nx = 0, ny = 0;
   if (nudge && t < nudge.until && !still()) { nx = nudge.dx; ny = nudge.dy; }
@@ -477,6 +497,8 @@ function frame(t) {
   inRoom(() => {
     drawFlames(ctx, s.room, s.lights, t, still());
     if (s.lit) { ctx.fillStyle = '#fff5d6'; ctx.fillRect(lx, ly, 1, 1); } // the lit flame's core is always bright (study line 446)
+    if (walk && !walk.stopped && !travel) drawMark(ctx, walk.tx, walk.ty, t, still());
+    if (t < alertUntil) drawAlert(ctx, sx + nx, sy + ny);
   });
   // § shake: the room jumps a pixel left and right after a hit; none with reduced motion (study line 432, D-105)
   // A bite shakes it the same way (D-118).
