@@ -47,7 +47,7 @@ test('every dungeon room is made, not the fallback, and the stairs line up from 
       assert.equal(p.map.length, 20, `seed ${seed} ${c.id}`);
       assert.equal(count(p.map, '<'), c.up ? 1 : 0);
       assert.equal(count(p.map, '>'), c.down ? 1 : 0);
-      assert.deepEqual(p.enemies.map((e) => e.id), ['rat']);
+      assert.deepEqual(p.enemies.map((e) => e.id), ['rat', 'rat']);
     }
     const above = layoutAt(seed, 7).cells.find((c) => c.down), up = layoutAt(seed, 8).cells.find((c) => c.up);
     assert.deepEqual({ x: up.x, y: up.y }, { x: above.x, y: above.y });

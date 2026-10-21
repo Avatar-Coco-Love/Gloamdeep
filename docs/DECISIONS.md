@@ -174,3 +174,17 @@ owner's wish in D-228, option B of the step 59b mock-up) The dungeon is
 drawn with the crypt's brick and slab art, every colour's red, green and
 blue multiplied by 0.72, 0.78 and 0.95: deeper and bluer. The stairs keep
 the crypt's colours. The crypt rooms at the top don't change.
+
+**D-230 · 2026-10-21 · The inventory gets its own step** (owner's pick)
+A small bag screen is built as its own step just before step 41 (first
+gear), so gear has somewhere to go. Its look and size are settled at
+that step. The owner's wish list and research on similar games are kept
+in `RESEARCH.md`.
+
+**D-231 · 2026-10-21 · More rats deeper** (step 34, owner's picks; builds
+D-223) Every generated room at depths 2 to 4 holds one rat, and from
+depth 5 down two, so a warren floor has 10 and a dungeon floor 12. It
+stays at two until the hero can grow stronger. The first rat guards the
+flask as before; the second sits anywhere open by the same rules (at
+least 5 steps in, 3 tiles from the stairs, out of the torch's light), and
+the rest of a seed's room doesn't change.

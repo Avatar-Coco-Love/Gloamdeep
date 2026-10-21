@@ -109,6 +109,10 @@ export const PLACES = {
 // depth laid out as a grid (region.js, D-201) adds rooms depth2:x,y beside
 // depth2, which holds its stairs up.
 const DEEPER = 'second';
+// § more rats deeper: one rat a room, two from depth 5, where the warrens
+// start (step 34, D-231)
+export const MORE_RATS = 5;
+export const ratsAt = (depth) => (depth >= MORE_RATS ? 2 : 1);
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.length), 10);
 export const isGenerated = (id) => !PLACES[id];
@@ -118,7 +122,7 @@ export function placeFor(id, seed = 1) {
   if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth), seed) };
   if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedAt(seed, PLACES[id].depth) + (PLACES[id].slot || 0)), map: withGap(id, PLACES[id].map, seed) };
   const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
-  return { ...((cell && generateRoom(cell.seed, shape, cell)) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
+  return { ...((cell && generateRoom(cell.seed, shape, { ...cell, rats: ratsAt(depth) })) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
 }
 
 // The room beyond each edge of a place with openings, by direction (D-197,

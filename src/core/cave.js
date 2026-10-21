@@ -17,12 +17,12 @@ const TRIES = 200;
 // (seed, shape, ways) → { map, start, lights, enemies, items }, or null if no
 // try worked. The shape is 'chambers', 'burrows' (D-165) or 'halls' (D-228). `ways.doors` are
 // openings to carve at the edges, as { dir, at } (region.js, D-201).
-// `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
+// `ways.rats` is how many rats the room holds (D-231). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
 // floors line up (D-202); true lets the room pick, null leaves them out.
-export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true } = {}) {
+export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1 } = {}) {
   const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
   for (let i = 0; i < TRIES; i++) {
-    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down);
+    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats);
     if (room) return room;
   }
   return null;
@@ -75,7 +75,7 @@ function chambers(r) {
 // The stairs, torch, flask, rat and herb in a carved grid, or null if they
 // don't fit. With no stairs up, the way in through the room's first door
 // stands for them (D-201), and there is no torch.
-function fill(r, g, up = true, down = true) {
+function fill(r, g, up = true, down = true, rats = 1) {
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
   const doors = g.doors || [];
@@ -107,7 +107,7 @@ function fill(r, g, up = true, down = true) {
   }
   if (at) g[at.y][at.x] = '<';
   if (to) g[to.y][to.x] = '>';
-  if (!at) return finds(r, g, floors, far, from, to, null, doors);
+  if (!at) return finds(r, g, floors, far, from, to, null, doors, rats);
 
   // § torch: on a wall face near the stairs up, not right above them, and
   // not on the top row, where the hearts, depth and oil bar boxes could hide
@@ -116,12 +116,12 @@ function fill(r, g, up = true, down = true) {
   const near = faces.filter((t) => dist(t, at) <= 3 && !(t.x === at.x && t.y === at.y - 1));
   if (!near.length) return null;
   const torch = pick(r, near);
-  return finds(r, g, floors, far, at, to, torch, doors);
+  return finds(r, g, floors, far, at, to, torch, doors, rats);
 }
 
 // The flask, rat and herb, `far` steps from `up`, the way in; with `down` and
-// `torch` when the room has them
-function finds(r, g, floors, far, up, down, torch, doors) {
+// `torch` when the room has them, and `count` rats in all
+function finds(r, g, floors, far, up, down, torch, doors, count = 1) {
   // § flask and rat: the flask well away from the stairs, the rat beside it,
   // at least 5 steps from the stairs up, and 3 tiles off counting across walls.
   // It starts in the dark, as the second room's does: out of the torch's
@@ -130,7 +130,8 @@ function finds(r, g, floors, far, up, down, torch, doors) {
   const flasks = open.filter((f) => far.get(key(f)) >= 5);
   if (!flasks.length) return null;
   const flask = pick(r, flasks);
-  const rats = open.filter((f) => !same(f, flask) && dist(f, flask) <= 2 && far.get(key(f)) >= 5 && dist(f, up) >= 3 && (!torch || dist(f, torch) >= 5) && (!down || dist(f, down) >= 3));
+  const dark = (f) => far.get(key(f)) >= 5 && dist(f, up) >= 3 && (!torch || dist(f, torch) >= 5) && (!down || dist(f, down) >= 3);
+  const rats = open.filter((f) => !same(f, flask) && dist(f, flask) <= 2 && dark(f));
   if (!rats.length) return null;
   const rat = pick(r, rats);
 
@@ -140,12 +141,23 @@ function finds(r, g, floors, far, up, down, torch, doors) {
   if (!herbs.length) return null;
   const herb = pick(r, herbs);
 
+  // § more rats deeper: each extra rat anywhere open by the first rat's
+  // rules, but not guarding the flask (D-231). Picked after the herb, so the
+  // rest of a seed's room stays as it was; one that doesn't fit is left out.
+  const enemies = [{ id: 'rat', x: rat.x, y: rat.y }], taken = [flask, herb, rat];
+  for (let i = 1; i < count; i++) {
+    const spots = open.filter((f) => dark(f) && !taken.some((t) => same(t, f)));
+    if (!spots.length) break;
+    const at = pick(r, spots);
+    taken.push(at); enemies.push({ id: 'rat', x: at.x, y: at.y });
+  }
+
   return {
     map: g.map((row) => row.join('')),
     start: { x: up.x, y: up.y },
     lights: torch ? [{ id: 'torch', x: torch.x, y: torch.y }] : [],
     items: [{ id: 'flask', x: flask.x, y: flask.y }, { id: 'herb', x: herb.x, y: herb.y }],
-    enemies: [{ id: 'rat', x: rat.x, y: rat.y }],
+    enemies,
   };
 }
 

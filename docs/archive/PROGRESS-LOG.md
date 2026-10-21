@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.35, burrow warrens.** From depth 5 each floor is 5
+  rooms in a 3 × 3 grid, a winding chain, the stairs down farthest away.
+  Owner's pick from a mock-up (D-227); the dungeon gets its own step.
+  Playtest: https://claude.ai/artifact/FRSoNAgUzYPdrKZER9tcY6
 - **2026-10-21, 0.2.34, a clear line to notice.** A rat in light notices
   the hero only with no wall between them; the owner saw a torchlit rat
   come from behind a wall (D-226). Step 59 is next.

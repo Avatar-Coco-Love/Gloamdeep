@@ -77,3 +77,8 @@ show?
 D-165 makes depths from 6 down earth burrows, but the first cave now
 ends at depth 5 (D-185). Do burrows move behind the portal, become the
 bottom depths of the first cave, or wait for a later cave?
+
+**Q-049 · When do creatures show their next move?** (with the second creature or later)
+The owner liked creatures showing what they will do next, as in Hoplite
+and Into the Breach (`RESEARCH.md`), but some situations may use it and
+some won't. When and where does it show, and how does it look?
