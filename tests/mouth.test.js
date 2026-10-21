@@ -73,12 +73,12 @@ test('the rocks beside the mouth are solid: nothing changes, no turn', () => {
   assert.equal(step(s, 'right'), s);
 });
 
-test('the woods and the crypt are both depth 0, and the map shows the part the hero is in (D-212, D-213)', () => {
+test('the woods and the crypt are both depth 0, and the map shows the part the hero is in until both are visited (D-212, D-222)', () => {
   for (const seed of [1, 4]) {
     const s = makeWorld('woods', seed);
-    assert.deepEqual(floorPlan(s, true).rooms.map((r) => r.id), ['woods']);
-    assert.deepEqual(floorPlan(makeWorld('first', seed), true).rooms.map((r) => r.id).sort(), ['first', 'south']);
-    assert.deepEqual(floorPlan(goToDepth(s, 1), true, 0).rooms.map((r) => r.id).sort(), ['first', 'south']); // the way the stairs lead
+    assert.deepEqual(floorPlan(s).rooms.map((r) => r.id), ['woods']);
+    assert.deepEqual(floorPlan(makeWorld('first', seed)).rooms.map((r) => r.id).sort(), ['first', 'south']);
+    assert.deepEqual(floorPlan(goToDepth(s, 1), false, 0).rooms.map((r) => r.id).sort(), ['first', 'south']); // the way the stairs lead
   }
 });
 

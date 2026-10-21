@@ -1,20 +1,31 @@
 // § map: the floor the hero is on, from the tiles remembered (D-176, D-205)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { floorPlan, markAt, roomsFound, fitView, panView, zoomView, ZOOM_MAX, floorsShown, turnFrom, stairsNear, stairsIn, centreView, DEEPEST } from '../src/core/map.js';
+import { floorPlan, wholeSurface, markAt, roomsFound, fitView, panView, zoomView, ZOOM_MAX, floorsShown, turnFrom, stairsNear, stairsIn, centreView, DEEPEST } from '../src/core/map.js';
 import { makeWorld, step } from '../src/core/turn.js';
-import { goToDepth } from '../src/core/stairs.js';
+import { goToDepth, goToPlace } from '../src/core/stairs.js';
 import { remember } from '../src/core/fog.js';
 import { layoutAt } from '../src/core/region.js';
 
 const SEED = 7;
 
-test('depth 0: the first room above the south room, the hero on their tile; the woods not on it (D-213)', () => {
-  const p = floorPlan(makeWorld('first', SEED), true);
+test('depth 0: the crypt alone, the first room above the south room, the hero on their tile, until the woods are visited (D-222)', () => {
+  const p = floorPlan(makeWorld('first', SEED));
   assert.equal(p.depth, 0);
   assert.deepEqual(p.rooms.map((r) => [r.id, r.x, r.y]), [['first', 0, 0], ['south', 0, 13]]);
   assert.deepEqual([p.cols, p.rows], [11, 26]);
   assert.deepEqual(p.hero, { x: 5, y: 11 });
+});
+
+test('depth 0: the woods and the crypt joined as in the Explorer once both are visited, or with reveal (D-222)', () => {
+  const s = makeWorld('first', SEED), whole = wholeSurface(s), at = (p, id) => p.rooms.find((r) => r.id === id);
+  const shown = floorPlan(s, true);
+  assert.deepEqual(shown.rooms.map((r) => [r.id, r.x, r.y]), whole.rooms.map((r) => [r.id, r.x, r.y]));
+  assert.deepEqual(shown.hero, { x: at(whole, 'first').x + 5, y: at(whole, 'first').y + 11 });
+  const out = goToPlace({ ...s, seen: s.seen.slice().fill(1) }, 'woods'), p = floorPlan(out);
+  assert.ok(at(p, 'woods') && at(p, 'first') && p.rooms.every((r) => r.seen), 'from memory, not revealed');
+  assert.deepEqual([at(p, 'woods').x, at(p, 'first').x, at(p, 'first').y], [at(whole, 'woods').x, at(whole, 'first').x, at(whole, 'first').y]);
+  assert.deepEqual(p.hero, { x: at(p, 'woods').x + out.hero.x, y: at(p, 'woods').y + out.hero.y });
 });
 
 test('the hero in the south room is placed under the first room', () => {
@@ -71,7 +82,7 @@ test('the map changes nothing: the memory is the same after a revealed plan', ()
 });
 
 test('the view opens on the whole floor, centred, and zooms in whole pixels up to its limit', () => {
-  const p = floorPlan(makeWorld('first', SEED), true), w = 152, h = 185;
+  const p = floorPlan(makeWorld('first', SEED)), w = 152, h = 185;
   const v = fitView(p, w, h);
   assert.equal(v.k, 7); // 26 rows in 185 pixels
   assert.ok(p.rows * v.k <= h && p.cols * v.k <= w);

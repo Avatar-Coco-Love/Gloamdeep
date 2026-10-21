@@ -2,10 +2,10 @@
 // or another one the map has turned to (D-206). Plain data, no drawing.
 // Every room of the floor sits on its grid, found by walking the side
 // openings from one of its rooms, but not the cave mouth: the woods and the
-// crypt are both depth 0, yet each shows as its own part (D-211, D-213); each is shown from the tiles the hero
-// remembers, or in full with the dev Reveal map switch, which keeps the
-// memory as it is. The Seed Explorer shows the whole surface instead, the two
-// parts joined at the mouth (D-214, D-216).
+// crypt are both depth 0, two parts joined at the mouth as in the Seed
+// Explorer once the hero has been in both, else the part they know (D-216,
+// D-222). It is shown from the tiles the hero remembers, or in full with the
+// dev Reveal map switch, which keeps the memory as it is.
 import { sidesOf, depthOf, tileAt, placeAt, placeBeside } from './room.js';
 import { mouthSpot, mouthOf } from './mouth.js';
 import { fresh } from './stairs.js';
@@ -19,6 +19,8 @@ const STEP = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 // unless given; another floor must have a room shown (floorsShown), and it
 // opens on the part its stairs lead to, if seen, else on a part that is.
 export function floorPlan(state, reveal = false, depth = depthOf(state.place)) {
+  const both = depth === 0 && joinedSurface(state, reveal);
+  if (both) return both;
   const seen = (id) => reveal || state.elsewhere[id]?.seen.some(Boolean);
   const start = depth === depthOf(state.place) ? state.place
     : [placeAt(depth), ...Object.keys(state.elsewhere)].find((id) => depthOf(id) === depth && seen(id)) || placeAt(depth);
@@ -60,6 +62,20 @@ export function wholeSurface(state) {
     cols: Math.max(woods.cols, dx + crypt.cols) - x0, rows: Math.max(woods.rows, dy + crypt.rows) - y0,
     rooms: all.map((r) => ({ ...r, x: r.x - x0, y: r.y - y0 })),
   };
+}
+
+// The game's surface map: the whole surface laid out as in the Explorer, with
+// only the rooms the hero knows and the hero on it (D-222). Null until the
+// hero has been in the woods and the crypt both, unless everything shows.
+function joinedSurface(state, reveal) {
+  const been = (id) => (id === state.place ? state : state.elsewhere[id]);
+  const visited = (id) => id === state.place || state.elsewhere[id]?.seen.some(Boolean);
+  const crypt = partPlan(state, true, 0, mouthOf(state.seed).room).rooms.map((r) => r.id);
+  if (!reveal && !(visited('woods') && crypt.some(visited))) return null;
+  const whole = wholeSurface(state);
+  const rooms = whole.rooms.filter((r) => reveal || been(r.id)).map((r) => ({ ...r, seen: reveal ? null : been(r.id).seen }));
+  const here = rooms.find((r) => r.id === state.place);
+  return { ...whole, rooms, hero: here ? { x: here.x + state.hero.x, y: here.y + state.hero.y } : null };
 }
 
 // § floors: the depths the map can turn to (D-206), shallowest first: the

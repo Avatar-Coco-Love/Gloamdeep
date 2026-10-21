@@ -29,7 +29,10 @@ Entry format:
   walk too.
 - Held on a dark tile, or one no remembered way leads to, the hero steps
   straight toward it, as before.
-- Decisions: D-220, D-221 (the surface decisions move to the archive).
+- The map joins the woods and the crypt at the cave mouth, as the Seed
+  Explorer does, once you have been in both.
+- Decisions: D-220, D-221 (the surface decisions move to the archive),
+  D-222, D-223 (deeper floors as grids, next). Q-038 narrowed.
 
 ## 0.2.30 (2026-10-21)
 - Daylight comes in through the cave mouth: in the crypt room the mouth

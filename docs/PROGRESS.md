@@ -7,13 +7,11 @@ go to the top of `archive/PROGRESS-LOG.md`.
 **Version:** 0.2.31 · **Stage:** 0.3, the world (D-168)
 
 ## Next up
-**The owner picks the next step.** The surface steps are done. Offer the
-stage 0.2 steps waiting below (34 to 41) and the ideas for later as
-choices, with a recommendation.
+**Step 59, deeper floors as grids with variety** (D-223). Read D-201
+to D-203, D-223 and Q-038, then mock up each kind of place's rules.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
-- Play 0.2.31: is the held walk's pace, mark and stop right (D-220)?
 - The starting region's name (Q-045), any time.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
@@ -41,7 +39,8 @@ The Seed Explorer (D-214, before step 50)
 - [x] E2 The whole surface on the Explorer's map, 0.2.28
 - [x] 50 Day and night outside, 0.2.29
 - [x] 51 Daylight through the cave mouth, 0.2.30
-- [x] 51b Hold to walk around walls, 0.2.31
+- [x] 51b Hold to walk around walls; the map joins the surface, 0.2.31
+- [ ] 59 Deeper floors as grids, each kind of place with its own rules (D-223)
 
 Stage 0.2 steps waiting (D-168): 34 more rats deeper, 35 deepest depth
 kept, 36 a proper fall, 37 saving, 38 a second creature, 39 experience,
@@ -68,9 +67,9 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   torch; it shrinks and warms through dusk, gone at night. Owner's picks
   (D-218), and hold to walk around walls is next (D-219, answers Q-026).
   Playtest: https://claude.ai/artifact/WdRHRAQxhk8KRkSg3g55Xk
-- **2026-10-21, 0.2.31, hold to walk.** A held finger or mouse walks
-  around walls to the tile under it, over remembered tiles. Owner's picks
-  from a mock-up: an amber frame on the target, a "!" and a stop when
-  something comes into view, a straight step toward unknown tiles
-  (D-220). Surface decisions archived (D-221).
+- **2026-10-21, 0.2.31, hold to walk.** A held finger walks around
+  walls over remembered tiles: an amber frame on the target, a "!" stop
+  when something comes into view (D-220). Surface decisions archived
+  (D-221). After the playtest: the map joins the surface (D-222);
+  deeper floors next (D-223).
   Playtest: https://claude.ai/artifact/85ZXk2u227YhA3qM45JUu1

@@ -54,7 +54,8 @@ says SURFACE in the crypt, until places have names. Built in its own
 step, 49b, after the mouth.
 
 **D-213 · 2026-10-21 · How the depths move up** (step 49b, owner's
-picks) A seed keeps its rooms: each place below the surface keeps the
+picks) *The map part superseded by D-222 (2026-10-21): the map joins the
+surface once both parts are visited.* A seed keeps its rooms: each place below the surface keeps the
 seed numbers of its old depth, so only the labels change. The map shows
 the part of the surface the hero is in, the woods or the two crypt
 rooms, both headed SURFACE; the second room's stairs up lead to the

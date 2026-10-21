@@ -107,3 +107,20 @@ before (D-044).
 **D-221 · 2026-10-21 · The surface decisions are archived** D-209 to
 D-218 moved unchanged to `archive/DECISIONS-SURFACE.md` as this file
 neared 12 KB. They stay in force.
+
+**D-222 · 2026-10-21 · The game's map joins the surface** (after the
+0.2.31 playtest, owner's pick; supersedes the map part of D-213) Once the
+hero has been in both the woods and the crypt, the map shows them joined
+as the Seed Explorer does (D-216), the crypt beside the cave mouth, with
+only the rooms the hero knows and the hero on it. Before that it shows
+the part the hero knows. Dev Reveal map shows the whole surface.
+
+**D-223 · 2026-10-21 · Deeper floors as grids, with variety** (after the
+0.2.31 playtest, owner's picks; part of Q-038) From depth 5 down the
+floors are one room, the stairs about 15 steps apart and one rat each
+(the owner's girlfriend's report). They become grids like depths 2 to 4,
+with the stairs down in another room, and with some variety: each kind
+of place (crypt, cave, dungeon, any underground place) has its own set
+of rules for how it is made. The rules are settled with a mock-up at the
+next step. More rats come from the grids now (one a room) and from step
+34 (more rats deeper) later.
