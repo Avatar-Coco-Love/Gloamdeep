@@ -20,6 +20,18 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.50 (2026-10-22)
+- The first gear: a knife. It lies in the first cave, the room you reach
+  down the crypt's stairs (depth 2), on a tile the seed picks at least 5
+  steps from the stairs.
+- Walk onto it and the hero holds it at once ("You take the knife."). It
+  hits for 2 where the lantern hits for 1, so a rat falls in one hit.
+- The bag shows it in its own "HELD" slot above the six slots. The bag
+  panel is a little taller for it.
+- It is kept through a fall, and no new knife lies in the cave while the
+  hero holds one.
+- Decisions: D-252.
+
 ## 0.2.49 (2026-10-22)
 - A stack in the bag holds at most 3 flasks. Walk onto a 4th and it stays
   on the floor for later (it never starts a second stack), and the text

@@ -137,7 +137,7 @@ export function createFrame(app, ui) {
     else if (app.screen === 'seed') drawSeedPad(ctx, app.entry, app.chosen, t, still());
     else if (app.screen === 'howto') drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still());
     else if (app.screen === 'map') drawMap(ctx, app.view, t, still(), screens.turns());
-    else if (app.screen === 'bag') drawBag(ctx, state.bag, app.chosen, SPRITES, app.bagOnTop);
+    else if (app.screen === 'bag') drawBag(ctx, state.bag, app.chosen, SPRITES, app.bagOnTop, state.held);
     else dev.draw(ctx, state, cam);
   }
 

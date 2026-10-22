@@ -19,6 +19,7 @@ export const LINES = {
   herbEat: { text: 'You eat the herb and feel better.', warn: false }, // (D-156)
   flaskPour: { text: 'You pour a flask.', warn: false }, // poured by itself (D-249)
   flaskFull: { text: "You can't carry more flasks.", warn: false }, // a full stack (D-250)
+  knifeTake: { text: 'You take the knife.', warn: false }, // into the held slot (D-252)
   levelUp: { text: 'You feel stronger. Level {n}.', warn: false }, // {n}, the new level (D-246)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)

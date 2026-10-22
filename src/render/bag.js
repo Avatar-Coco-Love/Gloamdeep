@@ -1,6 +1,7 @@
 // § bag panel: a box like the map's over the room's foot, so the hero and the
 // strip stay in view (D-247); over its top instead when the hero stands where
-// the panel would hide them. "BAG" in ember at its top, then the six slots in
+// the panel would hide them. "BAG" in ember at its top, then the held slot
+// with "HELD" beside it, the weapon in hand (D-252), then the six slots in
 // a row, each an item's sprite with its count when more than one, the chosen
 // slot framed in gold. Under them the chosen item's name, and Pour on the
 // right for one that pours. No veil: the room shows above it.
@@ -11,15 +12,16 @@ import { get } from '../core/registry.js';
 
 const K = '#0e0c16', LINE = '#2a2636', EMBER = '#f39a3b', GOLD = '#ffd66b', GREY = '#9790a4', CORE = '#fff5d6';
 const SLOT = 22, SLOT_GAP = 3;
-export const PANEL = { x: 8, w: W - 16, h: 60, y: SCREEN_H - 4 - 60 };
+export const PANEL = { x: 8, w: W - 16, h: 86, y: SCREEN_H - 4 - 86 };
 const TOP_Y = 4; // the panel's top when it moves over the room's top
 // Whether the panel goes to the top: the hero's tile, `heroY` pixels down the screen, would be under it
 export const panelOnTop = (heroY) => heroY + 16 > PANEL.y - 4;
 const ROW_X = Math.floor((W - (BAG_SLOTS * SLOT + (BAG_SLOTS - 1) * SLOT_GAP)) / 2);
 const POUR = { text: 'POUR', w: textWidth('POUR') + 6, h: 11 };
 POUR.x = PANEL.x + PANEL.w - 4 - POUR.w;
-// The panel's rows from its top: the slots' row, and the name's line under it
-const rows = (top) => { const y = top ? TOP_Y : PANEL.y, row = y + 15; return { y, row, foot: row + SLOT + 6 }; };
+// The panel's rows from its top: the held slot's, the slots' row, and the name's line under it
+const rows = (top) => { const y = top ? TOP_Y : PANEL.y, held = y + 15, row = held + SLOT + 4; return { y, held, row, foot: row + SLOT + 6 }; };
+const HELD_X = Math.floor((W - SLOT) / 2), HELD = 'HELD';
 const slotX = (i) => ROW_X + i * (SLOT + SLOT_GAP);
 const TAP_PAD = 4; // game pixels around a slot or Pour that still pick it
 
@@ -41,12 +43,16 @@ function frame(c, x, y, w, h, colour) {
   c.fillRect(x, y, 1, h); c.fillRect(x + w - 1, y, 1, h);
 }
 
-// bag: [{ id, n }]; chosen: the slot picked; sprites: the item sprites, keyed by id; top: see panelOnTop
-export function drawBag(c, bag, chosen, sprites, top = false) {
-  const { x, w, h } = PANEL, { y, row, foot } = rows(top);
+// bag: [{ id, n }]; chosen: the slot picked; sprites: the item sprites, keyed by id; top: see panelOnTop;
+// held: the weapon in hand's id, or null
+export function drawBag(c, bag, chosen, sprites, top = false, held = null) {
+  const { x, w, h } = PANEL, { y, held: hy, row, foot } = rows(top);
   c.fillStyle = K; c.fillRect(x, y, w, h);
   frame(c, x, y, w, h, LINE);
   drawText(c, 'BAG', Math.floor((W - textWidth('BAG')) / 2), y + 4, EMBER);
+  drawText(c, HELD, HELD_X - 5 - textWidth(HELD), hy + 8, GREY);
+  frame(c, HELD_X, hy, SLOT, SLOT, LINE);
+  if (held) c.drawImage(sprites[held], HELD_X + 3, hy + 3);
   for (let i = 0; i < BAG_SLOTS; i++) {
     const sx = slotX(i), s = bag[i];
     frame(c, sx, row, SLOT, SLOT, i === chosen ? GOLD : LINE);

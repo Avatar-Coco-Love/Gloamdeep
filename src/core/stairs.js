@@ -32,12 +32,14 @@ export function goToPlace(state, to) {
   return arrive(state, to, there, find(there.room, 'stairsUp') || placeFor(to, state.seed).start);
 }
 
-// The state moved to place `to`, its room `there`, the hero at `spot`; the room left waits
+// The state moved to place `to`, its room `there`, the hero at `spot`; the room left waits.
+// No weapon like the one held lies there (D-252).
 export function arrive(state, to, there, spot) {
   const here = { room: state.room, lights: state.lights, enemies: state.enemies, items: state.items, seen: state.seen };
   const elsewhere = { ...state.elsewhere, [state.place]: here };
   delete elsewhere[to];
-  return { ...state, ...there, place: to, elsewhere, hero: spot };
+  const items = state.held ? there.items.filter((it) => it.id !== state.held) : there.items;
+  return { ...state, ...there, items, place: to, elsewhere, hero: spot };
 }
 
 // A place never visited, as it begins from the game's seed, with nothing remembered

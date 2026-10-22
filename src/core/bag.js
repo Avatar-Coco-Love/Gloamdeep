@@ -1,6 +1,7 @@
 // § bag: what the hero carries (D-247). Six slots in a row; each holds one
 // kind of item, as a stack with its count: [{ id, n }]. Items with `bag` in
-// the registry go into it when walked onto. Plain data, no drawing.
+// the registry go into it when walked onto. The weapon in hand is apart from
+// it, in `state.held`: an item id, or null (D-252). Plain data, no drawing.
 export const BAG_SLOTS = 6;
 export const STACK_MAX = 3; // a stack holds at most 3; one more stays on the floor (D-250)
 
@@ -23,5 +24,9 @@ export function bagTake(bag, i) {
   return s.n > 1 ? bag.map((o, j) => (j === i ? { ...o, n: o.n - 1 } : o)) : bag.filter((o, j) => j !== i);
 }
 
-// A state from a save older than the bag gets an empty one
-export const withBag = (state) => (Array.isArray(state.bag) ? state : { ...state, bag: [] });
+// A state from a save older than the bag gets an empty one, and one older
+// than the held slot an empty hand (D-252)
+export const withBag = (state) => {
+  const s = Array.isArray(state.bag) ? state : { ...state, bag: [] };
+  return s.held === undefined ? { ...s, held: null } : s;
+};
