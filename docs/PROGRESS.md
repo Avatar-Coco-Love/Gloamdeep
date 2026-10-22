@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.43 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.44 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
@@ -45,7 +45,7 @@ The Seed Explorer (D-214, before step 50)
 - [x] M1 The map names the area, in its colour, 0.2.40 (D-233)
 - [x] 36 A proper fall: lie down, the dark, then wake, 0.2.41 (D-234)
 - [x] 37 Saving, with Continue on the title, 0.2.42 (D-238, D-239)
-- [x] 38 A second creature: the light-shy gloamling, 0.2.43 (D-240 to D-242)
+- [x] 38 A second creature: the light-shy gloamling, 0.2.43, 0.2.44 (D-240 to D-244)
 
 Stage 0.2 steps waiting (D-168): 39 experience, 40 levels, 41a the
 inventory (D-230), 41 first gear.
@@ -61,11 +61,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.41, a proper fall.** At 0 health the hero lies down
-  where they fell and the light closes to dark, then opens where they
-  wake (D-234). `main.js` split (D-235), D-219 to D-233
-  archived (D-236), Stage label fixed (D-237).
-  Playtest: https://claude.ai/artifact/94xckauod2Q6KCCai69MGH
 - **2026-10-22, 0.2.42, saving.** The journey is kept on this device
   after every turn; Continue on the title picks it up, and New journey
   asks "Start over?" first (D-238). Back to title keeps it (D-239).
@@ -74,3 +69,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   light and bites only at an ember or with the lantern off (D-240,
   D-241). Two warren rooms a floor hold one (D-242).
   Playtest: https://claude.ai/artifact/HWDnUaFPDTR1LDei8xgfFi
+- **2026-10-22, 0.2.44, more gloamlings.** Three a floor from depth 5
+  all the way down; one backing out of the light no longer walks into
+  torchlight (D-243, D-244).
+  Playtest: https://claude.ai/artifact/DpEhchRMW5ULRbgm7n4UW7

@@ -113,11 +113,11 @@ const DEEPER = 'second';
 // start (step 34, D-231)
 export const MORE_RATS = 5;
 export const ratsAt = (depth) => (depth >= MORE_RATS ? 2 : 1);
-// § gloamlings: on each warren floor (depths 5 to 7) two rooms the seed picks
-// hold a gloamling in place of their second rat (step 38, D-240)
-const GLOAMLING_ROOMS = 2;
+// § gloamlings: on each floor from depth 5 down, three rooms the seed picks
+// hold a gloamling in place of their second rat (D-240, D-244)
+const GLOAMLING_ROOMS = 3;
 export function gloamlingRooms(seed, depth) {
-  if (kindAt(depth)?.shape !== 'burrows') return [];
+  if (depth < MORE_RATS) return [];
   const ids = layoutAt(seed, depth).cells.map((c) => c.id), r = rng(seedAt(seed, depth) ^ 0x6a09e667), out = [];
   while (out.length < Math.min(GLOAMLING_ROOMS, ids.length)) out.push(...ids.splice(Math.floor(r() * ids.length), 1));
   return out;
