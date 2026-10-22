@@ -7,6 +7,7 @@ import { makeState, step, pour, itemAt } from '../src/core/turn.js';
 import { OIL, setOil } from '../src/core/oil.js';
 import { spawn } from '../src/core/spawn.js';
 import { BAG_SLOTS } from '../src/core/bag.js';
+import { shownLine } from '../src/core/lines.js';
 
 const room = makeRoom(FIRST_ROOM);
 // The hero starts at 5,11, so a flask on 5,10 is one step up.
@@ -31,6 +32,14 @@ test('stepping on a flask burns the step and puts it in the bag, not the lantern
 test('flasks stack in one slot', () => {
   const n = step({ ...withFlask(), bag: [{ id: 'flask', n: 2 }] }, 'up');
   assert.deepEqual(n.bag, [{ id: 'flask', n: 3 }]);
+});
+
+test('over a full stack of 3 the flask stays on the floor, with its line', () => {
+  const n = step({ ...withFlask(), bag: [{ id: 'flask', n: 3 }] }, 'up');
+  assert.equal(itemAt(n, 5, 10).id, 'flask');
+  assert.deepEqual(n.bag, [{ id: 'flask', n: 3 }], 'no new slot is started');
+  assert.equal(n.turn, 1, 'the step still passes a turn');
+  assert.equal(shownLine(n).text, "You can't carry more flasks.");
 });
 
 test('a flask stays on the floor when the bag has no room', () => {

@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.49 (2026-10-22)
+- A stack in the bag holds at most 3 flasks. Walk onto a 4th and it stays
+  on the floor for later (it never starts a second stack), and the text
+  line says "You can't carry more flasks."
+- D-234 to D-246 moved to `docs/archive/DECISIONS-LAST-STEPS-1.md`.
+- Decisions: D-250, D-251.
+
 ## 0.2.48 (2026-10-22)
 - Settings has a new line, "Flasks: By hand". Pick it (or press Left or
   Right) to switch to "By itself". This device remembers your choice.

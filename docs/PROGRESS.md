@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.48 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.49 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**41a3 A stack limit of 3** (D-248): a stack holds at most 3 flasks; a
-flask over it stays on the floor. The details are settled at that step.
+**41 First gear** (D-168, D-248): the last stage 0.2 step. The details
+are settled at that step.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -42,9 +42,9 @@ The Seed Explorer (D-214, before step 50)
 - [x] 40 Levels: 10 more each, "LV" after the hearts, 0.2.46 (D-246)
 - [x] 41a The bag: flasks go in it, tap then Pour, 0.2.47 (D-247)
 - [x] 41a2 Flasks: By itself, poured at 55% or lower, 0.2.48 (D-249)
+- [x] 41a3 A stack limit of 3, a 4th flask stays on the floor, 0.2.49 (D-250)
 
-Stage 0.2 steps waiting (D-168, D-248): 41a3 a stack
-limit of 3, 41 first gear. The stash chest comes with the home base.
+Stage 0.2 steps waiting (D-168, D-248): 41 first gear. The stash chest comes with the home base.
 
 UI and dev tools (the owner's wish, before step 46)
 - [x] U1 Sideways, the room uses the sides, 0.2.17
@@ -57,10 +57,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.46, levels.** Experience adds up to levels, 10
-  more each (2 at 10, 3 at 30). "LV 1" shows after the hearts, and the
-  text line says "You feel stronger. Level 2." (D-246).
-  Playtest: https://claude.ai/artifact/LECkPyWkbvZaFK516tp5kz
 - **2026-10-22, 0.2.47, the bag.** Flasks go into a 6-slot bag and
   stack; a bag button (or I) opens it over the room's foot, or its top
   when that would hide the hero. Tap a flask, then Pour: one turn. Kept
@@ -70,3 +66,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   Settings pours a flask, free, at 55% oil or lower: "You pour a flask."
   The title's hero sits a tile higher under Settings (D-249).
   Playtest: https://claude.ai/artifact/BipaLvkGACYmNEsJYfRpZb
+- **2026-10-22, 0.2.49, a stack limit of 3.** A stack holds 3 flasks; a
+  4th stays on the floor, never in a new slot, and the line says "You
+  can't carry more flasks." D-234 to D-246 archived (D-250, D-251).
+  Playtest: https://claude.ai/artifact/XEAdWUc6FQWpERE56DfUWu
