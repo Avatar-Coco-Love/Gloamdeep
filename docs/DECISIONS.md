@@ -123,3 +123,26 @@ title. A save from an older shape of the game is dropped quietly.
 **D-239 · 2026-10-22 · Back to title keeps the journey** (owner's pick;
 supersedes the last part of D-187) Back to title no longer ends the
 journey: it stays saved for Continue. Only Yes on "Start over?" ends it.
+
+**D-240 · 2026-10-22 · The gloamling, the second creature** (step 38,
+owner's picks) A small shadow on little legs, dark teal and grey with the
+pink hostile eyes (mock-up A). It is as strong as a rat: 2 health, a bite
+of 1. Its lines: "The gloamling hisses at you." when hit (the first pick,
+"…hisses and holds its ground.", didn't fit the text line), "The
+gloamling hisses and fades." when killed, "The gloamling bites you."
+
+**D-241 · 2026-10-22 · The gloamling shuns light** (step 38, owner's
+picks) It never steps onto a tile lit by any light: lantern, torch or
+glow. It notices the hero along a clear line, no wall between (D-226), lit
+or not, and then keeps coming as close as the light lets it. Caught in
+light, it backs away on its turn: to the dark tile next to it farthest
+from the hero, else (deep in the light) one tile farther from the hero,
+else it stays, cornered. While lit it never bites. So while the lantern
+has oil it can't reach the hero; at an ember or with the lantern off it
+can.
+
+**D-242 · 2026-10-22 · Where gloamlings live** (step 38, owner's pick;
+builds on D-231) On each warren floor (depths 5 to 7) two rooms the seed
+picks hold a gloamling in place of their second rat, on the same tile;
+the rest of the room doesn't change. Creatures don't show their next move
+yet (Q-049 stays open).

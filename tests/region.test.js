@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { layoutAt } from '../src/core/region.js';
 import { seedFor } from '../src/core/rng.js';
-import { placeFor, placeBeside, tileAt, depthOf } from '../src/core/room.js';
+import { placeFor, placeBeside, tileAt, depthOf, gloamlingRooms } from '../src/core/room.js';
 import { makeWorld, step } from '../src/core/turn.js';
 import { goToDepth } from '../src/core/stairs.js';
 
@@ -61,7 +61,7 @@ test('every warren room is made, not the fallback, with its stairs and contents'
     assert.equal(p.map.length, 20, `seed ${seed} ${c.id}`);
     assert.equal(all.includes('<'), !!c.up);
     assert.equal(all.includes('>'), !!c.down);
-    assert.deepEqual(p.enemies.map((e) => e.id), ['rat', 'rat']);
+    assert.deepEqual(p.enemies.map((e) => e.id), ['rat', gloamlingRooms(seed, depth).includes(c.id) ? 'gloamling' : 'rat']);
   }
 });
 
