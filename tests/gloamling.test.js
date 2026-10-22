@@ -1,7 +1,7 @@
 // § gloamling: the second creature, light-shy (step 38, D-240)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { makeRoom, FIRST_ROOM, gloamlingRooms, placeFor } from '../src/core/room.js';
+import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, gloamlingRooms, placeFor } from '../src/core/room.js';
 import { makeState, step, wait, switchLantern, FIRST_START } from '../src/core/turn.js';
 import { generateRoom } from '../src/core/cave.js';
 import { layoutAt } from '../src/core/region.js';
@@ -48,6 +48,13 @@ test('while the lantern has oil it never stands in light and never bites', () =>
   assert.equal(s.health, 5);
 });
 
+test('deep in light it backs away, but never into torchlight (D-243)', () => {
+  const torch = FIRST_LIGHTS.filter((l) => l.x === 4 && l.y === 4);
+  const s = { ...makeState(room, FIRST_START, torch, []), hero: { x: 4, y: 9 }, enemies: [{ id: 'gloamling', x: 4, y: 7 }] };
+  assert.equal(litAt({ ...s, lit: false }, 4, 6), true, 'the torch lights the tile behind it');
+  assert.deepEqual(where(wait(s)), [[3, 7]]);
+});
+
 test('next to the hero in light it does not bite, and backs away', () => {
   const n = wait(at(5, 10));
   assert.equal(n.health, 5);
@@ -77,12 +84,12 @@ test('a hit says it hisses, a kill that it fades', () => {
   assert.equal(shownLine(again), LINES.gloamlingDie);
 });
 
-test('two rooms on each warren floor hold one, in place of their second rat', () => {
+test('three rooms on each floor from depth 5 down hold one, in place of their second rat (D-244)', () => {
   for (const seed of [1, 2, 3, 4, 5]) {
-    for (const depth of [2, 4, 8, 9]) assert.deepEqual(gloamlingRooms(seed, depth), []);
-    for (const depth of [5, 6, 7]) {
+    for (const depth of [2, 3, 4]) assert.deepEqual(gloamlingRooms(seed, depth), []);
+    for (const depth of [5, 6, 7, 8, 9, 12]) {
       const ids = gloamlingRooms(seed, depth);
-      assert.equal(new Set(ids).size, 2);
+      assert.equal(new Set(ids).size, 3);
       for (const c of layoutAt(seed, depth).cells) {
         const kinds = placeFor(c.id, seed).enemies.map((e) => e.id);
         assert.deepEqual(kinds, ['rat', ids.includes(c.id) ? 'gloamling' : 'rat'], `seed ${seed} ${c.id}`);

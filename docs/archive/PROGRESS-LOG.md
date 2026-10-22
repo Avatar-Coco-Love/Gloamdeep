@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.41, a proper fall.** At 0 health the hero lies down
+  where they fell and the light closes to dark, then opens where they
+  wake (D-234). `main.js` split (D-235), D-219 to D-233
+  archived (D-236), Stage label fixed (D-237).
+  Playtest: https://claude.ai/artifact/94xckauod2Q6KCCai69MGH
 - **2026-10-21, 0.2.40, the map names the area.** The map and the Seed
   Explorer say "DEPTH 9 · DUNGEON", and walls take their area's colour
   (D-233, the owner's idea).

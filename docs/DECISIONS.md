@@ -137,12 +137,26 @@ glow. It notices the hero along a clear line, no wall between (D-226), lit
 or not, and then keeps coming as close as the light lets it. Caught in
 light, it backs away on its turn: to the dark tile next to it farthest
 from the hero, else (deep in the light) one tile farther from the hero,
-else it stays, cornered. While lit it never bites. So while the lantern
+else it stays, cornered. *Part superseded by D-243 (2026-10-22): the
+tile farther from the hero must be lit only by the lantern.* While lit it never bites. So while the lantern
 has oil it can't reach the hero; at an ember or with the lantern off it
 can.
 
 **D-242 · 2026-10-22 · Where gloamlings live** (step 38, owner's pick;
-builds on D-231) On each warren floor (depths 5 to 7) two rooms the seed
+builds on D-231) *Superseded by D-244 (2026-10-22): three a floor, from
+depth 5 all the way down.* On each warren floor (depths 5 to 7) two rooms the seed
 picks hold a gloamling in place of their second rat, on the same tile;
 the rest of the room doesn't change. Creatures don't show their next move
 yet (Q-049 stays open).
+
+**D-243 · 2026-10-22 · A gloamling never backs into torchlight** (owner's
+pick, after a playtest; supersedes part of D-241) Deep in the hero's
+light, with no dark tile next to it, a gloamling backs onto a tile
+farther from the hero only if just the lantern lights it, never a torch,
+glow or daylight; else it stays. The edge of a light stays as D-059
+counts it: the owner likes gloamlings lurking at the edges of light.
+
+**D-244 · 2026-10-22 · More gloamlings, all the way down** (owner's
+picks; supersedes D-242) On every floor from depth 5 down, warrens and
+dungeon alike, three rooms the seed picks hold a gloamling in place of
+their second rat, on the same tile.

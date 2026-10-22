@@ -20,6 +20,13 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.44 (2026-10-22)
+- Gloamlings now live on every floor from depth 5 down, the dungeon too,
+  and there are three a floor instead of two.
+- Fix: a gloamling backing out of your light no longer walks into a
+  torch's light; with nowhere dark or lantern-only to go, it stays.
+- Decisions: D-243 (supersedes part of D-241), D-244 (supersedes D-242).
+
 ## 0.2.43 (2026-10-22)
 - A second creature, the gloamling: a small shadow with pink eyes that
   shuns light. It won't step into any light, backs away when light

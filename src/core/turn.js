@@ -140,14 +140,16 @@ function free(state, e, x, y, lit = false) {
   return lit || !(get(e.id).shy && litAt(state, x, y));
 }
 
-// Where a light-shy enemy caught in light backs to (D-240): the dark tile next
-// to it farthest from the hero, else a lit one farther from them than it is,
-// else null, cornered
+// Where a light-shy enemy caught in light backs to (D-241, D-243): the dark
+// tile next to it farthest from the hero, else one farther from them that
+// only the lantern lights, never a torch or any other light, else null: it stays
 function backAway(state, e) {
   const away = (t) => Math.abs(t.x - state.hero.x) + Math.abs(t.y - state.hero.y);
   const next = Object.values(DIRS).map(([dx, dy]) => ({ x: e.x + dx, y: e.y + dy }));
   const far = (list) => list.reduce((best, t) => (!best || away(t) > away(best) ? t : best), null);
-  return far(next.filter((t) => free(state, e, t.x, t.y))) || far(next.filter((t) => away(t) > away(e) && free(state, e, t.x, t.y, true)));
+  const unlit = { ...state, lit: false }; // every light but the lantern
+  return far(next.filter((t) => free(state, e, t.x, t.y))) ||
+    far(next.filter((t) => away(t) > away(e) && free(state, e, t.x, t.y, true) && !litAt(unlit, t.x, t.y)));
 }
 
 // The tile enemy e steps onto, or null when both ways toward the hero are
