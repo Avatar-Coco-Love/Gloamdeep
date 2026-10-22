@@ -4,13 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.47 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.48 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**41a2 Auto pouring** (D-248): a setting that pours a flask from the
-bag by itself, only when none would be wasted (at 55% oil or lower).
-Where the setting lives and its words are settled at that step.
+**41a3 A stack limit of 3** (D-248): a stack holds at most 3 flasks; a
+flask over it stays on the floor. The details are settled at that step.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -42,8 +41,9 @@ The Seed Explorer (D-214, before step 50)
 - [x] 59 to 59c, 34 to 39, M1: deeper floors to experience, 0.2.35 to 0.2.45
 - [x] 40 Levels: 10 more each, "LV" after the hearts, 0.2.46 (D-246)
 - [x] 41a The bag: flasks go in it, tap then Pour, 0.2.47 (D-247)
+- [x] 41a2 Flasks: By itself, poured at 55% or lower, 0.2.48 (D-249)
 
-Stage 0.2 steps waiting (D-168, D-248): 41a2 Auto pouring, 41a3 a stack
+Stage 0.2 steps waiting (D-168, D-248): 41a3 a stack
 limit of 3, 41 first gear. The stash chest comes with the home base.
 
 UI and dev tools (the owner's wish, before step 46)
@@ -57,10 +57,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.45, experience.** Beating a creature or entering a
-  room never stood in gives 1, shown as a rising "+1"; kept through a
-  fall and in the save. Older saves get 1 a mapped room (D-245).
-  Playtest: https://claude.ai/artifact/KDYQoUaQuVexkPCwpTajEK
 - **2026-10-22, 0.2.46, levels.** Experience adds up to levels, 10
   more each (2 at 10, 3 at 30). "LV 1" shows after the hearts, and the
   text line says "You feel stronger. Level 2." (D-246).
@@ -70,3 +66,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   when that would hide the hero. Tap a flask, then Pour: one turn. Kept
   through a fall (D-247). Next steps set: Auto, a limit of 3 (D-248).
   Playtest: https://claude.ai/artifact/VuFwsChhVZPWqhAsNKM8uj
+- **2026-10-22, 0.2.48, flasks by themselves.** "Flasks: By itself" in
+  Settings pours a flask, free, at 55% oil or lower: "You pour a flask."
+  The title's hero sits a tile higher under Settings (D-249).
+  Playtest: https://claude.ai/artifact/BipaLvkGACYmNEsJYfRpZb

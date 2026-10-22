@@ -2,7 +2,7 @@
 // input/screens.js and the drawing in render/frame.js (D-235); `app` holds
 // what the three share.
 import { VERSION } from './core/version.js';
-import { makeWorld, step, wait, pour, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
+import { makeWorld, step, wait, pour, pourByItself, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { goToDepth, goToPlace } from './core/stairs.js';
@@ -122,6 +122,7 @@ function tryStep(dir) {
     app.state = next;
   }
   app.state = byItself(before, app.state);
+  if (app.settings.flasks === 'self') app.state = pourByItself(before, app.state);
   const { state } = app, fell = state.fell !== before.fell;
   if (fell || state.health < before.health) app.bitten = flashFor();
   if (fell) fallDown(state.fell);

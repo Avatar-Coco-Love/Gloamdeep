@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.45, experience.** Beating a creature or entering a
+  room never stood in gives 1, shown as a rising "+1"; kept through a
+  fall and in the save. Older saves get 1 a mapped room (D-245).
+  Playtest: https://claude.ai/artifact/KDYQoUaQuVexkPCwpTajEK
 - **2026-10-22, 0.2.44, more gloamlings.** Three a floor from depth 5
   all the way down; one backing out of the light no longer walks into
   torchlight (D-243, D-244).

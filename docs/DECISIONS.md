@@ -197,3 +197,11 @@ step. Herbs stay as they are. Older saves start with an empty bag.
 (at 55% oil or lower); 41a3, a stack limit of 3, a flask over it staying
 on the floor. The stash chest at home (D-021) comes later, with the home
 base, and makes the limit matter.
+
+**D-249 · 2026-10-22 · Flasks by themselves** (step 41a2, owner's picks;
+builds D-248) Settings gains "Flasks: By hand" under Lantern, above
+Back; picking it, Left or Right flip it to "By itself", kept on this
+device. By itself, once a turn has passed with the oil at 55% or lower,
+one flask from the bag pours, free, and the line says "You pour a
+flask.", unless another line (an oil line aside) was said that turn. On
+the title, a 6-line page lifts the hero and light one tile.

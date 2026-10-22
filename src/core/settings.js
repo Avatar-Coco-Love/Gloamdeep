@@ -38,6 +38,11 @@ const isSeed = (n) => Number.isInteger(n) && n >= 1 && n <= SEED_MAX;
 export const lanternText = (id) => 'Lantern: ' + (id === 'self' ? 'By itself' : 'By hand');
 export const nextLantern = (id) => (id === 'self' ? 'hand' : 'self');
 
+// § flasks: By hand or By itself (D-248, D-249). By itself, a flask in the bag
+// pours itself once none of it would be wasted. Off (By hand) until picked.
+export const flasksText = (id) => 'Flasks: ' + (id === 'self' ? 'By itself' : 'By hand');
+export const nextFlasks = nextLantern;
+
 // § storage: localStorage, wrapped (TECH.md)
 const KEY = 'gloamdeep-settings';
 export function loadSettings() {
@@ -47,7 +52,8 @@ export function loadSettings() {
   const motion = s?.motion === 'full' || s?.motion === 'reduced' ? s.motion : null;
   const seed = isSeed(s?.seed) ? s.seed : null;
   const lantern = s?.lantern === 'self' ? 'self' : 'hand';
-  return { controls, motion, seed, lantern };
+  const flasks = s?.flasks === 'self' ? 'self' : 'hand';
+  return { controls, motion, seed, lantern, flasks };
 }
 export function saveSettings(s) {
   try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* not kept */ }

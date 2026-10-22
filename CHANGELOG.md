@@ -20,6 +20,17 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.48 (2026-10-22)
+- Settings has a new line, "Flasks: By hand". Pick it (or press Left or
+  Right) to switch to "By itself". This device remembers your choice.
+- By itself, a flask from the bag pours itself into the lantern once the
+  oil is at 55% or lower, so none is wasted. It costs no turn, and the
+  text line says "You pour a flask." (unless something else happened that
+  turn, like a bite).
+- On the title screen, the hero and their light sit one tile higher while
+  Settings is open, so its heading no longer covers them.
+- Decisions: D-249.
+
 ## 0.2.47 (2026-10-22)
 - The bag: walking onto an oil flask now puts it in your bag instead of
   pouring it straight in. Flasks stack in one slot, with a count.

@@ -223,6 +223,19 @@ export function pour(state, i) {
   return endTurn(state, { ...next, bag: bagTake(state.bag, i), oil: Math.min(1, next.oil + entry.oil) });
 }
 
+// § pour by itself: with Flasks set to By itself (D-249), after a turn has
+// passed, the first flask in the bag pours once none of it would be wasted
+// (at 55% oil or lower, D-248). It is free: no turn passes. "You pour a
+// flask." is said, unless another line was said this turn (an oil line aside).
+export function pourByItself(before, after) {
+  if (after.turn === before.turn || after.fell !== before.fell) return after;
+  const i = after.bag.findIndex((s) => get(s.id)?.oil && after.oil + get(s.id).oil <= 1 + 1e-9);
+  if (i < 0) return after;
+  const poured = { ...after, bag: bagTake(after.bag, i), oil: Math.min(1, after.oil + get(after.bag[i].id).oil) };
+  const other = after.line?.turn === after.turn && !['oilLow', 'oilEmpty'].includes(after.line.id);
+  return other ? poured : say(poured, 'flaskPour');
+}
+
 // § wait: stand still for one turn (D-084). It passes a turn like a step,
 // so oil burns while the lantern is lit (D-037).
 export const wait = (state) => endTurn(state, passTurn(state));
