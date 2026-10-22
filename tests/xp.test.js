@@ -45,11 +45,23 @@ test('a fall keeps the experience and the hand-made rooms found, not the generat
   assert.deepEqual(n.found, ['first', 'south']);
 });
 
-test('experience is kept with the journey; an older save starts at 0 with its mapped rooms found', () => {
+test('experience is kept with the journey', () => {
   const s = toSouth();
   assert.deepEqual(readJourney(journeyText(s)).state, s);
-  const { xp, found, ...old } = s;
-  const back = readJourney(journeyText(old)).state;
-  assert.equal(back.xp, 0);
-  assert.ok(back.found.includes('south'));
+});
+
+test('an older save gets 1 for each room on its map but the first, and they don\'t pay again', () => {
+  const { xp, found, ...old } = toSouth();
+  const mapped = (p) => ({ ...p, seen: p.seen.map(() => 1) });
+  const depth3 = goToDepth(makeWorld('first', 5), 3);
+  const elsewhere = { ...old.elsewhere, first: mapped(old.elsewhere.first), depth3: mapped({ ...depth3, seen: depth3.seen }) };
+  const back = readJourney(journeyText({ ...old, elsewhere })).state;
+  assert.deepEqual([...back.found].sort(), ['depth3', 'first', 'south']);
+  assert.equal(back.xp, 2, 'south and depth 3; the first room gives none');
+  assert.equal(step(back, 'up').xp, 2);
+});
+
+test('an older save still in the first room, nothing else mapped, gets 0', () => {
+  const { xp, found, ...old } = makeWorld('first', 9);
+  assert.equal(readJourney(journeyText(old)).state.xp, 0);
 });

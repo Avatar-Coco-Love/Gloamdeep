@@ -72,5 +72,5 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   Playtest: https://claude.ai/artifact/DpEhchRMW5ULRbgm7n4UW7
 - **2026-10-22, 0.2.45, experience.** Beating a creature or entering a
   room never stood in gives 1, shown as a rising "+1"; kept through a
-  fall and in the save (D-245).
+  fall and in the save. Older saves get 1 a mapped room (D-245).
   Playtest: https://claude.ai/artifact/KDYQoUaQuVexkPCwpTajEK

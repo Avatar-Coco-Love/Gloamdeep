@@ -166,4 +166,6 @@ D-038) Beating a creature gives 1 experience, and so does stepping into
 a room the hero has never stood in (a dev jump gives none). It shows only
 as an amber "+1" rising over the hero; the total isn't shown yet. A fall
 keeps it all, and the hand-made rooms stay found; the generated depths,
-remade and forgotten after a fall (D-148), pay again.
+remade and forgotten after a fall (D-148), pay again. A journey saved
+before this gets 1 for each room already on its map, the first room
+aside (the owner's pick; creatures beaten then were never recorded).

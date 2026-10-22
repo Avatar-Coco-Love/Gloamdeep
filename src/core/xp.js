@@ -19,11 +19,14 @@ export function discover(before, after) {
 // forgotten (D-148); the hand-made rooms stay found (D-021).
 export const foundAfterFall = (found) => found.filter((id) => !isGenerated(id));
 
-// For a journey saved before experience: none earned, and the rooms already
-// remembered on the map count as found, so they don't pay now
+// For a journey saved before experience: the rooms already remembered on the
+// map count as found, and each pays now, as it would have when found; the
+// first room, where every journey starts, pays nothing (D-245). Creatures
+// beaten then were never recorded, so they can't count.
 export function withXp(state) {
   if (Array.isArray(state.found)) return state;
-  const found = [state.place];
-  for (const [id, p] of Object.entries(state.elsewhere || {})) if (p.seen?.some?.((v) => v)) found.push(id);
-  return { ...state, xp: 0, found };
+  const found = ['first'];
+  if (state.place !== 'first') found.push(state.place);
+  for (const [id, p] of Object.entries(state.elsewhere || {})) if (id !== 'first' && p.seen?.some?.((v) => v)) found.push(id);
+  return { ...state, xp: (found.length - 1) * XP_ROOM, found };
 }

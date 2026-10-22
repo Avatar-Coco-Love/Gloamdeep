@@ -24,6 +24,8 @@ Entry format:
 - Experience: beating a creature or stepping into a room you have never
   been in gives 1. A small amber "+1" rises over the hero when it does.
   Experience is kept through a fall and with the saved journey.
+- A journey saved before this update gets 1 for each room already on its
+  map (not the starting room), as soon as it is continued.
 - Decisions: D-245.
 
 ## 0.2.44 (2026-10-22)
