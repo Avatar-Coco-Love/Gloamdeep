@@ -8,6 +8,17 @@ export const XP_ROOM = 1; // a room never stood in before
 
 export const gain = (state, n) => ({ ...state, xp: state.xp + n });
 
+// § levels: experience adds up to levels, each costing XP_STEP more than the
+// one before: level 2 at 10, level 3 at 30, level 4 at 60 (D-246). A level
+// gives nothing yet; it only shows.
+export const XP_STEP = 10;
+export const xpFor = (level) => (XP_STEP * (level - 1) * level) / 2; // the total that reaches it
+export function levelOf(xp) {
+  let level = 1;
+  while (xp >= xpFor(level + 1)) level++;
+  return level;
+}
+
 // (before, after) → after, with a room's worth added when the turn brought
 // the hero into a room not in `found`, and that room added to it
 export function discover(before, after) {

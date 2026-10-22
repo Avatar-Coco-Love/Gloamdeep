@@ -20,6 +20,7 @@ import { HERO_HEALTH } from '../core/turn.js';
 import { glowsIn } from '../core/stairs.js';
 import { depthOf } from '../core/room.js';
 import { shownLine } from '../core/lines.js';
+import { levelOf } from '../core/xp.js';
 import { recordText } from '../core/record.js';
 import { daylight, darkNow } from '../core/daytime.js';
 import { shownSeed, canGoBack } from '../core/explorer.js';
@@ -124,7 +125,7 @@ export function createFrame(app, ui) {
       ctx.globalAlpha = 1;
     }
     // § strip: the hearts, depth and oil above the room or beside it, covering none of it (D-198, D-199)
-    drawStatus(hudCtx, { oil: s.oil, health: s.health, max: HERO_HEALTH, depth: depthOf(s.place) });
+    drawStatus(hudCtx, { oil: s.oil, health: s.health, max: HERO_HEALTH, depth: depthOf(s.place), level: levelOf(s.xp ?? state.xp) }); // the fall's picture keeps no xp, and a fall keeps it all (D-245)
     if (app.screen !== 'play') veil(hudCtx); // dimmed with the room under a menu
     const line = fall?.from ? null : shownLine(state); // the fall's line once the hero wakes
     textLine.draw(ctx, line, t, still());

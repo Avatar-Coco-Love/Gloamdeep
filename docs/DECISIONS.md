@@ -169,3 +169,12 @@ keeps it all, and the hand-made rooms stay found; the generated depths,
 remade and forgotten after a fall (D-148), pay again. A journey saved
 before this gets 1 for each room already on its map, the first room
 aside (the owner's pick; creatures beaten then were never recorded).
+
+**D-246 · 2026-10-22 · Levels** (step 40, owner's picks; builds D-038,
+D-245) Experience adds up to levels, each costing 10 more than the one
+before: level 2 at 10, level 3 at 30, level 4 at 60, level 5 at 100. A
+level gives nothing yet; what it gives is Q-050. The level shows as
+"LV 2" in a box after the hearts, like the depth's (sideways, under the
+oil bar). Reaching one, the text line says "You feel stronger. Level
+2.", over any other line that turn. A fall keeps the level, and older
+saves need nothing new: the level comes from the experience.

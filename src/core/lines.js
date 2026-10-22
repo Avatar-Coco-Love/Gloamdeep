@@ -17,16 +17,26 @@ export const LINES = {
   stairsDown: { text: 'You go down the stairs.', warn: false }, // (D-135)
   stairsUp: { text: 'You go up the stairs.', warn: false }, // (D-135)
   herbEat: { text: 'You eat the herb and feel better.', warn: false }, // (D-156)
+  levelUp: { text: 'You feel stronger. Level {n}.', warn: false }, // {n}, the new level (D-246)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
 const OIL_LOW = 0.2; // "under 20%", as in the study
 
-// § say: (state, id) → new state, the line said on this turn
-export const say = (state, id) => ({ ...state, line: { id, turn: state.turn } });
+// § say: (state, id, n) → new state, the line said on this turn; n fills a
+// line's {n}, as the level does
+export const say = (state, id, n) => ({ ...state, line: n === undefined ? { id, turn: state.turn } : { id, turn: state.turn, n } });
 
-// § shown: the line on screen now, or null once its turns are used up
-export const shownLine = (state) =>
-  state.line && state.turn - state.line.turn < LINE_TURNS ? LINES[state.line.id] : null;
+// § shown: the line on screen now, or null once its turns are used up. A line
+// with {n} is filled once per saying, so the same saying stays the same object
+// and is drawn and spoken once (textline.js, frame.js).
+const filled = new WeakMap();
+export function shownLine(state) {
+  if (!state.line || state.turn - state.line.turn >= LINE_TURNS) return null;
+  const entry = LINES[state.line.id];
+  if (state.line.n === undefined) return entry;
+  if (!filled.has(state.line)) filled.set(state.line, { ...entry, text: entry.text.replace('{n}', state.line.n) });
+  return filled.get(state.line);
+}
 
 // § oil: a line only as the oil crosses a mark on the way down, so each is
 // said once, and again only after the oil has gone back above it (D-096).

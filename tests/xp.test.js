@@ -5,6 +5,8 @@ import { makeRoom, FIRST_ROOM, FIRST_LIGHTS, FIRST_ENEMIES } from '../src/core/r
 import { makeState, makeWorld, step, wait, FIRST_START } from '../src/core/turn.js';
 import { goToDepth } from '../src/core/stairs.js';
 import { readJourney, journeyText } from '../src/core/save.js';
+import { levelOf, xpFor } from '../src/core/xp.js';
+import { shownLine } from '../src/core/lines.js';
 
 const room = makeRoom(FIRST_ROOM);
 const nextToRat = (health) => ({ ...makeState(room, FIRST_START, FIRST_LIGHTS, FIRST_ENEMIES), hero: { x: 3, y: 10 }, enemies: [{ id: 'rat', x: 2, y: 10, health }] });
@@ -64,4 +66,24 @@ test('an older save gets 1 for each room on its map but the first, and they don\
 test('an older save still in the first room, nothing else mapped, gets 0', () => {
   const { xp, found, ...old } = makeWorld('first', 9);
   assert.equal(readJourney(journeyText(old)).state.xp, 0);
+});
+
+// § levels: 10 more each level, said on the text line (D-246)
+test('levels cost 10 more each: 2 at 10, 3 at 30, 4 at 60', () => {
+  assert.deepEqual([0, 9, 10, 29, 30, 59, 60, 100].map(levelOf), [1, 1, 2, 2, 3, 3, 4, 5]);
+  assert.deepEqual([1, 2, 3, 4].map(xpFor), [0, 10, 30, 60]);
+});
+
+test('reaching a level says so, with its number, over the foe\'s line', () => {
+  const s = step({ ...nextToRat(1), xp: 9 }, 'left');
+  assert.equal(s.xp, 10);
+  assert.equal(shownLine(s).text, 'You feel stronger. Level 2.');
+  assert.equal(shownLine(s), shownLine(wait(s)), 'the same saying stays one line, drawn and spoken once');
+  assert.equal(step({ ...nextToRat(1), xp: 10 }, 'left').line.id, 'ratDie', 'no new level, the usual line');
+});
+
+test('a new room can bring the level too', () => {
+  const s = toSouth({ ...makeWorld(), xp: 29 });
+  assert.equal(s.line.id, 'levelUp');
+  assert.equal(s.line.n, 3);
 });

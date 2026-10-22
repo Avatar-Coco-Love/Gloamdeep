@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.46 (2026-10-22)
+- Levels: experience now adds up to levels. Level 2 takes 10, level 3
+  takes 30, level 4 takes 60, each 10 more than the last.
+- A small "LV 1" box sits after the hearts (under the oil bar, sideways).
+- Reaching a level, the text line says "You feel stronger. Level 2."
+  A level gives nothing else yet.
+- Dev stats line: shows the experience total.
+- Decisions: D-246.
+
 ## 0.2.45 (2026-10-22)
 - Experience: beating a creature or stepping into a room you have never
   been in gives 1. A small amber "+1" rises over the hero when it does.
