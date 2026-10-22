@@ -17,12 +17,13 @@ const TRIES = 200;
 // (seed, shape, ways) → { map, start, lights, enemies, items }, or null if no
 // try worked. The shape is 'chambers', 'burrows' (D-165) or 'halls' (D-228). `ways.doors` are
 // openings to carve at the edges, as { dir, at } (region.js, D-201).
-// `ways.rats` is how many rats the room holds (D-231). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
+// `ways.rats` is how many rats the room holds (D-231), and `ways.second` the
+// kind of creature that takes the extra ones' place (a gloamling, D-240). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
 // floors line up (D-202); true lets the room pick, null leaves them out.
-export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1 } = {}) {
+export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1, second = 'rat' } = {}) {
   const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
   for (let i = 0; i < TRIES; i++) {
-    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats);
+    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats, second);
     if (room) return room;
   }
   return null;
@@ -75,7 +76,7 @@ function chambers(r) {
 // The stairs, torch, flask, rat and herb in a carved grid, or null if they
 // don't fit. With no stairs up, the way in through the room's first door
 // stands for them (D-201), and there is no torch.
-function fill(r, g, up = true, down = true, rats = 1) {
+function fill(r, g, up = true, down = true, rats = 1, second = 'rat') {
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
   const doors = g.doors || [];
@@ -107,7 +108,7 @@ function fill(r, g, up = true, down = true, rats = 1) {
   }
   if (at) g[at.y][at.x] = '<';
   if (to) g[to.y][to.x] = '>';
-  if (!at) return finds(r, g, floors, far, from, to, null, doors, rats);
+  if (!at) return finds(r, g, floors, far, from, to, null, doors, rats, second);
 
   // § torch: on a wall face near the stairs up, not right above them, and
   // not on the top row, where the hearts, depth and oil bar boxes could hide
@@ -116,12 +117,13 @@ function fill(r, g, up = true, down = true, rats = 1) {
   const near = faces.filter((t) => dist(t, at) <= 3 && !(t.x === at.x && t.y === at.y - 1));
   if (!near.length) return null;
   const torch = pick(r, near);
-  return finds(r, g, floors, far, at, to, torch, doors, rats);
+  return finds(r, g, floors, far, at, to, torch, doors, rats, second);
 }
 
 // The flask, rat and herb, `far` steps from `up`, the way in; with `down` and
-// `torch` when the room has them, and `count` rats in all
-function finds(r, g, floors, far, up, down, torch, doors, count = 1) {
+// `torch` when the room has them, and `count` creatures in all, the extra
+// ones of kind `second`
+function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'rat') {
   // § flask and rat: the flask well away from the stairs, the rat beside it,
   // at least 5 steps from the stairs up, and 3 tiles off counting across walls.
   // It starts in the dark, as the second room's does: out of the torch's
@@ -149,7 +151,7 @@ function finds(r, g, floors, far, up, down, torch, doors, count = 1) {
     const spots = open.filter((f) => dark(f) && !taken.some((t) => same(t, f)));
     if (!spots.length) break;
     const at = pick(r, spots);
-    taken.push(at); enemies.push({ id: 'rat', x: at.x, y: at.y });
+    taken.push(at); enemies.push({ id: second, x: at.x, y: at.y });
   }
 
   return {

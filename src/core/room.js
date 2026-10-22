@@ -4,9 +4,9 @@ import { OUTSIDE } from './tiles.js';
 import { byLetter } from './registry.js';
 import { generateRoom } from './cave.js';
 import { generateWoods } from './woods.js';
-import { seedFor } from './rng.js';
+import { seedFor, rng } from './rng.js';
 import { scatter } from './scatter.js';
-import { cellOf, downPlaceIn, seedAt } from './region.js';
+import { cellOf, downPlaceIn, seedAt, layoutAt } from './region.js';
 import { mouthOf, mouthSides, withGap } from './mouth.js';
 
 // § first room: the shape of style study 1's room (study lines 96–110), with
@@ -113,6 +113,15 @@ const DEEPER = 'second';
 // start (step 34, D-231)
 export const MORE_RATS = 5;
 export const ratsAt = (depth) => (depth >= MORE_RATS ? 2 : 1);
+// § gloamlings: on each warren floor (depths 5 to 7) two rooms the seed picks
+// hold a gloamling in place of their second rat (step 38, D-240)
+const GLOAMLING_ROOMS = 2;
+export function gloamlingRooms(seed, depth) {
+  if (kindAt(depth)?.shape !== 'burrows') return [];
+  const ids = layoutAt(seed, depth).cells.map((c) => c.id), r = rng(seedAt(seed, depth) ^ 0x6a09e667), out = [];
+  while (out.length < Math.min(GLOAMLING_ROOMS, ids.length)) out.push(...ids.splice(Math.floor(r() * ids.length), 1));
+  return out;
+}
 export const placeAt = (depth) => Object.keys(PLACES).find((id) => PLACES[id].depth === depth) || `depth${depth}`;
 export const depthOf = (id) => PLACES[id]?.depth ?? parseInt(id.slice('depth'.length), 10);
 export const isGenerated = (id) => !PLACES[id];
@@ -122,7 +131,7 @@ export function placeFor(id, seed = 1) {
   if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth), seed) };
   if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedAt(seed, PLACES[id].depth) + (PLACES[id].slot || 0)), map: withGap(id, PLACES[id].map, seed) };
   const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
-  return { ...((cell && generateRoom(cell.seed, shape, { ...cell, rats: ratsAt(depth) })) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
+  return { ...((cell && generateRoom(cell.seed, shape, { ...cell, rats: ratsAt(depth), second: gloamlingRooms(seed, depth).includes(id) ? 'gloamling' : 'rat' })) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
 }
 
 // The room beyond each edge of a place with openings, by direction (D-197,

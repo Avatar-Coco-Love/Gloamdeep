@@ -14,8 +14,8 @@ const start = () => makeState(room, FIRST_START, FIRST_LIGHTS, FIRST_ENEMIES);
 // The rat sits at 2,10, so a hero at 3,10 walks left into it.
 const nextToRat = () => ({ ...start(), hero: { x: 3, y: 10 } });
 
-test('the registry has the rat as an enemy', () => {
-  assert.deepEqual(byKind('enemy').map((e) => e.id), ['rat']);
+test('the registry has the rat and the gloamling as enemies', () => {
+  assert.deepEqual(byKind('enemy').map((e) => e.id), ['rat', 'gloamling']);
 });
 
 test('the first room has the rat where the study put it', () => {

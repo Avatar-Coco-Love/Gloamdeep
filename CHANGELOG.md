@@ -20,6 +20,15 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.43 (2026-10-22)
+- A second creature, the gloamling: a small shadow with pink eyes that
+  shuns light. It won't step into any light, backs away when light
+  reaches it, and doesn't bite while lit, so it only gets you when the
+  lantern is off or down to an ember.
+- Two rooms on each warren floor (depths 5 to 7) hold one, in place of
+  their second rat. It can be spawned in dev mode.
+- Decisions: D-240, D-241, D-242.
+
 ## 0.2.42 (2026-10-22)
 - Saving: the journey is kept on this device after every turn. Continue
   appears first on the title once a journey is saved, and picks it up

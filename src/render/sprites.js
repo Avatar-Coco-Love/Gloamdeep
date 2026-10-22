@@ -32,6 +32,12 @@ const RAT = { mirror: false, rows: [
   '', '', '', '', '', '', '', '..........kk....', '.........kpdk...', '.....kkkkkSSSk..',
   '...kkSSSSSSSSpSk', '..kSSSSSSSSSSSSk', 'p.ksSSSSSSSSSSkp', '.pksdsssssssdkw.', '..pkkddkkkkddk..', '....kpk...kpk...'] };
 
+// § gloamling: a squat shadow on little legs, dark teal and grey, with the
+// pink hostile eyes (ART-DIRECTION.md palette, D-240)
+const GLOAMLING = { mirror: false, rows: [
+  '', '', '', '', '', '', '', '.....kkkkkk.....', '....kbdddddbk...', '...kbdddddddbk..', '..kbddpkddpkdbk.',
+  '..kbbddddddddbk.', '..kbbbbbbbbbbbk.', '...kkbkkbkkbkk..', '..kbk.kbkkb.kbk.', '..k....k..k...k.'] };
+
 function build(rows, mirror) {
   return Array.from({ length: 16 }, (_, i) => {
     let r = rows[i] || '';
@@ -54,8 +60,8 @@ function spriteCanvas(def, flash = null) {
   return cv;
 }
 
-export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), rat: spriteCanvas(RAT) }; // keyed by registry id
-const FLASHES = { rat: spriteCanvas(RAT, '#ffffff') };
+export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), rat: spriteCanvas(RAT), gloamling: spriteCanvas(GLOAMLING) }; // keyed by registry id
+const FLASHES = { rat: spriteCanvas(RAT, '#ffffff'), gloamling: spriteCanvas(GLOAMLING, '#ffffff') };
 // § facing left: an enemy's sprite mirrored, for one that walked left (D-158)
 function mirrored(cv) {
   const out = document.createElement('canvas');
@@ -64,7 +70,8 @@ function mirrored(cv) {
   c.scale(-1, 1); c.drawImage(cv, -16, 0);
   return out;
 }
-const LEFT = { rat: mirrored(SPRITES.rat) }, LEFT_FLASHES = { rat: mirrored(FLASHES.rat) };
+const LEFT = {}, LEFT_FLASHES = {};
+for (const id of Object.keys(FLASHES)) { LEFT[id] = mirrored(SPRITES[id]); LEFT_FLASHES[id] = mirrored(FLASHES[id]); }
 const BITTEN = spriteCanvas(HERO, PAL.p);
 
 // § shadow: a small dark oval under a sprite (study line 345)

@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.40, the map names the area.** The map and the Seed
+  Explorer say "DEPTH 9 · DUNGEON", and walls take their area's colour
+  (D-233, the owner's idea).
+  Playtest: https://claude.ai/artifact/KrUG8Eo7XTiWXw2nYCdfTo
 - **2026-10-21, 0.2.39, deepest depth kept.** The game remembers the
   deepest depth walked to, on this device, and the title screen shows it
   under the menu; dev jumps don't count (D-232).

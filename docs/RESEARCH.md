@@ -9,7 +9,7 @@ pillars (`VISION.md`).
 Inventory, saving and loading, more enemies, NPCs, companion(s), and new
 items: collectables, craftables, weapons and more. Where they stand:
 - Saving and loading: build step 37.
-- More enemies: step 38, a second creature.
+- More enemies: step 38 added the gloamling, which shuns light (D-240).
 - New items and weapons: step 41, first gear.
 - Inventory: its own step just before step 41 (D-230).
 - A companion: the faery (D-023, D-034). More than one would be a new
