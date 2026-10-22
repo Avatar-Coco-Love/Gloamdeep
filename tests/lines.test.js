@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM } from '../src/core/room.js';
-import { makeState, step, wait, switchLantern } from '../src/core/turn.js';
+import { makeState, step, wait, pour, switchLantern } from '../src/core/turn.js';
 import { setOil, OIL } from '../src/core/oil.js';
 import { LINES, LINE_TURNS, shownLine, oilLine } from '../src/core/lines.js';
 import { hasGlyph, textWidth } from '../src/render/font.js'; // plain data, no DOM
@@ -41,9 +41,9 @@ test('it is said again only after the oil goes back above the mark', () => {
   assert.equal(oilLine(0, 0), null);
 });
 
-test('a step that burns under the mark but finds a flask says nothing', () => {
-  const s = { ...at(0.2), items: [{ id: 'flask', x: 5, y: 10 }] };
-  assert.equal(step(s, 'up').line, null);
+test('a flask poured on the turn the oil would cross the mark says nothing', () => {
+  const s = { ...at(0.2), bag: [{ id: 'flask', n: 1 }] };
+  assert.equal(pour(s, 0).line, null);
 });
 
 test('a bump passes no turn and says nothing', () => {

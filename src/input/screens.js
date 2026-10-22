@@ -9,6 +9,9 @@
 // Its heading's arrows, < and >, Page Up and Page Down, or a tap on stairs found turn it a floor (D-206).
 // Seed Explorer on the title opens the same map for any seed, all revealed, with no
 // hero (D-214); the cross, Esc, P, M or a tap outside the box return to the title.
+// In play, the bag button or I opens the bag over the room's foot; Left and Right or a tap
+// pick a slot, Enter, Space or Pour pours the chosen flask, which closes it and takes the
+// turn; the button (a cross while it is open), I, Esc, P or a tap outside it closes it (D-247).
 // Continue goes back to the saved journey; New journey, while one is saved, asks
 // "Start over?" first, and No, Esc or P return to the title (D-238).
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
@@ -25,6 +28,10 @@ import { recordText } from '../core/record.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from '../core/map.js';
 import { setMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from '../render/map.js';
 import { startSeeds, shownSeed, addSeed, backSeed, explorerWorld } from '../core/explorer.js';
+import { BAG_SLOTS } from '../core/bag.js';
+import { get } from '../core/registry.js';
+import { bagAt, panelOnTop } from '../render/bag.js';
+import { TILE } from '../render/screen.js';
 
 const WORDS = {
   title: 'Gloamdeep. New journey, How to play, Settings or Seed Explorer: press Enter, or tap one.',
@@ -39,13 +46,13 @@ const PAN = 8; // game pixels an arrow key scrolls the map
 const STAIRS_REACH = 8; // game pixels from found stairs' centre that a tap still picks them
 
 // `ui`: the spoken line, the buttons, and the dev tools, input and map moves, asked for
-// when used (they are made after the screens); `newJourney` and `randomSeed` from main.js.
+// when used (they are made after the screens); `newJourney`, `randomSeed` and `pour(slot)` from main.js.
 export function createScreens(app, ui) {
-  const { spoken, lanternButton, pauseButton, mapButton, reduceMotion } = ui;
+  const { spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion } = ui;
   const menuOf = (sc) => (sc === 'title' ? titleMenu(app.saved) : sc === 'paused' ? PAUSE_MENU : sc === 'sure' ? SURE_MENU
     : settingsMenu(app.settings, reduceMotion.matches, app.pageFrom === 'paused' ? app.journeySeed : null));
   const exploring = () => app.screen === 'explore' || (app.screen === 'seed' && app.padFrom === 'explore');
-  const onTitle = () => app.screen === 'title' || app.screen === 'sure' || exploring() || (!['play', 'paused', 'map'].includes(app.screen) && app.pageFrom === 'title');
+  const onTitle = () => app.screen === 'title' || app.screen === 'sure' || exploring() || (!['play', 'paused', 'map', 'bag'].includes(app.screen) && app.pageFrom === 'title');
   const menuTop = () => (onTitle() ? titleTop(menuOf(app.screen).length) : pauseTop(menuOf(app.screen).length, app.screen === 'settings'));
   const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -1).map((l) => l.text).join('. ')}. Pick one to change it. Back.`;
   function show(next, at = 0) {
@@ -55,9 +62,10 @@ export function createScreens(app, ui) {
     lanternButton.hide(!playing); pauseButton.hide(!playing); ui.dev().hide(!playing);
     const mapOpen = next === 'map' || next === 'explore';
     mapButton.hide(!playing && !mapOpen); mapButton.closes(mapOpen);
+    bagButton.hide(!playing && next !== 'bag'); bagButton.closes(next === 'bag');
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
-      : next === 'howto' ? howtoWords(app.page, app.settings.controls)
+      : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords()
       : next === 'title' ? [WORDS[app.saved ? 'saved' : 'title'], app.deepest && `${recordText(app.deepest)}.`].filter(Boolean).join(' ') : WORDS[next];
   }
   const backTo = (id) => () => show(app.pageFrom, menuOf(app.pageFrom).findIndex((l) => l.id === id));
@@ -108,6 +116,21 @@ export function createScreens(app, ui) {
     });
   }
 
+  // § bag (D-247): opens on the first slot; no turn passes until a flask is poured
+  const slotWords = (i) => { const s = app.state.bag[i]; return s ? `${get(s.id).name}, ${s.n}` : 'Empty'; };
+  const bagWords = () => `Bag. ${app.state.bag.length ? app.state.bag.map((s, i) => slotWords(i)).join('. ') : 'Empty'}. Left and Right choose, Enter pours, I or Esc closes.`;
+  function toggleBag() {
+    if (app.screen === 'bag') show('play');
+    else if (app.screen === 'play') { app.queued = null; app.bagOnTop = panelOnTop(app.state.hero.y * TILE - app.cam.y); show('bag'); }
+  }
+  function pickSlot(i) { app.chosen = i; spoken.textContent = slotWords(i); }
+  function pourChosen() {
+    const s = app.state.bag[app.chosen];
+    if (!s || !get(s.id).oil) return;
+    show('play');
+    ui.pour(app.chosen);
+  }
+
   // § explorer (D-214): opens on the Settings seed, else a random one, on the surface;
   // Reseed, a typed seed and Back keep the floor shown, fitted whole. Settings never changes.
   function openExplorer() {
@@ -129,7 +152,7 @@ export function createScreens(app, ui) {
     else if (id === 'type') openPad('explore');
   }
   function pause() {
-    if (app.screen === 'map') show('play');
+    if (app.screen === 'map' || app.screen === 'bag') show('play');
     else if (app.screen === 'explore') closeExplorer();
     else if (app.screen === 'play') { app.queued = null; show('paused'); } // a step waiting in line is dropped
     else if (app.screen === 'paused') show('play'); // Esc or P again resumes
@@ -192,6 +215,7 @@ export function createScreens(app, ui) {
   function choose(i = app.chosen) {
     const id = menuOf(app.screen)[i]?.id;
     if (app.screen === 'seed') { pressKey(PAD[i].id); return; }
+    if (app.screen === 'bag') { pourChosen(); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
     if (id === 'new' && app.saved) show('sure', SURE_MENU.findIndex((l) => l.id === 'no'));
     else if (id === 'new' || id === 'yes') { ui.newJourney(); show('play'); }
@@ -211,6 +235,7 @@ export function createScreens(app, ui) {
   const onDir = (dir, how) => {
     if (app.screen === 'map' || app.screen === 'explore') { if (how !== 'swipe') panMap(...{ up: [0, -PAN], down: [0, PAN], left: [-PAN, 0], right: [PAN, 0] }[dir]); return; }
     if (app.screen === 'seed') { app.chosen = moveKey(app.chosen, dir); return; }
+    if (app.screen === 'bag') { if (dir === 'left' || dir === 'right') pickSlot(Math.min(BAG_SLOTS - 1, Math.max(0, app.chosen + (dir === 'left' ? -1 : 1)))); return; }
     if (app.screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else app.chosen = moveChoice(app.chosen, dir, HOWTO_LINES.length); return; }
     const id = menuOf(app.screen)[app.chosen]?.id;
     if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
@@ -229,6 +254,14 @@ export function createScreens(app, ui) {
       else if (app.screen === 'map' || py < win().y + win().h) tapStairs(px, py); // not through the Explorer's bar
       return;
     }
+    if (app.screen === 'bag') {
+      if (held) return;
+      const at = bagAt(px, py, app.bagOnTop);
+      if (at === 'out') show('play');
+      else if (at === 'pour') pourChosen();
+      else if (at) pickSlot(at.slot);
+      return;
+    }
     if (app.screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { app.chosen = k; choose(k); } return; }
     if (app.screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { app.chosen = 0; flipPage(at === 'prev'); } return; }
     const i = lineAt(py, menuOf(app.screen).length, menuTop());
@@ -236,5 +269,5 @@ export function createScreens(app, ui) {
   };
   const onMapScreen = () => app.screen === 'map' || app.screen === 'explore';
 
-  return { show, pause, toggleMap, turnMap, panMap, zoomMap, onType, choose, onDir, onPoint, onMapScreen, onTitle, menuOf, turns };
+  return { show, pause, toggleMap, toggleBag, turnMap, panMap, zoomMap, onType, choose, onDir, onPoint, onMapScreen, onTitle, menuOf, turns };
 }

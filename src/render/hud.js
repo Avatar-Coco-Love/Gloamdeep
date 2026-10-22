@@ -119,3 +119,11 @@ export function drawCloseIcon(c) {
   c.fillStyle = '#9790a4';
   for (let i = 0; i < 5; i++) { c.fillRect(i, i, 1, 1); c.fillRect(4 - i, i, 1, 1); }
 }
+
+// § bag icon: a pouch tied at the neck, in the same grey (D-247)
+const BAG_ICON = ['.x.x.', '..x..', '.xxx.', 'xxxxx', '.xxx.'];
+export function drawBagIcon(c) {
+  c.clearRect(0, 0, 5, 5);
+  c.fillStyle = '#9790a4';
+  BAG_ICON.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === 'x') c.fillRect(x, y, 1, 1); }));
+}

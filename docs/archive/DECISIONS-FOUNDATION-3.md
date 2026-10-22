@@ -14,8 +14,10 @@ Items get their own registry file (`items.js`). The flask is the
 study's sprite on a shadow, bobbing 1 pixel every 0.7 s.
 
 **D-078 · 2026-10-18 · A flask gives 45% of a tank** (step 15)
-The study's amount. Walking onto a flask burns the step, then pours it
-in and it is gone, even with a full lantern (the extra is lost).
+The study's amount. ~~Walking onto a flask burns the step, then pours it
+in and it is gone,~~ *That part superseded by D-247 (2026-10-22): it goes
+in the bag, and is poured from there.* Poured even with a full lantern
+(the extra is lost).
 
 **D-079 · 2026-10-18 · Flasks come from the dev spawn list** (step 15,
 builds on D-049)

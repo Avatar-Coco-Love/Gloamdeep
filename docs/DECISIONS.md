@@ -178,3 +178,22 @@ level gives nothing yet; what it gives is Q-050. The level shows as
 oil bar). Reaching one, the text line says "You feel stronger. Level
 2.", over any other line that turn. A fall keeps the level, and older
 saves need nothing new: the level comes from the experience.
+
+**D-247 · 2026-10-22 · The bag** (step 41a, owner's picks; answers
+D-230, supersedes part of D-078) Walking onto an oil flask puts it in the
+bag; flasks stack in one slot, with a count. The bag has 6 slots in one
+row. A bag button sits left of the map button (under it sideways), and
+I opens it too; it opens as a panel over the room's foot, the hero and
+the strip still in view, and over the room's top when the hero stands
+where it would hide them (Claude's fix, found while building). Tap a
+flask, then Pour: pouring takes one turn, like a wait, and closes the
+bag. The button (a cross while open), I, Esc or a tap outside close it,
+and no turn passes. Pouring into a full lantern is allowed (D-078). A
+fall keeps the bag for now; D-020's bag left where you fell is a later
+step. Herbs stay as they are. Older saves start with an empty bag.
+
+**D-248 · 2026-10-22 · The bag's next steps** (owner's picks) After 41a:
+41a2, an Auto setting that pours a flask only when none would be wasted
+(at 55% oil or lower); 41a3, a stack limit of 3, a flask over it staying
+on the floor. The stash chest at home (D-021) comes later, with the home
+base, and makes the limit matter.

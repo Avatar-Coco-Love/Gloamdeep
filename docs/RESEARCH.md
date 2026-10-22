@@ -11,7 +11,8 @@ items: collectables, craftables, weapons and more. Where they stand:
 - Saving and loading: build step 37.
 - More enemies: step 38 added the gloamling, which shuns light (D-240).
 - New items and weapons: step 41, first gear.
-- Inventory: its own step just before step 41 (D-230).
+- Inventory: the bag, step 41a (D-247); Auto pouring, a stack limit and
+  the stash chest come next (D-248).
 - A companion: the faery (D-023, D-034). More than one would be a new
   decision.
 - NPCs, crafting, collectables: ideas for later, below.

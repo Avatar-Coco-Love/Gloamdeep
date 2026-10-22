@@ -3,6 +3,7 @@
 // the tile memories (Uint8Array, fog.js) need turning into lists and back.
 // Plain data, no drawing.
 import { withXp } from './xp.js';
+import { withBag } from './bag.js';
 
 // Raise FORMAT when the state's shape changes; an older save is then dropped quietly
 export const FORMAT = 1;
@@ -12,7 +13,7 @@ export const packJourney = (state, jumped) => ({ format: FORMAT, jumped: !!jumpe
 export function unpackJourney(kept) {
   const s = kept?.state;
   if (kept?.format !== FORMAT || !s?.hero || !s.room || !s.place || !s.home) return null;
-  return { state: withXp(s), jumped: !!kept.jumped };
+  return { state: withBag(withXp(s)), jumped: !!kept.jumped };
 }
 
 // A tile memory as { u8: [...] } in the text, and back

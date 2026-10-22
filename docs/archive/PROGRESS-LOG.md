@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.44, more gloamlings.** Three a floor from depth 5
+  all the way down; one backing out of the light no longer walks into
+  torchlight (D-243, D-244).
+  Playtest: https://claude.ai/artifact/DpEhchRMW5ULRbgm7n4UW7
 - **2026-10-22, 0.2.43, the gloamling.** A second creature that shuns
   light and bites only at an ember or with the lantern off (D-240,
   D-241). Two warren rooms a floor hold one (D-242).

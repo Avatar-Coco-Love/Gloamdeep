@@ -14,6 +14,7 @@ import { inDaylight } from './daytime.js';
 import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
 import { XP_FOE, gain, discover, foundAfterFall, levelOf } from './xp.js';
+import { bagAdd, bagTake } from './bag.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -29,7 +30,7 @@ export const HERO_HEALTH = 5;
 // `seed` sets every generated depth (D-148).
 export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'] };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [] };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -85,12 +86,12 @@ export function step(state, dir) {
   return endTurn(state, takeStairs(next) || next);
 }
 
-// § pick up: a flask is poured in, never above full, and is gone, even into a
-// full lantern (D-078). A herb heals, never above full, and is gone with its
+// § pick up: a flask goes into the bag, and stays on the floor when the bag
+// has no room (D-247). A herb heals, never above full, and is gone with its
 // line; at full health it stays on the floor (D-155, D-156).
 function pickUp(state, found) {
   const entry = get(found.id), items = state.items.filter((it) => it !== found);
-  if (entry.oil) return { ...state, items, oil: Math.min(1, state.oil + entry.oil) };
+  if (entry.bag) { const bag = bagAdd(state.bag, found.id); return bag ? { ...state, items, bag } : state; }
   if (entry.heal && state.health < HERO_HEALTH) return say({ ...state, items, health: Math.min(HERO_HEALTH, state.health + entry.heal) }, entry.says);
   return state;
 }
@@ -210,6 +211,16 @@ function lightTorch(state, x, y) {
   if (!state.lit) return say(state, 'lanternDark');
   const lights = state.lights.map((l) => (l === torch ? { ...l, id: entry.lightsTo } : l));
   return endTurn(state, say(passTurn({ ...state, lights }), 'torchLit'));
+}
+
+// § pour: a flask from bag slot i into the lantern, never above full, even
+// into a full one (D-078). It passes a turn like a wait, so the oil burns first
+// and the enemies act (D-247). An empty slot changes nothing.
+export function pour(state, i) {
+  const entry = state.bag[i] && get(state.bag[i].id);
+  if (!entry?.oil) return state;
+  const next = passTurn(state);
+  return endTurn(state, { ...next, bag: bagTake(state.bag, i), oil: Math.min(1, next.oil + entry.oil) });
 }
 
 // § wait: stand still for one turn (D-084). It passes a turn like a step,
