@@ -18,12 +18,13 @@ const TRIES = 200;
 // try worked. The shape is 'chambers', 'burrows' (D-165) or 'halls' (D-228). `ways.doors` are
 // openings to carve at the edges, as { dir, at } (region.js, D-201).
 // `ways.rats` is how many rats the room holds (D-231), and `ways.second` the
-// kind of creature that takes the extra ones' place (a gloamling, D-240). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
+// kind of creature that takes the extra ones' place (a gloamling, D-240), and
+// `ways.knife` whether the knife lies there (D-252). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
 // floors line up (D-202); true lets the room pick, null leaves them out.
-export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1, second = 'rat' } = {}) {
+export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1, second = 'rat', knife = false } = {}) {
   const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
   for (let i = 0; i < TRIES; i++) {
-    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats, second);
+    const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats, second, knife);
     if (room) return room;
   }
   return null;
@@ -76,7 +77,7 @@ function chambers(r) {
 // The stairs, torch, flask, rat and herb in a carved grid, or null if they
 // don't fit. With no stairs up, the way in through the room's first door
 // stands for them (D-201), and there is no torch.
-function fill(r, g, up = true, down = true, rats = 1, second = 'rat') {
+function fill(r, g, up = true, down = true, rats = 1, second = 'rat', knife = false) {
   const floors = tilesWhere(g, (x, y) => g[y][x] === '.');
   if (floors.length < MIN_OPEN) return null;
   const doors = g.doors || [];
@@ -108,7 +109,7 @@ function fill(r, g, up = true, down = true, rats = 1, second = 'rat') {
   }
   if (at) g[at.y][at.x] = '<';
   if (to) g[to.y][to.x] = '>';
-  if (!at) return finds(r, g, floors, far, from, to, null, doors, rats, second);
+  if (!at) return finds(r, g, floors, far, from, to, null, doors, rats, second, knife);
 
   // § torch: on a wall face near the stairs up, not right above them, and
   // not on the top row, where the hearts, depth and oil bar boxes could hide
@@ -117,13 +118,13 @@ function fill(r, g, up = true, down = true, rats = 1, second = 'rat') {
   const near = faces.filter((t) => dist(t, at) <= 3 && !(t.x === at.x && t.y === at.y - 1));
   if (!near.length) return null;
   const torch = pick(r, near);
-  return finds(r, g, floors, far, at, to, torch, doors, rats, second);
+  return finds(r, g, floors, far, at, to, torch, doors, rats, second, knife);
 }
 
 // The flask, rat and herb, `far` steps from `up`, the way in; with `down` and
 // `torch` when the room has them, and `count` creatures in all, the extra
-// ones of kind `second`
-function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'rat') {
+// ones of kind `second`; and the knife when `knife` is set
+function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'rat', knife = false) {
   // § flask and rat: the flask well away from the stairs, the rat beside it,
   // at least 5 steps from the stairs up, and 3 tiles off counting across walls.
   // It starts in the dark, as the second room's does: out of the torch's
@@ -154,11 +155,21 @@ function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'r
     taken.push(at); enemies.push({ id: second, x: at.x, y: at.y });
   }
 
+  // § knife: by the flask's rule, at least 5 steps from the stairs up, on a
+  // tile nothing else took (D-252). Picked last, so the rest of a seed's room
+  // stays as it was; any open tile when none is that far.
+  const items = [{ id: 'flask', x: flask.x, y: flask.y }, { id: 'herb', x: herb.x, y: herb.y }];
+  if (knife) {
+    const free = open.filter((f) => !taken.some((t) => same(t, f))), far5 = free.filter((f) => far.get(key(f)) >= 5);
+    const at = (far5.length || free.length) && pick(r, far5.length ? far5 : free);
+    if (at) items.push({ id: 'knife', x: at.x, y: at.y });
+  }
+
   return {
     map: g.map((row) => row.join('')),
     start: { x: up.x, y: up.y },
     lights: torch ? [{ id: 'torch', x: torch.x, y: torch.y }] : [],
-    items: [{ id: 'flask', x: flask.x, y: flask.y }, { id: 'herb', x: herb.x, y: herb.y }],
+    items,
     enemies,
   };
 }

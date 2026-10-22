@@ -51,7 +51,7 @@ test('the panel fits the picture, and a tap picks a slot, Pour, or closes it', a
   const { W, SCREEN_H, H } = await import('../src/render/screen.js');
   assert.ok(PANEL.x >= 0 && PANEL.x + PANEL.w <= W && PANEL.y > H / 2 && PANEL.y + PANEL.h <= SCREEN_H);
   assert.equal(bagAt(W / 2, 10), 'out');
-  const row = PANEL.y + 15 + 11;
+  const row = PANEL.y + 15 + 26 + 11; // under the held slot (D-252)
   const slots = Array.from({ length: 200 }, (_, x) => bagAt(x, row)).filter((a) => a && a.slot !== undefined).map((a) => a.slot);
   assert.deepEqual([...new Set(slots)], [0, 1, 2, 3, 4, 5]);
   assert.equal(bagAt(PANEL.x + PANEL.w - 10, PANEL.y + PANEL.h - 8), 'pour');
@@ -61,6 +61,6 @@ test('the panel moves to the top when it would hide the hero', async () => {
   const { PANEL, bagAt, panelOnTop } = await import('../src/render/bag.js');
   assert.equal(panelOnTop(16 * 5), false);
   assert.equal(panelOnTop(16 * 10), true);
-  assert.equal(bagAt(PANEL.x + 20, 30, true).slot, 0);
-  assert.equal(bagAt(PANEL.x + 20, 30, false), 'out');
+  assert.equal(bagAt(PANEL.x + 20, 56, true).slot, 0);
+  assert.equal(bagAt(PANEL.x + 20, 56, false), 'out');
 });

@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.47, the bag.** Flasks go into a 6-slot bag and
+  stack; a bag button (or I) opens it over the room's foot, or its top
+  when that would hide the hero. Tap a flask, then Pour: one turn. Kept
+  through a fall (D-247). Next steps set: Auto, a limit of 3 (D-248).
+  Playtest: https://claude.ai/artifact/VuFwsChhVZPWqhAsNKM8uj
 - **2026-10-22, 0.2.46, levels.** Experience adds up to levels, 10
   more each (2 at 10, 3 at 30). "LV 1" shows after the hearts, and the
   text line says "You feel stronger. Level 2." (D-246).

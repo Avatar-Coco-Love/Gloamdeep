@@ -30,7 +30,7 @@ export const HERO_HEALTH = 5;
 // `seed` sets every generated depth (D-148).
 export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [] };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -88,9 +88,12 @@ export function step(state, dir) {
 
 // § pick up: a flask goes into the bag, and stays on the floor when the bag
 // has no room (D-247), or with its full line when its stack is full (D-250). A herb heals, never above full, and is gone with its
-// line; at full health it stays on the floor (D-155, D-156).
+// line; at full health it stays on the floor (D-155, D-156). A weapon goes
+// into an empty hand with its line (D-252); with one held it stays for now,
+// as only one knife lies in the world.
 function pickUp(state, found) {
   const entry = get(found.id), items = state.items.filter((it) => it !== found);
+  if (entry.hold) return state.held ? state : say({ ...state, items, held: found.id }, entry.says);
   if (entry.bag) {
     const bag = bagAdd(state.bag, found.id);
     if (bag) return { ...state, items, bag };
@@ -192,13 +195,14 @@ function fall(state) {
   return say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start, found: foundAfterFall(state.found) }, 'fall');
 }
 
-// § attack: the hero swings the lantern at the foe and stays put (D-109).
-// It passes a turn like a step, so oil burns (D-111). The foe's line is
-// said, and an oil line said on the same turn replaces it (D-112). A foe
-// beaten is worth experience (D-245).
+// § attack: the hero swings the lantern at the foe and stays put (D-109),
+// or the weapon held, which hits for its own `hit` (D-252). It passes a turn
+// like a step, so oil burns (D-111). The foe's line is said, and an oil line
+// said on the same turn replaces it (D-112). A foe beaten is worth experience (D-245).
 export const LANTERN_HIT = 1; // two hits kill the rat (D-110)
+export const heroHit = (state) => (state.held && get(state.held)?.hit) || LANTERN_HIT;
 function attack(state, foe) {
-  const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, LANTERN_HIT);
+  const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, heroHit(state));
   const dead = enemies.length < state.enemies.length, next = passTurn({ ...state, enemies });
   return endTurn(state, say(dead ? gain(next, XP_FOE) : next, dead ? entry.die : entry.hurt));
 }

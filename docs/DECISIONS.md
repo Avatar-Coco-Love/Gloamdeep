@@ -125,3 +125,15 @@ floor: it never starts a second stack in a free slot. The line says
 (as D-236) D-234 to D-246 moved unchanged to
 `archive/DECISIONS-LAST-STEPS-1.md` as this file passed 12 KB. They stay
 in force.
+
+**D-252 · 2026-10-22 · First gear: a knife** (step 41, owner's picks)
+The first gear is a close weapon, a knife, hitting for 2 where the
+lantern hits for 1 (D-110), on the same one tile. It lies in depth 2's
+first room, the one with the stairs up, on a tile the seed picks by the
+flask's rule (at least 5 steps from the stairs). Walking onto it puts it
+in the hero's hand at once, a held slot apart from the bag, shown in the
+bag panel above the six slots under "HELD"; the line says "You take the
+knife." It is kept through a fall, and no knife lies there while the
+hero holds one. For later (the owner's words): it will lie a little
+deeper, in a chest; a second weapon, found with one held, goes into the
+bag.
