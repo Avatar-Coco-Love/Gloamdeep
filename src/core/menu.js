@@ -1,6 +1,6 @@
 // § menu: the title screen's lines (D-177). Only what works is listed (D-178):
 // Continue only while a journey is saved, first and already picked (D-238). Plain data, no drawing.
-import { controlsText, motionText, seedText, lanternText } from './settings.js';
+import { controlsText, motionText, seedText, lanternText, flasksText } from './settings.js';
 
 // The Seed Explorer, a dev tool, is its last line (D-214)
 export const TITLE_MENU = [{ id: 'new', text: 'New journey' }, { id: 'howto', text: 'How to play' }, { id: 'settings', text: 'Settings' }, { id: 'explore', text: 'Seed Explorer' }];
@@ -19,6 +19,7 @@ export const settingsMenu = (s, deviceReduced = false, journey = null) => [
   { id: 'motion', text: motionText(s.motion, deviceReduced) },
   { id: 'seed', text: seedText(s.seed, journey) },
   { id: 'lantern', text: lanternText(s.lantern) },
+  { id: 'flasks', text: flasksText(s.flasks) },
   { id: 'back', text: 'Back' },
 ];
 
