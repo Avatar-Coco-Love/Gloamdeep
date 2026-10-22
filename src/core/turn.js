@@ -147,7 +147,8 @@ function chaseStep(state, e) {
 // full health and the starting oil. The map stays remembered (D-119, D-136,
 // D-021), but the depths below the second room get a new seed and new
 // layouts, and their maps are forgotten (D-148). The new seed places the
-// hand-made rooms' items and rats afresh (D-192).
+// hand-made rooms' items and rats afresh (D-192). `fell` keeps the room
+// as the hero fell in it, for the fall to be shown before they wake (D-234).
 function fall(state) {
   const seed = nextSeed(state.seed), { place, hero } = state.home;
   const begun = state.home.places ? beginAll(seed) : { [place]: state.home };
@@ -157,7 +158,9 @@ function fall(state) {
   const { room, lights, enemies, items = [] } = begun[place];
   const woke = { room, hero, lights, enemies, items, seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
   const home = state.home.places ? { ...state.home, ...begun[place], hero, places: begun } : state.home;
-  return say({ ...state, ...woke, home, seed, health: HERO_HEALTH, oil: OIL.start }, 'fall');
+  const { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn } = state;
+  const fell = { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn, seed: state.seed, health: 0 };
+  return say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start }, 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109).

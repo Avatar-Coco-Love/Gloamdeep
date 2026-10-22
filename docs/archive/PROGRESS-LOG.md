@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.38, more rats deeper.** From depth 5 every room has
+  two rats, one by the flask and one anywhere in the dark (D-231). The
+  owner's wish list and research on Hoplite and similar games are in
+  `RESEARCH.md`; an inventory step comes before first gear (D-230).
+  Playtest: https://claude.ai/artifact/4VcKCb33zw9T8EXDibHfgU
 - **2026-10-21, 0.2.37, colder dungeon bricks.** The dungeon's bricks and
   slabs are drawn deeper and bluer, as in mock-up option B (D-229). Step 34,
   more rats deeper, is next.

@@ -39,7 +39,9 @@ at build plan step 7 (D-039).
 ```
 index.html          page shell and canvas
 package.json        only for `npm test` (no dependencies)
-src/main.js         boot and the main loop
+src/main.js         boot, moving the hero, and the main loop
+src/input/screens.js  the title, menus, map and Seed Explorer (D-235)
+src/render/frame.js   draws each frame from the shared `app` (D-235)
 src/core/           rules, state, rng, registry, noise (no DOM);
                     one file per content kind, gathered by registry.js (D-048)
 src/render/         drawing, lighting, sprites

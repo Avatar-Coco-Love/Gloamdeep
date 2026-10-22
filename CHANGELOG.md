@@ -20,6 +20,16 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.41 (2026-10-22)
+- A proper fall: at 0 health the hero lies down where they fell, the
+  light closes to the deepest dark, then opens where they wake. With
+  reduced motion, only a moment of dark.
+- `src/main.js` is split in three: the screens and the drawing each have
+  their own file. The game plays the same.
+- Decisions D-219 to D-233 moved to `archive/DECISIONS-DEEPER.md`, and
+  the Stage label in `PROGRESS.md` now says stage 0.2's last steps.
+- Decisions: D-234 to D-237.
+
 ## 0.2.40 (2026-10-21)
 - The map and the Seed Explorer name each floor's area beside its depth:
   "DEPTH 9 · DUNGEON", with Crypt, Cave and Warren above it. The surface
