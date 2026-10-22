@@ -1,7 +1,7 @@
 // § menu: the title screen's and pause menu's lines, and moving between them
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from '../src/core/menu.js';
+import { TITLE_MENU, PAUSE_MENU, titleMenu, SURE_MENU, SURE_HEADING, SURE_NOTE, settingsMenu, moveChoice } from '../src/core/menu.js';
 import { CONTROLS } from '../src/core/settings.js';
 import { lineAt, pauseTop, LINE_GAP } from '../src/render/menu.js';
 import { SCREEN_H, W } from '../src/render/screen.js';
@@ -9,6 +9,16 @@ import { textWidth } from '../src/render/font.js';
 
 test('the title menu offers New journey first, then How to play, Settings, and the Seed Explorer last (D-214)', () => {
   assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'howto', 'settings', 'explore']);
+});
+
+test('Continue shows, first, only while a journey is saved (D-178, D-238)', () => {
+  assert.deepEqual(titleMenu(false).map((l) => l.id), ['new', 'howto', 'settings', 'explore']);
+  assert.deepEqual(titleMenu(true).map((l) => l.id), ['continue', 'new', 'howto', 'settings', 'explore']);
+});
+
+test('Start over? asks Yes or No, and its words fit the picture (D-238)', () => {
+  assert.deepEqual(SURE_MENU.map((l) => l.id), ['yes', 'no']);
+  for (const words of [SURE_HEADING, SURE_NOTE]) assert.ok(textWidth(words) <= W);
 });
 
 test('Up and Down move the choice and stop at the ends', () => {

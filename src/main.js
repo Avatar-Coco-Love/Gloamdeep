@@ -13,6 +13,7 @@ import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
 import { deeper, loadDeepest, saveDeepest } from './core/record.js';
+import { loadJourney, saveJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
 import { lanternFrom } from './core/sight.js';
@@ -54,7 +55,17 @@ const newWorld = () => {
   app.journeySeed = app.settings.seed || randomSeed();
   return makeWorld('first', app.journeySeed);
 };
-app.state = newWorld();
+// The journey saved on this device comes back as it was, ready for Continue (D-238)
+const kept = loadJourney();
+app.saved = !!kept;
+if (kept) { app.state = kept.state; app.jumped = kept.jumped; app.journeySeed = kept.state.seed; }
+else app.state = newWorld();
+// Saved after every turn, or any change, once the journey has begun (D-238)
+let savedState = app.state;
+function keepJourney() {
+  if (app.state === savedState) return;
+  saveJourney(app.state, app.jumped); savedState = app.state; app.saved = true;
+}
 function keepDeepest() {
   const d = deeper(app.deepest, depthOf(app.state.place), app.jumped);
   if (d !== app.deepest) { app.deepest = d; saveDeepest(d); }
@@ -188,6 +199,7 @@ function newJourney() {
   snap(app.state.hero);
   app.queued = app.nudge = app.hit = app.bitten = app.travel = app.fall = null; foeShown = new Map();
   frame.redraw(); rememberedAt = rememberedSeen = null;
+  savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
 }
 const stage = document.getElementById('stage');
 const screens = createScreens(app, {
@@ -271,6 +283,7 @@ function update(t) {
 }
 function loop(t) {
   if (!screens.onTitle()) update(t);
+  keepJourney();
   frame.draw(t);
   requestAnimationFrame(loop);
 }

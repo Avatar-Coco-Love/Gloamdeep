@@ -69,6 +69,8 @@ picture); Esc or P open the menu too, and close it again. The menu is
 drawn over the room behind a dark veil, its lines centred, picked like
 the title's. No turn passes while it is open. Back to title ends the
 journey: New journey then starts a new world with a new random seed.
+*That last part superseded by D-239 (2026-10-22): Back to title keeps
+the journey for Continue.*
 
 **D-188 · 2026-10-20 · The decision log makes room again** (step 53,
 as D-151) D-159 to D-167 (steps 31 to 33) moved unchanged to

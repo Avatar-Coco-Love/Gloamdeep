@@ -111,3 +111,15 @@ file neared 12 KB. They stay in force.
 (owner's pick; supersedes the version part of D-168) Steps 36 to 41 are
 stage 0.2's last steps, built in the world stage 0.3 began. Versions stay
 0.2.x. `PROGRESS.md` says so in its Stage label.
+
+**D-238 · 2026-10-22 · Saving the journey** (step 37, owner's picks)
+One journey is kept on this device, saved after every turn, and from the
+moment New journey starts it. Continue is then the title's first line,
+already picked, and goes back to it as it was (D-178). While a journey is
+saved, New journey asks "Start over? The saved journey is lost." with
+Yes and No; No is picked to begin with, and No, Esc or P go back to the
+title. A save from an older shape of the game is dropped quietly.
+
+**D-239 · 2026-10-22 · Back to title keeps the journey** (owner's pick;
+supersedes the last part of D-187) Back to title no longer ends the
+journey: it stays saved for Continue. Only Yes on "Start over?" ends it.
