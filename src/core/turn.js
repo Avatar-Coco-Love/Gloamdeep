@@ -14,7 +14,7 @@ import { inDaylight } from './daytime.js';
 import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
 import { XP_FOE, gain, discover, foundAfterFall, levelOf } from './xp.js';
-import { bagAdd, bagTake } from './bag.js';
+import { bagAdd, bagTake, stackFull } from './bag.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -87,11 +87,15 @@ export function step(state, dir) {
 }
 
 // § pick up: a flask goes into the bag, and stays on the floor when the bag
-// has no room (D-247). A herb heals, never above full, and is gone with its
+// has no room (D-247), or with its full line when its stack is full (D-250). A herb heals, never above full, and is gone with its
 // line; at full health it stays on the floor (D-155, D-156).
 function pickUp(state, found) {
   const entry = get(found.id), items = state.items.filter((it) => it !== found);
-  if (entry.bag) { const bag = bagAdd(state.bag, found.id); return bag ? { ...state, items, bag } : state; }
+  if (entry.bag) {
+    const bag = bagAdd(state.bag, found.id);
+    if (bag) return { ...state, items, bag };
+    return stackFull(state.bag, found.id) ? say(state, entry.full) : state;
+  }
   if (entry.heal && state.health < HERO_HEALTH) return say({ ...state, items, health: Math.min(HERO_HEALTH, state.health + entry.heal) }, entry.says);
   return state;
 }

@@ -1,7 +1,7 @@
 // § bag: six slots, a stack in each; kept through a fall and in the save (D-247)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { BAG_SLOTS, bagAdd, bagTake, withBag } from '../src/core/bag.js';
+import { BAG_SLOTS, STACK_MAX, bagAdd, bagTake, stackFull, withBag } from '../src/core/bag.js';
 import { makeWorld } from '../src/core/turn.js';
 import { packJourney, unpackJourney } from '../src/core/save.js';
 import { byKind } from '../src/core/registry.js';
@@ -17,6 +17,14 @@ test('an item joins its stack, else takes a new slot, else there is no room', ()
   const full = Array.from({ length: BAG_SLOTS }, (_, i) => ({ id: 'thing' + i, n: 1 }));
   assert.equal(bagAdd(full, 'flask'), null);
   assert.deepEqual(bagAdd(full, 'thing2')[2], { id: 'thing2', n: 2 });
+});
+
+test('a stack holds at most 3, and a full one never spills to a new slot', () => {
+  assert.equal(STACK_MAX, 3);
+  assert.deepEqual(bagAdd([{ id: 'flask', n: 2 }], 'flask'), [{ id: 'flask', n: 3 }]);
+  assert.equal(bagAdd([{ id: 'flask', n: 3 }], 'flask'), null);
+  assert.equal(stackFull([{ id: 'flask', n: 3 }], 'flask'), true);
+  assert.equal(stackFull([{ id: 'flask', n: 2 }], 'flask'), false);
 });
 
 test('taking one lowers the count; the last empties the slot and the rest move up', () => {

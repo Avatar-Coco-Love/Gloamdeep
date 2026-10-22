@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.46, levels.** Experience adds up to levels, 10
+  more each (2 at 10, 3 at 30). "LV 1" shows after the hearts, and the
+  text line says "You feel stronger. Level 2." (D-246).
+  Playtest: https://claude.ai/artifact/LECkPyWkbvZaFK516tp5kz
 - **2026-10-22, 0.2.45, experience.** Beating a creature or entering a
   room never stood in gives 1, shown as a rising "+1"; kept through a
   fall and in the save. Older saves get 1 a mapped room (D-245).
