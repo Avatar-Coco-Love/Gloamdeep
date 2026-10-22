@@ -33,7 +33,7 @@ test('the pause menu offers Resume, Settings, How to play, then Back to title, a
 });
 
 test('Settings shows Controls, Motion, Seed, then Back, and every choice fits the picture with its flame', () => {
-  assert.deepEqual(settingsMenu({ controls: 'tap', motion: null, seed: null }).map((l) => l.text), ['Controls: Tap only', 'Motion: Full', 'Seed: Random', 'Lantern: By hand', 'Flasks: By hand', 'Back']);
+  assert.deepEqual(settingsMenu({ controls: 'tap', motion: null, seed: null }).map((l) => l.text), ['Controls: Tap only', 'Motion: Full', 'Seed: Random', 'Lantern: By hand', 'Flasks: By hand', 'Version history', 'Back']);
   assert.equal(settingsMenu({ controls: 'tap', motion: null }, true)[1].text, 'Motion: Reduced');
   assert.ok(textWidth(settingsMenu({ seed: null }, false, 99999)[2].text) + 2 * 8 <= W);
   for (const c of CONTROLS) assert.ok(textWidth(settingsMenu({ controls: c.id })[0].text) + 2 * 8 <= W);

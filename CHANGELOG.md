@@ -1,7 +1,8 @@
 # Changelog
 
 Newest first. Every PR adds exactly one entry, and that entry is the
-version bump.
+version bump. The same lines go, word for word, into the in-game Version
+history, `src/core/history-0.2.js` (D-254).
 
 Versions:
 - `0.0.x`: pre-production (decisions, docs, art studies). No playable game.
@@ -19,6 +20,20 @@ Entry format:
 - One line per change, written so the owner can follow it.
 - Decisions: D-008. Questions closed: Q-001.
 ```
+
+## 0.2.52 (2026-10-22)
+- Settings has a new line, Version history, above Back. It lists every
+  version from 0.0.1 to this one, newest first, each with a short title.
+  Tap one, or press Enter or Right, to open it: its date and every change
+  in it, the same lines as this changelog. Left or a second tap closes it.
+  Swipes and Page Up and Page Down scroll a page.
+- Under Settings on the title, the hero sits one more tile higher, clear
+  of its heading now that Settings has seven lines.
+- The pixel font gains the marks the changelog uses: quotes, ×, <, >, =,
+  # and the three-dot ….
+- A test checks every version and every line against this changelog,
+  word for word, so the two can't drift apart.
+- Decisions: D-254.
 
 ## 0.2.51 (2026-10-22)
 - The knife stabs: hitting a creature with the knife held, the hero

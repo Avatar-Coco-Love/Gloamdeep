@@ -12,6 +12,7 @@ export const SURE_NOTE = 'The saved journey is lost.';
 // The pause menu during play (D-177, D-187, D-193)
 export const PAUSE_MENU = [{ id: 'resume', text: 'Resume' }, { id: 'settings', text: 'Settings' }, { id: 'howto', text: 'How to play' }, { id: 'title', text: 'Back to title' }];
 // Settings, from the title or the pause menu (D-189, D-190, D-210): picking a switch moves it to the next choice.
+// Version history, above Back, opens the page of every version (D-254).
 // deviceReduced: the device's own reduced-motion setting, which Motion follows until picked;
 // journey: this journey's seed, named from the pause menu (D-191), else null
 export const settingsMenu = (s, deviceReduced = false, journey = null) => [
@@ -20,6 +21,7 @@ export const settingsMenu = (s, deviceReduced = false, journey = null) => [
   { id: 'seed', text: seedText(s.seed, journey) },
   { id: 'lantern', text: lanternText(s.lantern) },
   { id: 'flasks', text: flasksText(s.flasks) },
+  { id: 'history', text: 'Version history' },
   { id: 'back', text: 'Back' },
 ];
 

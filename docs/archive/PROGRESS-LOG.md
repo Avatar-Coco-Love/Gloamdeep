@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.49, a stack limit of 3.** A stack holds 3 flasks; a
+  4th stays on the floor, never in a new slot, and the line says "You
+  can't carry more flasks." D-234 to D-246 archived (D-250, D-251).
+  Playtest: https://claude.ai/artifact/XEAdWUc6FQWpERE56DfUWu
 - **2026-10-22, 0.2.48, flasks by themselves.** "Flasks: By itself" in
   Settings pours a flask, free, at 55% oil or lower: "You pour a flask."
   The title's hero sits a tile higher under Settings (D-249).
