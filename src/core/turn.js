@@ -13,7 +13,7 @@ import { litAt, clearLine } from './sight.js';
 import { inDaylight } from './daytime.js';
 import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
-import { XP_FOE, gain, discover, foundAfterFall } from './xp.js';
+import { XP_FOE, gain, discover, foundAfterFall, levelOf } from './xp.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -217,10 +217,12 @@ function lightTorch(state, x, y) {
 export const wait = (state) => endTurn(state, passTurn(state));
 const passTurn = (state) => ({ ...state, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil });
 // The end of a passed turn: the oil line, if one was crossed, a new room's
-// experience (D-245), then the enemies' turn.
+// experience (D-245), the level line if a level was reached, which replaces
+// any other line (D-246), then the enemies' turn.
 const endTurn = (before, after) => {
   const id = oilLine(before.oil, after.oil);
-  return enemiesAct(discover(before, id ? say(after, id) : after));
+  const found = discover(before, id ? say(after, id) : after), level = levelOf(found.xp);
+  return enemiesAct(level > levelOf(before.xp) ? say(found, 'levelUp', level) : found);
 };
 
 // § switch: the lantern on or off, whenever the player likes. It is free:

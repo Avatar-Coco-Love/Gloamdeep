@@ -3,18 +3,21 @@
 import { W } from './screen.js';
 import { drawText, textWidth } from './font.js';
 
-// § status: the three boxes in the strip, hearts left, depth middle, oil
-// right; or stacked in the column at the room's left when the strip is
-// that narrow one (D-199): hearts, depth, oil from the top, 2 pixels apart.
-export function drawStatus(c, { oil, health, max, depth }) {
+// § status: the boxes in the strip, hearts left with the level after them,
+// depth middle, oil right; or stacked in the column at the room's left when
+// the strip is that narrow one (D-199): hearts, depth, oil, then the level
+// from the top, 2 pixels apart (D-246).
+export function drawStatus(c, { oil, health, max, depth, level }) {
   if (c.canvas.width === W) {
     drawHearts(c, health, max, 2, BOX_Y);
+    drawBox(c, `LV ${level}`, 2 + heartsW(max) + 2, BOX_Y);
     drawDepth(c, depth, null, BOX_Y);
     drawOilBar(c, oil, W - BOX_W - 2, BOX_Y);
   } else {
     drawHearts(c, health, max, 2, 2);
     drawDepth(c, depth, 2, 12);
     drawOilBar(c, oil, 2, 25);
+    drawBox(c, `LV ${level}`, 2, 35);
   }
 }
 
@@ -45,8 +48,9 @@ function drawOilBar(c, oil, bx, by) {
 // box like the oil bar's (D-116). A full heart is the hostile red with the
 // study's deeper red (PAL p, R) under it; an empty one is an empty oil segment's colour.
 const HEART = ['.x.x.', 'xxxxx', '.xxx.', '..x..'], HEART_W = 5;
+const heartsW = (max) => max * HEART_W + (max - 1) * GAP + 4;
 function drawHearts(c, health, max, bx, by) {
-  const w = max * HEART_W + (max - 1) * GAP + 4, h = HEART.length + 4;
+  const w = heartsW(max), h = HEART.length + 4;
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
@@ -67,8 +71,14 @@ function drawHearts(c, health, max, bx, by) {
 // text line's grey (D-146). A null x centres it. Outside, depth 0, it says
 // SURFACE until places have names (D-209).
 function drawDepth(c, depth, x, by) {
-  const text = depth === 0 ? 'SURFACE' : `DEPTH ${depth}`, w = textWidth(text) + 6, h = 7 + 4;
-  const bx = x ?? Math.floor((W - w) / 2);
+  const text = depth === 0 ? 'SURFACE' : `DEPTH ${depth}`;
+  drawBox(c, text, x ?? Math.floor((W - textWidth(text) - 6) / 2), by);
+}
+
+// § box: a word in the text line's grey in a box like the oil bar's, the
+// depth's and the level's ("LV 2", D-246)
+function drawBox(c, text, bx, by) {
+  const w = textWidth(text) + 6, h = 7 + 4;
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);

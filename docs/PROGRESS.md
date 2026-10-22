@@ -4,17 +4,18 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.45 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.46 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**40 Levels** (stage 0.2, D-038): experience adds up to levels, and
-the total shows. Read `DESIGN.md` and D-245 before proposing.
+**41a The inventory** (stage 0.2, D-230): a small bag screen, so gear
+has somewhere to go. Its look and size are settled at that step.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
 - When creatures should show their next move (Q-049), any time.
+- What a level gives (Q-050), before levels matter.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
   so each conversation starts on the latest `main`.
@@ -37,18 +38,10 @@ The Seed Explorer (D-214, before step 50)
 - [x] E1 The Explorer: the map, all revealed, the seed and its buttons, 0.2.27
 - [x] E2 The whole surface on the Explorer's map, 0.2.28
 - [x] 50 to 51d: day and night to the doorway line, 0.2.29 to 0.2.33
-- [x] 59 Deeper floors as grids: burrow floors are warrens, 0.2.35 (D-227)
-- [x] 59b The dungeon from depth 8: six halls, one loop, 0.2.36 (D-228)
-- [x] 59c Darker, colder bricks for the dungeon, 0.2.37 (D-229)
-- [x] 34 More rats deeper: two a room from depth 5, 0.2.38 (D-231)
-- [x] 35 Deepest depth kept, on the title screen, 0.2.39 (D-232)
-- [x] M1 The map names the area, in its colour, 0.2.40 (D-233)
-- [x] 36 A proper fall: lie down, the dark, then wake, 0.2.41 (D-234)
-- [x] 37 Saving, with Continue on the title, 0.2.42 (D-238, D-239)
-- [x] 38 A second creature: the light-shy gloamling, 0.2.43, 0.2.44 (D-240 to D-244)
-- [x] 39 Experience: a creature or a new room gives 1, 0.2.45 (D-245)
+- [x] 59 to 59c, 34 to 39, M1: deeper floors to experience, 0.2.35 to 0.2.45
+- [x] 40 Levels: 10 more each, "LV" after the hearts, 0.2.46 (D-246)
 
-Stage 0.2 steps waiting (D-168): 40 levels, 41a the
+Stage 0.2 steps waiting (D-168): 41a the
 inventory (D-230), 41 first gear.
 
 UI and dev tools (the owner's wish, before step 46)
@@ -62,10 +55,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.43, the gloamling.** A second creature that shuns
-  light and bites only at an ember or with the lantern off (D-240,
-  D-241). Two warren rooms a floor hold one (D-242).
-  Playtest: https://claude.ai/artifact/HWDnUaFPDTR1LDei8xgfFi
 - **2026-10-22, 0.2.44, more gloamlings.** Three a floor from depth 5
   all the way down; one backing out of the light no longer walks into
   torchlight (D-243, D-244).
@@ -74,3 +63,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   room never stood in gives 1, shown as a rising "+1"; kept through a
   fall and in the save. Older saves get 1 a mapped room (D-245).
   Playtest: https://claude.ai/artifact/KDYQoUaQuVexkPCwpTajEK
+- **2026-10-22, 0.2.46, levels.** Experience adds up to levels, 10
+  more each (2 at 10, 3 at 30). "LV 1" shows after the hearts, and the
+  text line says "You feel stronger. Level 2." (D-246).
+  Playtest: https://claude.ai/artifact/LECkPyWkbvZaFK516tp5kz

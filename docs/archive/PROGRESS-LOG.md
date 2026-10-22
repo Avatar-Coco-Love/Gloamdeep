@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.43, the gloamling.** A second creature that shuns
+  light and bites only at an ember or with the lantern off (D-240,
+  D-241). Two warren rooms a floor hold one (D-242).
+  Playtest: https://claude.ai/artifact/HWDnUaFPDTR1LDei8xgfFi
 - **2026-10-22, 0.2.42, saving.** The journey is kept on this device
   after every turn; Continue on the title picks it up, and New journey
   asks "Start over?" first (D-238). Back to title keeps it (D-239).
