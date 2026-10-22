@@ -80,7 +80,9 @@ Read the smallest file that answers the question.
 ## Keeping track: every PR does all of these
 
 - **CHANGELOG.md**: add a new version entry at the top (the format is in its
-  header). Each PR has exactly one version.
+  header). Each PR has exactly one version. Add the same lines, with a
+  short title, at the top of `src/core/history-0.2.js`, the in-game
+  Version history (D-254); `npm test` fails if the two differ.
 - **docs/PROGRESS.md**: add a log entry, set "Next up" and update "Waiting
   on the owner". Keep only 3 log entries there. Move the oldest to the top
   of `docs/archive/PROGRESS-LOG.md`.

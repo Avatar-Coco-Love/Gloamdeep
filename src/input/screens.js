@@ -14,12 +14,17 @@
 // turn; the button (a cross while it is open), I, Esc, P or a tap outside it closes it (D-247).
 // Continue goes back to the saved journey; New journey, while one is saved, asks
 // "Start over?" first, and No, Esc or P return to the title (D-238).
+// Version history in Settings opens the page of every version (D-254): Up and Down choose one,
+// Enter, Space, Right or a tap on its row opens or closes it (Left closes it), swipes and
+// Page Up and Page Down scroll a page; Back, Esc or P return to Settings.
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
 import { depthOf, areaAt } from '../core/room.js';
 import { lineAt, pauseTop } from '../render/menu.js';
 import { titleTop } from '../render/title.js';
 import { keyAt } from '../render/seedpad.js';
 import { howtoAt } from '../render/howto.js';
+import { historyRows, historyAt, headRow, lastRow, ROW_H, LIST_H } from '../render/history.js';
+import { HISTORY, versionWords, scrollToShow, clampScroll } from '../core/history.js';
 import { nextPage, howtoWords, HOWTO_LINES } from '../core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from '../core/seedpad.js';
 import { titleMenu, PAUSE_MENU, SURE_MENU, SURE_NOTE, SURE_HEADING, settingsMenu, moveChoice } from '../core/menu.js';
@@ -40,6 +45,7 @@ const WORDS = {
   paused: 'Paused. Resume, Settings, How to play, or Back to title.',
   play: '',
 };
+const HISTORY_WORDS = `Version history, ${HISTORY.length} versions, newest first. Up and Down choose one, Enter opens or closes it. Back.`;
 const SEED_WORDS = 'Seed. Type up to 5 digits, then OK. Random gives a new world each journey. Esc leaves it unchanged.';
 const EXPLORE_PAD_WORDS = 'Seed. Type up to 5 digits, then OK to see that seed. Random shows a random one. Esc leaves it unchanged.';
 const PAN = 8; // game pixels an arrow key scrolls the map
@@ -54,9 +60,9 @@ export function createScreens(app, ui) {
   const exploring = () => app.screen === 'explore' || (app.screen === 'seed' && app.padFrom === 'explore');
   const onTitle = () => app.screen === 'title' || app.screen === 'sure' || exploring() || (!['play', 'paused', 'map', 'bag'].includes(app.screen) && app.pageFrom === 'title');
   const menuTop = () => (onTitle() ? titleTop(menuOf(app.screen).length) : pauseTop(menuOf(app.screen).length, app.screen === 'settings'));
-  const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -1).map((l) => l.text).join('. ')}. Pick one to change it. Back.`;
+  const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -2).map((l) => l.text).join('. ')}. Pick one to change it. Version history. Back.`;
   function show(next, at = 0) {
-    if ((next === 'settings' && app.screen !== 'seed') || next === 'howto') app.pageFrom = app.screen;
+    if ((next === 'settings' && app.screen !== 'seed' && app.screen !== 'history') || next === 'howto') app.pageFrom = app.screen;
     app.screen = next; app.chosen = at;
     const playing = next === 'play';
     lanternButton.hide(!playing); pauseButton.hide(!playing); ui.dev().hide(!playing);
@@ -65,13 +71,47 @@ export function createScreens(app, ui) {
     bagButton.hide(!playing && next !== 'bag'); bagButton.closes(next === 'bag');
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
-      : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords()
+      : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
       : next === 'title' ? [WORDS[app.saved ? 'saved' : 'title'], app.deepest && `${recordText(app.deepest)}.`].filter(Boolean).join(' ') : WORDS[next];
   }
   const backTo = (id) => () => show(app.pageFrom, menuOf(app.pageFrom).findIndex((l) => l.id === id));
   const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
   function openHowTo() { app.page = ui.input().kind(); show('howto'); }
   function flipPage(back = false) { app.page = nextPage(app.page, back); spoken.textContent = howtoWords(app.page, app.settings.controls); }
+
+  // § version history (D-254): opens with every version closed, on the newest
+  function openHistory() { app.opened = new Set(); app.rows = historyRows(app.opened); app.scroll = 0; show('history'); }
+  const closeHistory = () => show('settings', menuOf('settings').findIndex((l) => l.id === 'history'));
+  const shownRows = () => clampScroll(app.scroll, app.rows.length * ROW_H, LIST_H);
+  // Choose version i (or Back), its row scrolled into view
+  function pickVersion(i) {
+    app.chosen = i;
+    const e = HISTORY[i];
+    if (!e) { spoken.textContent = 'Back'; return; }
+    const r = headRow(app.rows, i);
+    app.scroll = scrollToShow(app.scroll, r, r, ROW_H, LIST_H, app.rows.length);
+    spoken.textContent = versionWords(e, app.opened.has(e.v));
+  }
+  // Open or close version i; an opened one shows as much of itself as fits
+  function openVersion(i, open = !app.opened.has(HISTORY[i]?.v)) {
+    const e = HISTORY[i];
+    if (!e || open === app.opened.has(e.v)) return;
+    if (open) app.opened.add(e.v); else app.opened.delete(e.v);
+    app.rows = historyRows(app.opened);
+    app.scroll = shownRows();
+    pickVersion(i);
+    if (open) app.scroll = scrollToShow(app.scroll, headRow(app.rows, i), lastRow(app.rows, i), ROW_H, LIST_H, app.rows.length);
+  }
+  // Scroll a page down (by > 0) or up; the flame moves to the top version shown if it scrolled away
+  function pageHistory(by) {
+    app.scroll = clampScroll(app.scroll + by * (LIST_H - ROW_H), app.rows.length * ROW_H, LIST_H);
+    const top = Math.floor(app.scroll / ROW_H), bottom = Math.floor((app.scroll + LIST_H) / ROW_H) - 1;
+    const shown = (r) => r >= top && r <= bottom;
+    if (app.chosen < HISTORY.length && !app.rows.some((row, r) => row.i === app.chosen && shown(r))) {
+      app.chosen = app.rows[top].i;
+      spoken.textContent = versionWords(HISTORY[app.chosen], app.opened.has(HISTORY[app.chosen].v));
+    }
+  }
 
   // § map: the floor the hero is on, worked out once as it opens; no turn passes
   // (D-205). It turns to other floors seen; the hero stays put (D-206).
@@ -103,6 +143,7 @@ export function createScreens(app, ui) {
     mapFloor(depthOf(app.state.place));
   }
   function turnMap(way) {
+    if (app.screen === 'history') { pageHistory(way === 'up' ? -1 : 1); return; }
     const to = (app.screen === 'map' || app.screen === 'explore') && turnFrom(app.floors, app.plan.depth, way);
     if (to) mapFloor(to);
   }
@@ -159,6 +200,7 @@ export function createScreens(app, ui) {
     else if (app.screen === 'settings') closeSettings();
     else if (app.screen === 'seed') closePad();
     else if (app.screen === 'howto') closeHowTo();
+    else if (app.screen === 'history') closeHistory();
     else if (app.screen === 'sure') titleAt('new');
   }
   function change(key, next, words) {
@@ -218,6 +260,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'seed') { pressKey(PAD[i].id); return; }
     if (app.screen === 'bag') { pourChosen(); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
+    if (app.screen === 'history') { if (i < HISTORY.length) openVersion(i); else closeHistory(); return; }
     if (id === 'new' && app.saved) show('sure', SURE_MENU.findIndex((l) => l.id === 'no'));
     else if (id === 'new' || id === 'yes') { ui.newJourney(); show('play'); }
     else if (id === 'no') titleAt('new');
@@ -231,6 +274,7 @@ export function createScreens(app, ui) {
     else if (id === 'seed') openPad();
     else if (id === 'lantern') changeLantern();
     else if (id === 'flasks') changeFlasks();
+    else if (id === 'history') openHistory();
     else if (id === 'back') closeSettings();
   }
   // Arrows and swipes off the room: menus take swipes always (D-189)
@@ -239,6 +283,12 @@ export function createScreens(app, ui) {
     if (app.screen === 'seed') { app.chosen = moveKey(app.chosen, dir); return; }
     if (app.screen === 'bag') { if (dir === 'left' || dir === 'right') pickSlot(Math.min(BAG_SLOTS - 1, Math.max(0, app.chosen + (dir === 'left' ? -1 : 1)))); return; }
     if (app.screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else app.chosen = moveChoice(app.chosen, dir, HOWTO_LINES.length); return; }
+    if (app.screen === 'history') {
+      if (dir === 'left' || dir === 'right') openVersion(app.chosen, dir === 'right');
+      else if (how === 'swipe') pageHistory(dir === 'up' ? 1 : -1); // the list follows the finger
+      else pickVersion(moveChoice(app.chosen, dir, HISTORY.length + 1));
+      return;
+    }
     const id = menuOf(app.screen)[app.chosen]?.id;
     if (id === 'controls' && (dir === 'left' || dir === 'right')) changeControls(dir === 'left');
     else if (id === 'motion' && (dir === 'left' || dir === 'right')) changeMotion();
@@ -266,6 +316,13 @@ export function createScreens(app, ui) {
       return;
     }
     if (app.screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { app.chosen = k; choose(k); } return; }
+    if (app.screen === 'history') {
+      const at = historyAt(py, app.scroll, app.rows.length);
+      if (at === 'back') closeHistory();
+      else if (at && app.rows[at.row].kind === 'head') openVersion(app.rows[at.row].i);
+      else if (at) pickVersion(app.rows[at.row].i);
+      return;
+    }
     if (app.screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { app.chosen = 0; flipPage(at === 'prev'); } return; }
     const i = lineAt(py, menuOf(app.screen).length, menuTop());
     if (i >= 0) { app.chosen = i; choose(i); }

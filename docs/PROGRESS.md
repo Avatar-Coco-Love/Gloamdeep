@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.51 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.52 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
@@ -45,6 +45,7 @@ The Seed Explorer (D-214, before step 50)
 - [x] 41a3 A stack limit of 3, a 4th flask stays on the floor, 0.2.49 (D-250)
 - [x] 41 First gear: a knife in the first cave, held, hits for 2, 0.2.50 (D-252)
 - [x] 41b The knife's stab, a quick jab, 0.2.51 (D-253)
+- [x] Version history in Settings, 0.2.52 (D-254, the owner's wish)
 
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 
@@ -59,10 +60,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.49, a stack limit of 3.** A stack holds 3 flasks; a
-  4th stays on the floor, never in a new slot, and the line says "You
-  can't carry more flasks." D-234 to D-246 archived (D-250, D-251).
-  Playtest: https://claude.ai/artifact/XEAdWUc6FQWpERE56DfUWu
 - **2026-10-22, 0.2.50, first gear.** A knife lies in depth 2's first
   room; walking onto it holds it ("You take the knife."), in a HELD slot
   above the bag's six. It hits for 2, so a rat falls in one hit. Kept
@@ -71,3 +68,6 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 - **2026-10-22, 0.2.51, the knife's stab.** A knife hit darts the hero
   half a tile toward the creature and back in 0.1 s (D-253).
   Playtest: https://claude.ai/artifact/632zAB2bfQSFZr7EXDT8kc
+- **2026-10-22, 0.2.52, version history.** Settings lists every
+  version; tap one for its changelog lines, word for word (D-254).
+  Playtest: https://claude.ai/artifact/YQBk7PAQV34MafuCGYZHnx

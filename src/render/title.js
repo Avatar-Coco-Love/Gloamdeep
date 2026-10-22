@@ -19,8 +19,8 @@ const LIGHT_OIL = 0.5; // a half-full lantern: the light stays between the name 
 export const MENU_Y = 166; // the first menu line's top
 // A longer page (Settings) starts higher, so its last line stays where a 3-line menu's does
 export const titleTop = (count) => Math.min(MENU_Y, MENU_Y - (count - 3) * LINE_GAP);
-// A page of 6 lines or more lifts the hero and light one tile, clear of its heading (D-249)
-export const heroRow = (count) => HERO.y - (count >= 6 ? 1 : 0);
+// Each line past 5 lifts the hero and light one tile, clear of the page's heading (D-249, D-254)
+export const heroRow = (count) => HERO.y - Math.max(0, count - 5);
 
 // § scene: the floor, drawn once; no tile is remembered, so only the light shows it
 const room = makeRoom(Array.from({ length: H / TILE }, () => '.'.repeat(W / TILE)));

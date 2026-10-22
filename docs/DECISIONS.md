@@ -143,3 +143,16 @@ A hit with the knife held shows a quick jab: the hero darts half a tile
 (8 pixels) toward the creature and back in 0.1 s, as well as the hit's
 flash and shake (D-109). The lantern's swing has none. None with reduced
 motion.
+
+**D-254 · 2026-10-22 · Version history in Settings** (owner's picks)
+Settings gets a line, Version history, above Back. It lists every
+version from 0.0.1, newest first: its number and a short title taken
+from its PR's title. Tapping one (or Enter, or Right) opens it: its date
+and its changelog lines, word for word, without backticks; Left or a
+second tap closes it. Swipes and Page Up and Page Down scroll a page.
+Every PR adds its lines to `src/core/history-0.2.js` (the stage's file)
+as well as to `CHANGELOG.md`; a test fails if the two differ. The pixel
+font gains " × < > = # … and −. The page is dark of its own, and each
+Settings line past 5 lifts the title's hero a tile (builds D-249).
+Checked at 0.2.52: PRs #1 to #89 are versions 0.0.1 to 0.2.51, one
+each, with no gaps or repeats; only the build plan's step numbers jump.

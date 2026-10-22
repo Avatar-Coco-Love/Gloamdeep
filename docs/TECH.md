@@ -58,4 +58,7 @@ runner, with no dependencies.
 
 ## Versioning in code
 Once code exists, `src/core/version.js` exports `VERSION`, and it must match
-the top `CHANGELOG.md` entry. Add a test that checks this.
+the top `CHANGELOG.md` entry. Add a test that checks this. The in-game
+Version history (`src/core/history.js` and its files, one per minor
+version) holds every changelog line; `tests/history.test.js` checks it
+word for word (D-254).

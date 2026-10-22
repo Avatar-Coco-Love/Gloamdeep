@@ -41,7 +41,7 @@ const app = {
   journeySeed: 0, state: null,
   // The deepest depth walked to, kept on this device (D-021, D-232); a dev jump stops this journey counting
   deepest: loadDeepest(), jumped: false,
-  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag' or 'explore'
+  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore' or 'history'
   screen: 'title', chosen: 0,
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
@@ -52,6 +52,7 @@ const app = {
   spokenLine: null,
   cam: { x: 0, y: 0 }, // the room pixel at the screen's top-left (src/core/camera.js)
   bagOnTop: false, // the bag's panel over the room's top, so it doesn't hide the hero (D-247)
+  opened: new Set(), rows: [], scroll: 0, // Version history: the versions open, its rows, and how far it is scrolled (D-254)
 };
 const newWorld = () => {
   app.journeySeed = app.settings.seed || randomSeed();
