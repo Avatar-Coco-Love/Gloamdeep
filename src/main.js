@@ -89,6 +89,7 @@ Object.assign(app, {
   // as the camera follows the hero; `stopped` once something came into view, until the finger lifts.
   walk: null, // { px, py, tx, ty, stopped }
   alertUntil: 0, // the "!" over the hero after a stop
+  gain: null, // { n, at } the "+1" over the hero when experience is earned (D-245)
   hit: null, // { enemy, until, shakeUntil } after attacking an enemy (D-105, D-109)
   bitten: null, // { until, shakeUntil } after a bite: the hero flashes red (D-118)
   travel: null, // { from, mid, end } while taking stairs: the old room fades out, the new one in (D-135)
@@ -128,6 +129,8 @@ function tryStep(dir) {
   } else if (went || (still() && !fell)) { snap(state.hero); if (went) foeShown = new Map(); }
   else if (!fell) followFoes(before.enemies, state.enemies);
   if (went) keepDeepest();
+  // Experience earned shows as it rises over the hero; after stairs, once the new room shows (D-245)
+  if (state.xp > before.xp) app.gain = { n: state.xp - before.xp, at: app.travel?.mid ?? performance.now() };
 }
 // The fall is shown in the room where it happened, then the hero wakes at the start (D-234)
 function fallDown(from) {
@@ -197,7 +200,7 @@ const mapButton = createMapButton(hud, { onMap: () => screens.toggleMap() });
 function newJourney() {
   app.state = newWorld(); app.jumped = false;
   snap(app.state.hero);
-  app.queued = app.nudge = app.hit = app.bitten = app.travel = app.fall = null; foeShown = new Map();
+  app.queued = app.nudge = app.hit = app.bitten = app.travel = app.fall = app.gain = null; foeShown = new Map();
   frame.redraw(); rememberedAt = rememberedSeen = null;
   savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
 }
