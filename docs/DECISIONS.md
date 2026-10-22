@@ -137,3 +137,9 @@ knife." It is kept through a fall, and no knife lies there while the
 hero holds one. For later (the owner's words): it will lie a little
 deeper, in a chest; a second weapon, found with one held, goes into the
 bag.
+
+**D-253 · 2026-10-22 · The knife's stab** (owner's pick, builds D-252)
+A hit with the knife held shows a quick jab: the hero darts half a tile
+(8 pixels) toward the creature and back in 0.1 s, as well as the hit's
+flash and shake (D-109). The lantern's swing has none. None with reduced
+motion.

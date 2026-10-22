@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.48, flasks by themselves.** "Flasks: By itself" in
+  Settings pours a flask, free, at 55% oil or lower: "You pour a flask."
+  The title's hero sits a tile higher under Settings (D-249).
+  Playtest: https://claude.ai/artifact/BipaLvkGACYmNEsJYfRpZb
 - **2026-10-22, 0.2.47, the bag.** Flasks go into a 6-slot bag and
   stack; a bag button (or I) opens it over the room's foot, or its top
   when that would hide the hero. Tap a flask, then Pour: one turn. Kept

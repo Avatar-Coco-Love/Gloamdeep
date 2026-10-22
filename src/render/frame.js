@@ -13,6 +13,7 @@ import { drawSeedPad } from './seedpad.js';
 import { drawHowTo } from './howto.js';
 import { drawMap } from './map.js';
 import { drawBag } from './bag.js';
+import { jabAt } from './jab.js';
 import { drawMark, drawAlert, drawGain } from './walk.js';
 import { drawDoors } from './doors.js';
 import { LANTERN, LANTERN_AT } from '../core/light.js';
@@ -66,10 +67,11 @@ export function createFrame(app, ui) {
   function draw(t) {
     hudCtx.fillStyle = '#0e0c16'; hudCtx.fillRect(0, 0, hud.width, hud.height); // the strip stays empty on the title
     if (screens.onTitle()) { onTitleScreens(t); return; }
-    const { state, shown, nudge, hit, bitten, travel, fall, walk } = app;
+    const { state, shown, nudge, hit, jab, bitten, travel, fall, walk } = app;
     const s = travel?.from || fall?.from || state;
     let nx = 0, ny = 0;
     if (nudge && t < nudge.until && !still()) { nx = nudge.dx; ny = nudge.dy; }
+    if (jab && !still()) { const j = jabAt(jab, t); nx += j.x; ny += j.y; } // the knife's stab (D-253)
     if (s.room !== drawnRoom) {
       drawnRoom = s.room; doors = doorways(s.place, s.room, s.seed);
       base.width = drawnRoom.cols * TILE; base.height = drawnRoom.rows * TILE;
