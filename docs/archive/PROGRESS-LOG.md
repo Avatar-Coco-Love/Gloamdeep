@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.42, saving.** The journey is kept on this device
+  after every turn; Continue on the title picks it up, and New journey
+  asks "Start over?" first (D-238). Back to title keeps it (D-239).
+  Playtest: https://claude.ai/artifact/AgjQHjpGRGmhQe3HQTS6nC
 - **2026-10-22, 0.2.41, a proper fall.** At 0 health the hero lies down
   where they fell and the light closes to dark, then opens where they
   wake (D-234). `main.js` split (D-235), D-219 to D-233

@@ -12,7 +12,7 @@ import { drawPause, veil } from './menu.js';
 import { drawSeedPad } from './seedpad.js';
 import { drawHowTo } from './howto.js';
 import { drawMap } from './map.js';
-import { drawMark, drawAlert } from './walk.js';
+import { drawMark, drawAlert, drawGain } from './walk.js';
 import { drawDoors } from './doors.js';
 import { LANTERN, LANTERN_AT } from '../core/light.js';
 import { reach } from '../core/oil.js';
@@ -107,6 +107,7 @@ export function createFrame(app, ui) {
       drawDoors(ctx, doors, dev.revealed() ? null : s.seen, s.room.cols, t, still()); // over the light, so remembered ones show (D-225)
       if (walk && !walk.stopped && !travel) drawMark(ctx, walk.tx, walk.ty, t, still());
       if (t < app.alertUntil) drawAlert(ctx, sx + nx, sy + ny);
+      else if (app.gain && !fall) drawGain(ctx, app.gain.n, sx + nx, sy + ny, t, Math.max(app.gain.at, app.alertUntil), still()); // after a "!", not over it
     });
     // § shake: the room jumps a pixel left and right after a hit; none with reduced motion (study line 432, D-105)
     // A bite shakes it the same way (D-118).

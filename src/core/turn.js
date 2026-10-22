@@ -13,6 +13,7 @@ import { litAt, clearLine } from './sight.js';
 import { inDaylight } from './daytime.js';
 import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
+import { XP_FOE, gain, discover, foundAfterFall } from './xp.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -28,7 +29,7 @@ export const HERO_HEALTH = 5;
 // `seed` sets every generated depth (D-148).
 export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'] };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -38,7 +39,7 @@ export function makeState(room, start = FIRST_START, lights = [], enemies = [], 
 export function makeWorld(first = 'first', seed = 1) {
   const begun = beginAll(seed);
   const here = begun[first], state = makeState(here.room, here.start, here.lights, here.enemies, here.items, seed);
-  return { ...state, place: first, elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
+  return { ...state, place: first, found: [first], elsewhere: away(begun, first, {}), home: { ...state.home, place: first, places: begun } };
 }
 
 // Every hand-made place as it begins with this seed
@@ -183,17 +184,18 @@ function fall(state) {
   const home = state.home.places ? { ...state.home, ...begun[place], hero, places: begun } : state.home;
   const { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn } = state;
   const fell = { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn, seed: state.seed, health: 0 };
-  return say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start }, 'fall');
+  return say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start, found: foundAfterFall(state.found) }, 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109).
 // It passes a turn like a step, so oil burns (D-111). The foe's line is
-// said, and an oil line said on the same turn replaces it (D-112).
+// said, and an oil line said on the same turn replaces it (D-112). A foe
+// beaten is worth experience (D-245).
 export const LANTERN_HIT = 1; // two hits kill the rat (D-110)
 function attack(state, foe) {
   const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, LANTERN_HIT);
-  const dead = enemies.length < state.enemies.length;
-  return endTurn(state, say(passTurn({ ...state, enemies }), dead ? entry.die : entry.hurt));
+  const dead = enemies.length < state.enemies.length, next = passTurn({ ...state, enemies });
+  return endTurn(state, say(dead ? gain(next, XP_FOE) : next, dead ? entry.die : entry.hurt));
 }
 
 // § light a torch: walking into the wall of an unlit torch, from the tile it
@@ -214,10 +216,11 @@ function lightTorch(state, x, y) {
 // so oil burns while the lantern is lit (D-037).
 export const wait = (state) => endTurn(state, passTurn(state));
 const passTurn = (state) => ({ ...state, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil });
-// The end of a passed turn: the oil line, if one was crossed, then the enemies' turn.
+// The end of a passed turn: the oil line, if one was crossed, a new room's
+// experience (D-245), then the enemies' turn.
 const endTurn = (before, after) => {
   const id = oilLine(before.oil, after.oil);
-  return enemiesAct(id ? say(after, id) : after);
+  return enemiesAct(discover(before, id ? say(after, id) : after));
 };
 
 // § switch: the lantern on or off, whenever the player likes. It is free:

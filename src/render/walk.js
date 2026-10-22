@@ -1,5 +1,5 @@
 // § walk marks: the held walk's target and its stop (D-220), in room pixels.
-import { drawText } from './font.js';
+import { drawText, textWidth } from './font.js';
 
 const AMBER = '#ffc65c', DARK = '#0e0c16'; // the menu's amber, outlined in the deepest dark
 
@@ -19,4 +19,18 @@ export function drawMark(c, tx, ty, t, still) {
 export function drawAlert(c, x, y) {
   for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) drawText(c, '!', x + 7 + dx, y - 11 + dy, DARK);
   drawText(c, '!', x + 7, y - 11, AMBER);
+}
+
+// § gain: a "+1" rising over the hero as experience is earned (D-245), in the
+// "!"'s amber and outline. It rises 6 pixels and fades over GAIN_MS from
+// `at`; with reduced motion it stays put and goes at the end.
+export const GAIN_MS = 900;
+export function drawGain(c, n, x, y, t, at, still) {
+  const k = (t - at) / GAIN_MS;
+  if (k < 0 || k >= 1) return;
+  const text = `+${n}`, gx = x + 8 - Math.floor(textWidth(text) / 2), gy = Math.max(1, y - 11 - (still ? 0 : Math.round(6 * k))); // kept inside the room on its top row
+  c.globalAlpha = still ? 1 : Math.min(1, 3 * (1 - k));
+  for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) drawText(c, text, gx + dx, gy + dy, DARK);
+  drawText(c, text, gx, gy, AMBER);
+  c.globalAlpha = 1;
 }
