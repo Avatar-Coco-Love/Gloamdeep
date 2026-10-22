@@ -26,7 +26,9 @@ at build plan step 7 (D-039).
   what lets dev tools and tests change the game safely.
 - **One content registry.** Every tile, item, enemy and NPC is one data
   entry: its id, name, how it is drawn and how it behaves. Menus, the dev
-  spawn tool and saves all read from the registry. Nothing keeps its own
+  spawn tool and saves all read from the registry. The save
+  (`src/core/save.js`, D-238) writes the whole state; raise its `FORMAT`
+  when the state's shape changes, so older saves are dropped, not misread. Nothing keeps its own
   hand-written list.
 - **Seeded RNG.** All randomness comes from one seeded generator, so a
   seed reproduces a run exactly ("load seed 4127 and watch the bug happen").

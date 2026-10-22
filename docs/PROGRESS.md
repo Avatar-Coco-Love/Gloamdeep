@@ -4,13 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.41 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.42 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**37 Saving** (stage 0.2, D-168): the journey kept on this device, with
-Continue on the title once it works (D-178). Read D-019, D-021 and D-178
-before proposing.
+**38 A second creature** (stage 0.2, D-168). Read `DESIGN.md`, the
+wish list in `RESEARCH.md` and Q-049 before proposing.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -45,8 +44,9 @@ The Seed Explorer (D-214, before step 50)
 - [x] 35 Deepest depth kept, on the title screen, 0.2.39 (D-232)
 - [x] M1 The map names the area, in its colour, 0.2.40 (D-233)
 - [x] 36 A proper fall: lie down, the dark, then wake, 0.2.41 (D-234)
+- [x] 37 Saving, with Continue on the title, 0.2.42 (D-238, D-239)
 
-Stage 0.2 steps waiting (D-168): 37 saving, 38 a second creature, 39 experience, 40 levels, 41a the
+Stage 0.2 steps waiting (D-168): 38 a second creature, 39 experience, 40 levels, 41a the
 inventory (D-230), 41 first gear.
 
 UI and dev tools (the owner's wish, before step 46)
@@ -60,10 +60,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.39, deepest depth kept.** The game remembers the
-  deepest depth walked to, on this device, and the title screen shows it
-  under the menu; dev jumps don't count (D-232).
-  Playtest: https://claude.ai/artifact/KT9HBosAuBtexwPMmcnVT4
 - **2026-10-21, 0.2.40, the map names the area.** The map and the Seed
   Explorer say "DEPTH 9 · DUNGEON", and walls take their area's colour
   (D-233, the owner's idea).
@@ -73,3 +69,7 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   wake (D-234). `main.js` split (D-235), D-219 to D-233
   archived (D-236), Stage label fixed (D-237).
   Playtest: https://claude.ai/artifact/94xckauod2Q6KCCai69MGH
+- **2026-10-22, 0.2.42, saving.** The journey is kept on this device
+  after every turn; Continue on the title picks it up, and New journey
+  asks "Start over?" first (D-238). Back to title keeps it (D-239).
+  Playtest: https://claude.ai/artifact/AgjQHjpGRGmhQe3HQTS6nC

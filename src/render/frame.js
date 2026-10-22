@@ -25,7 +25,7 @@ import { daylight, darkNow } from '../core/daytime.js';
 import { shownSeed, canGoBack } from '../core/explorer.js';
 import { mouthLight } from '../core/mouth.js';
 import { cameraAt } from '../core/camera.js';
-import { PAUSE_MENU } from '../core/menu.js';
+import { PAUSE_MENU, SURE_MENU, SURE_HEADING, SURE_NOTE } from '../core/menu.js';
 import { doorways } from '../core/openings.js';
 
 export const FADE_MS = 200; // each way, taking stairs (D-135)
@@ -57,6 +57,7 @@ export function createFrame(app, ui) {
     if (screen === 'explore') { drawTitle(ctx, [], 0, t, still()); drawMap(ctx, app.view, t, still(), screens.turns(), { seed: shownSeed(app.seeds), back: canGoBack(app.seeds) }); }
     else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, app.entry, app.chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still()); }
+    else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
     else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null, screen === 'title' ? recordText(app.deepest) : null);
   }
 

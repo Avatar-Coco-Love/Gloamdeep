@@ -20,6 +20,14 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.42 (2026-10-22)
+- Saving: the journey is kept on this device after every turn. Continue
+  appears first on the title once a journey is saved, and picks it up
+  where it was, even after closing the page.
+- Back to title keeps the journey. New journey asks "Start over? The
+  saved journey is lost." first, with No picked.
+- Decisions: D-238, D-239 (supersedes the last part of D-187).
+
 ## 0.2.41 (2026-10-22)
 - A proper fall: at 0 health the hero lies down where they fell, the
   light closes to the deepest dark, then opens where they wake. With

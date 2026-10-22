@@ -9,6 +9,8 @@
 // Its heading's arrows, < and >, Page Up and Page Down, or a tap on stairs found turn it a floor (D-206).
 // Seed Explorer on the title opens the same map for any seed, all revealed, with no
 // hero (D-214); the cross, Esc, P, M or a tap outside the box return to the title.
+// Continue goes back to the saved journey; New journey, while one is saved, asks
+// "Start over?" first, and No, Esc or P return to the title (D-238).
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
 import { depthOf, areaAt } from '../core/room.js';
 import { lineAt, pauseTop } from '../render/menu.js';
@@ -17,7 +19,7 @@ import { keyAt } from '../render/seedpad.js';
 import { howtoAt } from '../render/howto.js';
 import { nextPage, howtoWords, HOWTO_LINES } from '../core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from '../core/seedpad.js';
-import { TITLE_MENU, PAUSE_MENU, settingsMenu, moveChoice } from '../core/menu.js';
+import { titleMenu, PAUSE_MENU, SURE_MENU, SURE_NOTE, SURE_HEADING, settingsMenu, moveChoice } from '../core/menu.js';
 import { saveSettings, nextControl, controlsText, nextMotion, motionText, seedText, lanternText, nextLantern } from '../core/settings.js';
 import { recordText } from '../core/record.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from '../core/map.js';
@@ -26,6 +28,8 @@ import { startSeeds, shownSeed, addSeed, backSeed, explorerWorld } from '../core
 
 const WORDS = {
   title: 'Gloamdeep. New journey, How to play, Settings or Seed Explorer: press Enter, or tap one.',
+  saved: 'Gloamdeep. Continue, New journey, How to play, Settings or Seed Explorer: press Enter, or tap one.',
+  sure: `${SURE_HEADING} ${SURE_NOTE} Yes or No.`,
   paused: 'Paused. Resume, Settings, How to play, or Back to title.',
   play: '',
 };
@@ -38,10 +42,10 @@ const STAIRS_REACH = 8; // game pixels from found stairs' centre that a tap stil
 // when used (they are made after the screens); `newJourney` and `randomSeed` from main.js.
 export function createScreens(app, ui) {
   const { spoken, lanternButton, pauseButton, mapButton, reduceMotion } = ui;
-  const menuOf = (sc) => (sc === 'title' ? TITLE_MENU : sc === 'paused' ? PAUSE_MENU
+  const menuOf = (sc) => (sc === 'title' ? titleMenu(app.saved) : sc === 'paused' ? PAUSE_MENU : sc === 'sure' ? SURE_MENU
     : settingsMenu(app.settings, reduceMotion.matches, app.pageFrom === 'paused' ? app.journeySeed : null));
   const exploring = () => app.screen === 'explore' || (app.screen === 'seed' && app.padFrom === 'explore');
-  const onTitle = () => app.screen === 'title' || exploring() || (!['play', 'paused', 'map'].includes(app.screen) && app.pageFrom === 'title');
+  const onTitle = () => app.screen === 'title' || app.screen === 'sure' || exploring() || (!['play', 'paused', 'map'].includes(app.screen) && app.pageFrom === 'title');
   const menuTop = () => (onTitle() ? titleTop(menuOf(app.screen).length) : pauseTop(menuOf(app.screen).length, app.screen === 'settings'));
   const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -1).map((l) => l.text).join('. ')}. Pick one to change it. Back.`;
   function show(next, at = 0) {
@@ -54,7 +58,7 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls)
-      : next === 'title' && app.deepest ? `${WORDS.title} ${recordText(app.deepest)}.` : WORDS[next];
+      : next === 'title' ? [WORDS[app.saved ? 'saved' : 'title'], app.deepest && `${recordText(app.deepest)}.`].filter(Boolean).join(' ') : WORDS[next];
   }
   const backTo = (id) => () => show(app.pageFrom, menuOf(app.pageFrom).findIndex((l) => l.id === id));
   const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
@@ -112,7 +116,8 @@ export function createScreens(app, ui) {
     show('explore');
     mapFloor(0);
   }
-  const closeExplorer = () => show('title', TITLE_MENU.findIndex((l) => l.id === 'explore'));
+  const titleAt = (id) => show('title', menuOf('title').findIndex((l) => l.id === id));
+  const closeExplorer = () => titleAt('explore');
   function showSeeds(next) {
     if (next === app.seeds) return;
     app.seeds = next;
@@ -131,6 +136,7 @@ export function createScreens(app, ui) {
     else if (app.screen === 'settings') closeSettings();
     else if (app.screen === 'seed') closePad();
     else if (app.screen === 'howto') closeHowTo();
+    else if (app.screen === 'sure') titleAt('new');
   }
   function change(key, next, words) {
     app.settings = { ...app.settings, [key]: next };
@@ -181,13 +187,16 @@ export function createScreens(app, ui) {
     return true;
   };
 
-  // § choosing: a menu line picked; New journey starts in a new world, Back to title ends it (D-187)
+  // § choosing: a menu line picked; New journey starts in a new world (D-187), asking first
+  // while one is saved; Continue and Back to title keep the journey (D-238)
   function choose(i = app.chosen) {
     const id = menuOf(app.screen)[i]?.id;
     if (app.screen === 'seed') { pressKey(PAD[i].id); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
-    if (id === 'new') { ui.newJourney(); show('play'); }
-    else if (id === 'resume') show('play');
+    if (id === 'new' && app.saved) show('sure', SURE_MENU.findIndex((l) => l.id === 'no'));
+    else if (id === 'new' || id === 'yes') { ui.newJourney(); show('play'); }
+    else if (id === 'no') titleAt('new');
+    else if (id === 'resume' || id === 'continue') show('play');
     else if (id === 'title') show('title');
     else if (id === 'settings') show('settings');
     else if (id === 'howto') openHowTo();

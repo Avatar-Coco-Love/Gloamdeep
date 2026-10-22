@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-21, 0.2.39, deepest depth kept.** The game remembers the
+  deepest depth walked to, on this device, and the title screen shows it
+  under the menu; dev jumps don't count (D-232).
+  Playtest: https://claude.ai/artifact/KT9HBosAuBtexwPMmcnVT4
 - **2026-10-21, 0.2.38, more rats deeper.** From depth 5 every room has
   two rats, one by the flask and one anywhere in the dark (D-231). The
   owner's wish list and research on Hoplite and similar games are in
