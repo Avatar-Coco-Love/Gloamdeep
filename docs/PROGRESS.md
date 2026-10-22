@@ -4,11 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.40 · **Stage:** 0.3, the world (D-168)
+**Version:** 0.2.41 · **Stage:** 0.2, the last steps (36 to 41), in the
+world of 0.3 (D-168, D-237)
 
 ## Next up
-**36 A proper fall** (stage 0.2, D-168): what happens when the hero's
-health runs out. Read D-119 and D-136 before proposing.
+**37 Saving** (stage 0.2, D-168): the journey kept on this device, with
+Continue on the title once it works (D-178). Read D-019, D-021 and D-178
+before proposing.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -42,9 +44,9 @@ The Seed Explorer (D-214, before step 50)
 - [x] 34 More rats deeper: two a room from depth 5, 0.2.38 (D-231)
 - [x] 35 Deepest depth kept, on the title screen, 0.2.39 (D-232)
 - [x] M1 The map names the area, in its colour, 0.2.40 (D-233)
+- [x] 36 A proper fall: lie down, the dark, then wake, 0.2.41 (D-234)
 
-Stage 0.2 steps waiting (D-168): 36 a proper
-fall, 37 saving, 38 a second creature, 39 experience, 40 levels, 41a the
+Stage 0.2 steps waiting (D-168): 37 saving, 38 a second creature, 39 experience, 40 levels, 41a the
 inventory (D-230), 41 first gear.
 
 UI and dev tools (the owner's wish, before step 46)
@@ -58,16 +60,16 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-21, 0.2.38, more rats deeper.** From depth 5 every room has
-  two rats, one by the flask and one anywhere in the dark (D-231). The
-  owner's wish list and research on Hoplite and similar games are in
-  `RESEARCH.md`; an inventory step comes before first gear (D-230).
-  Playtest: https://claude.ai/artifact/4VcKCb33zw9T8EXDibHfgU
 - **2026-10-21, 0.2.39, deepest depth kept.** The game remembers the
   deepest depth walked to, on this device, and the title screen shows it
-  under the menu; dev jumps don't count (D-232). Step 36 is next.
+  under the menu; dev jumps don't count (D-232).
   Playtest: https://claude.ai/artifact/KT9HBosAuBtexwPMmcnVT4
 - **2026-10-21, 0.2.40, the map names the area.** The map and the Seed
   Explorer say "DEPTH 9 · DUNGEON", and walls take their area's colour
-  (D-233, the owner's idea). Step 36 is still next.
+  (D-233, the owner's idea).
   Playtest: https://claude.ai/artifact/KrUG8Eo7XTiWXw2nYCdfTo
+- **2026-10-22, 0.2.41, a proper fall.** At 0 health the hero lies down
+  where they fell and the light closes to dark, then opens where they
+  wake (D-234). `main.js` split (D-235), D-219 to D-233
+  archived (D-236), Stage label fixed (D-237).
+  Playtest: https://claude.ai/artifact/94xckauod2Q6KCCai69MGH

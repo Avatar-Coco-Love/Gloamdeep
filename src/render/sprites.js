@@ -74,11 +74,19 @@ export function drawShadow(c, x, y, w) {
   c.fillRect(x + 9 - w / 2, y + 16, w - 2, 1);
 }
 
+const LYING_DROP = 3; // pixels the fallen hero sits lower, on the floor
 // § hero: drawn 2 pixels up from its tile, on its shadow (ART-DIRECTION.md).
-// `bitten`: flashing red just after a bite (D-118).
-export function drawHero(c, x, y, bitten = false) {
-  drawShadow(c, x, y, 8);
-  c.drawImage(bitten ? BITTEN : SPRITES.hero, x, y - 2);
+// `bitten`: flashing red just after a bite (D-118). `lying`: fallen, turned
+// a quarter over onto the floor, a whole turn so the pixels stay crisp (D-234).
+export function drawHero(c, x, y, bitten = false, lying = false) {
+  const sprite = bitten ? BITTEN : SPRITES.hero;
+  drawShadow(c, x, y, lying ? 12 : 8);
+  if (!lying) { c.drawImage(sprite, x, y - 2); return; }
+  c.save();
+  c.translate(x + 8, y + LYING_DROP + 8);
+  c.rotate(Math.PI / 2);
+  c.drawImage(sprite, -8, -8);
+  c.restore();
 }
 
 // § items: each item 2 pixels up from its tile, on its shadow. An item bobs
