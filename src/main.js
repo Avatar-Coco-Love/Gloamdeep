@@ -93,6 +93,7 @@ Object.assign(app, {
   alertUntil: 0, // the "!" over the hero after a stop
   gain: null, // { n, at } the "+1" over the hero when experience is earned (D-245)
   hit: null, // { enemy, until, shakeUntil } after attacking an enemy (D-105, D-109)
+  jab: null, // { dx, dy, start } after a hit with a weapon held (D-253)
   bitten: null, // { until, shakeUntil } after a bite: the hero flashes red (D-118)
   travel: null, // { from, mid, end } while taking stairs: the old room fades out, the new one in (D-135)
   fall: null, // { from, lieAt, darkAt, mid, end } after a fall, until the hero wakes (D-234)
@@ -118,6 +119,7 @@ function tryStep(dir) {
     const [dx, dy] = DIRS[dir], foe = enemyAt(app.state, app.state.hero.x + dx, app.state.hero.y + dy);
     to = { x: before.hero.x + dx, y: before.hero.y + dy };
     if (foe) app.hit = { enemy: foe, ...flashFor() };
+    if (foe && before.held) app.jab = { dx, dy, start: performance.now() }; // the knife's stab (D-253)
     else if (next.turn === app.state.turn) nudgeToward(dir); // a bump, or a torch the dark lantern can't light (D-122)
     app.state = next;
   }
@@ -205,7 +207,7 @@ const bagButton = createBagButton(hud, { onBag: () => screens.toggleBag() });
 function newJourney() {
   app.state = newWorld(); app.jumped = false;
   snap(app.state.hero);
-  app.queued = app.nudge = app.hit = app.bitten = app.travel = app.fall = app.gain = null; foeShown = new Map();
+  app.queued = app.nudge = app.hit = app.jab = app.bitten = app.travel = app.fall = app.gain = null; foeShown = new Map();
   frame.redraw(); rememberedAt = rememberedSeen = null;
   savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
 }

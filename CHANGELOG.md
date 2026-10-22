@@ -20,6 +20,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.51 (2026-10-22)
+- The knife stabs: hitting a creature with the knife held, the hero
+  darts half a tile toward it and springs back, in a tenth of a second.
+  The lantern's swing stays as it was. None with reduced motion.
+- Decisions: D-253.
+
 ## 0.2.50 (2026-10-22)
 - The first gear: a knife. It lies in the first cave, the room you reach
   down the crypt's stairs (depth 2), on a tile the seed picks at least 5
