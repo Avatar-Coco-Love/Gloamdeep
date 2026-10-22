@@ -20,6 +20,20 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.47 (2026-10-22)
+- The bag: walking onto an oil flask now puts it in your bag instead of
+  pouring it straight in. Flasks stack in one slot, with a count.
+- A bag button sits left of the map button (under it, sideways); I opens
+  it too. The bag opens as a panel over the bottom of the room, with six
+  slots, so the hero and the hearts stay in view. If the hero stands
+  where the panel would hide them, it opens over the top instead.
+- Tap a flask, then Pour (or Enter or Space) to pour it into the lantern.
+  Pouring takes one turn and closes the bag. The button (now a cross), I,
+  Esc or a tap outside the panel close it without a turn passing.
+- The bag is kept through a fall, and in the save. Older saves start
+  with an empty bag.
+- Decisions: D-247, D-248.
+
 ## 0.2.46 (2026-10-22)
 - Levels: experience now adds up to levels. Level 2 takes 10, level 3
   takes 30, level 4 takes 60, each 10 more than the last.

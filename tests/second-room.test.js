@@ -21,11 +21,12 @@ test('the second room has a flask, a rat and a torch at 3,0; the first a flask',
   assert.equal(enemyAt(n, rat.x, rat.y).id, 'rat');
 });
 
-test('the flask pours in when walked onto, and stays gone after going up and back down', () => {
+test('the flask goes in the bag when walked onto, and stays gone after going up and back down', () => {
   let s = { ...down(), hero: { x: flask.x, y: flask.y - 1 }, enemies: [], oil: 0.5 };
   s = step(s, 'down');
   assert.equal(itemAt(s, flask.x, flask.y), undefined);
-  assert.equal(s.oil, Math.min(1, burnOil(0.5) + 0.45));
+  assert.equal(s.oil, burnOil(0.5));
+  assert.deepEqual(s.bag, [{ id: 'flask', n: 1 }]);
   s = step({ ...s, hero: { x: 2, y: 1 } }, 'left'); // up
   assert.equal(s.place, 'first');
   s = step({ ...s, hero: { x: 2, y: 1 } }, 'left'); // down again

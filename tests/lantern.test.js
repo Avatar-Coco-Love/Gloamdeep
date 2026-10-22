@@ -2,10 +2,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM } from '../src/core/room.js';
-import { makeState, makeWorld, step, switchLantern, followDaylight } from '../src/core/turn.js';
+import { makeState, makeWorld, step, pour, switchLantern, followDaylight } from '../src/core/turn.js';
 import { goToPlace } from '../src/core/stairs.js';
-import { OIL } from '../src/core/oil.js';
-import { spawn } from '../src/core/spawn.js';
+import { OIL, setOil } from '../src/core/oil.js';
 
 const room = makeRoom(FIRST_ROOM);
 
@@ -31,8 +30,8 @@ test('a step with the lantern off passes a turn but burns no oil', () => {
 });
 
 test('a flask still pours in with the lantern off', () => {
-  const s = switchLantern(spawn(makeState(room), 'flask', 5, 10));
-  assert.equal(step(s, 'up').oil, Math.min(1, OIL.start + 0.45));
+  const s = switchLantern({ ...setOil(makeState(room), 0.5), bag: [{ id: 'flask', n: 1 }] });
+  assert.equal(pour(s, 0).oil, 0.95);
 });
 
 test('By itself, the lantern goes out in daylight and lights again in the dark (D-210)', () => {

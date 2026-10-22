@@ -2,7 +2,7 @@
 // input/screens.js and the drawing in render/frame.js (D-235); `app` holds
 // what the three share.
 import { VERSION } from './core/version.js';
-import { makeWorld, step, wait, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
+import { makeWorld, step, wait, pour, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt } from './core/enemies.js';
 import { goToDepth, goToPlace } from './core/stairs.js';
@@ -23,6 +23,7 @@ import { createInput } from './input/input.js';
 import { createLanternButton } from './input/lantern.js';
 import { createPauseButton } from './input/pause.js';
 import { createMapButton } from './input/mapbutton.js';
+import { createBagButton } from './input/bagbutton.js';
 import { createMapMoves } from './input/mapview.js';
 import { createScreens } from './input/screens.js';
 import { createFrame, FADE_MS } from './render/frame.js';
@@ -40,7 +41,7 @@ const app = {
   journeySeed: 0, state: null,
   // The deepest depth walked to, kept on this device (D-021, D-232); a dev jump stops this journey counting
   deepest: loadDeepest(), jumped: false,
-  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map' or 'explore'
+  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag' or 'explore'
   screen: 'title', chosen: 0,
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
@@ -50,6 +51,7 @@ const app = {
   plan: null, view: null, floors: [], // the map shown, its view, and the floors it turns to
   spokenLine: null,
   cam: { x: 0, y: 0 }, // the room pixel at the screen's top-left (src/core/camera.js)
+  bagOnTop: false, // the bag's panel over the room's top, so it doesn't hide the hero (D-247)
 };
 const newWorld = () => {
   app.journeySeed = app.settings.seed || randomSeed();
@@ -110,6 +112,7 @@ function tryStep(dir) {
   const before = app.state;
   let to = before.hero;
   if (dir === 'wait') app.state = wait(app.state); // standing still, one turn (D-084)
+  else if (dir.pour !== undefined) app.state = pour(app.state, dir.pour); // a flask from the bag, one turn (D-247)
   else {
     const next = step(app.state, dir);
     const [dx, dy] = DIRS[dir], foe = enemyAt(app.state, app.state.hero.x + dx, app.state.hero.y + dy);
@@ -195,6 +198,7 @@ const switchIt = () => { if (app.screen === 'play') app.state = switchLantern(ap
 const lanternButton = createLanternButton(hud, { onSwitch: switchIt });
 const pauseButton = createPauseButton(hud, { onPause: () => screens.pause() });
 const mapButton = createMapButton(hud, { onMap: () => screens.toggleMap() });
+const bagButton = createBagButton(hud, { onBag: () => screens.toggleBag() });
 
 // § journey: New journey starts in a new world (D-187)
 function newJourney() {
@@ -206,7 +210,8 @@ function newJourney() {
 }
 const stage = document.getElementById('stage');
 const screens = createScreens(app, {
-  spoken, lanternButton, pauseButton, mapButton, reduceMotion, newJourney, randomSeed,
+  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed,
+  pour: (slot) => tryStep({ pour: slot }),
   dev: () => dev, input: () => input, mapMoves: () => mapMoves, // made below
 });
 // In play the Controls switch can turn swipes off (D-189); off the room, the screens take them
@@ -218,7 +223,7 @@ const onPoint = (px, py, held) => { if (app.screen === 'play') stepToward(px, py
 const onWait = () => { if (app.screen === 'play') tryStep('wait'); else if (!screens.onMapScreen()) screens.choose(); };
 const onChoose = () => { if (app.screen !== 'play' && !screens.onMapScreen()) screens.choose(); };
 const input = createInput(stage, canvas, {
-  onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: screens.pause, onMap: screens.toggleMap, onFloor: screens.turnMap, onType: screens.onType,
+  onDir, onPoint, onLantern: switchIt, onWait, onChoose, onPause: screens.pause, onMap: screens.toggleMap, onBag: screens.toggleBag, onFloor: screens.turnMap, onType: screens.onType,
 });
 const mapMoves = createMapMoves(stage, canvas, { active: screens.onMapScreen, onPan: screens.panMap, onZoom: screens.zoomMap });
 const dev = createDev(stage, canvas, { // on for everyone (D-086)

@@ -4,12 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.46 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.47 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**41a The inventory** (stage 0.2, D-230): a small bag screen, so gear
-has somewhere to go. Its look and size are settled at that step.
+**41a2 Auto pouring** (D-248): a setting that pours a flask from the
+bag by itself, only when none would be wasted (at 55% oil or lower).
+Where the setting lives and its words are settled at that step.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -40,9 +41,10 @@ The Seed Explorer (D-214, before step 50)
 - [x] 50 to 51d: day and night to the doorway line, 0.2.29 to 0.2.33
 - [x] 59 to 59c, 34 to 39, M1: deeper floors to experience, 0.2.35 to 0.2.45
 - [x] 40 Levels: 10 more each, "LV" after the hearts, 0.2.46 (D-246)
+- [x] 41a The bag: flasks go in it, tap then Pour, 0.2.47 (D-247)
 
-Stage 0.2 steps waiting (D-168): 41a the
-inventory (D-230), 41 first gear.
+Stage 0.2 steps waiting (D-168, D-248): 41a2 Auto pouring, 41a3 a stack
+limit of 3, 41 first gear. The stash chest comes with the home base.
 
 UI and dev tools (the owner's wish, before step 46)
 - [x] U1 Sideways, the room uses the sides, 0.2.17
@@ -55,10 +57,6 @@ low oil (D-210); sounds; scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.44, more gloamlings.** Three a floor from depth 5
-  all the way down; one backing out of the light no longer walks into
-  torchlight (D-243, D-244).
-  Playtest: https://claude.ai/artifact/DpEhchRMW5ULRbgm7n4UW7
 - **2026-10-22, 0.2.45, experience.** Beating a creature or entering a
   room never stood in gives 1, shown as a rising "+1"; kept through a
   fall and in the save. Older saves get 1 a mapped room (D-245).
@@ -67,3 +65,8 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   more each (2 at 10, 3 at 30). "LV 1" shows after the hearts, and the
   text line says "You feel stronger. Level 2." (D-246).
   Playtest: https://claude.ai/artifact/LECkPyWkbvZaFK516tp5kz
+- **2026-10-22, 0.2.47, the bag.** Flasks go into a 6-slot bag and
+  stack; a bag button (or I) opens it over the room's foot, or its top
+  when that would hide the hero. Tap a flask, then Pour: one turn. Kept
+  through a fall (D-247). Next steps set: Auto, a limit of 3 (D-248).
+  Playtest: https://claude.ai/artifact/VuFwsChhVZPWqhAsNKM8uj

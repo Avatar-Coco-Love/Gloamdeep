@@ -8,11 +8,11 @@ import { drawLanternIcon } from '../render/hud.js';
 import { BUTTON as SIZE, BUTTON_GAP as GAP } from '../render/screen.js';
 
 // § place: the button's spot (D-198, D-199): slot 0 the lantern, 1 the
-// pause button, 2 the map (D-205), -1 the dev wrench. Above the picture they
+// pause button, 2 the map (D-205), 3 the bag (D-247), -1 the dev wrench. Above the picture they
 // make one row, the wrench at the left end, the lantern at the right end with
-// pause and then the map to its left. Sideways (the strip is a column at the
+// pause, the map and then the bag to its left. Sideways (the strip is a column at the
 // room's left), the wrench stands left of the picture's top, pause right of
-// it with the map under it, and the lantern at the bottom right, under the thumb. `hud` is the strip; the picture is it
+// it with the map and the bag under it, and the lantern at the bottom right, under the thumb. `hud` is the strip; the picture is it
 // and the room's canvas beside it. Placed again whenever the page or the
 // picture changes size; then(top, left, picture) hears where it went.
 export function keepPlaced(hud, button, slot, then) {
