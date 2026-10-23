@@ -74,7 +74,7 @@ export function createFrame(app, ui) {
     else if (screen === 'trim') drawTrims(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'clothes') drawClothes(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'drop') drawAsk(ctx, slotName(app.profiles.slots[app.dropping], app.dropping), SURE_MENU, app.chosen, DROP_NOTE, t, still());
-    else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
+    else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, playing(app.profiles).played, t, still());
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
     else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null);
   }
@@ -156,7 +156,7 @@ export function createFrame(app, ui) {
     else if (app.screen === 'seed') drawSeedPad(ctx, app.entry, app.chosen, t, still());
     else if (app.screen === 'howto') drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still());
     else if (app.screen === 'history') drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still());
-    else if (app.screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
+    else if (app.screen === 'journal') drawJournal(ctx, playing(app.profiles).records, playing(app.profiles).played, t, still());
     else if (app.screen === 'map') drawMap(ctx, app.view, t, still(), screens.turns());
     else if (app.screen === 'bag') drawBag(ctx, state.bag, app.chosen, SPRITES, app.bagOnTop, state.held);
     else dev.draw(ctx, state, cam);
