@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.56, a rat's bite.** Two low, dry snaps of teeth,
+  after the hit in the same turn; the gloamling is silent (D-259).
+  Sound board: https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU
 - **2026-10-23, 0.2.55, the hit's sound.** A soft "dmp" per hit, a
   tick on top with the knife (D-258). Sound board:
   https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU (republished).

@@ -121,3 +121,11 @@ stay the same as the world grows. A new word goes there when decided.
 **D-265 · 2026-10-23 · The last steps' later decisions are archived**
 (as D-251) D-247 to D-260 moved unchanged to
 `archive/DECISIONS-LAST-STEPS-2.md`. They stay in force.
+
+**D-266 · 2026-10-23 · Old saves are upgraded** (G1, owner's picks;
+answers D-263's G1, supersedes D-238's last sentence) Each save carries
+a format number. When the save's shape changes, the number goes up by
+one and a small numbered step is added, from the old shape to the new
+(as Minecraft and Factorio upgrade old worlds). Loading runs every step
+from the save's number up to today's. A save no step can bring up,
+broken or from a newer version of the game, is still dropped quietly.

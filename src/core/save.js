@@ -5,15 +5,29 @@
 import { withXp } from './xp.js';
 import { withBag } from './bag.js';
 
-// Raise FORMAT when the state's shape changes; an older save is then dropped quietly
-export const FORMAT = 1;
+// § upgrades: an older save is brought up to today's shape, one numbered step at a
+// time (D-266), instead of dropped. When the state's shape changes, raise FORMAT and
+// add the step from the old number to the new one; never edit a step once merged.
+export const FORMAT = 2;
+export const UPGRADES = {
+  1: (s) => withBag(withXp(s)), // 1 → 2: experience (D-245), the bag and the held item (D-247, D-252)
+};
+// A save's state at today's shape, or null when no steps lead there (broken, or newer than this game)
+export function upgradeState(format, state) {
+  if (!Number.isInteger(format) || format < 1 || format > FORMAT) return null;
+  let s = state;
+  for (let f = format; f < FORMAT; f++) s = UPGRADES[f](s);
+  return s;
+}
+
 // What is kept: the state, and whether a dev jump stopped the record counting (D-232)
 export const packJourney = (state, jumped) => ({ format: FORMAT, jumped: !!jumped, state });
-// A kept journey back, or null when there is none, it is from an older format, or it is broken
+// A kept journey back, upgraded, or null when there is none or it can't be read (dropped quietly, D-266)
 export function unpackJourney(kept) {
-  const s = kept?.state;
-  if (kept?.format !== FORMAT || !s?.hero || !s.room || !s.place || !s.home) return null;
-  return { state: withBag(withXp(s)), jumped: !!kept.jumped };
+  const s0 = kept?.state;
+  if (!s0?.hero || !s0.room || !s0.place || !s0.home) return null;
+  const s = upgradeState(kept.format, s0);
+  return s ? { state: s, jumped: !!kept.jumped } : null;
 }
 
 // A tile memory as { u8: [...] } in the text, and back

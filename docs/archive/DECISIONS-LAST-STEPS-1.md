@@ -40,6 +40,7 @@ already picked, and goes back to it as it was (D-178). While a journey is
 saved, New journey asks "Start over? The saved journey is lost." with
 Yes and No; No is picked to begin with, and No, Esc or P go back to the
 title. A save from an older shape of the game is dropped quietly.
+(Last sentence superseded by D-266, 2026-10-23: old saves are upgraded.)
 
 **D-239 · 2026-10-22 · Back to title keeps the journey** (owner's pick;
 supersedes the last part of D-187) Back to title no longer ends the
