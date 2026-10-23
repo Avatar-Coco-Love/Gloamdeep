@@ -23,16 +23,18 @@ export function typeKey(entry, id) {
 // The seed OK keeps: a number, or null for Random when nothing is typed
 export const entrySeed = (entry) => (entry ? Number(entry) : null);
 
-// § move: arrows walk the grid and stop at its edges; Up and Down keep the column
-export function moveKey(i, dir) {
-  const k = PAD[i];
+// § move: arrows walk the grid and stop at its edges; Up and Down keep the column.
+// Any pad of { row, col, span } keys walks this way (the name pad too, D-272).
+export function moveOn(pad, i, dir) {
+  const k = pad[i];
   if (dir === 'left' || dir === 'right') {
-    const next = PAD[i + (dir === 'left' ? -1 : 1)];
+    const next = pad[i + (dir === 'left' ? -1 : 1)];
     return next && next.row === k.row ? i + (dir === 'left' ? -1 : 1) : i;
   }
   const row = k.row + (dir === 'up' ? -1 : 1);
-  if (row < 0 || row >= PAD_ROWS) return i;
-  const keys = PAD.filter((p) => p.row === row);
+  const keys = pad.filter((p) => p.row === row);
+  if (!keys.length) return i;
   const under = keys.find((p) => k.col >= p.col && k.col < p.col + p.span) || keys[keys.length - 1];
-  return PAD.indexOf(under);
+  return pad.indexOf(under);
 }
+export const moveKey = (i, dir) => moveOn(PAD, i, dir);

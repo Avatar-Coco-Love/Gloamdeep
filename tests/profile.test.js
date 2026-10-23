@@ -93,6 +93,13 @@ test('picking an empty slot makes a new profile there and plays as it; a used on
   assert.equal(usingSlot(two, 0).slots[1], two.slots[1]); // back to the first, the second stays
 });
 
+test('a new profile takes the name typed on the name pad; a used one keeps its own', () => {
+  const named = usingSlot(newProfiles(), 2, 'COCO');
+  assert.equal(named.slots[2].name, 'COCO');
+  assert.equal(slotName(named.slots[2], 2), 'COCO');
+  assert.equal(usingSlot(named, 2, 'TOM').slots[2].name, 'COCO');
+});
+
 test('deleting a slot empties it; the next profile in use takes over, or none is in use', () => {
   const ps = usingSlot(usingSlot(newProfiles(4), 2), 0); // slots 1 and 3 in use, the first playing
   assert.deepEqual(withoutSlot(ps, 2), { current: 0, slots: [ps.slots[0], null, null] });

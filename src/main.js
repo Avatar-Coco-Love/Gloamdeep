@@ -45,12 +45,13 @@ const app = {
   // Who plays: the profiles on this device (D-268), the one in use picked on the slot screen (D-271)
   profiles: loadProfiles(),
   jumped: false, // a dev jump stops this journey counting towards the deepest depth (D-232)
-  // screen: 'slots', 'drop', 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore', 'history' or 'journal'
+  // screen: 'slots', 'name', 'drop', 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore', 'history' or 'journal'
   screen: 'slots', chosen: 0,
   deleting: false, dropping: 0, slotsBack: false, // the slot screen: Delete picked, the slot asked about, Back shown (D-271)
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
-  entry: '', // the digits typed on the seed pad
+  entry: '', // the digits typed on the seed pad, or the letters on the name pad
+  naming: 0, // the empty slot the name pad makes a profile in (D-272)
   padFrom: 'settings', // the screen the seed pad was opened from: Settings or the Explorer
   seeds: [], // the seeds the Explorer has shown this visit, the last one on screen
   plan: null, view: null, floors: [], // the map shown, its view, and the floors it turns to
@@ -242,9 +243,10 @@ function newJourney() {
   freshView();
   savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
 }
-// § slots (D-271): picking a slot plays as its profile, a new one in an empty slot, with its own journey
-function useSlot(i) {
-  app.profiles = usingSlot(app.profiles, i); saveProfiles(app.profiles);
+// § slots (D-271): picking a slot plays as its profile, a new one in an empty slot, with its own journey;
+// a new one takes the name typed on the name pad (D-272)
+function useSlot(i, name = '') {
+  app.profiles = usingSlot(app.profiles, i, name); saveProfiles(app.profiles);
   loadInto(i); savedState = app.state; freshView();
 }
 // Deleting a profile drops its journey too; if it was in use, the next in use takes over
