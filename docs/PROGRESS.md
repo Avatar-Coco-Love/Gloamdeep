@@ -74,4 +74,4 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 - **2026-10-23, 0.2.76, a hero in each box.** Each Profiles box shows
   its hero on a small lit patch, the name beside it (D-287). [Playtest](https://claude.ai/artifact/DJaRH4iNQQB1YzXrzM1D6t).
 - **2026-10-23, 0.2.77, back on the name pad.** The name pad has a
-  Back key; Look reads Change look (D-288, D-289). [Playtest](PLAYTEST).
+  Back key; Look reads Change look (D-288, D-289). [Playtest](https://claude.ai/artifact/3Q7sBzGBDpWKqDZPTRwFEd).
