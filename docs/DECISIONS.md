@@ -140,3 +140,16 @@ Records, and items and torches need: step, hit, beat, bite, fall,
 lantern, enter, found, level, take, eat, pour, torch
 (`src/core/events.js`). The sounds play from it now, as before; nothing
 else reads it yet. The save's format goes to 3 (D-266).
+
+**D-268 · 2026-10-23 · Profiles, one for each person** (G3, owner's
+picks; answers D-263's G3) A device keeps up to 3 profiles, in slots, as
+Hollow Knight and Celeste keep save files. Each profile has a name
+(typed, up to 12 letters), a look, its Records, and its own journey,
+saved apart from the small list of profiles, so a turn rewrites only
+the journey in play. Settings and dev switches stay with the device.
+G3 builds this with nothing on screen: the first slot is used, unnamed,
+and keeps the journey and deepest depth already saved. Later steps, one
+at a time: a screen to pick, start and delete profiles; the name; then
+the look: the cloak's colour, the eyes' colour, the lantern's trim (its
+light stays the same for everyone) and the clothing type. The colours
+come from sets that fit the palette, shown as a mock-up first.

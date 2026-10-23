@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.58, built to grow.** Plans only (D-261 to D-265):
+  built to grow, one Journal with Records first, groundwork G1 to G4
+  first, a glossary. Nothing visible.
 - **2026-10-23, 0.2.57, a quieter title.** The "Deepest: depth N" line
   is off the title menu; the record is still kept, for a stats page
   later (D-260). Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P

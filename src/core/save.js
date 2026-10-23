@@ -1,4 +1,4 @@
-// § save: the journey kept on this device, one at a time (D-238). The whole
+// § save: the journey kept on this device, one for each profile (D-238, D-268). The whole
 // state is plain data, written after every turn and read back as it was; only
 // the tile memories (Uint8Array, fog.js) need turning into lists and back.
 // Plain data, no drawing.
@@ -37,13 +37,14 @@ const fromText = (k, v) => (Array.isArray(v?.u8) && Object.keys(v).length === 1 
 export const journeyText = (state, jumped) => JSON.stringify(packJourney(state, jumped), toText);
 export const readJourney = (text) => unpackJourney(JSON.parse(text, fromText));
 
-// § storage: localStorage, wrapped (TECH.md); with storage blocked it lasts until the page closes
-const KEY = 'gloamdeep-journey';
-export function loadJourney() {
+// § storage: localStorage, wrapped (TECH.md); with storage blocked it lasts until the page closes.
+// Each profile's journey has its own place (D-268); the first slot's is where the one journey was kept before.
+export const journeyKey = (slot = 0) => (slot === 0 ? 'gloamdeep-journey' : `gloamdeep-journey-${slot + 1}`);
+export function loadJourney(slot = 0) {
   let kept = null;
-  try { kept = readJourney(localStorage.getItem(KEY)); } catch { /* not kept */ }
+  try { kept = readJourney(localStorage.getItem(journeyKey(slot))); } catch { /* not kept */ }
   return kept;
 }
-export function saveJourney(state, jumped) {
-  try { localStorage.setItem(KEY, journeyText(state, jumped)); } catch { /* not kept */ }
+export function saveJourney(state, jumped, slot = 0) {
+  try { localStorage.setItem(journeyKey(slot), journeyText(state, jumped)); } catch { /* not kept */ }
 }
