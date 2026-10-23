@@ -129,3 +129,14 @@ one and a small numbered step is added, from the old shape to the new
 (as Minecraft and Factorio upgrade old worlds). Loading runs every step
 from the save's number up to today's. A save no step can bring up,
 broken or from a newer version of the game, is still dropped quietly.
+
+**D-267 · 2026-10-23 · Each turn's events** (G2, owner's picks; answers
+D-263's G2) The turn's list of what happened lives on the game state,
+`state.events`, as roguelikes such as Brogue and Caves of Qud pass news
+between their parts. Each passed turn, and each free switch of the
+lantern, starts a new list; what follows in the same action (the lantern
+or a flask by itself) adds to it. From the start it holds what sounds,
+Records, and items and torches need: step, hit, beat, bite, fall,
+lantern, enter, found, level, take, eat, pour, torch
+(`src/core/events.js`). The sounds play from it now, as before; nothing
+else reads it yet. The save's format goes to 3 (D-266).

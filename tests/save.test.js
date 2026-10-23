@@ -50,6 +50,13 @@ test('a format 1 save, from before experience and the bag, is upgraded, not drop
   assert.deepEqual(now.state, back.state);
 });
 
+test('a format 2 save, from before the events, is upgraded with none (D-267)', () => {
+  const { events, ...old } = makeWorld('first', 9);
+  const back = unpackJourney({ format: 2, state: old });
+  assert.deepEqual(back.state.events, []);
+  assert.deepEqual(back.state, makeWorld('first', 9));
+});
+
 test('saving and loading go through localStorage, and work without it', () => {
   assert.equal(loadJourney(), null); // no localStorage here
   saveJourney(makeWorld('first', 3), false); // does not throw

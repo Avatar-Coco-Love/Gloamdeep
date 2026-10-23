@@ -16,9 +16,10 @@ test('Sound starts Off and flips to On and back', () => {
 // § bite sound: a rat's bite sounds of teeth; the gloamling's is silent for now (D-259)
 
 test("A rat's bite sounds of teeth, a gloamling's of nothing", () => {
-  assert.equal(biteSound({ line: { id: 'ratBite' } }, false), 'teeth');
-  assert.equal(biteSound({ line: { id: 'gloamlingBite' } }, false), undefined);
-  const hero = { x: 3, y: 3 };
-  assert.equal(biteSound({ fell: { hero, enemies: [{ id: 'rat', x: 3, y: 4 }] } }, true), 'teeth');
-  assert.equal(biteSound({ fell: { hero, enemies: [{ id: 'gloamling', x: 2, y: 3 }, { id: 'rat', x: 5, y: 5 }] } }, true), undefined);
+  const bite = (id) => ({ type: 'bite', id, hurt: 1 });
+  assert.equal(biteSound([bite('rat')]), 'teeth');
+  assert.equal(biteSound([bite('gloamling')]), undefined);
+  assert.equal(biteSound([bite('gloamling'), bite('rat')]), undefined); // the gloamling's line shows
+  assert.equal(biteSound([bite('gloamling'), bite('rat'), { type: 'fall' }]), 'teeth');
+  assert.equal(biteSound([{ type: 'step' }]), undefined);
 });

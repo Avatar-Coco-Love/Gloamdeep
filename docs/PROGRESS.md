@@ -4,13 +4,14 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.59 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.60 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**G2 Events** (D-263): each turn writes a short list of what happened.
-Claude proposes how, with 2 or 3 options, before building. Read
-`TECH.md` and `src/core/turn.js`.
+**G3 A profile** (D-263): one save for what lasts across journeys
+(Records, later feats and unlocks), apart from the journey save. Claude
+proposes how, with 2 or 3 options, before building. Read `src/core/save.js`
+and `src/core/record.js`.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -50,7 +51,8 @@ The Seed Explorer (D-214, before step 50)
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 Built to grow (D-261 to D-263; order may change)
 - [x] G1 Old saves upgraded, 0.2.59
-- [ ] G2 events · G3 a profile · G4 behaviours as data
+- [x] G2 Events, 0.2.60
+- [ ] G3 a profile · G4 behaviours as data
 - [ ] J1 The Journal, its Records tab (D-262)
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
@@ -62,11 +64,10 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.57, a quieter title.** The "Deepest: depth N" line
-  is off the title menu; the record is still kept, for a stats page
-  later (D-260). Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P
 - **2026-10-23, 0.2.58, built to grow.** Plans only (D-261 to D-265):
   built to grow, one Journal with Records first, groundwork G1 to G4
   first, a glossary. Nothing visible.
 - **2026-10-23, 0.2.59, old saves upgraded.** Numbered steps bring an
   old save up to today's shape (D-266). Nothing visible.
+- **2026-10-23, 0.2.60, what happened.** Each turn writes a list of
+  events on the state; the sounds play from it (D-267). Nothing visible.

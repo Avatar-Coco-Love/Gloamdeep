@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.57, a quieter title.** The "Deepest: depth N" line
+  is off the title menu; the record is still kept, for a stats page
+  later (D-260). Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P
 - **2026-10-23, 0.2.56, a rat's bite.** Two low, dry snaps of teeth,
   after the hit in the same turn; the gloamling is silent (D-259).
   Sound board: https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU

@@ -23,7 +23,9 @@ at build plan step 7 (D-039).
 ## Architecture
 - **Built to grow (D-261).** The game may become vast. Add content as
   registry data, not special cases in the rules; keep systems talking
-  through each turn's events (D-263), and keep saves upgradable.
+  through each turn's events (D-263, D-267): a rule notes what happened
+  with `note()` (`src/core/events.js`) and other parts read
+  `state.events`, never guess it from the state; and keep saves upgradable.
 - **State is separate from drawing.** The game rules work on plain data and
   never touch the DOM. Rendering and input are thin layers on top. This is
   what lets dev tools and tests change the game safely.
