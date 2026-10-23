@@ -2,6 +2,10 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.73', date: '2026-10-23', title: 'Steps in Records', lines: [
+    "The Journal's Records show a fifth line, Steps: every tile you have walked onto, on all your journeys. It counts from 0 from now on, also for profiles made before this.",
+    "Decisions: D-283.",
+  ] },
   { v: '0.2.72', date: '2026-10-23', title: 'Earned looks and gathering', lines: [
     "Ideas recorded: looks and unique things earned in play with their own currency, never bought, such as zebra, cow-spot or camo cloaks; calm or intense play chosen by where you go; mining, fishing, farming and harvesting for later; co-op as a someday idea. Nothing in the game changes.",
     "Decisions: D-280, D-281, D-282.",

@@ -82,7 +82,7 @@ function keepJourney() {
 }
 function keepRecords(events) {
   // The profile's Records (D-021, D-232, D-268, D-270): the deepest depth walked to,
-  // and the creatures beaten, falls and rooms found that this action's events bring
+  // and the creatures beaten, falls, rooms found and steps that this action's events bring
   const was = playing(app.profiles).records, d = deeper(was.deepest, depthOf(app.state.place), app.jumped);
   let records = counted(was, events, app.jumped);
   if (d !== records.deepest) records = { ...records, deepest: d };

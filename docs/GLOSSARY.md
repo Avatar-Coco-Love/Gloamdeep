@@ -40,7 +40,7 @@ this page and a decision disagree, the decision wins.
 - **Journal:** one book with tabs: Records first, later quests, a
   bestiary and feats (D-262).
 - **Records:** the Journal's facts about how you've played: deepest,
-  beaten, falls, rooms found (D-262, D-270).
+  beaten, falls, rooms found, steps (D-262, D-270, D-283).
 - **Seed Explorer:** the title's map of a whole seed (D-214).
 - **Dev tools:** on for everyone (D-086, `DEV-TOOLS.md`).
 

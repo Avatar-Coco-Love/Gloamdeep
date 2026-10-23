@@ -115,3 +115,8 @@ entering is an idea for later (Q-056).
 fishing, farming and harvesting are all wanted, built one at a time much
 later. Mining works like Stardew Valley's: ore deposits to break, but a
 room's outer walls can't be destroyed. Each gets its own decisions.
+
+**D-283 · 2026-10-23 · Steps in Records** (the owner's pick; the first
+stats page fact after D-260) The Journal's Records gain a fifth line,
+Steps, at the foot: every tile the hero walks onto, on all the
+profile's journeys, from 0. Dev jumps stop it counting, as the others.
