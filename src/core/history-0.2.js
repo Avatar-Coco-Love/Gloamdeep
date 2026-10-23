@@ -2,6 +2,12 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.68', date: '2026-10-23', title: 'Eyes for each profile', lines: [
+    "A new profile now chooses its eyes after its cloak: Choose your eyes shows the hero's head close up, in the cloak just picked, with bone, ice, moss, sky, silver or brown eyes. OK makes the profile; Back returns to the cloak.",
+    "Look on the slot screen now opens the cloak, then the eyes; OK on the eyes keeps both, and Esc there keeps the old look. The cloak screen's heroes wear the eyes picked.",
+    "Profiles made before this keep bone eyes, as before.",
+    "Decisions: D-276.",
+  ] },
   { v: '0.2.67', date: '2026-10-23', title: 'A cloak for each profile', lines: [
     "A new profile now chooses its cloak after its name: six heroes on one screen, in teal, moss, heather, rust, indigo or sand. Pick one with a tap, the arrows or a click, then OK. Back returns to the name pad with the name kept.",
     "The slot screen has a Look line between Rename and Delete. Look, then a profile's box, opens the same screen on its cloak; OK keeps the new one, and Back or Esc keeps the old. The hero wears the cloak on the title and in play.",

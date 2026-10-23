@@ -1,19 +1,19 @@
 // § sprites: 16 × 16 pixel maps written as strings, one letter per palette
 // colour; symmetric ones store the left half and mirror it (style study 1,
 // lines 121–176, ART-DIRECTION.md "Sprites").
-import { CLOAKS } from '../core/registry.js';
+import { CLOAKS, EYES } from '../core/registry.js';
 
 const PAL = {
   k: '#0e0c16', w: '#efe6cc', C: '#a6e0e4', c: '#58a8b4', B: '#2f6a7c', b: '#1c3e4e',
   y: '#ffd66b', Y: '#f39a3b', O: '#a8642c', o: '#e9a94a', a: '#e8d5a0',
-  S: '#9aa6b4', s: '#6b7686', d: '#4a5262', p: '#e8786a',
+  S: '#9aa6b4', s: '#6b7686', d: '#4a5262', p: '#e8786a', e: '#efe6cc', // e: the hero's eyes
   g: '#6fb04e', G: '#3c6e3a', // moss (ART-DIRECTION.md palette)
 };
 
 // § hero: the study's hero, with the lantern held out to its right (D-042, D-056).
 // `extra` pixels are drawn over the mirrored rows: [x, y, colour letter].
 const HERO = { mirror: true, rows: [
-  '........', '......kk', '.....kCc', '....kCcc', '...kCckk', '...kckkk', '...kckwk', '...kcBkk',
+  '........', '......kk', '.....kCc', '....kCcc', '...kCckk', '...kckkk', '...kckek', '...kcBkk',
   '...kccBB', '..kcccBB', '..kccBBB', '..kcBBBb', '..kcBBbB', '..kBBbbB', '...kkbkk', '....kk..'],
   extra: [[13, 7, 'k'], [12, 8, 'k'], [13, 8, 'a'], [14, 8, 'k'], [11, 9, 'k'], [12, 9, 'y'], [13, 9, 'w'], [14, 9, 'y'], [15, 9, 'k'],
     [11, 10, 'k'], [12, 10, 'Y'], [13, 10, 'y'], [14, 10, 'Y'], [15, 10, 'k'], [12, 11, 'k'], [13, 11, 'O'], [14, 11, 'k']] };
@@ -81,12 +81,20 @@ function mirrored(cv) {
 const LEFT = {}, LEFT_FLASHES = {};
 for (const id of Object.keys(FLASHES)) { LEFT[id] = mirrored(SPRITES[id]); LEFT_FLASHES[id] = mirrored(FLASHES[id]); }
 const BITTEN = spriteCanvas(HERO, PAL.p);
-// § cloaks: the hero in each cloak (P3), its four cloak shades swapped; the outline, eye
-// and lantern stay. The profile in play's is worn wherever the hero is drawn.
-const HEROES = Object.fromEntries(Object.values(CLOAKS).map(({ id, shades: [C, c, B, b] }) => [id, spriteCanvas(HERO, null, { ...PAL, C, c, B, b })]));
+// § looks: the hero in a cloak and eyes (P3, P4), its four cloak shades and its eye colour
+// swapped; the outline and lantern stay. Each is made once, the first time it is worn or shown.
+// The profile in play's is worn wherever the hero is drawn.
+const HEROES = {};
+export function heroIn(cloak, eyes) {
+  const key = `${cloak}/${eyes}`;
+  if (!HEROES[key]) {
+    const [C, c, B, b] = (CLOAKS[cloak] ?? CLOAKS.teal).shades, e = (EYES[eyes] ?? EYES.bone).colour;
+    HEROES[key] = spriteCanvas(HERO, null, { ...PAL, C, c, B, b, e });
+  }
+  return HEROES[key];
+}
 let worn = SPRITES.hero;
-export const heroIn = (cloak) => HEROES[cloak] ?? SPRITES.hero;
-export function wearCloak(cloak) { worn = heroIn(cloak); }
+export function wearLook(cloak, eyes) { worn = heroIn(cloak, eyes); }
 
 // § shadow: a small dark oval under a sprite (study line 345)
 export function drawShadow(c, x, y, w) {
