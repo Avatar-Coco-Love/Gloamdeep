@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.70 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.71 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-The look is done. `DECISIONS.md` is at 12 KB: archive D-270 to D-278
-(as D-274), then pick the next step with the owner from Ideas for later.
+Pick the next step with the owner from Ideas for later (the look is
+done, and `DECISIONS.md` has room again).
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -52,6 +52,7 @@ Built to grow (D-261 to D-263; order may change)
 - [x] G1 to G4, J1, P1: old saves to the slot screen, 0.2.59 to 0.2.64
 - [x] P2 to P4 The name pad, rename, the cloak, the eyes, 0.2.65 to 0.2.68
 - [x] P5, P6 The lantern's trim, the clothes, 0.2.69, 0.2.70 (D-277, D-278)
+- [x] D-270 to D-278 archived, 0.2.71 (D-279)
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -62,9 +63,9 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.68, the eyes.** Six eye colours, picked on faces
-  close up, after the cloak (D-276). [Playtest](https://claude.ai/artifact/VPDZio1UKVBeZS9phXxBhP).
 - **2026-10-23, 0.2.69, the trim.** Six lantern trims, the cap and base,
   picked after the eyes (D-277). [Playtest](https://claude.ai/artifact/57na2nhmHvSR3afiiq9Sbo).
 - **2026-10-23, 0.2.70, the clothes.** Cloak, Belted, Short or Tattered,
   picked after the trim (D-278). [Playtest](https://claude.ai/artifact/5knwWmjZEqV3oLQNYp3V8m).
+- **2026-10-23, 0.2.71, the archive.** D-270 to D-278 moved unchanged
+  to `archive/DECISIONS-GROWING-2.md` (D-279). Nothing visible.
