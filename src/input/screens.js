@@ -24,7 +24,8 @@
 // asks "Delete …? Lost for good." with No picked; No, Esc or P go back. Profiles on the title
 // opens the slot screen again, with Back, Esc or P returning to the title. An empty box first
 // opens the name pad (D-272): letters typed, tapped or picked, Del, and OK makes the profile;
-// Esc goes back to the slot screen with nothing made.
+// Esc goes back to the slot screen with nothing made. Rename, then a profile's box, opens the
+// pad on its name; OK keeps the new name, Esc the old (D-273). Cancel, Esc or P stop picking.
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
 import { depthOf, areaAt } from '../core/room.js';
 import { lineAt, pauseTop } from '../render/menu.js';
@@ -45,7 +46,7 @@ import { startSeeds, shownSeed, addSeed, backSeed, explorerWorld } from '../core
 import { BAG_SLOTS } from '../core/bag.js';
 import { get } from '../core/registry.js';
 import { playing as inPlay, SLOTS, slotName } from '../core/profile.js';
-import { slotLines, slotsAt, askTop } from '../render/slots.js';
+import { slotLines, slotsAt, slotsHeading, askTop } from '../render/slots.js';
 import { journalWords } from '../core/journal.js';
 import { journalAt } from '../render/journal.js';
 import { bagAt, panelOnTop } from '../render/bag.js';
@@ -85,7 +86,7 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
-      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords() : next === 'name' ? NAME_WORDS
+      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords() : next === 'name' ? nameWords()
       : next === 'drop' ? `Delete ${slotName(app.profiles.slots[app.dropping], app.dropping)}? ${DROP_NOTE} Yes or No.`
       : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }
@@ -129,32 +130,40 @@ export function createScreens(app, ui) {
   }
 
   // § slots (D-271): the flame starts on the profile in use; Back only once there is a title to go back to
-  const linesNow = () => slotLines(app.deleting, app.slotsBack && app.profiles.current !== null);
+  const linesNow = () => slotLines(app.picking, app.slotsBack && app.profiles.current !== null);
   const profileWords = (p, i) => (p ? `${slotName(p, i)}, deepest ${p.records.deepest}` : 'Empty');
-  const slotsWords = () => `${app.deleting ? 'Delete which?' : 'Profiles. Pick one to play.'} ${app.profiles.slots.map(profileWords).join('. ')}. ${linesNow().map((l) => l.text).join('. ')}.`;
-  function openSlots(back) { app.deleting = false; app.slotsBack = back; show('slots', app.profiles.current ?? 0); }
+  const slotsWords = () => `${app.picking ? slotsHeading(app.picking) : 'Profiles. Pick one to play.'} ${app.profiles.slots.map(profileWords).join('. ')}. ${linesNow().map((l) => l.text).join('. ')}.`;
+  function openSlots(back) { app.picking = null; app.slotsBack = back; show('slots', app.profiles.current ?? 0); }
   function chooseSlot(i) {
     if (i < SLOTS) {
-      if (!app.deleting && !app.profiles.slots[i]) { app.naming = i; app.entry = ''; show('name'); }
-      else if (!app.deleting) { ui.useSlot(i); show('title'); }
-      else if (app.profiles.slots[i]) { app.dropping = i; show('drop', SURE_MENU.findIndex((l) => l.id === 'no')); }
+      const p = app.profiles.slots[i];
+      if (!app.picking && !p) openName(i, false);
+      else if (!app.picking) { ui.useSlot(i); show('title'); }
+      else if (!p) return; // an Empty box can't be renamed or deleted
+      else if (app.picking === 'rename') openName(i, true);
+      else { app.dropping = i; show('drop', SURE_MENU.findIndex((l) => l.id === 'no')); }
       return;
     }
     const id = linesNow()[i - SLOTS]?.id;
-    if (id === 'delete') { app.deleting = !app.deleting; spoken.textContent = slotsWords(); }
+    if (id === 'rename' || id === 'delete') { app.picking = app.picking === id ? null : id; spoken.textContent = slotsWords(); }
     else if (id === 'back') titleAt('profiles');
   }
   // § name pad (D-272): OK makes the profile with the letters typed (none keeps it unnamed,
-  // Claude's call) and opens the title; Esc goes back to the slot screen with nothing made
-  const NAME_WORDS = 'Name your profile. Type up to 12 letters, then OK.';
+  // Claude's call) and opens the title; Esc goes back to the slot screen with nothing made.
+  // Renaming (D-273) opens on the name kept; OK keeps the new one (none: unnamed again) and
+  // goes back to the slot screen; Esc leaves the old name.
+  const nameWords = () => (app.renaming ? `Rename profile. ${app.entry || 'nothing typed'}. Type up to 12 letters, then OK.` : 'Name your profile. Type up to 12 letters, then OK.');
+  function openName(i, renaming) { app.naming = i; app.renaming = renaming; app.entry = renaming ? app.profiles.slots[i].name : ''; show('name'); }
+  function closeName() { app.picking = null; show('slots', app.naming); }
   function pressName(id) {
-    if (id === 'ok') { ui.useSlot(app.naming, app.entry); show('title'); }
+    if (id === 'ok' && app.renaming) { ui.renameSlot(app.naming, app.entry); closeName(); }
+    else if (id === 'ok') { ui.useSlot(app.naming, app.entry); show('title'); }
     else { app.entry = typeLetter(app.entry, id); spoken.textContent = app.entry || 'nothing typed'; }
   }
   // After the question: back to the slot screen, the flame on the slot asked about
   function closeDrop(yes) {
     if (yes) ui.dropSlot(app.dropping);
-    app.deleting = false;
+    app.picking = null;
     show('slots', app.dropping);
   }
 
@@ -249,8 +258,8 @@ export function createScreens(app, ui) {
     else if (app.screen === 'journal') closeJournal();
     else if (app.screen === 'sure') titleAt('new');
     else if (app.screen === 'drop') closeDrop(false);
-    else if (app.screen === 'name') show('slots', app.naming);
-    else if (app.screen === 'slots' && app.deleting) chooseSlot(SLOTS); // Cancel
+    else if (app.screen === 'name') closeName();
+    else if (app.screen === 'slots' && app.picking) { app.picking = null; spoken.textContent = slotsWords(); } // Cancel
     else if (app.screen === 'slots' && linesNow().some((l) => l.id === 'back')) titleAt('profiles');
   }
   function change(key, next, words) {

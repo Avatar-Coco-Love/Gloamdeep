@@ -14,7 +14,7 @@ import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
 import { deeper, counted } from './core/record.js';
-import { loadProfiles, saveProfiles, playing, withRecords, usingSlot, withoutSlot } from './core/profile.js';
+import { loadProfiles, saveProfiles, playing, withRecords, usingSlot, withoutSlot, renamedSlot } from './core/profile.js';
 import { loadJourney, saveJourney, dropJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
@@ -47,11 +47,11 @@ const app = {
   jumped: false, // a dev jump stops this journey counting towards the deepest depth (D-232)
   // screen: 'slots', 'name', 'drop', 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore', 'history' or 'journal'
   screen: 'slots', chosen: 0,
-  deleting: false, dropping: 0, slotsBack: false, // the slot screen: Delete picked, the slot asked about, Back shown (D-271)
+  picking: null, dropping: 0, slotsBack: false, // the slot screen: Rename or Delete picked (D-273), the slot asked about, Back shown (D-271)
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
   entry: '', // the digits typed on the seed pad, or the letters on the name pad
-  naming: 0, // the empty slot the name pad makes a profile in (D-272)
+  naming: 0, renaming: false, // the slot the name pad names: an empty one (D-272), or a profile renamed (D-273)
   padFrom: 'settings', // the screen the seed pad was opened from: Settings or the Explorer
   seeds: [], // the seeds the Explorer has shown this visit, the last one on screen
   plan: null, view: null, floors: [], // the map shown, its view, and the floors it turns to
@@ -249,6 +249,8 @@ function useSlot(i, name = '') {
   app.profiles = usingSlot(app.profiles, i, name); saveProfiles(app.profiles);
   loadInto(i); savedState = app.state; freshView();
 }
+// Renaming a profile keeps all else, its journey too (D-273)
+function renameSlot(i, name) { app.profiles = renamedSlot(app.profiles, i, name); saveProfiles(app.profiles); }
 // Deleting a profile drops its journey too; if it was in use, the next in use takes over
 function dropSlot(i) {
   const was = app.profiles.current;
@@ -257,7 +259,7 @@ function dropSlot(i) {
 }
 const stage = document.getElementById('stage');
 const screens = createScreens(app, {
-  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, dropSlot,
+  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, renameSlot, dropSlot,
   pour: (slot) => tryStep({ pour: slot }),
   dev: () => dev, input: () => input, mapMoves: () => mapMoves, // made below
 });

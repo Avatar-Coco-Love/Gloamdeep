@@ -1,7 +1,8 @@
 // § profile: who plays on this device, three slots (D-268)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot } from '../src/core/profile.js';
+import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot, renamedSlot } from '../src/core/profile.js';
+import { slotLines, slotsAt, slotsHeading } from '../src/render/slots.js';
 import { journeyKey, loadJourney, saveJourney, dropJourney } from '../src/core/save.js';
 import { makeWorld } from '../src/core/turn.js';
 
@@ -98,6 +99,28 @@ test('a new profile takes the name typed on the name pad; a used one keeps its o
   assert.equal(named.slots[2].name, 'COCO');
   assert.equal(slotName(named.slots[2], 2), 'COCO');
   assert.equal(usingSlot(named, 2, 'TOM').slots[2].name, 'COCO');
+});
+
+test('renaming changes only the name; nothing typed makes it unnamed; an empty slot stays empty (D-273)', () => {
+  const ps = usingSlot(newProfiles(4), 0, 'COCO');
+  const tom = renamedSlot(ps, 0, 'TOM');
+  assert.deepEqual(tom.slots[0], { ...ps.slots[0], name: 'TOM' });
+  assert.equal(tom.current, 0);
+  assert.equal(slotName(renamedSlot(tom, 0, '').slots[0], 0), 'Profile 1');
+  assert.equal(renamedSlot(ps, 1, 'TOM').slots[1], null);
+});
+
+test('the slot screen: Rename above Delete, the one being done reads Cancel, a tap picks the nearest line', () => {
+  assert.deepEqual(slotLines(null, true).map((l) => l.text), ['Rename', 'Delete', 'Back']);
+  assert.deepEqual(slotLines('rename', false).map((l) => l.text), ['Cancel', 'Delete']);
+  assert.deepEqual(slotLines('delete', false).map((l) => l.text), ['Rename', 'Cancel']);
+  assert.equal(slotsHeading('rename'), 'Rename which?');
+  assert.equal(slotsHeading(null), 'Profiles');
+  const lines = slotLines(null, true), seen = new Set();
+  for (let y = 150; y < 225; y++) seen.add(slotsAt(y, lines));
+  for (const id of ['rename', 'delete', 'back']) assert.ok(seen.has(id), id);
+  assert.equal(slotsAt(166, lines), 'rename');
+  assert.equal(slotsAt(182, lines), 'delete');
 });
 
 test('deleting a slot empties it; the next profile in use takes over, or none is in use', () => {

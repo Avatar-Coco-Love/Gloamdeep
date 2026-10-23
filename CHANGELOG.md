@@ -21,6 +21,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.66 (2026-10-23)
+- The slot screen has a Rename line above Delete. Rename, then a profile's box, opens the name pad on its name: Del trims it, letters add to it, and OK keeps the new name. OK with nothing typed makes it unnamed again, and Esc keeps the old name.
+- While picking, the heading asks "Rename which?" and Rename reads Cancel. An Empty box can't be renamed.
+- Decisions D-261 to D-269 moved, unchanged, to an archive file.
+- Decisions: D-273, D-274.
+
 ## 0.2.65 (2026-10-23)
 - Picking an Empty slot now asks for a name first: a pad of letters A to Z, with Del and OK, drawn like the seed pad. Tap or click the letters, walk them with the arrows, or type on a keyboard. A name has up to 12 letters, in capitals, and shows on the slot screen.
 - OK with nothing typed makes the profile unnamed (Profile 2), and Esc goes back to the slots without making it.

@@ -65,8 +65,8 @@ export function createFrame(app, ui) {
     else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, app.entry, app.chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still()); }
     else if (screen === 'history') { drawTitle(ctx, [], 0, t, still()); drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still()); }
-    else if (screen === 'slots') drawSlots(ctx, app.profiles, app.chosen, app.deleting, app.slotsBack && app.profiles.current !== null, t, still());
-    else if (screen === 'name') drawNamePad(ctx, app.entry, app.chosen, t, still());
+    else if (screen === 'slots') drawSlots(ctx, app.profiles, app.chosen, app.picking, app.slotsBack && app.profiles.current !== null, t, still());
+    else if (screen === 'name') drawNamePad(ctx, app.entry, app.chosen, t, still(), app.renaming ? 'Rename profile' : undefined);
     else if (screen === 'drop') drawAsk(ctx, slotName(app.profiles.slots[app.dropping], app.dropping), SURE_MENU, app.chosen, DROP_NOTE, t, still());
     else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);

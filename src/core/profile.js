@@ -45,6 +45,8 @@ export const withRecords = (ps, records) => withPlaying(ps, { ...playing(ps), re
 export const slotName = (p, i) => p.name || `Profile ${i + 1}`;
 // The profiles with slot i in use; an empty slot gets a new profile, named as typed (D-272) or unnamed
 export const usingSlot = (ps, i, name = '') => ({ current: i, slots: ps.slots.map((p, j) => (j === i ? p ?? { ...newProfile(), name } : p)) });
+// The profiles with slot i's profile renamed (P2b); nothing typed makes it unnamed again
+export const renamedSlot = (ps, i, name) => ({ ...ps, slots: ps.slots.map((p, j) => (j === i && p ? { ...p, name } : p)) });
 // The profiles with slot i emptied; if it was in use, the first slot still in use takes over, or none
 export function withoutSlot(ps, i) {
   const slots = ps.slots.map((p, j) => (j === i ? null : p));
