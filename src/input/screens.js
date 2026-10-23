@@ -91,7 +91,7 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
-      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords() : next === 'name' ? nameWords() : next === 'cloak' ? cloakWords() : next === 'eyes' ? eyesWords() : next === 'trim' ? trimWords() : next === 'clothes' ? clothesWords()
+      : next === 'journal' ? journalWords(inPlay(app.profiles).records, inPlay(app.profiles).played) : next === 'slots' ? slotsWords() : next === 'name' ? nameWords() : next === 'cloak' ? cloakWords() : next === 'eyes' ? eyesWords() : next === 'trim' ? trimWords() : next === 'clothes' ? clothesWords()
       : next === 'drop' ? `Delete ${slotName(app.profiles.slots[app.dropping], app.dropping)}? ${DROP_NOTE} Yes or No.`
       : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }

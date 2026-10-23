@@ -164,3 +164,8 @@ screen in a journey counts, not the menus, the Journal or a hidden page.
 It shows in its Profiles box at the right end of the Deepest line, as
 hours and minutes ("1h 23m"), or only minutes under an hour ("23m").
 Profiles made before it start from 0.
+
+**D-291 · 2026-10-23 · Time played in Records** (the owner's picks; builds
+D-290) The Journal's Records gain an eighth line, Time played, at the foot
+under Torches lit: the profile's play time (D-290), written as in its
+Profiles box ("1h 23m", or "23m" under an hour).

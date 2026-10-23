@@ -13,9 +13,9 @@ test('Records is the one tab for now', () => {
   assert.deepEqual(TABS.map((t) => t.text), ['Records']);
 });
 
-test('the Records tab shows the deepest depth, creatures beaten, falls, rooms found, steps, flasks poured and torches lit (D-283, D-285, D-286)', () => {
-  assert.deepEqual(recordRows(records).map((r) => [r.text, r.value]), [['Deepest', 'depth 3'], ['Beaten', '12'], ['Falls', '4'], ['Rooms found', '27'], ['Steps', '1843'], ['Flasks poured', '6'], ['Torches lit', '2']]);
-  assert.equal(journalWords(records), 'Journal, Records tab. Deepest, depth 3. Beaten, 12. Falls, 4. Rooms found, 27. Steps, 1843. Flasks poured, 6. Torches lit, 2. Back.');
+test('the Records tab shows the deepest depth, creatures beaten, falls, rooms found, steps, flasks poured, torches lit and time played (D-283, D-285, D-286, D-291)', () => {
+  assert.deepEqual(recordRows(records, 5025).map((r) => [r.text, r.value]), [['Deepest', 'depth 3'], ['Beaten', '12'], ['Falls', '4'], ['Rooms found', '27'], ['Steps', '1843'], ['Flasks poured', '6'], ['Torches lit', '2'], ['Time played', '1h 23m']]);
+  assert.equal(journalWords(records, 1380), 'Journal, Records tab. Deepest, depth 3. Beaten, 12. Falls, 4. Rooms found, 27. Steps, 1843. Flasks poured, 6. Torches lit, 2. Time played, 23m. Back.');
 });
 
 test('the counts rise with each beat, fall, found, step, pour and torch event, on any journey', () => {

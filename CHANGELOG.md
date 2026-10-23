@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.79 (2026-10-23)
+- The Journal's Records show an eighth line, Time played, under Torches lit: how long this profile has played, written as in its Profiles box, such as 1h 23m, or 23m under an hour.
+- Decisions: D-291.
+
 ## 0.2.78 (2026-10-23)
 - Each Profiles box shows how long that profile has played, at the right end of the Deepest line, in hours and minutes, such as 1h 23m, or only minutes under an hour, such as 23m. Only time in a journey counts: the menus, the Journal and a hidden page or locked phone do not. It counts from 0 from now on, also for profiles made before this.
 - Decisions: D-290.

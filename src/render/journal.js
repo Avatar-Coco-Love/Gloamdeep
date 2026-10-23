@@ -17,8 +17,8 @@ const TAP_PAD = 8; // game pixels above and below Back that still pick it
 // What a tap at y in game pixels picks: 'back' or null
 export const journalAt = (y) => (y >= BACK_Y - TAP_PAD && y < BACK_Y + FONT_H + TAP_PAD ? 'back' : null);
 
-// § draw: records, the profile's; still: reduced motion
-export function drawJournal(c, records, t, still) {
+// § draw: records and played, the profile's; still: reduced motion
+export function drawJournal(c, records, played, t, still) {
   c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H); // a page of its own
   drawHeading(c, 'Journal', TABS_Y + 2);
   // § tabs: the open tab framed, its foot open onto the page below the rule
@@ -32,7 +32,7 @@ export function drawJournal(c, records, t, still) {
     x += w + 9;
   });
   c.fillStyle = GREY; c.fillRect(x - 6, RULE_Y, W - EDGE - (x - 6), 1);
-  recordRows(records).forEach((row, i) => {
+  recordRows(records, played).forEach((row, i) => {
     const y = ROWS_Y + i * ROW_H;
     drawText(c, row.text, NAME_X, y, GREY);
     drawText(c, row.value, W - NAME_X - textWidth(row.value), y, CORE);

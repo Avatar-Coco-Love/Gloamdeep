@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.76, a hero in each box.** Each Profiles box shows
+  its hero on a small lit patch, the name beside it (D-287). [Playtest](https://claude.ai/artifact/DJaRH4iNQQB1YzXrzM1D6t).
 - **2026-10-23, 0.2.75, torches.** Records gain Torches lit, every
   lighting, under Flasks poured (D-286). [Playtest](https://claude.ai/artifact/CWUkBFYHS2PhXF5eW3QLGk).
 - **2026-10-23, 0.2.74, flasks.** Records gain Flasks poured, by hand
