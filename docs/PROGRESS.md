@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.71 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.72 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
@@ -18,6 +18,8 @@ done, and `DECISIONS.md` has room again).
 - A space or digits in names (Q-054), any time.
 - Play data: kept on the device or sent (Q-052), near 1.0.
 - What a level gives (Q-050), before levels matter.
+- The play-earned currency (Q-055), before the first unlock.
+- A region's name and rating (Q-056), with a second region.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the 0.2.1 PR's setup script line to the cloud environment.
 
@@ -53,19 +55,21 @@ Built to grow (D-261 to D-263; order may change)
 - [x] P2 to P4 The name pad, rename, the cloak, the eyes, 0.2.65 to 0.2.68
 - [x] P5, P6 The lantern's trim, the clothes, 0.2.69, 0.2.70 (D-277, D-278)
 - [x] D-270 to D-278 archived, 0.2.71 (D-279)
+- [x] Ideas: earned looks, gathering, 0.2.72
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
-Ideas for later (and the owner's wish list in `RESEARCH.md`): a slot's hero and play time (D-271); painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
+Ideas for later (and the owner's wish list in `RESEARCH.md`): gathering (D-282); a slot's hero and play time (D-271); painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
 low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.69, the trim.** Six lantern trims, the cap and base,
-  picked after the eyes (D-277). [Playtest](https://claude.ai/artifact/57na2nhmHvSR3afiiq9Sbo).
 - **2026-10-23, 0.2.70, the clothes.** Cloak, Belted, Short or Tattered,
   picked after the trim (D-278). [Playtest](https://claude.ai/artifact/5knwWmjZEqV3oLQNYp3V8m).
 - **2026-10-23, 0.2.71, the archive.** D-270 to D-278 moved unchanged
   to `archive/DECISIONS-GROWING-2.md` (D-279). Nothing visible.
+- **2026-10-23, 0.2.72, earned looks.** Looks earned with a play-only
+  currency (D-280), the world as the dial (D-281), gathering later
+  (D-282). Nothing visible.
