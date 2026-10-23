@@ -4,18 +4,19 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.62 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.63 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**J1 The Journal, its Records tab** (D-262): Claude proposes 2 or 3
-options with a mock-up first. Read D-262 and `src/core/profile.js`.
+**P1 The slot screen** (D-268): pick, start, delete profiles. Ask
+Q-051 first, then 2 or 3 options with a mock-up.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
 - When creatures should show their next move (Q-049), any time.
 - What a profile's slot shows (Q-051), before P1.
+- Play data: kept on the device or sent (Q-052), near 1.0.
 - What a level gives (Q-050), before levels matter.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the setup script line from the 0.2.1 PR to the cloud environment,
@@ -49,11 +50,8 @@ The Seed Explorer (D-214, before step 50)
 
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 Built to grow (D-261 to D-263; order may change)
-- [x] G1 Old saves upgraded, 0.2.59
-- [x] G2 Events, 0.2.60
-- [x] G3 Profiles, 0.2.61
-- [x] G4 Behaviours as data, 0.2.62
-- [ ] J1 The Journal, its Records tab (D-262)
+- [x] G1 to G4 Old saves, events, profiles, behaviours, 0.2.59 to 0.2.62
+- [x] J1 The Journal, its Records tab, 0.2.63
 - [ ] P1 to P6 (D-268): slot screen, name, cloak, eyes, lantern trim, clothes
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
@@ -65,10 +63,10 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.60, what happened.** Each turn writes a list of
-  events on the state; the sounds play from it (D-267). Nothing visible.
 - **2026-10-23, 0.2.61, profiles.** Up to 3 profiles on a device, each
   with a name, a look, Records and its own journey; the first is used
   for now (D-268). Nothing visible.
 - **2026-10-23, 0.2.62, creatures' ways.** Each creature names its ways
   (chases, shuns light); the turn rules read them (D-269). Nothing visible.
+- **2026-10-23, 0.2.63, the Journal.** On the title and pause menus, one
+  tab, Records: deepest, beaten, falls, rooms (D-270). [Playtest](https://claude.ai/artifact/KxD3DHXVpUK2wRTVzECJgo).

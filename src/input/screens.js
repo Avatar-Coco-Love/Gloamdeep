@@ -17,6 +17,8 @@
 // Version history in Settings opens the page of every version (D-254): Up and Down choose one,
 // Enter, Space, Right or a tap on its row opens or closes it (Left closes it), swipes and
 // Page Up and Page Down scroll a page; Back, Esc or P return to Settings.
+// Journal, on the title and the pause menu, opens its page (D-270); Enter, Space, a tap on
+// Back, Esc or P return to the menu it was opened from.
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
 import { depthOf, areaAt } from '../core/room.js';
 import { lineAt, pauseTop } from '../render/menu.js';
@@ -34,14 +36,17 @@ import { setMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from '../render/map.
 import { startSeeds, shownSeed, addSeed, backSeed, explorerWorld } from '../core/explorer.js';
 import { BAG_SLOTS } from '../core/bag.js';
 import { get } from '../core/registry.js';
+import { playing as inPlay } from '../core/profile.js';
+import { journalWords } from '../core/journal.js';
+import { journalAt } from '../render/journal.js';
 import { bagAt, panelOnTop } from '../render/bag.js';
 import { TILE } from '../render/screen.js';
 
 const WORDS = {
-  title: 'Gloamdeep. New journey, How to play, Settings or Seed Explorer: press Enter, or tap one.',
-  saved: 'Gloamdeep. Continue, New journey, How to play, Settings or Seed Explorer: press Enter, or tap one.',
+  title: 'Gloamdeep. New journey, Journal, How to play, Settings or Seed Explorer: press Enter, or tap one.',
+  saved: 'Gloamdeep. Continue, New journey, Journal, How to play, Settings or Seed Explorer: press Enter, or tap one.',
   sure: `${SURE_HEADING} ${SURE_NOTE} Yes or No.`,
-  paused: 'Paused. Resume, Settings, How to play, or Back to title.',
+  paused: 'Paused. Resume, Journal, Settings, How to play, or Back to title.',
   play: '',
 };
 const HISTORY_WORDS = `Version history, ${HISTORY.length} versions, newest first. Up and Down choose one, Enter opens or closes it. Back.`;
@@ -61,7 +66,7 @@ export function createScreens(app, ui) {
   const menuTop = () => (onTitle() ? titleTop(menuOf(app.screen).length) : pauseTop(menuOf(app.screen).length, app.screen === 'settings'));
   const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -2).map((l) => l.text).join('. ')}. Pick one to change it. Version history. Back.`;
   function show(next, at = 0) {
-    if ((next === 'settings' && app.screen !== 'seed' && app.screen !== 'history') || next === 'howto') app.pageFrom = app.screen;
+    if ((next === 'settings' && app.screen !== 'seed' && app.screen !== 'history') || next === 'howto' || next === 'journal') app.pageFrom = app.screen;
     app.screen = next; app.chosen = at;
     const playing = next === 'play';
     lanternButton.hide(!playing); pauseButton.hide(!playing); ui.dev().hide(!playing);
@@ -71,10 +76,11 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
+      : next === 'journal' ? journalWords(inPlay(app.profiles).records)
       : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }
   const backTo = (id) => () => show(app.pageFrom, menuOf(app.pageFrom).findIndex((l) => l.id === id));
-  const closeSettings = backTo('settings'), closeHowTo = backTo('howto');
+  const closeSettings = backTo('settings'), closeHowTo = backTo('howto'), closeJournal = backTo('journal');
   function openHowTo() { app.page = ui.input().kind(); show('howto'); }
   function flipPage(back = false) { app.page = nextPage(app.page, back); spoken.textContent = howtoWords(app.page, app.settings.controls); }
 
@@ -200,6 +206,7 @@ export function createScreens(app, ui) {
     else if (app.screen === 'seed') closePad();
     else if (app.screen === 'howto') closeHowTo();
     else if (app.screen === 'history') closeHistory();
+    else if (app.screen === 'journal') closeJournal();
     else if (app.screen === 'sure') titleAt('new');
   }
   function change(key, next, words) {
@@ -261,12 +268,14 @@ export function createScreens(app, ui) {
     if (app.screen === 'bag') { pourChosen(); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
     if (app.screen === 'history') { if (i < HISTORY.length) openVersion(i); else closeHistory(); return; }
+    if (app.screen === 'journal') { closeJournal(); return; }
     if (id === 'new' && app.saved) show('sure', SURE_MENU.findIndex((l) => l.id === 'no'));
     else if (id === 'new' || id === 'yes') { ui.newJourney(); show('play'); }
     else if (id === 'no') titleAt('new');
     else if (id === 'resume' || id === 'continue') show('play');
     else if (id === 'title') show('title');
     else if (id === 'settings') show('settings');
+    else if (id === 'journal') show('journal');
     else if (id === 'howto') openHowTo();
     else if (id === 'explore') openExplorer();
     else if (id === 'controls') changeControls();
@@ -284,6 +293,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'seed') { app.chosen = moveKey(app.chosen, dir); return; }
     if (app.screen === 'bag') { if (dir === 'left' || dir === 'right') pickSlot(Math.min(BAG_SLOTS - 1, Math.max(0, app.chosen + (dir === 'left' ? -1 : 1)))); return; }
     if (app.screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else app.chosen = moveChoice(app.chosen, dir, HOWTO_LINES.length); return; }
+    if (app.screen === 'journal') return; // one tab for now, and only Back to pick
     if (app.screen === 'history') {
       if (dir === 'left' || dir === 'right') openVersion(app.chosen, dir === 'right');
       else if (how === 'swipe') pageHistory(dir === 'up' ? 1 : -1); // the list follows the finger
@@ -325,6 +335,7 @@ export function createScreens(app, ui) {
       else if (at) pickVersion(app.rows[at.row].i);
       return;
     }
+    if (app.screen === 'journal') { if (journalAt(py) === 'back') closeJournal(); return; }
     if (app.screen === 'howto') { const at = howtoAt(px, py); if (at === 'back') closeHowTo(); else if (at) { app.chosen = 0; flipPage(at === 'prev'); } return; }
     const i = lineAt(py, menuOf(app.screen).length, menuTop());
     if (i >= 0) { app.chosen = i; choose(i); }
