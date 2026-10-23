@@ -16,6 +16,10 @@ items: collectables, craftables, weapons and more. Where they stand:
 - A companion: the faery (D-023, D-034). More than one would be a new
   decision.
 - NPCs, crafting, collectables: ideas for later, below.
+- Sound (2026-10-23): background music and more sounds; later, Settings
+  lets players turn each sound on or off, keeping what they like. The
+  first footstep (D-255) sounds a little like mining; judge it again
+  once music and other sounds play with it.
 
 ## The games
 **Hoplite** (phone, turn-based, hex grid; from the 2013 7-Day Roguelike)

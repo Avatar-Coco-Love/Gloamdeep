@@ -56,7 +56,7 @@ UI and dev tools (the owner's wish, before step 46)
 
 Ideas for later (and the owner's wish list in `RESEARCH.md`): painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
-low oil (D-210); more sounds; scarcer light deeper
+low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
