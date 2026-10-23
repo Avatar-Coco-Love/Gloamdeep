@@ -115,3 +115,14 @@ entering is an idea for later (Q-056).
 fishing, farming and harvesting are all wanted, built one at a time much
 later. Mining works like Stardew Valley's: ore deposits to break, but a
 room's outer walls can't be destroyed. Each gets its own decisions.
+
+**D-283 · 2026-10-23 · Steps in Records** (the owner's pick; the first
+stats page fact after D-260) The Journal's Records gain a fifth line,
+Steps, at the foot: every tile the hero walks onto, on all the
+profile's journeys, from 0. Dev jumps stop it counting, as the others.
+
+**D-284 · 2026-10-23 · Achievements in tiers, later** (the owner's wish)
+Achievements will come, built on Records: a record can have its own set,
+reached at higher and higher numbers, such as many tiers of steps
+walked. Not every record needs a set. Finishing one can give a reward.
+The tiers, the rewards and where they show are Q-057.

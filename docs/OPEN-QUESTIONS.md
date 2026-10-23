@@ -105,3 +105,8 @@ what it buys first (looks, unique things) and where it is spent.
 **Q-056 · A region's name and difficulty on entering** (with a second
 region, D-281) Whether the name shows on screen when you enter, with a
 difficulty rating, and how the rating looks (stars, skulls, words).
+
+**Q-057 · Achievements: tiers and rewards** (before the first
+achievement, D-284) Which records get a set, the numbers of each tier,
+what a reward is (perhaps the play-earned currency, Q-055, or a look)
+and where achievements show (a Journal tab, a note on reaching one).
