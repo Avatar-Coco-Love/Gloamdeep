@@ -157,3 +157,10 @@ keeps the old name.
 slot screen's Look line reads "Change look", clearer to new players. It
 still reads Cancel while picking a box, and the heading still asks
 "Change whose look?".
+
+**D-290 · 2026-10-23 · A slot's play time** (the owner's picks; builds
+D-271, D-287) Each profile keeps its play time: only time on the play
+screen in a journey counts, not the menus, the Journal or a hidden page.
+It shows in its Profiles box at the right end of the Deepest line, as
+hours and minutes ("1h 23m"), or only minutes under an hour ("23m").
+Profiles made before it start from 0.

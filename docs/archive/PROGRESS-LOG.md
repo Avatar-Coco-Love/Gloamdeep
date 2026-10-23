@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.75, torches.** Records gain Torches lit, every
+  lighting, under Flasks poured (D-286). [Playtest](https://claude.ai/artifact/CWUkBFYHS2PhXF5eW3QLGk).
 - **2026-10-23, 0.2.74, flasks.** Records gain Flasks poured, by hand
   or by itself, under Steps (D-285). [Playtest](https://claude.ai/artifact/7hg6nZVKVAZoeRBTBECHEw).
 - **2026-10-23, 0.2.73, steps.** Records gain Steps, every tile walked

@@ -1,20 +1,20 @@
 // § profile: who plays on this device (D-268). Three slots, each empty or one
-// person's profile: a name, a look and Records. Each profile's journey is saved
+// person's profile: a name, a look, Records and its play time (D-290). Each profile's journey is saved
 // apart, in its own place (save.js), so a turn rewrites only the one in play.
 // The slot screen picks the one in use (D-271); with every slot empty, none is. Plain data, no drawing.
 
 export const SLOTS = 3;
 // A new profile: no name or look chosen yet, no Records. Records: the deepest depth,
 // creatures beaten, falls, rooms found, steps walked, flasks poured and torches lit,
-// on all its journeys (D-262, D-270, D-283, D-285, D-286)
+// on all its journeys (D-262, D-270, D-283, D-285, D-286); played: whole seconds in its journeys (D-290)
 export const COUNTS = ['beaten', 'falls', 'found', 'steps', 'poured', 'torches'];
-export const newProfile = (deepest = 0) => ({ name: '', look: {}, records: { deepest, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0, torches: 0 } });
+export const newProfile = (deepest = 0) => ({ name: '', look: {}, records: { deepest, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0, torches: 0 }, played: 0 });
 // The profiles at the start: the first slot in use, the others empty
 export const newProfiles = (deepest = 0) => ({ current: 0, slots: [newProfile(deepest), ...Array(SLOTS - 1).fill(null)] });
 
 // § upgrades: as the journey save's (D-266). When the profiles' shape changes,
 // raise FORMAT and add the step from the old number to the new; never edit a merged step.
-export const FORMAT = 5;
+export const FORMAT = 6;
 export const UPGRADES = {
   // 1 → 2: the Records' counts, none yet (D-270)
   1: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { beaten: 0, falls: 0, found: 0, ...p.records } }) }),
@@ -24,12 +24,14 @@ export const UPGRADES = {
   3: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { poured: 0, ...p.records } }) }),
   // 4 → 5: torches lit, none yet (D-286)
   4: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { torches: 0, ...p.records } }) }),
+  // 5 → 6: play time, none yet (D-290)
+  5: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { played: 0, ...p }) }),
 };
 
 // § reading: a kept profile list, checked and upgraded, or null when it can't be read
 const isCount = (n) => Number.isInteger(n) && n >= 0;
 const isProfile = (p) => typeof p?.name === 'string' && typeof p.look === 'object' && p.look !== null
-  && ['deepest', ...COUNTS].every((k) => isCount(p.records?.[k]));
+  && ['deepest', ...COUNTS].every((k) => isCount(p.records?.[k])) && isCount(p.played);
 export function unpackProfiles(kept) {
   if (!Number.isInteger(kept?.format) || kept.format < 1 || kept.format > FORMAT) return null;
   let ps = kept.profiles;
@@ -47,6 +49,13 @@ export const withPlaying = (ps, p) => ({ ...ps, slots: ps.slots.map((q, i) => (i
 export const withDeepest = (ps, deepest) => withRecords(ps, { ...playing(ps).records, deepest });
 // The profiles with the Records of the profile in play replaced
 export const withRecords = (ps, records) => withPlaying(ps, { ...playing(ps), records });
+// § play time (D-290): the profiles with seconds more played by the profile in play, and how it is
+// written in its box: hours and minutes, 1h 23m, or only minutes under an hour, 23m
+export const withPlayed = (ps, seconds) => withPlaying(ps, { ...playing(ps), played: playing(ps).played + seconds });
+export function playedText(seconds) {
+  const m = Math.floor(seconds / 60), h = Math.floor(m / 60);
+  return h ? `${h}h ${m % 60}m` : `${m}m`;
+}
 
 // § slots: the slot screen's rules (D-271). An unnamed profile shows as Profile and its slot's number.
 export const slotName = (p, i) => p.name || `Profile ${i + 1}`;

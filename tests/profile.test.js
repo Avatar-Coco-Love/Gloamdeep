@@ -1,7 +1,7 @@
 // § profile: who plays on this device, three slots (D-268)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot, renamedSlot, lookedSlot } from '../src/core/profile.js';
+import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot, renamedSlot, lookedSlot, withPlayed, playedText } from '../src/core/profile.js';
 import { slotLines, slotsAt, slotsHeading } from '../src/render/slots.js';
 import { journeyKey, loadJourney, saveJourney, dropJourney } from '../src/core/save.js';
 import { makeWorld } from '../src/core/turn.js';
@@ -12,11 +12,11 @@ function withStorage(kept, fn) {
   try { fn(); } finally { delete globalThis.localStorage; }
 }
 
-test('at the start: three slots, the first in use, unnamed, with no look and no Records', () => {
+test('at the start: three slots, the first in use, unnamed, with no look, no Records and no play time', () => {
   const ps = newProfiles();
   assert.equal(ps.slots.length, SLOTS);
   assert.equal(SLOTS, 3);
-  assert.deepEqual(playing(ps), { name: '', look: {}, records: { deepest: 0, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0, torches: 0 } });
+  assert.deepEqual(playing(ps), { name: '', look: {}, records: { deepest: 0, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0, torches: 0 }, played: 0 });
   assert.deepEqual(ps.slots.slice(1), [null, null]);
 });
 
@@ -171,4 +171,17 @@ test('a deleted profile\'s journey goes with it, and the others stay', () => {
     assert.equal(loadJourney(1), null);
     assert.ok(loadJourney(0));
   });
+});
+
+test('a fifth-format profile list comes up with no play time yet, its Records kept (D-290)', () => {
+  const records = { deepest: 2, beaten: 5, falls: 1, found: 9, steps: 300, poured: 4, torches: 3 };
+  const old = { format: 5, profiles: { current: 0, slots: [{ name: 'Coco', look: {}, records }, null, null] } };
+  assert.deepEqual(unpackProfiles(old).slots[0], { name: 'Coco', look: {}, records, played: 0 });
+});
+
+test('play time adds to the profile in play only, and reads in hours and minutes (D-290)', () => {
+  const ps = withPlayed(usingSlot(newProfiles(), 1), 75);
+  assert.equal(ps.slots[1].played, 75);
+  assert.equal(ps.slots[0].played, 0);
+  assert.deepEqual([0, 59, 60, 1380, 3599, 3600, 5000, 360000].map(playedText), ['0m', '0m', '1m', '23m', '59m', '1h 0m', '1h 23m', '100h 0m']);
 });
