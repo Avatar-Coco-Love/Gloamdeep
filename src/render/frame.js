@@ -3,7 +3,7 @@
 // the shown hero and enemies and takes the turns before each frame.
 import { TILE, W, H } from './screen.js';
 import { drawRoom } from './tiles.js';
-import { drawHero, drawItems, drawEnemies, SPRITES, wearLook } from './sprites.js';
+import { drawHero, drawItems, drawEnemies, SPRITES, wearLook, heroIn } from './sprites.js';
 import { drawLight, flicker } from './light.js';
 import { drawBrackets, torchLights, drawFlames } from './torches.js';
 import { drawStatus } from './hud.js';
@@ -67,7 +67,7 @@ export function createFrame(app, ui) {
     else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, app.entry, app.chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still()); }
     else if (screen === 'history') { drawTitle(ctx, [], 0, t, still()); drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still()); }
-    else if (screen === 'slots') drawSlots(ctx, app.profiles, app.chosen, app.picking, app.slotsBack && app.profiles.current !== null, t, still());
+    else if (screen === 'slots') drawSlots(ctx, app.profiles, (p) => heroIn(cloakOf(p), eyesOf(p), trimOf(p), clothesOf(p)), app.chosen, app.picking, app.slotsBack && app.profiles.current !== null, t, still());
     else if (screen === 'name') drawNamePad(ctx, app.entry, app.chosen, t, still(), app.renaming ? 'Rename profile' : undefined);
     else if (screen === 'cloak') drawCloaks(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'eyes') drawEyes(ctx, app.cloak, app.eyes, app.chosen, t, still());

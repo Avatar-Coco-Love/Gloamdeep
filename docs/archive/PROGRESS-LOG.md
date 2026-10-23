@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.73, steps.** Records gain Steps, every tile walked
+  onto (D-283); achievements in tiers, later (D-284). [Playtest](https://claude.ai/artifact/P5tV7uspZMMMHmH1gK4VXv).
 - **2026-10-23, 0.2.72, earned looks.** Looks earned with a play-only
   currency (D-280), the world as the dial (D-281), gathering later
   (D-282). Nothing visible.

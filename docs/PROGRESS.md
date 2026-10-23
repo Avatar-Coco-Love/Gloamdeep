@@ -4,11 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.75 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.76 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-Pick the next step with the owner from Ideas for later.
+Pick the next step with the owner from Ideas for later (a slot's play time
+needs its rules first: what counts, and how it is written).
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -56,19 +57,20 @@ Built to grow (D-261 to D-263; order may change)
 - [x] P5, P6 The lantern's trim, the clothes, 0.2.69, 0.2.70 (D-277, D-278)
 - [x] D-270 to D-278 archived, 0.2.71 (D-279)
 - [x] Ideas: earned looks, gathering, 0.2.72 · R1 to R3 Steps, flasks, torches in Records, 0.2.73 to 0.2.75
+- [x] P7 The hero in each Profiles box, 0.2.76 (D-287)
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
-Ideas for later (and the owner's wish list in `RESEARCH.md`): gathering (D-282); a slot's hero and play time (D-271); more Records lines; painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
+Ideas for later (and the owner's wish list in `RESEARCH.md`): gathering (D-282); a slot's play time (D-271); more Records lines; painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
 low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.73, steps.** Records gain Steps, every tile walked
-  onto (D-283); achievements in tiers, later (D-284). [Playtest](https://claude.ai/artifact/P5tV7uspZMMMHmH1gK4VXv).
 - **2026-10-23, 0.2.74, flasks.** Records gain Flasks poured, by hand
   or by itself, under Steps (D-285). [Playtest](https://claude.ai/artifact/7hg6nZVKVAZoeRBTBECHEw).
 - **2026-10-23, 0.2.75, torches.** Records gain Torches lit, every
   lighting, under Flasks poured (D-286). [Playtest](https://claude.ai/artifact/CWUkBFYHS2PhXF5eW3QLGk).
+- **2026-10-23, 0.2.76, a hero in each box.** Each Profiles box shows
+  its hero on a small lit patch, the name beside it (D-287). [Playtest](https://claude.ai/artifact/DJaRH4iNQQB1YzXrzM1D6t).
