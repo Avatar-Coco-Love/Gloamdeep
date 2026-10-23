@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.68, the eyes.** Six eye colours, picked on faces
+  close up, after the cloak (D-276). [Playtest](https://claude.ai/artifact/VPDZio1UKVBeZS9phXxBhP).
 - **2026-10-23, 0.2.67, the cloak.** Six cloak colours; a new profile
   picks one after its name, Look changes it (D-275). [Playtest](https://claude.ai/artifact/HDCVWysaw11b1sBwCotW4e).
 - **2026-10-23, 0.2.66, rename.** Rename above Delete; a box opens the

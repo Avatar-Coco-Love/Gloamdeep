@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.71 (2026-10-23)
+- Decisions D-270 to D-278 moved, unchanged, to an archive file. Nothing in the game changes.
+- Decisions: D-279.
+
 ## 0.2.70 (2026-10-23)
 - A new profile now chooses its clothes after its trim: Choose your clothes shows four heroes, two to a row, in the cloak, eyes and trim just picked: Cloak (as before), Belted, Short or Tattered. The belt and its buckle take the lantern's trim. OK makes the profile; Back returns to the trim.
 - Look on the slot screen now opens the cloak, the eyes, the trim, then the clothes; OK on the clothes keeps all four, and Esc after the cloak keeps the old look. The cloak screen's heroes wear the clothes picked, and the red flash of a bite keeps their shape.
