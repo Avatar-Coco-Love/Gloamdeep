@@ -2,6 +2,12 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.63', date: '2026-10-23', title: 'The Journal', lines: [
+    "A Journal now opens from the title screen, under New journey, and from the pause menu, under Resume. It has one tab for now, Records: your deepest depth, the creatures you have beaten, your falls and the rooms you have found, counted across all your journeys from now on.",
+    "Your deepest depth carries over. The other counts start at 0. A journey where a dev tool jumped to a depth doesn't count, as for the deepest depth.",
+    "Plans: a new open question about play data, kept on the device or sent (Q-052).",
+    "Decisions: D-270. Questions opened: Q-052.",
+  ] },
   { v: '0.2.62', date: '2026-10-23', title: 'Creatures\' ways', lines: [
     "Behind the scenes, nothing changes in the game. How a creature acts is now written as named ways it can have: the rat chases, and the gloamling chases and shuns light. A new creature can mix these ways, and new ways can be added later.",
     "Decisions: D-269.",

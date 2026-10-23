@@ -162,3 +162,12 @@ each way means as data (how it notices the hero, whether it moves toward
 them, steps into light, bites while lit, what it does when lit); the
 turn rules read only that, and a later way in the list wins. A new
 creature mixes ways by name. Nothing changes in play.
+
+**D-270 · 2026-10-23 · The Journal and its Records** (J1, owner's picks;
+builds D-262) Journal is a line on the title, under New journey, and on
+the pause menu, under Resume. Its page shows a tab row with its one tab,
+Records, open; later tabs join the row. Records shows the deepest depth,
+creatures beaten, falls and rooms found, counted from each turn's events
+(D-267) on all the profile's journeys, from 0 for the counts. As for the
+deepest depth, a journey with a dev jump doesn't count (D-232; Claude's
+call, may change). Only Back can be picked for now.

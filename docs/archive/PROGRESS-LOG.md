@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.60, what happened.** Each turn writes a list of
+  events on the state; the sounds play from it (D-267). Nothing visible.
 - **2026-10-23, 0.2.59, old saves upgraded.** Numbered steps bring an
   old save up to today's shape (D-266). Nothing visible.
 - **2026-10-23, 0.2.58, built to grow.** Plans only (D-261 to D-265):

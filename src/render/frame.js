@@ -12,6 +12,7 @@ import { drawPause, veil } from './menu.js';
 import { drawSeedPad } from './seedpad.js';
 import { drawHowTo } from './howto.js';
 import { drawHistory } from './history.js';
+import { drawJournal } from './journal.js';
 import { drawMap } from './map.js';
 import { drawBag } from './bag.js';
 import { jabAt } from './jab.js';
@@ -28,6 +29,7 @@ import { daylight, darkNow } from '../core/daytime.js';
 import { shownSeed, canGoBack } from '../core/explorer.js';
 import { mouthLight } from '../core/mouth.js';
 import { cameraAt } from '../core/camera.js';
+import { playing } from '../core/profile.js';
 import { PAUSE_MENU, SURE_MENU, SURE_HEADING, SURE_NOTE } from '../core/menu.js';
 import { doorways } from '../core/openings.js';
 
@@ -61,6 +63,7 @@ export function createFrame(app, ui) {
     else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, app.entry, app.chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still()); }
     else if (screen === 'history') { drawTitle(ctx, [], 0, t, still()); drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still()); }
+    else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
     else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null);
   }
@@ -140,6 +143,7 @@ export function createFrame(app, ui) {
     else if (app.screen === 'seed') drawSeedPad(ctx, app.entry, app.chosen, t, still());
     else if (app.screen === 'howto') drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still());
     else if (app.screen === 'history') drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still());
+    else if (app.screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
     else if (app.screen === 'map') drawMap(ctx, app.view, t, still(), screens.turns());
     else if (app.screen === 'bag') drawBag(ctx, state.bag, app.chosen, SPRITES, app.bagOnTop, state.held);
     else dev.draw(ctx, state, cam);

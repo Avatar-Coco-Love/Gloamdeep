@@ -7,13 +7,13 @@ import { lineAt, pauseTop, LINE_GAP } from '../src/render/menu.js';
 import { SCREEN_H, W } from '../src/render/screen.js';
 import { textWidth } from '../src/render/font.js';
 
-test('the title menu offers New journey first, then How to play, Settings, and the Seed Explorer last (D-214)', () => {
-  assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'howto', 'settings', 'explore']);
+test('the title menu offers New journey first, then Journal (D-270), How to play, Settings, and the Seed Explorer last (D-214)', () => {
+  assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'journal', 'howto', 'settings', 'explore']);
 });
 
 test('Continue shows, first, only while a journey is saved (D-178, D-238)', () => {
-  assert.deepEqual(titleMenu(false).map((l) => l.id), ['new', 'howto', 'settings', 'explore']);
-  assert.deepEqual(titleMenu(true).map((l) => l.id), ['continue', 'new', 'howto', 'settings', 'explore']);
+  assert.deepEqual(titleMenu(false).map((l) => l.id), ['new', 'journal', 'howto', 'settings', 'explore']);
+  assert.deepEqual(titleMenu(true).map((l) => l.id), ['continue', 'new', 'journal', 'howto', 'settings', 'explore']);
 });
 
 test('Start over? asks Yes or No, and its words fit the picture (D-238)', () => {
@@ -28,8 +28,8 @@ test('Up and Down move the choice and stop at the ends', () => {
   assert.equal(moveChoice(1, 'left', 3), 1);
 });
 
-test('the pause menu offers Resume, Settings, How to play, then Back to title, and nothing that does not work yet', () => {
-  assert.deepEqual(PAUSE_MENU.map((l) => l.id), ['resume', 'settings', 'howto', 'title']);
+test('the pause menu offers Resume, Journal (D-270), Settings, How to play, then Back to title, and nothing that does not work yet', () => {
+  assert.deepEqual(PAUSE_MENU.map((l) => l.id), ['resume', 'journal', 'settings', 'howto', 'title']);
 });
 
 test('Settings shows Controls, Motion, Seed, then Back, and every choice fits the picture with its flame', () => {

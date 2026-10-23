@@ -4,19 +4,25 @@
 // Until the slot screen comes, the first slot is the one in use. Plain data, no drawing.
 
 export const SLOTS = 3;
-// A new profile: no name or look chosen yet, no Records
-export const newProfile = (deepest = 0) => ({ name: '', look: {}, records: { deepest } });
+// A new profile: no name or look chosen yet, no Records. Records: the deepest depth,
+// creatures beaten, falls and rooms found, on all its journeys (D-262, D-270)
+export const COUNTS = ['beaten', 'falls', 'found'];
+export const newProfile = (deepest = 0) => ({ name: '', look: {}, records: { deepest, beaten: 0, falls: 0, found: 0 } });
 // The profiles at the start: the first slot in use, the others empty
 export const newProfiles = (deepest = 0) => ({ current: 0, slots: [newProfile(deepest), ...Array(SLOTS - 1).fill(null)] });
 
 // § upgrades: as the journey save's (D-266). When the profiles' shape changes,
 // raise FORMAT and add the step from the old number to the new; never edit a merged step.
-export const FORMAT = 1;
-export const UPGRADES = {};
+export const FORMAT = 2;
+export const UPGRADES = {
+  // 1 → 2: the Records' counts, none yet (D-270)
+  1: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { beaten: 0, falls: 0, found: 0, ...p.records } }) }),
+};
 
 // § reading: a kept profile list, checked and upgraded, or null when it can't be read
+const isCount = (n) => Number.isInteger(n) && n >= 0;
 const isProfile = (p) => typeof p?.name === 'string' && typeof p.look === 'object' && p.look !== null
-  && Number.isInteger(p.records?.deepest) && p.records.deepest >= 0;
+  && ['deepest', ...COUNTS].every((k) => isCount(p.records?.[k]));
 export function unpackProfiles(kept) {
   if (!Number.isInteger(kept?.format) || kept.format < 1 || kept.format > FORMAT) return null;
   let ps = kept.profiles;
@@ -31,7 +37,9 @@ export const packProfiles = (profiles) => ({ format: FORMAT, profiles });
 export const playing = (ps) => ps.slots[ps.current];
 export const withPlaying = (ps, p) => ({ ...ps, slots: ps.slots.map((q, i) => (i === ps.current ? p : q)) });
 // The profiles after a new deepest depth (the rule is record.js's deeper)
-export const withDeepest = (ps, deepest) => withPlaying(ps, { ...playing(ps), records: { ...playing(ps).records, deepest } });
+export const withDeepest = (ps, deepest) => withRecords(ps, { ...playing(ps).records, deepest });
+// The profiles with the Records of the profile in play replaced
+export const withRecords = (ps, records) => withPlaying(ps, { ...playing(ps), records });
 
 // § storage: localStorage, wrapped (TECH.md); with storage blocked it lasts until the page closes.
 // The first time, the record kept before profiles (record.js, D-232) moves into the first slot.

@@ -1,0 +1,37 @@
+// § journal: one book with tabs, Records first (J1, D-262, D-270)
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { TABS, recordRows, journalWords } from '../src/core/journal.js';
+import { counted } from '../src/core/record.js';
+import { newProfile } from '../src/core/profile.js';
+import { journalAt } from '../src/render/journal.js';
+import { BACK_Y } from '../src/render/history.js';
+
+const records = { deepest: 3, beaten: 12, falls: 4, found: 27 };
+
+test('Records is the one tab for now', () => {
+  assert.deepEqual(TABS.map((t) => t.text), ['Records']);
+});
+
+test('the Records tab shows the deepest depth, creatures beaten, falls and rooms found', () => {
+  assert.deepEqual(recordRows(records).map((r) => [r.text, r.value]), [['Deepest', 'depth 3'], ['Beaten', '12'], ['Falls', '4'], ['Rooms found', '27']]);
+  assert.equal(journalWords(records), 'Journal, Records tab. Deepest, depth 3. Beaten, 12. Falls, 4. Rooms found, 27. Back.');
+});
+
+test('the counts rise with each beat, fall and found event, on any journey', () => {
+  const r = newProfile().records;
+  const after = counted(r, [{ type: 'hit', id: 'rat' }, { type: 'beat', id: 'rat' }, { type: 'found', place: 'second' }, { type: 'fall' }, { type: 'step' }]);
+  assert.deepEqual(after, { deepest: 0, beaten: 1, falls: 1, found: 1 });
+  assert.deepEqual(r, { deepest: 0, beaten: 0, falls: 0, found: 0 }); // the old one left as it was
+});
+
+test('nothing counted is the same Records, and a dev jump stops the counting (D-232)', () => {
+  const r = newProfile().records;
+  assert.equal(counted(r, [{ type: 'step' }]), r);
+  assert.equal(counted(r, [{ type: 'beat', id: 'rat' }], true), r);
+});
+
+test('a tap on Back, or near it, goes back; elsewhere does nothing', () => {
+  assert.equal(journalAt(BACK_Y + 2), 'back');
+  assert.equal(journalAt(60), null);
+});

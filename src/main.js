@@ -13,8 +13,8 @@ import { createScreen, TILE } from './render/screen.js';
 import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
-import { deeper } from './core/record.js';
-import { loadProfiles, saveProfiles, playing, withDeepest } from './core/profile.js';
+import { deeper, counted } from './core/record.js';
+import { loadProfiles, saveProfiles, playing, withRecords } from './core/profile.js';
 import { loadJourney, saveJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
@@ -45,7 +45,7 @@ const app = {
   // Who plays: the profiles on this device, the first in use until the slot screen (D-268)
   profiles: loadProfiles(),
   jumped: false, // a dev jump stops this journey counting towards the deepest depth (D-232)
-  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore' or 'history'
+  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore', 'history' or 'journal'
   screen: 'title', chosen: 0,
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
@@ -74,10 +74,13 @@ function keepJourney() {
   if (app.state === savedState) return;
   saveJourney(app.state, app.jumped, app.profiles.current); savedState = app.state; app.saved = true;
 }
-function keepDeepest() {
-  // The deepest depth walked to, in the profile's Records (D-021, D-232, D-268)
-  const was = playing(app.profiles).records.deepest, d = deeper(was, depthOf(app.state.place), app.jumped);
-  if (d !== was) { app.profiles = withDeepest(app.profiles, d); saveProfiles(app.profiles); }
+function keepRecords(events) {
+  // The profile's Records (D-021, D-232, D-268, D-270): the deepest depth walked to,
+  // and the creatures beaten, falls and rooms found that this action's events bring
+  const was = playing(app.profiles).records, d = deeper(was.deepest, depthOf(app.state.place), app.jumped);
+  let records = counted(was, events, app.jumped);
+  if (d !== records.deepest) records = { ...records, deepest: d };
+  if (records !== was) { app.profiles = withRecords(app.profiles, records); saveProfiles(app.profiles); }
 }
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 // Motion follows the device until the Motion switch is picked (D-190)
@@ -134,7 +137,9 @@ function tryStep(dir) {
   if (app.settings.flasks === 'self') app.state = pourByItself(before, app.state);
   const { state } = app, fell = state.fell !== before.fell;
   if (fell || state.health < before.health) app.bitten = flashFor();
-  hear(eventsSince(before, state));
+  const events = eventsSince(before, state);
+  hear(events);
+  keepRecords(events);
   if (fell) fallDown(state.fell);
   const went = !fell && state.place !== before.place;
   if (went && !still()) { // the hero walks onto the stairs as the old room fades (D-135)
@@ -142,7 +147,6 @@ function tryStep(dir) {
     app.travel = { from: { ...before, hero: to }, mid: now + FADE_MS, end: now + 2 * FADE_MS };
   } else if (went || (still() && !fell)) { snap(state.hero); if (went) foeShown = new Map(); }
   else if (!fell) followFoes(before.enemies, state.enemies);
-  if (went) keepDeepest();
   // Experience earned shows as it rises over the hero; after stairs, once the new room shows (D-245)
   if (state.xp > before.xp) app.gain = { n: state.xp - before.xp, at: app.travel?.mid ?? performance.now() };
 }

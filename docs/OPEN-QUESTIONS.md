@@ -91,3 +91,10 @@ Levels only show for now. Each could add a heart, more damage, a skill
 Hollow Knight shows the place and play time; Celeste the name and
 deaths. Ideas: the name, the deepest depth, play time, the hero in their
 look. And may a profile be renamed or its look changed later?
+
+**Q-052 · Play data: kept on the device, or sent?** (near 1.0)
+Telemetry sends how people play (falls, depths, journey length) to a
+small service, with an opt-in switch in Settings and a privacy note.
+Options: keep it on the device, with a dev button to save it as a file
+for playtesters (Claude's pick for now); opt-in telemetry near release,
+built on each turn's events (D-267); or never.
