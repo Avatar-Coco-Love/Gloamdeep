@@ -35,5 +35,7 @@ grep. Never read them whole. The 8 KB cap doesn't apply here.
   unchanged from `DECISIONS.md` at step 53 (D-188). Still in force.
 - `DECISIONS-MENU.md`: D-177 to D-193 (the main menu, steps 52 to 58),
   moved unchanged from `DECISIONS.md` at step 45 (D-196). Still in force.
+- `DECISIONS-GROWING-1.md`: D-261 to D-269 (built to grow, steps G1 to
+  G4), moved unchanged from `DECISIONS.md` at 0.2.66 (D-274). Still in force.
 - The foundation build plan (steps 7 to 30) is at the top of
   `PROGRESS-LOG.md`.

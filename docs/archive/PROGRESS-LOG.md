@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.63, the Journal.** On the title and pause menus, one
+  tab, Records: deepest, beaten, falls, rooms (D-270). [Playtest](https://claude.ai/artifact/KxD3DHXVpUK2wRTVzECJgo).
 - **2026-10-23, 0.2.62, creatures' ways.** Each creature names its ways
   (chases, shuns light); the turn rules read them (D-269). Nothing visible.
 - **2026-10-23, 0.2.61, profiles.** Up to 3 profiles on a device, each

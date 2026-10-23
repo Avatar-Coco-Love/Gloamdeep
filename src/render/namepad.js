@@ -1,5 +1,5 @@
-// § name pad: the page for naming a new profile (D-272), dark like the slot screen's.
-// The heading Name your profile, the letters typed so far with a cursor, then the keys
+// § name pad: the page for naming a new profile (D-272) or renaming one (D-273), dark like
+// the slot screen's. The heading Name your profile (or Rename profile), the letters typed so far with a cursor, then the keys
 // on a 7-column grid; the chosen key gold with the menu's flame.
 import { NAME_PAD, NAME_ROWS, NAME_COLS, NAME_MAX } from '../core/namepad.js';
 import { W, SCREEN_H } from './screen.js';
@@ -25,9 +25,9 @@ export function nameKeyAt(x, y) {
 }
 
 // entry: the letters typed; chosen: a key's index; still: reduced motion (the cursor stays lit)
-export function drawNamePad(c, entry, chosen, t, still) {
+export function drawNamePad(c, entry, chosen, t, still, heading = 'Name your profile') {
   c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H);
-  drawHeading(c, 'Name your profile', TOP);
+  drawHeading(c, heading, TOP);
   const w = textWidth(entry), cursor = entry.length < NAME_MAX, x = Math.floor((W - w - (cursor ? 5 : 0)) / 2);
   drawText(c, entry, x, TOP, GOLD);
   if (cursor && (still || Math.floor(t / 500) % 2 === 0)) { c.fillStyle = GOLD; c.fillRect(x + w + (entry ? 1 : 0), TOP + 7, 4, 1); }

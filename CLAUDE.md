@@ -17,7 +17,7 @@ CSS and JavaScript, with everything drawn and synthesized in code.
   the owner's choice. This applies to design, art, code structure and bug
   fixes.
 - Never invent mechanics, story, names or numbers that are not in
-  `docs/DECISIONS.md` or its archive files (D-041, D-083, D-103, D-120, D-137, D-151, D-161, D-188, D-196, D-208, D-213, D-221, D-236, D-251, D-265). If something
+  `docs/DECISIONS.md` or its archive files (D-041, D-083, D-103, D-120, D-137, D-151, D-161, D-188, D-196, D-208, D-213, D-221, D-236, D-251, D-265, D-274). If something
   is missing, add it to
   `docs/OPEN-QUESTIONS.md` and ask.
 - Ask questions as **multiple choice** (the AskUserQuestion tool when it
@@ -49,7 +49,7 @@ Read the smallest file that answers the question.
 | File | What it holds | When to read it |
 | --- | --- | --- |
 | `docs/PROGRESS.md` | status, Next up, the last 3 log entries | every conversation |
-| `docs/DECISIONS.md` | D-168 to D-176, and D-261 on | grep for an ID or topic |
+| `docs/DECISIONS.md` | D-168 to D-176, and D-270 on | grep for an ID or topic |
 | `docs/archive/DECISIONS-PREPRODUCTION.md` | D-001 to D-038, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-FOUNDATION-1.md` | D-039 to D-052, D-070 to D-076, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-FOUNDATION-2.md` | D-053 to D-069, still in force | grep only, never read whole |
@@ -65,6 +65,7 @@ Read the smallest file that answers the question.
 | `docs/archive/DECISIONS-DEEPER.md` | D-219 to D-233, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-LAST-STEPS-1.md` | D-234 to D-246, still in force | grep only, never read whole |
 | `docs/archive/DECISIONS-LAST-STEPS-2.md` | D-247 to D-260, still in force | grep only, never read whole |
+| `docs/archive/DECISIONS-GROWING-1.md` | D-261 to D-269, still in force | grep only, never read whole |
 | `docs/GLOSSARY.md` | the game's words and their decisions (D-264) | before naming anything |
 | `docs/OPEN-QUESTIONS.md` | undecided questions, Q-001, Q-002… | when a step touches one |
 | `docs/RESEARCH.md` | the owner's wish list, similar games, ideas kept | when proposing a feature |
