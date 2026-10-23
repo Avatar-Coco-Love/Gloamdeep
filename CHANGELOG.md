@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.59 (2026-10-23)
+- Behind the scenes, nothing changes on screen. A journey saved by an older version of the game is now brought up to date when you continue it, one small numbered step at a time, instead of being lost. Saves the game can't read are still dropped quietly.
+- Decisions: D-266.
+
 ## 0.2.58 (2026-10-23)
 - Plans only, nothing changes in the game. The game is now built to grow: Claude suggests ideas from other successful games along the way, and new parts are made so more can be added later.
 - Stats, and later quests, a bestiary and achievements, will live in one Journal with tabs; the first tab is Records. Four behind-the-scenes steps come first: old saves upgraded instead of lost, a list of what happens each turn, a profile save, and creature behaviours as data.

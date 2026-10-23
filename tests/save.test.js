@@ -1,7 +1,7 @@
 // § save: the journey kept on this device (D-238)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { unpackJourney, journeyText, readJourney, loadJourney, saveJourney, FORMAT } from '../src/core/save.js';
+import { unpackJourney, packJourney, journeyText, readJourney, loadJourney, saveJourney, FORMAT, UPGRADES, upgradeState } from '../src/core/save.js';
 import { makeWorld, step, DIRS } from '../src/core/turn.js';
 import { goToDepth } from '../src/core/stairs.js';
 
@@ -24,10 +24,30 @@ test('a kept journey plays on the same as the one it was kept from', () => {
   assert.deepEqual(b, a);
 });
 
-test('nothing kept, an older format or a broken save gives null', () => {
+test('nothing kept, a broken save or one from a newer game gives null (dropped quietly, D-266)', () => {
+  const s = makeWorld('first', 1);
   assert.equal(unpackJourney(null), null);
-  assert.equal(unpackJourney({ format: FORMAT - 1, state: makeWorld('first', 1) }), null);
   assert.equal(unpackJourney({ format: FORMAT, state: { hero: 1 } }), null);
+  for (const format of [FORMAT + 1, 0, undefined, '1', 1.5]) assert.equal(unpackJourney({ format, state: s }), null);
+});
+
+test('every older format has a step up to the next (D-266)', () => {
+  for (let f = 1; f < FORMAT; f++) assert.equal(typeof UPGRADES[f], 'function', `step ${f} → ${f + 1}`);
+  const s = makeWorld('first', 5);
+  assert.deepEqual(upgradeState(FORMAT, s), s); // today's shape is left as it is
+});
+
+test('a format 1 save, from before experience and the bag, is upgraded, not dropped', () => {
+  const { xp, found, bag, held, ...old } = makeWorld('first', 9);
+  const back = unpackJourney({ format: 1, jumped: true, state: old });
+  assert.equal(back.jumped, true);
+  assert.deepEqual(back.state.found, ['first']);
+  assert.equal(back.state.xp, 0);
+  assert.deepEqual(back.state.bag, []);
+  assert.equal(back.state.held, null);
+  assert.deepEqual(back.state, makeWorld('first', 9));
+  const now = unpackJourney(packJourney(back.state));
+  assert.deepEqual(now.state, back.state);
 });
 
 test('saving and loading go through localStorage, and work without it', () => {

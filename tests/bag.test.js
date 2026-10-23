@@ -42,7 +42,7 @@ test('the bag is kept in the save, and an older save gets an empty one', () => {
   const s = { ...makeWorld('first', 3), bag: [{ id: 'flask', n: 2 }] };
   assert.deepEqual(unpackJourney(packJourney(s)).state.bag, [{ id: 'flask', n: 2 }]);
   const { bag, ...old } = s;
-  assert.deepEqual(unpackJourney(packJourney(old)).state.bag, []);
+  assert.deepEqual(unpackJourney({ format: 1, state: old }).state.bag, []); // saves before the bag were format 1 (D-266)
   assert.deepEqual(withBag(old).bag, []);
 });
 
