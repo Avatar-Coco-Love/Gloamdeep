@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.57 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.58 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**Pick the next step.** Claude offers 2 or 3 small next steps from the
-ideas below and `RESEARCH.md` (another sound is one), for the owner.
+**G1 Upgrade old saves** (D-263). Claude proposes how, with 2 or 3
+options, before building. Read `TECH.md` and `src/core/save.js`.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -47,10 +47,11 @@ The Seed Explorer (D-214, before step 50)
 - [x] S1 to S4 Sounds: a step, the lantern's tick, a hit, a rat's bite, 0.2.53 to 0.2.56
 
 Stage 0.2's steps are all built. The stash chest comes with the home base.
+Built to grow (D-261 to D-263; order may change)
+- [ ] G1 save upgrades · G2 events · G3 a profile · G4 behaviours as data
+- [ ] J1 The Journal, its Records tab (D-262)
 
-UI and dev tools (the owner's wish, before step 46)
-- [x] U1 Sideways, the room uses the sides, 0.2.17
-- [x] U2 The dev side drawer, in the pixel font, 0.2.18
+- [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
 Ideas for later (and the owner's wish list in `RESEARCH.md`): painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
@@ -59,12 +60,12 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.55, the hit's sound.** A soft "dmp" per hit, a
-  tick on top with the knife (D-258). Sound board:
-  https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU (republished).
 - **2026-10-23, 0.2.56, a rat's bite.** Two low, dry snaps of teeth,
   after the hit in the same turn; the gloamling is silent (D-259).
-  Sound board at the 0.2.55 link above, republished.
+  Sound board: https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU
 - **2026-10-23, 0.2.57, a quieter title.** The "Deepest: depth N" line
   is off the title menu; the record is still kept, for a stats page
   later (D-260). Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P
+- **2026-10-23, 0.2.58, built to grow.** Plans only (D-261 to D-265):
+  built to grow, one Journal with Records first, groundwork G1 to G4
+  first, a glossary. Nothing visible.

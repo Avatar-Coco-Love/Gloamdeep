@@ -21,6 +21,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.58 (2026-10-23)
+- Plans only, nothing changes in the game. The game is now built to grow: Claude suggests ideas from other successful games along the way, and new parts are made so more can be added later.
+- Stats, and later quests, a bestiary and achievements, will live in one Journal with tabs; the first tab is Records. Four behind-the-scenes steps come first: old saves upgraded instead of lost, a list of what happens each turn, a profile save, and creature behaviours as data.
+- A new glossary page keeps the game's words consistent.
+- Decisions: D-261 to D-265.
+
 ## 0.2.57 (2026-10-23)
 - The title screen no longer shows your deepest depth under the menu. The game still remembers it on this device, ready for a stats page later.
 - Decisions: D-260.
