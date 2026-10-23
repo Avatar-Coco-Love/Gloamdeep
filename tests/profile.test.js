@@ -125,11 +125,11 @@ test('renaming changes only the name; nothing typed makes it unnamed; an empty s
   assert.equal(renamedSlot(ps, 1, 'TOM').slots[1], null);
 });
 
-test('the slot screen: Rename, Look, Delete, the one being done reads Cancel, a tap picks the nearest line', () => {
-  assert.deepEqual(slotLines(null, true).map((l) => l.text), ['Rename', 'Look', 'Delete', 'Back']);
-  assert.deepEqual(slotLines('rename', false).map((l) => l.text), ['Cancel', 'Look', 'Delete']);
+test('the slot screen: Rename, Change look, Delete, the one being done reads Cancel, a tap picks the nearest line', () => {
+  assert.deepEqual(slotLines(null, true).map((l) => l.text), ['Rename', 'Change look', 'Delete', 'Back']);
+  assert.deepEqual(slotLines('rename', false).map((l) => l.text), ['Cancel', 'Change look', 'Delete']);
   assert.deepEqual(slotLines('look', false).map((l) => l.text), ['Rename', 'Cancel', 'Delete']);
-  assert.deepEqual(slotLines('delete', false).map((l) => l.text), ['Rename', 'Look', 'Cancel']);
+  assert.deepEqual(slotLines('delete', false).map((l) => l.text), ['Rename', 'Change look', 'Cancel']);
   assert.equal(slotsHeading('rename'), 'Rename which?');
   assert.equal(slotsHeading('look'), 'Change whose look?');
   assert.equal(slotsHeading(null), 'Profiles');

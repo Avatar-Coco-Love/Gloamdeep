@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.76 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.77 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
@@ -58,6 +58,7 @@ Built to grow (D-261 to D-263; order may change)
 - [x] D-270 to D-278 archived, 0.2.71 (D-279)
 - [x] Ideas: earned looks, gathering, 0.2.72 · R1 to R3 Steps, flasks, torches in Records, 0.2.73 to 0.2.75
 - [x] P7 The hero in each Profiles box, 0.2.76 (D-287)
+- [x] Back on the name pad, Change look, 0.2.77 (D-288, D-289, the owner's finds)
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -68,9 +69,9 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.74, flasks.** Records gain Flasks poured, by hand
-  or by itself, under Steps (D-285). [Playtest](https://claude.ai/artifact/7hg6nZVKVAZoeRBTBECHEw).
 - **2026-10-23, 0.2.75, torches.** Records gain Torches lit, every
   lighting, under Flasks poured (D-286). [Playtest](https://claude.ai/artifact/CWUkBFYHS2PhXF5eW3QLGk).
 - **2026-10-23, 0.2.76, a hero in each box.** Each Profiles box shows
   its hero on a small lit patch, the name beside it (D-287). [Playtest](https://claude.ai/artifact/DJaRH4iNQQB1YzXrzM1D6t).
+- **2026-10-23, 0.2.77, back on the name pad.** The name pad has a
+  Back key; Look reads Change look (D-288, D-289). [Playtest](PLAYTEST).

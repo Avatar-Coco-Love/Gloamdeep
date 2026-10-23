@@ -146,3 +146,14 @@ in the profile's look (D-275 to D-278), on a small square of lit crypt
 floor with its shadow, at the box's left; the name, Deepest and the
 slot's number stay, the name and Deepest moved right to make room. An
 Empty box has no hero. Play time in the box is still to come.
+
+**D-288 · 2026-10-23 · Back on the name pad** (the owner's find and
+pick; builds D-272, D-273) The name pad gets a Back key on its own row
+under Del and OK, as the look screens have. It does what Esc does: a new
+profile goes back to the slot screen with nothing made, and a rename
+keeps the old name.
+
+**D-289 · 2026-10-23 · Change look** (the owner's wish and pick) The
+slot screen's Look line reads "Change look", clearer to new players. It
+still reads Cancel while picking a box, and the heading still asks
+"Change whose look?".
