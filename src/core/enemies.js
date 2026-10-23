@@ -2,14 +2,14 @@
 // tiles, one per tile, in `state.enemies`. registry.js gathers this table.
 // An enemy in the state is { id, x, y }, plus `health` once it has been hit,
 // `chasing` once it has noticed the hero (D-127, D-157) and `facing` ('left'
-// or 'right', drawn facing right until it walks, D-158).
+// or 'right', drawn facing right until it walks, D-158). `ways` names how it
+// acts, from behaviours.js (D-269).
 export const ENEMIES = {
   // Two lantern hits kill it (D-109, D-110); it bites for 1 when next to the hero (D-114)
-  // and comes for them once it notices them (D-126). Its bite sounds of teeth (D-259).
-  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite', sound: 'teeth' },
-  // Light-shy (D-240): it never steps onto a lit tile, backs out of light into
-  // the dark, and doesn't bite while lit. It sees the hero along a clear line, lit or not.
-  gloamling: { id: 'gloamling', kind: 'enemy', name: 'Gloamling', health: 2, bite: 1, shy: true, hurt: 'gloamlingHurt', die: 'gloamlingDie', bites: 'gloamlingBite' },
+  // and chases them once it notices them (D-126). Its bite sounds of teeth (D-259).
+  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, ways: ['chases'], hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite', sound: 'teeth' },
+  // It chases, and shuns light (D-240).
+  gloamling: { id: 'gloamling', kind: 'enemy', name: 'Gloamling', health: 2, bite: 1, ways: ['chases', 'shunsLight'], hurt: 'gloamlingHurt', die: 'gloamlingDie', bites: 'gloamlingBite' },
 };
 
 // § lookups: the enemy on tile x, y, or undefined

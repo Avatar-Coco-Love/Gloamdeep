@@ -17,7 +17,7 @@ const where = (s) => s.enemies.map(({ x, y }) => [x, y]);
 
 test('a gloamling is as strong as a rat: 2 health, a bite of 1', () => {
   const g = get('gloamling');
-  assert.equal(g.health, 2); assert.equal(g.bite, 1); assert.equal(g.shy, true);
+  assert.equal(g.health, 2); assert.equal(g.bite, 1); assert.deepEqual(g.ways, ['chases', 'shunsLight']);
 });
 
 test('in the dark it sees the hero along a clear line and comes', () => {

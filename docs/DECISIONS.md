@@ -153,3 +153,12 @@ at a time: a screen to pick, start and delete profiles; the name; then
 the look: the cloak's colour, the eyes' colour, the lantern's trim (its
 light stays the same for everyone) and the clothing type. The colours
 come from sets that fit the palette, shown as a mock-up first.
+
+**D-269 · 2026-10-23 · Creatures' ways as data** (G4, owner's pick from
+three; answers D-263's G4) A creature's registry entry names its ways,
+as Caves of Qud builds creatures from parts: the rat `['chases']`, the
+gloamling `['chases', 'shunsLight']`. `src/core/behaviours.js` holds what
+each way means as data (how it notices the hero, whether it moves toward
+them, steps into light, bites while lit, what it does when lit); the
+turn rules read only that, and a later way in the list wins. A new
+creature mixes ways by name. Nothing changes in play.

@@ -7,6 +7,7 @@ import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
 import { say, oilLine } from './lines.js';
 import { enemyAt, hitEnemy, biters } from './enemies.js';
+import { traits } from './behaviours.js';
 import { lightAt, openSide } from './lights.js';
 import { mountAt } from './mount.js';
 import { litAt, clearLine } from './sight.js';
@@ -107,12 +108,12 @@ function pickUp(state, found) {
 // § enemies' turn: after the hero's, every enemy next to the hero bites, lit
 // or not (D-114). The bite line replaces any other said this turn (D-117).
 // A biting enemy has noticed the hero, even in the dark (D-157).
-// A light-shy one on a lit tile doesn't bite (D-240).
+// One that shuns light doesn't bite from a lit tile (D-240, its `bitesLit`).
 // At 0 health the hero falls and wakes at the room's start (D-119).
 // Then the others come one tile closer (D-126 to D-129).
 // Each bite is a `bite` event, in the order they bite.
 function enemiesAct(state) {
-  const bites = biters(state.enemies, state.hero).filter((e) => !(get(e.id).shy && litAt(state, e.x, e.y)));
+  const bites = biters(state.enemies, state.hero).filter((e) => traits(get(e.id)).bitesLit || !litAt(state, e.x, e.y));
   if (!bites.length) return enemiesMove(state);
   const health = Math.max(0, state.health - bites.reduce((sum, e) => sum + get(e.id).bite, 0));
   const enemies = state.enemies.map((e) => (bites.includes(e) ? { ...e, chasing: true } : e));
@@ -128,17 +129,20 @@ function enemiesAct(state) {
 // (D-128). One that steps next to the hero bites on the next turn (D-129).
 // A step left or right turns it to face that way; up or down keeps its
 // facing (D-158). They move in list order, so one waits behind another.
-// A light-shy one (D-240) notices along a clear line, lit or not, and never
-// steps onto a lit tile; caught in light, it backs away, into the dark if it can.
+// How each acts comes from its ways (behaviours.js, D-269): one that shuns
+// light (D-240) notices along a clear line, lit or not, and never steps onto
+// a lit tile; caught in light, it backs away, into the dark if it can.
 function enemiesMove(state) {
   let enemies = state.enemies;
   for (const e of state.enemies) {
-    const shy = get(e.id).shy, lit = litAt(state, e.x, e.y);
-    const chasing = e.chasing || ((shy || lit) && clearLine(state.room, e, state.hero));
-    if (!chasing && !(shy && lit)) continue;
+    const t = traits(get(e.id)), lit = litAt(state, e.x, e.y);
+    const sees = t.notices === 'anyLine' || (t.notices === 'inLight' && lit);
+    const chasing = e.chasing || (sees && clearLine(state.room, e, state.hero));
+    const flees = lit && t.whenLit === 'backAway';
+    if (!(chasing && t.moves) && !flees) continue;
     const near = Math.abs(e.x - state.hero.x) + Math.abs(e.y - state.hero.y) === 1;
     const now = { ...state, enemies };
-    const to = (shy && lit ? backAway(now, e) : near ? e : chaseStep(now, e)) || e;
+    const to = (flees ? backAway(now, e) : near ? e : chaseStep(now, e)) || e;
     const facing = to.x < e.x ? 'left' : to.x > e.x ? 'right' : e.facing;
     enemies = enemies.map((o) => (o === e ? { ...e, x: to.x, y: to.y, ...(chasing && { chasing: true }), ...(facing && { facing }) } : o));
   }
@@ -146,13 +150,13 @@ function enemiesMove(state) {
 }
 
 // Whether enemy e may step onto tile x, y: nothing solid, no item, no other
-// enemy, not the hero, and no light for a light-shy one unless `lit` (D-240)
+// enemy, not the hero, and no light for one that shuns it unless `lit` (D-240)
 function free(state, e, x, y, lit = false) {
   if (tileAt(state.room, x, y).solid || itemAt(state, x, y) || enemyAt(state, x, y) || (x === state.hero.x && y === state.hero.y)) return false;
-  return lit || !(get(e.id).shy && litAt(state, x, y));
+  return lit || traits(get(e.id)).intoLight || !litAt(state, x, y);
 }
 
-// Where a light-shy enemy caught in light backs to (D-241, D-243): the dark
+// Where an enemy that shuns light, caught in it, backs to (D-241, D-243): the dark
 // tile next to it farthest from the hero, else one farther from them that
 // only the lantern lights, never a torch or any other light, else null: it stays
 function backAway(state, e) {

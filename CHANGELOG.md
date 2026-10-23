@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.62 (2026-10-23)
+- Behind the scenes, nothing changes in the game. How a creature acts is now written as named ways it can have: the rat chases, and the gloamling chases and shuns light. A new creature can mix these ways, and new ways can be added later.
+- Decisions: D-269.
+
 ## 0.2.61 (2026-10-23)
 - Behind the scenes, nothing changes on screen. The game can now keep up to three profiles on one device, so later each person can have their own name, look, Records and journey. For now everyone plays as the first profile, which keeps your current journey and your deepest depth.
 - Planned next, one small step at a time: a screen to pick a profile, typing a name (up to 12 letters), then choices for the cloak's colour, the eyes, the lantern's trim and the clothing.
