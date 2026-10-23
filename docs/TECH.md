@@ -46,12 +46,13 @@ src/input/screens.js  the title, menus, map and Seed Explorer (D-235)
 src/render/frame.js   draws each frame from the shared `app` (D-235)
 src/core/           rules, state, rng, registry, noise (no DOM);
                     one file per content kind, gathered by registry.js (D-048)
-src/render/         drawing, lighting, sprites
+src/render/         drawing, lighting, sprites, and sound (D-255)
 src/input/          tap, mouse, keyboard
 src/dev/            dev mode (see DEV-TOOLS.md)
 tests/              node --test, for core/ only
 tools/playtest.js   packs the game into one page for playtests (D-073);
                     not part of the game, which has no build step
+tools/soundboard.js packs the game's sounds into a page of buttons (D-256)
 ```
 ES modules (`<script type="module">`). Tests use Node's built-in test
 runner, with no dependencies.

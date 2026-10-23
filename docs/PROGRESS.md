@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.52 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.53 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**Pick the next step.** Stage 0.2's last step is built. Claude offers 2
-or 3 next steps from the ideas below and `RESEARCH.md`, for the owner.
+**Pick the next step.** Claude offers 2 or 3 small next steps from the
+ideas below and `RESEARCH.md` (another sound is one), for the owner.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -46,6 +46,7 @@ The Seed Explorer (D-214, before step 50)
 - [x] 41 First gear: a knife in the first cave, held, hits for 2, 0.2.50 (D-252)
 - [x] 41b The knife's stab, a quick jab, 0.2.51 (D-253)
 - [x] Version history in Settings, 0.2.52 (D-254, the owner's wish)
+- [x] S1 The first sound, a footstep, 0.2.53 (D-255)
 
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 
@@ -55,19 +56,18 @@ UI and dev tools (the owner's wish, before step 46)
 
 Ideas for later (and the owner's wish list in `RESEARCH.md`): painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
-low oil (D-210); sounds; scarcer light deeper
+low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.50, first gear.** A knife lies in depth 2's first
-  room; walking onto it holds it ("You take the knife."), in a HELD slot
-  above the bag's six. It hits for 2, so a rat falls in one hit. Kept
-  through a fall; no new one while held (D-252).
-  Playtest: https://claude.ai/artifact/632zAB2bfQSFZr7EXDT8kc
 - **2026-10-22, 0.2.51, the knife's stab.** A knife hit darts the hero
   half a tile toward the creature and back in 0.1 s (D-253).
   Playtest: https://claude.ai/artifact/632zAB2bfQSFZr7EXDT8kc
 - **2026-10-22, 0.2.52, version history.** Settings lists every
   version; tap one for its changelog lines, word for word (D-254).
   Playtest: https://claude.ai/artifact/YQBk7PAQV34MafuCGYZHnx
+- **2026-10-23, 0.2.53, the first sound.** A soft footstep, no two
+  alike; Sound starts Off (D-255). Sound board (D-256):
+  https://claude.ai/artifact/MfSRBdghmo5Tx5sW3JLbcs
+  Playtest: https://claude.ai/artifact/Cjnj3UUYmSFxM4Ldu2VnRV

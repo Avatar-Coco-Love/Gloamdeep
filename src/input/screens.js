@@ -28,7 +28,7 @@ import { HISTORY, versionWords, scrollToShow, clampScroll } from '../core/histor
 import { nextPage, howtoWords, HOWTO_LINES } from '../core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from '../core/seedpad.js';
 import { titleMenu, PAUSE_MENU, SURE_MENU, SURE_NOTE, SURE_HEADING, settingsMenu, moveChoice } from '../core/menu.js';
-import { saveSettings, nextControl, controlsText, nextMotion, motionText, seedText, lanternText, nextLantern, flasksText, nextFlasks } from '../core/settings.js';
+import { saveSettings, nextControl, controlsText, nextMotion, motionText, seedText, lanternText, nextLantern, flasksText, nextFlasks, soundText, nextSound } from '../core/settings.js';
 import { recordText } from '../core/record.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from '../core/map.js';
 import { setMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from '../render/map.js';
@@ -212,6 +212,7 @@ export function createScreens(app, ui) {
   const changeMotion = () => { const m = nextMotion(app.settings.motion, reduceMotion.matches); change('motion', m, motionText(m, reduceMotion.matches)); };
   const changeLantern = () => { const l = nextLantern(app.settings.lantern); change('lantern', l, lanternText(l)); };
   const changeFlasks = () => { const f = nextFlasks(app.settings.flasks); change('flasks', f, flasksText(f)); };
+  const changeSound = () => { const o = nextSound(app.settings.sound); change('sound', o, soundText(o)); };
 
   // § seed pad (D-191): OK keeps the typed seed, or Random when none is typed; Random
   // keeps Random. Either starts the next New journey; this one goes on as it is.
@@ -274,6 +275,7 @@ export function createScreens(app, ui) {
     else if (id === 'seed') openPad();
     else if (id === 'lantern') changeLantern();
     else if (id === 'flasks') changeFlasks();
+    else if (id === 'sound') changeSound();
     else if (id === 'history') openHistory();
     else if (id === 'back') closeSettings();
   }
@@ -294,6 +296,7 @@ export function createScreens(app, ui) {
     else if (id === 'motion' && (dir === 'left' || dir === 'right')) changeMotion();
     else if (id === 'lantern' && (dir === 'left' || dir === 'right')) changeLantern();
     else if (id === 'flasks' && (dir === 'left' || dir === 'right')) changeFlasks();
+    else if (id === 'sound' && (dir === 'left' || dir === 'right')) changeSound();
     else app.chosen = moveChoice(app.chosen, dir, menuOf(app.screen).length);
   };
   // A tap or click off the room

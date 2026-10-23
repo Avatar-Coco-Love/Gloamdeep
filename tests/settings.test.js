@@ -18,7 +18,7 @@ test('Tap only stops swipes walking; Swipe only stops taps walking', () => {
 });
 
 test('with no storage, or a strange value kept, it starts on Tap and swipe', () => {
-  assert.deepEqual(loadSettings(), { controls: 'both', motion: null, seed: null, lantern: 'hand', flasks: 'hand' }); // no localStorage here
+  assert.deepEqual(loadSettings(), { controls: 'both', motion: null, seed: null, lantern: 'hand', flasks: 'hand', sound: 'off' }); // no localStorage here
   saveSettings({ controls: 'tap' }); // does not throw
   const kept = { 'gloamdeep-settings': '{"controls":"fly"}' };
   globalThis.localStorage = { getItem: (k) => kept[k] ?? null, setItem: (k, v) => { kept[k] = v; } };
@@ -46,7 +46,7 @@ test('a kept Motion choice comes back; a strange one follows the device', () => 
   try {
     assert.equal(loadSettings().motion, null);
     saveSettings({ controls: 'tap', motion: 'reduced' });
-    assert.deepEqual(loadSettings(), { controls: 'tap', motion: 'reduced', seed: null, lantern: 'hand', flasks: 'hand' });
+    assert.deepEqual(loadSettings(), { controls: 'tap', motion: 'reduced', seed: null, lantern: 'hand', flasks: 'hand', sound: 'off' });
   } finally { delete globalThis.localStorage; }
 });
 

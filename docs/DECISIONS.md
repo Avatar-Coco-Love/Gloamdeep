@@ -156,3 +156,20 @@ font gains " × < > = # … and −. The page is dark of its own, and each
 Settings line past 5 lifts the title's hero a tile (builds D-249).
 Checked at 0.2.52: PRs #1 to #89 are versions 0.0.1 to 0.2.51, one
 each, with no gaps or repeats; only the build plan's step numbers jump.
+
+**D-255 · 2026-10-23 · The first sound: a footstep** (owner's picks)
+The game's first sound is a soft, light footstep each time the hero
+walks a tile, made in code with Web Audio. No two steps sound alike
+(changed after the playtest: a low thump dropped, half as loud, and
+each step's pitch and loudness vary, where before two took turns).
+Settings gets "Sound: Off", above Version history (D-178): On or Off,
+kept on this device. Off until picked, while the sounds get player
+ready (changed after the playtest: On → Off). A browser plays nothing
+before the first tap, click or key.
+
+**D-256 · 2026-10-23 · A sound board for new sounds** (owner's wish)
+Every PR that adds or changes a sound also publishes a private sound
+board: a page with one button per game sound, built with
+`node tools/soundboard.js <scratchpad>/sounds.html` from the game's own
+sound code. Its link goes in the chat, the PR body and the log entry,
+republished to the same link each time.

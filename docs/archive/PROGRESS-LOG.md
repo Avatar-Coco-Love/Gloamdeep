@@ -2,6 +2,11 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.50, first gear.** A knife lies in depth 2's first
+  room; walking onto it holds it ("You take the knife."), in a HELD slot
+  above the bag's six. It hits for 2, so a rat falls in one hit. Kept
+  through a fall; no new one while held (D-252).
+  Playtest: https://claude.ai/artifact/632zAB2bfQSFZr7EXDT8kc
 - **2026-10-22, 0.2.49, a stack limit of 3.** A stack holds 3 flasks; a
   4th stays on the floor, never in a new slot, and the line says "You
   can't carry more flasks." D-234 to D-246 archived (D-250, D-251).
