@@ -121,7 +121,7 @@ function tryStep(dir) {
     const next = step(app.state, dir);
     const [dx, dy] = DIRS[dir], foe = enemyAt(app.state, app.state.hero.x + dx, app.state.hero.y + dy);
     to = { x: before.hero.x + dx, y: before.hero.y + dy };
-    if (foe) app.hit = { enemy: foe, ...flashFor() };
+    if (foe) { app.hit = { enemy: foe, ...flashFor() }; sound.hit(!!before.held); } // the hit's sound (D-258)
     if (foe && before.held) app.jab = { dx, dy, start: performance.now() }; // the knife's stab (D-253)
     else if (next.turn === app.state.turn) nudgeToward(dir); // a bump, or a torch the dark lantern can't light (D-122)
     app.state = next;

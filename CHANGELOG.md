@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.55 (2026-10-23)
+- Hitting a creature makes a sound: a soft, low "dmp". With the knife held, a small tick rides on top. Each hit varies a little in pitch and loudness, so a fight doesn't sound like a machine. Only with Sound: On.
+- The sound board has Lantern hit, Knife hit and A fight, 3 knife hits.
+- Decisions: D-258.
+
 ## 0.2.54 (2026-10-23)
 - The lantern ticks as it goes on or off: a soft, low "tok", a little higher for on and lower for off, so you can tell which by ear. It ticks whether you switch it yourself or it switches by itself at the daylight's edge. Only with Sound: On.
 - The sound board has Lantern on and Lantern off.
