@@ -46,8 +46,9 @@ this page and a decision disagree, the decision wins.
 - **Event:** one thing that happened in a turn ("rat died"); each turn
   writes a short list of them, `state.events`; the kinds are listed in
   `src/core/events.js` (D-267).
-- **Profile:** the save for what lasts across journeys, apart from the
-  journey save.
+- **Profile:** one person's save on a device, in one of 3 slots: a
+  name, a look, Records and their own journey (D-268).
+- **Slot:** one of the 3 places for a profile; empty or in use (D-268).
 - **Behaviour:** a reusable way a creature acts, set in its registry
   entry.
 - **Registry:** the one list of all content (TECH.md, D-048).

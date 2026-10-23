@@ -13,7 +13,8 @@ import { createScreen, TILE } from './render/screen.js';
 import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
-import { deeper, loadDeepest, saveDeepest } from './core/record.js';
+import { deeper } from './core/record.js';
+import { loadProfiles, saveProfiles, playing, withDeepest } from './core/profile.js';
 import { loadJourney, saveJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
@@ -41,8 +42,9 @@ const randomSeed = () => Math.floor(Math.random() * SEED_MAX) + 1; // the Seed E
 const app = {
   settings: loadSettings(), // kept on this device (D-189)
   journeySeed: 0, state: null,
-  // The deepest depth walked to, kept on this device (D-021, D-232); a dev jump stops this journey counting
-  deepest: loadDeepest(), jumped: false,
+  // Who plays: the profiles on this device, the first in use until the slot screen (D-268)
+  profiles: loadProfiles(),
+  jumped: false, // a dev jump stops this journey counting towards the deepest depth (D-232)
   // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore' or 'history'
   screen: 'title', chosen: 0,
   pageFrom: 'title', // the menu Settings or How to play was opened from
@@ -61,7 +63,7 @@ const newWorld = () => {
   return makeWorld('first', app.journeySeed);
 };
 // The journey saved on this device comes back as it was, ready for Continue (D-238)
-const kept = loadJourney();
+const kept = loadJourney(app.profiles.current);
 app.saved = !!kept;
 if (kept) { app.state = kept.state; app.jumped = kept.jumped; app.journeySeed = kept.state.seed; }
 else app.state = newWorld();
@@ -70,11 +72,12 @@ const sound = createSound(() => app.settings.sound === 'on'); // D-255
 let savedState = app.state;
 function keepJourney() {
   if (app.state === savedState) return;
-  saveJourney(app.state, app.jumped); savedState = app.state; app.saved = true;
+  saveJourney(app.state, app.jumped, app.profiles.current); savedState = app.state; app.saved = true;
 }
 function keepDeepest() {
-  const d = deeper(app.deepest, depthOf(app.state.place), app.jumped);
-  if (d !== app.deepest) { app.deepest = d; saveDeepest(d); }
+  // The deepest depth walked to, in the profile's Records (D-021, D-232, D-268)
+  const was = playing(app.profiles).records.deepest, d = deeper(was, depthOf(app.state.place), app.jumped);
+  if (d !== was) { app.profiles = withDeepest(app.profiles, d); saveProfiles(app.profiles); }
 }
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 // Motion follows the device until the Motion switch is picked (D-190)

@@ -34,7 +34,9 @@ at build plan step 7 (D-039).
   spawn tool and saves all read from the registry. The save
   (`src/core/save.js`, D-238) writes the whole state. When the state's
   shape changes, raise its `FORMAT` and add one step to `UPGRADES`, from
-  the old number to the new, with a test (D-266); never edit a merged step. Nothing keeps its own
+  the old number to the new, with a test (D-266); never edit a merged step.
+  The profiles (`src/core/profile.js`, D-268) have their own `FORMAT` and
+  `UPGRADES`, the same way. Nothing keeps its own
   hand-written list.
 - **Seeded RNG.** All randomness comes from one seeded generator, so a
   seed reproduces a run exactly ("load seed 4127 and watch the bug happen").

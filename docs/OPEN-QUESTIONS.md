@@ -86,3 +86,8 @@ some won't. When and where does it show, and how does it look?
 **Q-050 · What does a level give?** (before levels matter, D-246)
 Levels only show for now. Each could add a heart, more damage, a skill
 (D-027), or something else; maybe some levels give more than others.
+
+**Q-051 · What does a profile's slot show?** (before the slot screen)
+Hollow Knight shows the place and play time; Celeste the name and
+deaths. Ideas: the name, the deepest depth, play time, the hero in their
+look. And may a profile be renamed or its look changed later?
