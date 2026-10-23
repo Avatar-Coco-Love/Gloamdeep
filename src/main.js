@@ -14,7 +14,7 @@ import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
 import { deeper, counted } from './core/record.js';
-import { loadProfiles, saveProfiles, playing, withRecords, usingSlot, withoutSlot, renamedSlot } from './core/profile.js';
+import { loadProfiles, saveProfiles, playing, withRecords, usingSlot, withoutSlot, renamedSlot, lookedSlot } from './core/profile.js';
 import { loadJourney, saveJourney, dropJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
@@ -244,13 +244,15 @@ function newJourney() {
   savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
 }
 // § slots (D-271): picking a slot plays as its profile, a new one in an empty slot, with its own journey;
-// a new one takes the name typed on the name pad (D-272)
-function useSlot(i, name = '') {
-  app.profiles = usingSlot(app.profiles, i, name); saveProfiles(app.profiles);
+// a new one takes the name typed on the name pad (D-272) and the cloak chosen after it (P3)
+function useSlot(i, name = '', look = {}) {
+  app.profiles = usingSlot(app.profiles, i, name, look); saveProfiles(app.profiles);
   loadInto(i); savedState = app.state; freshView();
 }
 // Renaming a profile keeps all else, its journey too (D-273)
 function renameSlot(i, name) { app.profiles = renamedSlot(app.profiles, i, name); saveProfiles(app.profiles); }
+// A new look keeps all else too (P3)
+function lookSlot(i, look) { app.profiles = lookedSlot(app.profiles, i, look); saveProfiles(app.profiles); }
 // Deleting a profile drops its journey too; if it was in use, the next in use takes over
 function dropSlot(i) {
   const was = app.profiles.current;
@@ -259,7 +261,7 @@ function dropSlot(i) {
 }
 const stage = document.getElementById('stage');
 const screens = createScreens(app, {
-  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, renameSlot, dropSlot,
+  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, renameSlot, lookSlot, dropSlot,
   pour: (slot) => tryStep({ pour: slot }),
   dev: () => dev, input: () => input, mapMoves: () => mapMoves, // made below
 });

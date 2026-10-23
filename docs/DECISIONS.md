@@ -138,3 +138,19 @@ the nearer one.
 **D-274 · 2026-10-23 · Built to grow's first decisions are archived**
 (owner's pick, as D-265) D-261 to D-269 moved unchanged to
 `archive/DECISIONS-GROWING-1.md`. They stay in force.
+
+**D-275 · 2026-10-23 · The cloak** (P3, owner's picks from a mock-up;
+builds D-268) A profile's cloak comes in six colours, teal (the study's,
+first), moss, heather, rust, indigo and sand, each four shades in
+`src/core/looks.js`; ash, crimson, gold and violet are kept out, as they
+fade into the crypt or look like enemies, the lantern or stairs. A new
+profile picks its cloak after its name, on Choose a cloak: the six
+heroes 2× on lit crypt floor, three to a row, the picked one framed in
+gold, then OK and Back. OK makes the profile and opens the title; Back
+returns to the name pad with the name kept. Look, between Rename and
+Delete on the slot screen, then a box, opens the same screen on its
+cloak; OK keeps the new one, Back or Esc the old. Profiles made before
+wear teal; their look was already kept, so the save's shape needs no
+upgrade. Claude's calls, may change: the heading words, "Change whose
+look?" while picking, a new profile starting on teal, and Enter on a
+hero moving the flame to OK.

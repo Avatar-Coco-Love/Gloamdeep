@@ -21,6 +21,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.67 (2026-10-23)
+- A new profile now chooses its cloak after its name: six heroes on one screen, in teal, moss, heather, rust, indigo or sand. Pick one with a tap, the arrows or a click, then OK. Back returns to the name pad with the name kept.
+- The slot screen has a Look line between Rename and Delete. Look, then a profile's box, opens the same screen on its cloak; OK keeps the new one, and Back or Esc keeps the old. The hero wears the cloak on the title and in play.
+- Profiles made before this wear teal, as before.
+- Decisions: D-275.
+
 ## 0.2.66 (2026-10-23)
 - The slot screen has a Rename line above Delete. Rename, then a profile's box, opens the name pad on its name: Del trims it, letters add to it, and OK keeps the new name. OK with nothing typed makes it unnamed again, and Esc keeps the old name.
 - While picking, the heading asks "Rename which?" and Rename reads Cancel. An Empty box can't be renamed.
