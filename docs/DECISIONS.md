@@ -158,7 +158,9 @@ Checked at 0.2.52: PRs #1 to #89 are versions 0.0.1 to 0.2.51, one
 each, with no gaps or repeats; only the build plan's step numbers jump.
 
 **D-255 · 2026-10-23 · The first sound: a footstep** (owner's picks)
-The game's first sound is a soft, low footstep each time the hero walks
-a tile, made in code with Web Audio. Settings gets "Sound: On", above
+The game's first sound is a soft, light footstep each time the hero
+walks a tile, made in code with Web Audio. No two steps sound alike
+(changed after the playtest: a low thump dropped, half as loud, and
+each step's pitch and loudness vary, where before two took turns). Settings gets "Sound: On", above
 Version history (D-178): On or Off, On until picked, kept on this
 device. A browser plays nothing before the first tap, click or key.

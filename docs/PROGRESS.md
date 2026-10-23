@@ -67,6 +67,6 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 - **2026-10-22, 0.2.52, version history.** Settings lists every
   version; tap one for its changelog lines, word for word (D-254).
   Playtest: https://claude.ai/artifact/YQBk7PAQV34MafuCGYZHnx
-- **2026-10-23, 0.2.53, the first sound.** A soft, low footstep on each
-  tile walked, feet taking turns; "Sound: On" in Settings (D-255).
+- **2026-10-23, 0.2.53, the first sound.** A soft footstep on each tile
+  walked, no two alike; "Sound: On" in Settings (D-255).
   Playtest: https://claude.ai/artifact/Cjnj3UUYmSFxM4Ldu2VnRV

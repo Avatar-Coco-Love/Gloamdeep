@@ -23,7 +23,7 @@ Entry format:
 
 ## 0.2.53 (2026-10-23)
 - Settings has a new line, "Sound: On", above Version history. Pick it (or press Left or Right) to switch it Off and back. This device remembers your choice.
-- The game's first sound: a soft, low footstep each time the hero walks a tile, the feet taking turns, the second a little lower. It is made in code, with no sound files. A browser plays sound only after your first tap, click or key, so the game stays quiet until then.
+- The game's first sound: a soft, light footstep each time the hero walks a tile. No two steps sound alike: each has its own pitch and loudness. It is made in code, with no sound files. A browser plays sound only after your first tap, click or key, so the game stays quiet until then.
 - Decisions: D-255.
 
 ## 0.2.52 (2026-10-22)
