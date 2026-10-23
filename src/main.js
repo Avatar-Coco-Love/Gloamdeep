@@ -198,10 +198,15 @@ function holdAt(p) {
   app.walk = { px: p[0], py: p[1], tx: Math.floor((p[0] + cam.x) / TILE), ty: Math.floor((p[1] + cam.y) / TILE), stopped: walk?.stopped || false };
 }
 
-// The lantern set to By itself follows the daylight as the hero comes and goes (D-210)
-const byItself = (before, after) => (app.settings.lantern === 'self' ? followDaylight(before, after) : after);
-// § switch: the lantern button and the L key, free at any time in play (D-080, D-081)
-const switchIt = () => { if (app.screen === 'play') app.state = switchLantern(app.state); };
+// The lantern set to By itself follows the daylight as the hero comes and goes (D-210),
+// and ticks as it switches (D-257)
+function byItself(before, after) {
+  const s = app.settings.lantern === 'self' ? followDaylight(before, after) : after;
+  if (s.lit !== after.lit) sound.lantern(s.lit);
+  return s;
+}
+// § switch: the lantern button and the L key, free at any time in play (D-080, D-081); it ticks (D-257)
+const switchIt = () => { if (app.screen === 'play') { app.state = switchLantern(app.state); sound.lantern(app.state.lit); } };
 const lanternButton = createLanternButton(hud, { onSwitch: switchIt });
 const pauseButton = createPauseButton(hud, { onPause: () => screens.pause() });
 const mapButton = createMapButton(hud, { onMap: () => screens.toggleMap() });

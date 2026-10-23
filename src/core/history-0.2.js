@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.54', date: '2026-10-23', title: "The lantern's tick", lines: [
+    "The lantern ticks as it goes on or off: a soft, low \"tok\", a little higher for on and lower for off, so you can tell which by ear. It ticks whether you switch it yourself or it switches by itself at the daylight's edge. Only with Sound: On.",
+    "The sound board has Lantern on and Lantern off.",
+    "Decisions: D-257.",
+  ] },
   { v: '0.2.53', date: '2026-10-23', title: "The first sound", lines: [
     "Settings has a new line, \"Sound: Off\", above Version history. Sound starts off while the sounds get ready for players; pick it (or press Left or Right) to switch it On and back. This device remembers your choice.",
     "The game's first sound: a soft, light footstep each time the hero walks a tile. No two steps sound alike: each has its own pitch and loudness. It is made in code, with no sound files. A browser plays sound only after your first tap, click or key, so the game stays quiet until then.",

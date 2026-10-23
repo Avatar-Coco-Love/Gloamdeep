@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.51, the knife's stab.** A knife hit darts the hero
+  half a tile toward the creature and back in 0.1 s (D-253).
+  Playtest: https://claude.ai/artifact/632zAB2bfQSFZr7EXDT8kc
 - **2026-10-22, 0.2.50, first gear.** A knife lies in depth 2's first
   room; walking onto it holds it ("You take the knife."), in a HELD slot
   above the bag's six. It hits for 2, so a rat falls in one hit. Kept
