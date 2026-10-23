@@ -1,7 +1,7 @@
 // § profile: who plays on this device, three slots (D-268)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot, renamedSlot } from '../src/core/profile.js';
+import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot, renamedSlot, lookedSlot } from '../src/core/profile.js';
 import { slotLines, slotsAt, slotsHeading } from '../src/render/slots.js';
 import { journeyKey, loadJourney, saveJourney, dropJourney } from '../src/core/save.js';
 import { makeWorld } from '../src/core/turn.js';
@@ -110,17 +110,30 @@ test('renaming changes only the name; nothing typed makes it unnamed; an empty s
   assert.equal(renamedSlot(ps, 1, 'TOM').slots[1], null);
 });
 
-test('the slot screen: Rename above Delete, the one being done reads Cancel, a tap picks the nearest line', () => {
-  assert.deepEqual(slotLines(null, true).map((l) => l.text), ['Rename', 'Delete', 'Back']);
-  assert.deepEqual(slotLines('rename', false).map((l) => l.text), ['Cancel', 'Delete']);
-  assert.deepEqual(slotLines('delete', false).map((l) => l.text), ['Rename', 'Cancel']);
+test('the slot screen: Rename, Look, Delete, the one being done reads Cancel, a tap picks the nearest line', () => {
+  assert.deepEqual(slotLines(null, true).map((l) => l.text), ['Rename', 'Look', 'Delete', 'Back']);
+  assert.deepEqual(slotLines('rename', false).map((l) => l.text), ['Cancel', 'Look', 'Delete']);
+  assert.deepEqual(slotLines('look', false).map((l) => l.text), ['Rename', 'Cancel', 'Delete']);
+  assert.deepEqual(slotLines('delete', false).map((l) => l.text), ['Rename', 'Look', 'Cancel']);
   assert.equal(slotsHeading('rename'), 'Rename which?');
+  assert.equal(slotsHeading('look'), 'Change whose look?');
   assert.equal(slotsHeading(null), 'Profiles');
   const lines = slotLines(null, true), seen = new Set();
-  for (let y = 150; y < 225; y++) seen.add(slotsAt(y, lines));
-  for (const id of ['rename', 'delete', 'back']) assert.ok(seen.has(id), id);
-  assert.equal(slotsAt(166, lines), 'rename');
-  assert.equal(slotsAt(182, lines), 'delete');
+  for (let y = 145; y < 225; y++) seen.add(slotsAt(y, lines));
+  for (const id of ['rename', 'look', 'delete', 'back']) assert.ok(seen.has(id), id);
+  assert.equal(slotsAt(158, lines), 'rename');
+  assert.equal(slotsAt(174, lines), 'look');
+  assert.equal(slotsAt(190, lines), 'delete');
+  assert.equal(slotsAt(210, lines), 'back');
+});
+
+test('a new profile wears the cloak chosen after its name; Look changes only the look (P3)', () => {
+  const ps = usingSlot(newProfiles(), 1, 'COCO', { cloak: 'moss' });
+  assert.deepEqual(ps.slots[1].look, { cloak: 'moss' });
+  const rust = lookedSlot(ps, 1, { cloak: 'rust' });
+  assert.deepEqual(rust.slots[1], { ...ps.slots[1], look: { cloak: 'rust' } });
+  assert.equal(rust.current, 1);
+  assert.equal(lookedSlot(ps, 2, { cloak: 'rust' }).slots[2], null); // an Empty box has no look
 });
 
 test('deleting a slot empties it; the next profile in use takes over, or none is in use', () => {

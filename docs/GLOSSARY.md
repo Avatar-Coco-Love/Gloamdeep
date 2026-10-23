@@ -55,6 +55,9 @@ this page and a decision disagree, the decision wins.
   delete a profile (D-271).
 - **Name pad:** the page of letters for naming a new profile (D-272), or
   renaming one (D-273).
+- **Cloak, look:** a profile's look is what its hero wears; for now the
+  cloak's colour, one of six, chosen after the name or with Look on the
+  slot screen (D-275).
 - **Behaviour, way:** a reusable way a creature acts, named in its
   registry entry's `ways`, defined in `src/core/behaviours.js` (D-269).
 - **Registry:** the one list of all content (TECH.md, D-048).

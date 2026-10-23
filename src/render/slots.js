@@ -1,6 +1,6 @@
 // § slots: the slot screen (D-271), a dark page of its own like the Journal's. The
 // heading Profiles, then a framed box for each of the 3 slots: a profile's name and
-// its deepest depth, or Empty. Rename and Delete below them (D-273), and Back at the foot
+// its deepest depth, or Empty. Rename, Look (P3) and Delete below them (D-273), and Back at the foot
 // when the screen was opened from the title menu. While renaming or deleting, the heading
 // asks which, and that line reads Cancel. The question after Delete, Delete …?, is
 // drawn here too, with its note and Yes and No.
@@ -12,22 +12,23 @@ import { SLOTS, slotName } from '../core/profile.js';
 
 const K = '#0e0c16', GOLD = '#ffd66b', GREY = '#9790a4', CORE = '#fff5d6', DIM = '#4a4458';
 const BOX_X = 12, BOX_W = W - 2 * BOX_X, BOX_H = 30; // each slot's box
-const BOX_Y = 44, BOX_GAP = 36; // the first box's top, and from one box's top to the next
+const BOX_Y = 42, BOX_GAP = 34; // the first box's top, and from one box's top to the next (closer for Look, P3)
 const TEXT_X = BOX_X + 10;
-const RENAME_Y = BOX_Y + SLOTS * BOX_GAP + 10, DELETE_Y = RENAME_Y + LINE_GAP;
+const RENAME_Y = BOX_Y + SLOTS * BOX_GAP + 10, LOOK_Y = RENAME_Y + LINE_GAP, DELETE_Y = LOOK_Y + LINE_GAP;
 const TAP_PAD = 8; // game pixels above and below a line that still pick it; the nearest line wins
 const HEADING_Y = 26; // the heading's line top, one line above it, as the Journal's
 const ASK_TOP = 140; // the question's Yes, with No under it
 
-// The lines under the boxes: Rename and Delete (the one being done reads Cancel), and Back
-// when there is somewhere to go back to. picking: null, 'rename' or 'delete'
+// The lines under the boxes: Rename, Look and Delete (the one being done reads Cancel), and Back
+// when there is somewhere to go back to. picking: null, 'rename', 'look' or 'delete'
 export const slotLines = (picking, back) => [
   { id: 'rename', text: picking === 'rename' ? 'Cancel' : 'Rename' },
+  { id: 'look', text: picking === 'look' ? 'Cancel' : 'Look' },
   { id: 'delete', text: picking === 'delete' ? 'Cancel' : 'Delete' },
   ...(back ? [{ id: 'back', text: 'Back' }] : []),
 ];
-const LINE_Y = { rename: RENAME_Y, delete: DELETE_Y, back: BACK_Y };
-const HEADINGS = { rename: 'Rename which?', delete: 'Delete which?' };
+const LINE_Y = { rename: RENAME_Y, look: LOOK_Y, delete: DELETE_Y, back: BACK_Y };
+const HEADINGS = { rename: 'Rename which?', look: 'Change whose look?', delete: 'Delete which?' };
 export const slotsHeading = (picking) => HEADINGS[picking] ?? 'Profiles';
 
 // What a tap at y in game pixels picks: a slot's number, a line's id, or null

@@ -1,6 +1,8 @@
 // § sprites: 16 × 16 pixel maps written as strings, one letter per palette
 // colour; symmetric ones store the left half and mirror it (style study 1,
 // lines 121–176, ART-DIRECTION.md "Sprites").
+import { CLOAKS } from '../core/registry.js';
+
 const PAL = {
   k: '#0e0c16', w: '#efe6cc', C: '#a6e0e4', c: '#58a8b4', B: '#2f6a7c', b: '#1c3e4e',
   y: '#ffd66b', Y: '#f39a3b', O: '#a8642c', o: '#e9a94a', a: '#e8d5a0',
@@ -53,16 +55,16 @@ function build(rows, mirror) {
 }
 
 // flash: the silhouette for a hit flash, white (ART-DIRECTION.md, "Sprites"),
-// or the hostile red when the hero is bitten (D-118)
-function spriteCanvas(def, flash = null) {
+// or the hostile red when the hero is bitten (D-118); pal: the colours, as PAL
+function spriteCanvas(def, flash = null, pal = PAL) {
   const cv = document.createElement('canvas');
   cv.width = cv.height = 16;
   const c = cv.getContext('2d');
   build(def.rows, def.mirror).forEach((r, y) => [...r].forEach((ch, x) => {
-    if (!PAL[ch]) return;
-    c.fillStyle = flash || PAL[ch]; c.fillRect(x, y, 1, 1);
+    if (!pal[ch]) return;
+    c.fillStyle = flash || pal[ch]; c.fillRect(x, y, 1, 1);
   }));
-  for (const [x, y, ch] of def.extra || []) { c.fillStyle = flash || PAL[ch]; c.fillRect(x, y, 1, 1); }
+  for (const [x, y, ch] of def.extra || []) { c.fillStyle = flash || pal[ch]; c.fillRect(x, y, 1, 1); }
   return cv;
 }
 
@@ -79,6 +81,12 @@ function mirrored(cv) {
 const LEFT = {}, LEFT_FLASHES = {};
 for (const id of Object.keys(FLASHES)) { LEFT[id] = mirrored(SPRITES[id]); LEFT_FLASHES[id] = mirrored(FLASHES[id]); }
 const BITTEN = spriteCanvas(HERO, PAL.p);
+// § cloaks: the hero in each cloak (P3), its four cloak shades swapped; the outline, eye
+// and lantern stay. The profile in play's is worn wherever the hero is drawn.
+const HEROES = Object.fromEntries(Object.values(CLOAKS).map(({ id, shades: [C, c, B, b] }) => [id, spriteCanvas(HERO, null, { ...PAL, C, c, B, b })]));
+let worn = SPRITES.hero;
+export const heroIn = (cloak) => HEROES[cloak] ?? SPRITES.hero;
+export function wearCloak(cloak) { worn = heroIn(cloak); }
 
 // § shadow: a small dark oval under a sprite (study line 345)
 export function drawShadow(c, x, y, w) {
@@ -92,7 +100,7 @@ const LYING_DROP = 3; // pixels the fallen hero sits lower, on the floor
 // `bitten`: flashing red just after a bite (D-118). `lying`: fallen, turned
 // a quarter over onto the floor, a whole turn so the pixels stay crisp (D-234).
 export function drawHero(c, x, y, bitten = false, lying = false) {
-  const sprite = bitten ? BITTEN : SPRITES.hero;
+  const sprite = bitten ? BITTEN : worn;
   drawShadow(c, x, y, lying ? 12 : 8);
   if (!lying) { c.drawImage(sprite, x, y - 2); return; }
   c.save();
