@@ -20,6 +20,9 @@ items: collectables, craftables, weapons and more. Where they stand:
   lets players turn each sound on or off, keeping what they like. The
   first footstep (D-255) sounds a little like mining; judge it again
   once music and other sounds play with it.
+- A stats page (2026-10-23): all sorts of facts about how you've played,
+  the deepest depth first (D-260). Later quests, challenges,
+  achievements, maybe leaderboards.
 
 ## The games
 **Hoplite** (phone, turn-based, hex grid; from the 2013 7-Day Roguelike)

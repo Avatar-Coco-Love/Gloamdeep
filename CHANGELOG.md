@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.57 (2026-10-23)
+- The title screen no longer shows your deepest depth under the menu. The game still remembers it on this device, ready for a stats page later.
+- Decisions: D-260.
+
 ## 0.2.56 (2026-10-23)
 - A rat's bite makes a sound: two low, dry snaps of teeth with a hint of breath. When you hit and get bitten in the same turn, the bite comes a moment after your hit, so you hear both. Each bite varies a little, like the hits. The gloamling's bite stays silent for now. Only with Sound: On.
 - The sound board has A rat bites, and Knife hit, then a rat bites.

@@ -4,7 +4,8 @@
 
 // The record after a turn: the depth now, if it is deeper and was walked to
 export const deeper = (record, depth, jumped = false) => (!jumped && depth > record ? depth : record);
-// The title screen's line, or null while the hero has not gone below the surface
+// The record's line, or null while the hero has not gone below the surface; off the title
+// screen since D-260, kept for a stats page later
 export const recordText = (record) => (record > 0 ? `Deepest: depth ${record}` : null);
 
 // § storage: localStorage, wrapped (TECH.md); with storage blocked it lasts until the page closes
