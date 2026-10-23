@@ -43,6 +43,10 @@ export const nextLantern = (id) => (id === 'self' ? 'hand' : 'self');
 export const flasksText = (id) => 'Flasks: ' + (id === 'self' ? 'By itself' : 'By hand');
 export const nextFlasks = nextLantern;
 
+// § sound: On or Off (D-178, D-255). On until picked; a browser plays nothing before the first tap anyway.
+export const soundText = (id) => 'Sound: ' + (id === 'off' ? 'Off' : 'On');
+export const nextSound = (id) => (id === 'off' ? 'on' : 'off');
+
 // § storage: localStorage, wrapped (TECH.md)
 const KEY = 'gloamdeep-settings';
 export function loadSettings() {
@@ -53,7 +57,8 @@ export function loadSettings() {
   const seed = isSeed(s?.seed) ? s.seed : null;
   const lantern = s?.lantern === 'self' ? 'self' : 'hand';
   const flasks = s?.flasks === 'self' ? 'self' : 'hand';
-  return { controls, motion, seed, lantern, flasks };
+  const sound = s?.sound === 'off' ? 'off' : 'on';
+  return { controls, motion, seed, lantern, flasks, sound };
 }
 export function saveSettings(s) {
   try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* not kept */ }

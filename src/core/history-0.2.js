@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.53', date: '2026-10-23', title: "The first sound", lines: [
+    "Settings has a new line, \"Sound: On\", above Version history. Pick it (or press Left or Right) to switch it Off and back. This device remembers your choice.",
+    "The game's first sound: a soft, low footstep each time the hero walks a tile, the feet taking turns, the second a little lower. It is made in code, with no sound files. A browser plays sound only after your first tap, click or key, so the game stays quiet until then.",
+    "Decisions: D-255.",
+  ] },
   { v: '0.2.52', date: '2026-10-22', title: "Version history", lines: [
     "Settings has a new line, Version history, above Back. It lists every version from 0.0.1 to this one, newest first, each with a short title. Tap one, or press Enter or Right, to open it: its date and every change in it, the same lines as this changelog. Left or a second tap closes it. Swipes and Page Up and Page Down scroll a page.",
     "Under Settings on the title, the hero sits one more tile higher, clear of its heading now that Settings has seven lines.",

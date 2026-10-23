@@ -27,6 +27,7 @@ import { createBagButton } from './input/bagbutton.js';
 import { createMapMoves } from './input/mapview.js';
 import { createScreens } from './input/screens.js';
 import { createFrame, FADE_MS } from './render/frame.js';
+import { createSound } from './render/sound.js';
 import { createDev } from './dev/dev.js';
 
 const canvas = document.getElementById('game'), hud = document.getElementById('hud');
@@ -63,6 +64,7 @@ const kept = loadJourney();
 app.saved = !!kept;
 if (kept) { app.state = kept.state; app.jumped = kept.jumped; app.journeySeed = kept.state.seed; }
 else app.state = newWorld();
+const sound = createSound(() => app.settings.sound !== 'off'); // D-255
 // Saved after every turn, or any change, once the journey has begun (D-238)
 let savedState = app.state;
 function keepJourney() {
@@ -136,6 +138,7 @@ function tryStep(dir) {
   } else if (went || (still() && !fell)) { snap(state.hero); if (went) foeShown = new Map(); }
   else if (!fell) followFoes(before.enemies, state.enemies);
   if (went) keepDeepest();
+  if (!fell && (went || state.hero.x !== before.hero.x || state.hero.y !== before.hero.y)) sound.footstep(); // a tile walked (D-255)
   // Experience earned shows as it rises over the hero; after stairs, once the new room shows (D-245)
   if (state.xp > before.xp) app.gain = { n: state.xp - before.xp, at: app.travel?.mid ?? performance.now() };
 }

@@ -46,7 +46,7 @@ src/input/screens.js  the title, menus, map and Seed Explorer (D-235)
 src/render/frame.js   draws each frame from the shared `app` (D-235)
 src/core/           rules, state, rng, registry, noise (no DOM);
                     one file per content kind, gathered by registry.js (D-048)
-src/render/         drawing, lighting, sprites
+src/render/         drawing, lighting, sprites, and sound (D-255)
 src/input/          tap, mouse, keyboard
 src/dev/            dev mode (see DEV-TOOLS.md)
 tests/              node --test, for core/ only
