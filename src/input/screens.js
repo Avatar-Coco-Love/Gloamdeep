@@ -22,7 +22,9 @@
 // The game opens on the slot screen (D-271): Up and Down or a tap pick a slot's box, which
 // plays as that profile (a new one in an empty slot) and opens the title. Delete, then a box,
 // asks "Delete …? Lost for good." with No picked; No, Esc or P go back. Profiles on the title
-// opens the slot screen again, with Back, Esc or P returning to the title.
+// opens the slot screen again, with Back, Esc or P returning to the title. An empty box first
+// opens the name pad (D-272): letters typed, tapped or picked, Del, and OK makes the profile;
+// Esc goes back to the slot screen with nothing made.
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
 import { depthOf, areaAt } from '../core/room.js';
 import { lineAt, pauseTop } from '../render/menu.js';
@@ -33,6 +35,8 @@ import { historyRows, historyAt, headRow, lastRow, ROW_H, LIST_H } from '../rend
 import { HISTORY, versionWords, scrollToShow, clampScroll } from '../core/history.js';
 import { nextPage, howtoWords, HOWTO_LINES } from '../core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from '../core/seedpad.js';
+import { NAME_PAD, typeLetter, moveName } from '../core/namepad.js';
+import { nameKeyAt } from '../render/namepad.js';
 import { titleMenu, PAUSE_MENU, SURE_MENU, SURE_NOTE, SURE_HEADING, DROP_NOTE, settingsMenu, moveChoice } from '../core/menu.js';
 import { saveSettings, nextControl, controlsText, nextMotion, motionText, seedText, lanternText, nextLantern, flasksText, nextFlasks, soundText, nextSound } from '../core/settings.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from '../core/map.js';
@@ -67,7 +71,7 @@ export function createScreens(app, ui) {
   const menuOf = (sc) => (sc === 'title' ? titleMenu(app.saved) : sc === 'paused' ? PAUSE_MENU : sc === 'sure' || sc === 'drop' ? SURE_MENU
     : settingsMenu(app.settings, reduceMotion.matches, app.pageFrom === 'paused' ? app.journeySeed : null));
   const exploring = () => app.screen === 'explore' || (app.screen === 'seed' && app.padFrom === 'explore');
-  const onTitle = () => ['slots', 'drop', 'title', 'sure'].includes(app.screen) || exploring() || (!['play', 'paused', 'map', 'bag'].includes(app.screen) && app.pageFrom === 'title');
+  const onTitle = () => ['slots', 'name', 'drop', 'title', 'sure'].includes(app.screen) || exploring() || (!['play', 'paused', 'map', 'bag'].includes(app.screen) && app.pageFrom === 'title');
   const menuTop = () => (app.screen === 'drop' ? askTop : onTitle() ? titleTop(menuOf(app.screen).length) : pauseTop(menuOf(app.screen).length, app.screen === 'settings'));
   const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -2).map((l) => l.text).join('. ')}. Pick one to change it. Version history. Back.`;
   function show(next, at = 0) {
@@ -81,7 +85,7 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
-      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords()
+      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords() : next === 'name' ? NAME_WORDS
       : next === 'drop' ? `Delete ${slotName(app.profiles.slots[app.dropping], app.dropping)}? ${DROP_NOTE} Yes or No.`
       : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }
@@ -131,13 +135,21 @@ export function createScreens(app, ui) {
   function openSlots(back) { app.deleting = false; app.slotsBack = back; show('slots', app.profiles.current ?? 0); }
   function chooseSlot(i) {
     if (i < SLOTS) {
-      if (!app.deleting) { ui.useSlot(i); show('title'); }
+      if (!app.deleting && !app.profiles.slots[i]) { app.naming = i; app.entry = ''; show('name'); }
+      else if (!app.deleting) { ui.useSlot(i); show('title'); }
       else if (app.profiles.slots[i]) { app.dropping = i; show('drop', SURE_MENU.findIndex((l) => l.id === 'no')); }
       return;
     }
     const id = linesNow()[i - SLOTS]?.id;
     if (id === 'delete') { app.deleting = !app.deleting; spoken.textContent = slotsWords(); }
     else if (id === 'back') titleAt('profiles');
+  }
+  // § name pad (D-272): OK makes the profile with the letters typed (none keeps it unnamed,
+  // Claude's call) and opens the title; Esc goes back to the slot screen with nothing made
+  const NAME_WORDS = 'Name your profile. Type up to 12 letters, then OK.';
+  function pressName(id) {
+    if (id === 'ok') { ui.useSlot(app.naming, app.entry); show('title'); }
+    else { app.entry = typeLetter(app.entry, id); spoken.textContent = app.entry || 'nothing typed'; }
   }
   // After the question: back to the slot screen, the flame on the slot asked about
   function closeDrop(yes) {
@@ -237,6 +249,7 @@ export function createScreens(app, ui) {
     else if (app.screen === 'journal') closeJournal();
     else if (app.screen === 'sure') titleAt('new');
     else if (app.screen === 'drop') closeDrop(false);
+    else if (app.screen === 'name') show('slots', app.naming);
     else if (app.screen === 'slots' && app.deleting) chooseSlot(SLOTS); // Cancel
     else if (app.screen === 'slots' && linesNow().some((l) => l.id === 'back')) titleAt('profiles');
   }
@@ -285,7 +298,13 @@ export function createScreens(app, ui) {
       if (id) pressBar(id);
       return !!id;
     }
-    if (app.screen !== 'seed') return false;
+    if (app.screen === 'name') {
+      if (key !== 'backspace' && !/^[a-z]$/.test(key)) return false;
+      pressName(key === 'backspace' ? 'del' : key);
+      app.chosen = NAME_PAD.findIndex((k) => k.id === 'ok');
+      return true;
+    }
+    if (app.screen !== 'seed' || !/^[0-9]$|^backspace$/.test(key)) return false;
     pressKey(key === 'backspace' ? 'del' : key);
     app.chosen = PAD.findIndex((k) => k.id === 'ok');
     return true;
@@ -296,6 +315,7 @@ export function createScreens(app, ui) {
   function choose(i = app.chosen) {
     const id = menuOf(app.screen)[i]?.id;
     if (app.screen === 'seed') { pressKey(PAD[i].id); return; }
+    if (app.screen === 'name') { pressName(NAME_PAD[i].id); return; }
     if (app.screen === 'bag') { pourChosen(); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
     if (app.screen === 'history') { if (i < HISTORY.length) openVersion(i); else closeHistory(); return; }
@@ -325,6 +345,7 @@ export function createScreens(app, ui) {
   const onDir = (dir, how) => {
     if (app.screen === 'map' || app.screen === 'explore') { if (how !== 'swipe') panMap(...{ up: [0, -PAN], down: [0, PAN], left: [-PAN, 0], right: [PAN, 0] }[dir]); return; }
     if (app.screen === 'seed') { app.chosen = moveKey(app.chosen, dir); return; }
+    if (app.screen === 'name') { app.chosen = moveName(app.chosen, dir); return; }
     if (app.screen === 'bag') { if (dir === 'left' || dir === 'right') pickSlot(Math.min(BAG_SLOTS - 1, Math.max(0, app.chosen + (dir === 'left' ? -1 : 1)))); return; }
     if (app.screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else app.chosen = moveChoice(app.chosen, dir, HOWTO_LINES.length); return; }
     if (app.screen === 'journal') return; // one tab for now, and only Back to pick
@@ -363,6 +384,7 @@ export function createScreens(app, ui) {
       return;
     }
     if (app.screen === 'seed') { const k = keyAt(px, py); if (k >= 0) { app.chosen = k; choose(k); } return; }
+    if (app.screen === 'name') { const k = nameKeyAt(px, py); if (k >= 0) { app.chosen = k; choose(k); } return; }
     if (app.screen === 'history') {
       const at = historyAt(py, app.scroll, app.rows.length);
       if (at === 'back') closeHistory();

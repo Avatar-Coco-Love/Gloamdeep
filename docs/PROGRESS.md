@@ -4,18 +4,18 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.64 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.65 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**P2 The name** (D-268): type a profile's name, up to 12 letters. Ask
-Q-053 first, then 2 or 3 options with a mock-up.
+**P2b Rename** (D-272): a Rename line on the slot screen, next to
+Delete, then a box, opens the name pad on its name. Offer 2 or 3 options.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
 - When creatures should show their next move (Q-049), any time.
-- Whether a profile's name or look may change later (Q-053), before P2.
+- A space or digits in names (Q-054), any time.
 - Play data: kept on the device or sent (Q-052), near 1.0.
 - What a level gives (Q-050), before levels matter.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
@@ -50,7 +50,8 @@ The Seed Explorer (D-214, before step 50)
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 Built to grow (D-261 to D-263; order may change)
 - [x] G1 to G4, J1, P1: old saves to the slot screen, 0.2.59 to 0.2.64
-- [ ] P2 to P6 (D-268): name, cloak, eyes, lantern trim, clothes
+- [x] P2 The name pad for a new profile, 0.2.65 (D-272)
+- [ ] P2b Rename; P3 to P6 (D-268): cloak, eyes, lantern trim, clothes
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -61,10 +62,9 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.62, creatures' ways.** Each creature names its ways
-  (chases, shuns light); the turn rules read them (D-269). Nothing visible.
 - **2026-10-23, 0.2.63, the Journal.** On the title and pause menus, one
   tab, Records: deepest, beaten, falls, rooms (D-270). [Playtest](https://claude.ai/artifact/KxD3DHXVpUK2wRTVzECJgo).
 - **2026-10-23, 0.2.64, the slot screen.** The game opens on Profiles:
-  3 boxes to pick, start or delete a profile; Profiles on the title
-  goes back (D-271). [Playtest](https://claude.ai/artifact/3fpshzULgSpmFvxTM6iRew).
+  pick, start or delete a profile (D-271). [Playtest](https://claude.ai/artifact/3fpshzULgSpmFvxTM6iRew).
+- **2026-10-23, 0.2.65, the name.** An Empty slot asks for a name on a
+  letter pad, A to Z, up to 12 (D-272). [Playtest](https://claude.ai/artifact/FWXKySnJooUsfdK2HYCt4Q).

@@ -43,8 +43,8 @@ export const withRecords = (ps, records) => withPlaying(ps, { ...playing(ps), re
 
 // § slots: the slot screen's rules (D-271). An unnamed profile shows as Profile and its slot's number.
 export const slotName = (p, i) => p.name || `Profile ${i + 1}`;
-// The profiles with slot i in use; an empty slot gets a new, unnamed profile
-export const usingSlot = (ps, i) => ({ current: i, slots: ps.slots.map((p, j) => (j === i ? p ?? newProfile() : p)) });
+// The profiles with slot i in use; an empty slot gets a new profile, named as typed (D-272) or unnamed
+export const usingSlot = (ps, i, name = '') => ({ current: i, slots: ps.slots.map((p, j) => (j === i ? p ?? { ...newProfile(), name } : p)) });
 // The profiles with slot i emptied; if it was in use, the first slot still in use takes over, or none
 export function withoutSlot(ps, i) {
   const slots = ps.slots.map((p, j) => (j === i ? null : p));

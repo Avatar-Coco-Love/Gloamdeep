@@ -183,3 +183,16 @@ line on the title, after Settings, opens the slot screen again, with
 Back. The hero's look and play time in the box come later (the owner's
 wish). Claude's words, may change: "Delete which?" while deleting, and
 Cancel in place of Delete.
+
+**D-272 · 2026-10-23 · The name pad, and changing a profile later** (P2,
+owner's picks; answers Q-053; builds D-268) Picking an Empty box opens a
+name pad, dark like the slot screen, drawn as the seed pad is (D-191):
+the heading "Name your profile", the letters typed with a cursor, then
+A to Z seven to a row, Del and OK. Keys are tapped, clicked, walked with
+the arrows, or typed on a keyboard (letters and Backspace; the flame then
+moves to OK). A name holds only the letters A to Z, up to 12, kept in
+capitals; a space and digits wait (Q-054). OK makes the profile and opens
+the title. Claude's calls, may change: OK with nothing typed makes it
+unnamed (Profile 2), and Esc goes back to the slot screen with nothing
+made. A profile's name and look may change later, from the slot screen
+(a Rename line next to Delete; the look the same way once it exists).

@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.62, creatures' ways.** Each creature names its ways
+  (chases, shuns light); the turn rules read them (D-269). Nothing visible.
 - **2026-10-23, 0.2.61, profiles.** Up to 3 profiles on a device, each
   with a name, a look, Records and its own journey; the first is used
   for now (D-268). Nothing visible.

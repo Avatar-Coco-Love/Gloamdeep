@@ -2,6 +2,12 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.65', date: '2026-10-23', title: 'A name for each profile', lines: [
+    "Picking an Empty slot now asks for a name first: a pad of letters A to Z, with Del and OK, drawn like the seed pad. Tap or click the letters, walk them with the arrows, or type on a keyboard. A name has up to 12 letters, in capitals, and shows on the slot screen.",
+    "OK with nothing typed makes the profile unnamed (Profile 2), and Esc goes back to the slots without making it.",
+    "Plans: a profile's name and look may change later, from the slot screen. A new open question, whether names may hold a space or digits (Q-054).",
+    "Decisions: D-272. Questions closed: Q-053. Questions opened: Q-054.",
+  ] },
   { v: '0.2.64', date: '2026-10-23', title: 'Profiles to pick', lines: [
     "The game now opens on a Profiles screen with three slots. Each used slot shows its profile's name and deepest depth; an unnamed profile shows as Profile 1, 2 or 3. Pick one to play as that profile, with its own journey and Records. Picking an empty slot makes a new profile there.",
     "Delete, then a slot, asks \"Delete \u2026? Lost for good.\" with No picked; Yes removes the profile and its journey. A Profiles line on the title screen, after Settings, goes back to the slots.",
