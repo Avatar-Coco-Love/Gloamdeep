@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.56 (2026-10-23)
+- A rat's bite makes a sound: two low, dry snaps of teeth with a hint of breath. When you hit and get bitten in the same turn, the bite comes a moment after your hit, so you hear both. Each bite varies a little, like the hits. The gloamling's bite stays silent for now. Only with Sound: On.
+- The sound board has A rat bites, and Knife hit, then a rat bites.
+- Decisions: D-259.
+
 ## 0.2.55 (2026-10-23)
 - Hitting a creature makes a sound: a soft, low "dmp". With the knife held, a small tick rides on top. Each hit varies a little in pitch and loudness, so a fight doesn't sound like a machine. Only with Sound: On.
 - The sound board has Lantern hit, Knife hit and A fight, 3 knife hits.

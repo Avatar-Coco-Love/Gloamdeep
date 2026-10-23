@@ -5,8 +5,8 @@
 // or 'right', drawn facing right until it walks, D-158).
 export const ENEMIES = {
   // Two lantern hits kill it (D-109, D-110); it bites for 1 when next to the hero (D-114)
-  // and comes for them once it notices them (D-126).
-  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite' },
+  // and comes for them once it notices them (D-126). Its bite sounds of teeth (D-259).
+  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite', sound: 'teeth' },
   // Light-shy (D-240): it never steps onto a lit tile, backs out of light into
   // the dark, and doesn't bite while lit. It sees the hero along a clear line, lit or not.
   gloamling: { id: 'gloamling', kind: 'enemy', name: 'Gloamling', health: 2, bite: 1, shy: true, hurt: 'gloamlingHurt', die: 'gloamlingDie', bites: 'gloamlingBite' },
@@ -27,3 +27,12 @@ export function hitEnemy(enemies, foe, entry, damage) {
 // § bites: (enemies, hero) → the enemies next to the hero, four ways (D-042),
 // who bite on their turn. They stay put while they bite (D-114, D-128).
 export const biters = (enemies, hero) => enemies.filter((e) => Math.abs(e.x - hero.x) + Math.abs(e.y - hero.y) === 1);
+
+// § bite sound: (state, fell) → the sound of this turn's bite, or undefined (D-259): the
+// creature whose bite line shows, or after a fall, one next to the hero as they fell.
+// A creature without a `sound` bites silently, for now the gloamling.
+export function biteSound(state, fell) {
+  const kinds = fell ? biters(state.fell.enemies, state.fell.hero).map((e) => ENEMIES[e.id])
+    : Object.values(ENEMIES).filter((k) => k.bites === state.line?.id);
+  return kinds.find((k) => k?.sound)?.sound;
+}

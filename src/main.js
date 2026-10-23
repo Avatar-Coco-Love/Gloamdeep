@@ -4,7 +4,7 @@
 import { VERSION } from './core/version.js';
 import { makeWorld, step, wait, pour, pourByItself, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
-import { enemyAt } from './core/enemies.js';
+import { enemyAt, biteSound } from './core/enemies.js';
 import { goToDepth, goToPlace } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
@@ -114,14 +114,14 @@ function tryStep(dir) {
   if (app.fall) return; // nothing is taken while the hero lies fallen
   if (!settled()) { app.queued = dir; return; }
   const before = app.state;
-  let to = before.hero;
+  let to = before.hero, struck = false;
   if (dir === 'wait') app.state = wait(app.state); // standing still, one turn (D-084)
   else if (dir.pour !== undefined) app.state = pour(app.state, dir.pour); // a flask from the bag, one turn (D-247)
   else {
     const next = step(app.state, dir);
     const [dx, dy] = DIRS[dir], foe = enemyAt(app.state, app.state.hero.x + dx, app.state.hero.y + dy);
     to = { x: before.hero.x + dx, y: before.hero.y + dy };
-    if (foe) { app.hit = { enemy: foe, ...flashFor() }; sound.hit(!!before.held); } // the hit's sound (D-258)
+    if (foe) { app.hit = { enemy: foe, ...flashFor() }; sound.hit(!!before.held); struck = true; } // the hit's sound (D-258)
     if (foe && before.held) app.jab = { dx, dy, start: performance.now() }; // the knife's stab (D-253)
     else if (next.turn === app.state.turn) nudgeToward(dir); // a bump, or a torch the dark lantern can't light (D-122)
     app.state = next;
@@ -129,7 +129,11 @@ function tryStep(dir) {
   app.state = byItself(before, app.state);
   if (app.settings.flasks === 'self') app.state = pourByItself(before, app.state);
   const { state } = app, fell = state.fell !== before.fell;
-  if (fell || state.health < before.health) app.bitten = flashFor();
+  if (fell || state.health < before.health) {
+    app.bitten = flashFor();
+    const bite = biteSound(state, fell);
+    if (bite) sound[bite](struck); // a moment after the hit, when there was one (D-259)
+  }
   if (fell) fallDown(state.fell);
   const went = !fell && state.place !== before.place;
   if (went && !still()) { // the hero walks onto the stairs as the old room fades (D-135)

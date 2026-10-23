@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.56', date: '2026-10-23', title: "A rat's bite", lines: [
+    "A rat's bite makes a sound: two low, dry snaps of teeth with a hint of breath. When you hit and get bitten in the same turn, the bite comes a moment after your hit, so you hear both. Each bite varies a little, like the hits. The gloamling's bite stays silent for now. Only with Sound: On.",
+    "The sound board has A rat bites, and Knife hit, then a rat bites.",
+    "Decisions: D-259.",
+  ] },
   { v: '0.2.55', date: '2026-10-23', title: "The hit's sound", lines: [
     "Hitting a creature makes a sound: a soft, low \"dmp\". With the knife held, a small tick rides on top. Each hit varies a little in pitch and loudness, so a fight doesn't sound like a machine. Only with Sound: On.",
     "The sound board has Lantern hit, Knife hit and A fight, 3 knife hits.",
