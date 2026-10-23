@@ -126,6 +126,9 @@ Read the smallest file that answers the question.
   `node tools/playtest.js <scratchpad>/playtest.html` (D-073), and
   put the link in the PR body and the `docs/PROGRESS.md` log entry.
   Republish to the same link after each push.
+- A PR that adds or changes a sound also gets a sound board Artifact
+  (`node tools/soundboard.js <scratchpad>/sounds.html`, D-256), linked
+  and republished like the playtest, and in the chat.
 - After every push, update the PR body so "What changed" and "Decisions"
   match the branch (D-076).
 - End every conversation with a handoff of at most 5 lines: the PR link,

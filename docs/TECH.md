@@ -52,6 +52,7 @@ src/dev/            dev mode (see DEV-TOOLS.md)
 tests/              node --test, for core/ only
 tools/playtest.js   packs the game into one page for playtests (D-073);
                     not part of the game, which has no build step
+tools/soundboard.js packs the game's sounds into a page of buttons (D-256)
 ```
 ES modules (`<script type="module">`). Tests use Node's built-in test
 runner, with no dependencies.

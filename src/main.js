@@ -64,7 +64,7 @@ const kept = loadJourney();
 app.saved = !!kept;
 if (kept) { app.state = kept.state; app.jumped = kept.jumped; app.journeySeed = kept.state.seed; }
 else app.state = newWorld();
-const sound = createSound(() => app.settings.sound !== 'off'); // D-255
+const sound = createSound(() => app.settings.sound === 'on'); // D-255
 // Saved after every turn, or any change, once the journey has begun (D-238)
 let savedState = app.state;
 function keepJourney() {
