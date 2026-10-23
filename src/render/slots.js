@@ -1,6 +1,6 @@
 // § slots: the slot screen (D-271), a dark page of its own like the Journal's. The
 // heading Profiles, then a framed box for each of the 3 slots: a profile's hero in its look
-// on a small lit patch of crypt floor, then its name and its deepest depth, or Empty (D-287). Rename, Change look (P3, D-289) and Delete below them (D-273), and Back at the foot
+// on a small lit patch of crypt floor, then its name and its deepest depth, its play time at the right (D-290), or Empty (D-287). Rename, Change look (P3, D-289) and Delete below them (D-273), and Back at the foot
 // when the screen was opened from the title menu. While renaming or deleting, the heading
 // asks which, and that line reads Cancel. The question after Delete, Delete …?, is
 // drawn here too, with its note and Yes and No.
@@ -8,7 +8,7 @@ import { W, SCREEN_H } from './screen.js';
 import { drawText, textWidth, FONT_H } from './font.js';
 import { LINE_GAP, drawHeading, drawMarker, drawLines } from './menu.js';
 import { BACK_Y } from './history.js';
-import { SLOTS, slotName } from '../core/profile.js';
+import { SLOTS, slotName, playedText } from '../core/profile.js';
 
 const K = '#0e0c16', GOLD = '#ffd66b', GREY = '#9790a4', CORE = '#fff5d6', DIM = '#4a4458';
 const BOX_X = 12, BOX_W = W - 2 * BOX_X, BOX_H = 30; // each slot's box
@@ -81,6 +81,8 @@ export function drawSlots(c, ps, heroOf, chosen, picking, back, t, still) {
       drawText(c, slotName(p, i), TEXT_X, y + 6, on ? GOLD : CORE);
       drawText(c, `Deepest  ${p.records.deepest}`, TEXT_X, y + 17, GREY);
       drawText(c, String(i + 1), BOX_X + BOX_W - 10 - textWidth(String(i + 1)), y + 6, DIM);
+      const time = playedText(p.played);
+      drawText(c, time, BOX_X + BOX_W - 10 - textWidth(time), y + 17, GREY);
     } else drawText(c, 'Empty', Math.floor((W - textWidth('Empty')) / 2), y + 11, DIM);
     if (on) drawMarker(c, BOX_X - 6, y + 13, t, still);
   });

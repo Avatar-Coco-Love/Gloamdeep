@@ -50,7 +50,7 @@ this page and a decision disagree, the decision wins.
   writes a short list of them, `state.events`; the kinds are listed in
   `src/core/events.js` (D-267).
 - **Profile:** one person's save on a device, in one of 3 slots: a
-  name, a look, Records and their own journey (D-268).
+  name, a look, Records, its play time (D-290) and their own journey (D-268).
 - **Slot:** one of the 3 places for a profile; empty or in use (D-268).
 - **Slot screen, Profiles:** where the game opens, to pick, start or
   delete a profile (D-271).

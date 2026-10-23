@@ -14,7 +14,7 @@ import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
 import { deeper, counted } from './core/record.js';
-import { loadProfiles, saveProfiles, playing, withRecords, usingSlot, withoutSlot, renamedSlot, lookedSlot } from './core/profile.js';
+import { loadProfiles, saveProfiles, playing, withRecords, withPlayed, usingSlot, withoutSlot, renamedSlot, lookedSlot } from './core/profile.js';
 import { loadJourney, saveJourney, dropJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
@@ -88,6 +88,21 @@ function keepRecords(events) {
   if (d !== records.deepest) records = { ...records, deepest: d };
   if (records !== was) { app.profiles = withRecords(app.profiles, records); saveProfiles(app.profiles); }
 }
+// § play time (D-290): the time on the play screen counts, kept in whole seconds every 10 and when
+// the page is hidden; a long gap between frames (the page hidden, the phone locked) counts as one frame
+let playedMs = 0, lastFrame = null;
+const MAX_FRAME_MS = 250, KEEP_EVERY_MS = 10000;
+function keepPlayed(t, force = false) {
+  const dt = lastFrame === null ? 0 : Math.min(t - lastFrame, MAX_FRAME_MS);
+  lastFrame = t;
+  if (app.profiles.current === null) { playedMs = 0; return; }
+  if (app.screen === 'play') playedMs += dt;
+  if (playedMs < 1000 || (!force && playedMs < KEEP_EVERY_MS && app.screen === 'play')) return;
+  const seconds = Math.floor(playedMs / 1000);
+  playedMs -= seconds * 1000;
+  app.profiles = withPlayed(app.profiles, seconds); saveProfiles(app.profiles);
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) { keepPlayed(performance.now(), true); lastFrame = null; } });
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 // Motion follows the device until the Motion switch is picked (D-190)
 const still = () => stillMotion(app.settings.motion, reduceMotion.matches);
@@ -344,6 +359,7 @@ function update(t) {
 function loop(t) {
   if (!screens.onTitle()) update(t);
   keepJourney();
+  keepPlayed(t);
   frame.draw(t);
   requestAnimationFrame(loop);
 }

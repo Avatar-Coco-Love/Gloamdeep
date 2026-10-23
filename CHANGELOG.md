@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.78 (2026-10-23)
+- Each Profiles box shows how long that profile has played, at the right end of the Deepest line, in hours and minutes, such as 1h 23m, or only minutes under an hour, such as 23m. Only time in a journey counts: the menus, the Journal and a hidden page or locked phone do not. It counts from 0 from now on, also for profiles made before this.
+- Decisions: D-290.
+
 ## 0.2.77 (2026-10-23)
 - The name pad (Name your profile, and Rename profile) has a Back key on its own row under Del and OK, so a phone can leave it too. It goes back to Profiles with nothing made, or with the old name kept, as Esc does.
 - On the Profiles screen, Look now reads Change look.

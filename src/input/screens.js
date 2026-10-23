@@ -50,7 +50,7 @@ import { setMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from '../render/map.
 import { startSeeds, shownSeed, addSeed, backSeed, explorerWorld } from '../core/explorer.js';
 import { BAG_SLOTS } from '../core/bag.js';
 import { get } from '../core/registry.js';
-import { playing as inPlay, SLOTS, slotName } from '../core/profile.js';
+import { playing as inPlay, SLOTS, slotName, playedText } from '../core/profile.js';
 import { slotLines, slotsAt, slotsHeading, askTop } from '../render/slots.js';
 import { journalWords } from '../core/journal.js';
 import { journalAt } from '../render/journal.js';
@@ -136,7 +136,7 @@ export function createScreens(app, ui) {
 
   // § slots (D-271): the flame starts on the profile in use; Back only once there is a title to go back to
   const linesNow = () => slotLines(app.picking, app.slotsBack && app.profiles.current !== null);
-  const profileWords = (p, i) => (p ? `${slotName(p, i)}, deepest ${p.records.deepest}` : 'Empty');
+  const profileWords = (p, i) => (p ? `${slotName(p, i)}, deepest ${p.records.deepest}, played ${playedText(p.played)}` : 'Empty');
   const slotsWords = () => `${app.picking ? slotsHeading(app.picking) : 'Profiles. Pick one to play.'} ${app.profiles.slots.map(profileWords).join('. ')}. ${linesNow().map((l) => l.text).join('. ')}.`;
   function openSlots(back) { app.picking = null; app.slotsBack = back; show('slots', app.profiles.current ?? 0); }
   function chooseSlot(i) {
