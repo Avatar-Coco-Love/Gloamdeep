@@ -132,3 +132,10 @@ Journal's Records gain a sixth line, Flasks poured, at the foot under
 Steps: every flask poured into the lantern, by hand or by itself (D-249),
 on all the profile's journeys, from 0. Dev jumps stop it counting, as the
 others.
+
+**D-286 · 2026-10-23 · Torches lit in Records** (the owner's picks) The
+Journal's Records gain a seventh line, Torches lit, at the foot under
+Flasks poured: every torch the hero lights, on all the profile's
+journeys, from 0. Each lighting counts, also a torch lit again after a
+fall or "Reset room" puts it back unlit, as the hero can't yet put a
+torch out to light it again. Dev jumps stop it counting, as the others.

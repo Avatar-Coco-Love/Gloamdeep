@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.75 (2026-10-23)
+- The Journal's Records show a seventh line, Torches lit, under Flasks poured: every time you light a torch, on all your journeys. A torch lit again after a fall or "Reset room" counts again. It counts from 0 from now on, also for profiles made before this.
+- Decisions: D-286.
+
 ## 0.2.74 (2026-10-23)
 - The Journal's Records show a sixth line, Flasks poured, under Steps: every flask of oil poured into the lantern, by your hand or by itself, on all your journeys. It counts from 0 from now on, also for profiles made before this.
 - Decisions: D-285.

@@ -5,15 +5,16 @@
 
 export const SLOTS = 3;
 // A new profile: no name or look chosen yet, no Records. Records: the deepest depth,
-// creatures beaten, falls, rooms found, steps walked and flasks poured, on all its journeys (D-262, D-270, D-283, D-285)
-export const COUNTS = ['beaten', 'falls', 'found', 'steps', 'poured'];
-export const newProfile = (deepest = 0) => ({ name: '', look: {}, records: { deepest, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0 } });
+// creatures beaten, falls, rooms found, steps walked, flasks poured and torches lit,
+// on all its journeys (D-262, D-270, D-283, D-285, D-286)
+export const COUNTS = ['beaten', 'falls', 'found', 'steps', 'poured', 'torches'];
+export const newProfile = (deepest = 0) => ({ name: '', look: {}, records: { deepest, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0, torches: 0 } });
 // The profiles at the start: the first slot in use, the others empty
 export const newProfiles = (deepest = 0) => ({ current: 0, slots: [newProfile(deepest), ...Array(SLOTS - 1).fill(null)] });
 
 // § upgrades: as the journey save's (D-266). When the profiles' shape changes,
 // raise FORMAT and add the step from the old number to the new; never edit a merged step.
-export const FORMAT = 4;
+export const FORMAT = 5;
 export const UPGRADES = {
   // 1 → 2: the Records' counts, none yet (D-270)
   1: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { beaten: 0, falls: 0, found: 0, ...p.records } }) }),
@@ -21,6 +22,8 @@ export const UPGRADES = {
   2: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { steps: 0, ...p.records } }) }),
   // 3 → 4: flasks poured, none yet (D-285)
   3: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { poured: 0, ...p.records } }) }),
+  // 4 → 5: torches lit, none yet (D-286)
+  4: (ps) => ({ ...ps, slots: ps.slots.map((p) => p && { ...p, records: { torches: 0, ...p.records } }) }),
 };
 
 // § reading: a kept profile list, checked and upgraded, or null when it can't be read
