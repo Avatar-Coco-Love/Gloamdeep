@@ -2,6 +2,10 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.60', date: '2026-10-23', title: 'What happened', lines: [
+    "Behind the scenes, nothing changes on screen or in sound. Each turn now writes a short list of what happened: a step, a hit, a bite, a fall, the lantern switched, a room entered or found, a level reached, an item taken, a herb eaten, a flask poured, a torch lit. The sounds now play from this list, and later Records, quests and feats will read it too.",
+    "Decisions: D-267.",
+  ] },
   { v: '0.2.59', date: '2026-10-23', title: 'Old saves upgraded', lines: [
     "Behind the scenes, nothing changes on screen. A journey saved by an older version of the game is now brought up to date when you continue it, one small numbered step at a time, instead of being lost. Saves the game can't read are still dropped quietly.",
     "Decisions: D-266.",

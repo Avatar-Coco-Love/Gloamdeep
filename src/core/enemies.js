@@ -28,11 +28,11 @@ export function hitEnemy(enemies, foe, entry, damage) {
 // who bite on their turn. They stay put while they bite (D-114, D-128).
 export const biters = (enemies, hero) => enemies.filter((e) => Math.abs(e.x - hero.x) + Math.abs(e.y - hero.y) === 1);
 
-// § bite sound: (state, fell) → the sound of this turn's bite, or undefined (D-259): the
-// creature whose bite line shows, or after a fall, one next to the hero as they fell.
+// § bite sound: (events) → the sound of this turn's bite, or undefined (D-259), read
+// from the turn's `bite` events (events.js, D-267): the first creature's to bite,
+// whose bite line shows, or after a fall, the first that has a sound.
 // A creature without a `sound` bites silently, for now the gloamling.
-export function biteSound(state, fell) {
-  const kinds = fell ? biters(state.fell.enemies, state.fell.hero).map((e) => ENEMIES[e.id])
-    : Object.values(ENEMIES).filter((k) => k.bites === state.line?.id);
-  return kinds.find((k) => k?.sound)?.sound;
+export function biteSound(events) {
+  const kinds = events.filter((e) => e.type === 'bite').map((e) => ENEMIES[e.id]);
+  return (events.some((e) => e.type === 'fall') ? kinds.find((k) => k?.sound) : kinds[0])?.sound;
 }

@@ -15,6 +15,7 @@ import { takeStairs } from './stairs.js';
 import { offEdge, walkOff } from './openings.js';
 import { XP_FOE, gain, discover, foundAfterFall, levelOf } from './xp.js';
 import { bagAdd, bagTake, stackFull } from './bag.js';
+import { note, fresh } from './events.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -30,7 +31,7 @@ export const HERO_HEALTH = 5;
 // `seed` sets every generated depth (D-148).
 export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null, events: [] };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -69,18 +70,18 @@ function away(begun, here, seen) {
 // enemies left behind can act (D-132). Walking off an edge through an
 // opening does the same, into the room beyond (D-197); elsewhere the edge is
 // wall. Every passed turn ends with the enemies' turn (D-114), in the room
-// the hero ends it in.
+// the hero ends it in. A tile walked onto is a `step` event (events.js).
 export function step(state, dir) {
   const [dx, dy] = DIRS[dir];
   const x = state.hero.x + dx, y = state.hero.y + dy;
   if (offEdge(state.room, x, y)) {
-    const out = walkOff(passTurn(state), dir);
+    const out = walkOff(note(passTurn(state), 'step'), dir);
     return out ? endTurn(state, out) : state;
   }
   if (tileAt(state.room, x, y).solid) return lightTorch(state, x, y);
   const foe = enemyAt(state, x, y);
   if (foe) return attack(state, foe);
-  let next = passTurn({ ...state, hero: { x, y } });
+  let next = note(passTurn({ ...state, hero: { x, y } }), 'step');
   const found = itemAt(state, x, y);
   if (found) next = pickUp(next, found);
   return endTurn(state, takeStairs(next) || next);
@@ -90,16 +91,16 @@ export function step(state, dir) {
 // has no room (D-247), or with its full line when its stack is full (D-250). A herb heals, never above full, and is gone with its
 // line; at full health it stays on the floor (D-155, D-156). A weapon goes
 // into an empty hand with its line (D-252); with one held it stays for now,
-// as only one knife lies in the world.
+// as only one knife lies in the world. Taken is a `take` event, a herb eaten an `eat`.
 function pickUp(state, found) {
-  const entry = get(found.id), items = state.items.filter((it) => it !== found);
-  if (entry.hold) return state.held ? state : say({ ...state, items, held: found.id }, entry.says);
+  const entry = get(found.id), items = state.items.filter((it) => it !== found), id = found.id;
+  if (entry.hold) return state.held ? state : note(say({ ...state, items, held: id }, entry.says), 'take', { id });
   if (entry.bag) {
-    const bag = bagAdd(state.bag, found.id);
-    if (bag) return { ...state, items, bag };
-    return stackFull(state.bag, found.id) ? say(state, entry.full) : state;
+    const bag = bagAdd(state.bag, id);
+    if (bag) return note({ ...state, items, bag }, 'take', { id });
+    return stackFull(state.bag, id) ? say(state, entry.full) : state;
   }
-  if (entry.heal && state.health < HERO_HEALTH) return say({ ...state, items, health: Math.min(HERO_HEALTH, state.health + entry.heal) }, entry.says);
+  if (entry.heal && state.health < HERO_HEALTH) return note(say({ ...state, items, health: Math.min(HERO_HEALTH, state.health + entry.heal) }, entry.says), 'eat', { id });
   return state;
 }
 
@@ -109,12 +110,14 @@ function pickUp(state, found) {
 // A light-shy one on a lit tile doesn't bite (D-240).
 // At 0 health the hero falls and wakes at the room's start (D-119).
 // Then the others come one tile closer (D-126 to D-129).
+// Each bite is a `bite` event, in the order they bite.
 function enemiesAct(state) {
   const bites = biters(state.enemies, state.hero).filter((e) => !(get(e.id).shy && litAt(state, e.x, e.y)));
   if (!bites.length) return enemiesMove(state);
   const health = Math.max(0, state.health - bites.reduce((sum, e) => sum + get(e.id).bite, 0));
   const enemies = state.enemies.map((e) => (bites.includes(e) ? { ...e, chasing: true } : e));
-  const bitten = say({ ...state, health, enemies }, get(bites[0].id).bites);
+  let bitten = say({ ...state, health, enemies }, get(bites[0].id).bites);
+  for (const e of bites) bitten = note(bitten, 'bite', { id: e.id, hurt: get(e.id).bite });
   return health > 0 ? enemiesMove(bitten) : fall(bitten);
 }
 
@@ -181,6 +184,7 @@ function chaseStep(state, e) {
 // layouts, and their maps are forgotten (D-148). The new seed places the
 // hand-made rooms' items and rats afresh (D-192). `fell` keeps the room
 // as the hero fell in it, for the fall to be shown before they wake (D-234).
+// It is a `fall` event.
 function fall(state) {
   const seed = nextSeed(state.seed), { place, hero } = state.home;
   const begun = state.home.places ? beginAll(seed) : { [place]: state.home };
@@ -192,25 +196,27 @@ function fall(state) {
   const home = state.home.places ? { ...state.home, ...begun[place], hero, places: begun } : state.home;
   const { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn } = state;
   const fell = { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn, seed: state.seed, health: 0 };
-  return say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start, found: foundAfterFall(state.found) }, 'fall');
+  return note(say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start, found: foundAfterFall(state.found) }, 'fall'), 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109),
 // or the weapon held, which hits for its own `hit` (D-252). It passes a turn
 // like a step, so oil burns (D-111). The foe's line is said, and an oil line
 // said on the same turn replaces it (D-112). A foe beaten is worth experience (D-245).
+// It is a `hit` event, and a foe beaten a `beat` too.
 export const LANTERN_HIT = 1; // two hits kill the rat (D-110)
 export const heroHit = (state) => (state.held && get(state.held)?.hit) || LANTERN_HIT;
 function attack(state, foe) {
   const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, heroHit(state));
-  const dead = enemies.length < state.enemies.length, next = passTurn({ ...state, enemies });
-  return endTurn(state, say(dead ? gain(next, XP_FOE) : next, dead ? entry.die : entry.hurt));
+  const dead = enemies.length < state.enemies.length;
+  const next = note(passTurn({ ...state, enemies }), 'hit', { id: foe.id, held: state.held });
+  return endTurn(state, say(dead ? note(gain(next, XP_FOE), 'beat', { id: foe.id }) : next, dead ? entry.die : entry.hurt));
 }
 
 // § light a torch: walking into the wall of an unlit torch, from the tile it
 // faces, lights it for good (D-121). It passes a turn like a step (D-122);
 // the hit's rules for lines apply (D-124). With the lantern off nothing
-// happens and no turn passes, but the line says why (D-122).
+// happens and no turn passes, but the line says why (D-122). Lit, it is a `torch` event.
 function lightTorch(state, x, y) {
   const torch = lightAt(state, x, y), entry = torch && get(torch.id);
   if (!entry?.lightsTo) return state;
@@ -218,16 +224,16 @@ function lightTorch(state, x, y) {
   if (!side || side.x !== state.hero.x || side.y !== state.hero.y) return state;
   if (!state.lit) return say(state, 'lanternDark');
   const lights = state.lights.map((l) => (l === torch ? { ...l, id: entry.lightsTo } : l));
-  return endTurn(state, say(passTurn({ ...state, lights }), 'torchLit'));
+  return endTurn(state, note(say(passTurn({ ...state, lights }), 'torchLit'), 'torch'));
 }
 
 // § pour: a flask from bag slot i into the lantern, never above full, even
 // into a full one (D-078). It passes a turn like a wait, so the oil burns first
-// and the enemies act (D-247). An empty slot changes nothing.
+// and the enemies act (D-247). An empty slot changes nothing. A `pour` event, by hand.
 export function pour(state, i) {
   const entry = state.bag[i] && get(state.bag[i].id);
   if (!entry?.oil) return state;
-  const next = passTurn(state);
+  const next = note(passTurn(state), 'pour', { id: state.bag[i].id, by: 'hand' });
   return endTurn(state, { ...next, bag: bagTake(state.bag, i), oil: Math.min(1, next.oil + entry.oil) });
 }
 
@@ -235,11 +241,12 @@ export function pour(state, i) {
 // passed, the first flask in the bag pours once none of it would be wasted
 // (at 55% oil or lower, D-248). It is free: no turn passes. "You pour a
 // flask." is said, unless another line was said this turn (an oil line aside).
+// It adds a `pour` event, by itself, to the turn's.
 export function pourByItself(before, after) {
   if (after.turn === before.turn || after.fell !== before.fell) return after;
   const i = after.bag.findIndex((s) => get(s.id)?.oil && after.oil + get(s.id).oil <= 1 + 1e-9);
   if (i < 0) return after;
-  const poured = { ...after, bag: bagTake(after.bag, i), oil: Math.min(1, after.oil + get(after.bag[i].id).oil) };
+  const poured = note({ ...after, bag: bagTake(after.bag, i), oil: Math.min(1, after.oil + get(after.bag[i].id).oil) }, 'pour', { id: after.bag[i].id, by: 'self' });
   const other = after.line?.turn === after.turn && !['oilLow', 'oilEmpty'].includes(after.line.id);
   return other ? poured : say(poured, 'flaskPour');
 }
@@ -247,26 +254,31 @@ export function pourByItself(before, after) {
 // § wait: stand still for one turn (D-084). It passes a turn like a step,
 // so oil burns while the lantern is lit (D-037).
 export const wait = (state) => endTurn(state, passTurn(state));
-const passTurn = (state) => ({ ...state, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil });
+// A passed turn starts a new list of events (events.js)
+const passTurn = (state) => fresh({ ...state, turn: state.turn + 1, oil: state.lit ? burnOil(state.oil) : state.oil });
 // The end of a passed turn: the oil line, if one was crossed, a new room's
 // experience (D-245), the level line if a level was reached, which replaces
-// any other line (D-246), then the enemies' turn.
+// any other line (D-246), then the enemies' turn. Another room is an `enter`
+// event, a new one a `found` too, and a level reached a `level`.
 const endTurn = (before, after) => {
-  const id = oilLine(before.oil, after.oil);
-  const found = discover(before, id ? say(after, id) : after), level = levelOf(found.xp);
-  return enemiesAct(level > levelOf(before.xp) ? say(found, 'levelUp', level) : found);
+  const id = oilLine(before.oil, after.oil), place = after.place;
+  let found = discover(before, id ? say(after, id) : after);
+  if (place !== before.place) found = note(found, 'enter', { place });
+  if (found.found.length > after.found.length) found = note(found, 'found', { place });
+  const level = levelOf(found.xp);
+  return enemiesAct(level > levelOf(before.xp) ? note(say(found, 'levelUp', level), 'level', { n: level }) : found);
 };
 
 // § switch: the lantern on or off, whenever the player likes. It is free:
-// no turn passes and no oil burns (D-015, D-080, D-081).
-export const switchLantern = (state) => ({ ...state, lit: !state.lit });
+// no turn passes and no oil burns (D-015, D-080, D-081). A `lantern` event, on a list of its own.
+export const switchLantern = (state) => note(fresh({ ...state, lit: !state.lit }), 'lantern', { lit: !state.lit });
 // With the lantern set to By itself (D-210): out as the hero comes into daylight,
 // or dawn comes, lit again as they leave it, or dusk falls (D-217); else the state
 // as it is. Only at that change, so the player's own switch between holds. It is
-// free, like the switch.
+// free, like the switch, and adds a `lantern` event to the turn's.
 export function followDaylight(before, after) {
   const was = inDaylight(before), now = inDaylight(after);
-  return was === now || after.lit === was ? after : { ...after, lit: was };
+  return was === now || after.lit === was ? after : note({ ...after, lit: was }, 'lantern', { lit: was });
 }
 
 // § items: the item lying on tile x, y, or undefined

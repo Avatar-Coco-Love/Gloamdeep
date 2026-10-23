@@ -44,7 +44,8 @@ this page and a decision disagree, the decision wins.
 
 ## In the code (D-263)
 - **Event:** one thing that happened in a turn ("rat died"); each turn
-  writes a short list of them.
+  writes a short list of them, `state.events`; the kinds are listed in
+  `src/core/events.js` (D-267).
 - **Profile:** the save for what lasts across journeys, apart from the
   journey save.
 - **Behaviour:** a reusable way a creature acts, set in its registry

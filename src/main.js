@@ -5,6 +5,7 @@ import { VERSION } from './core/version.js';
 import { makeWorld, step, wait, pour, pourByItself, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt, biteSound } from './core/enemies.js';
+import { eventsSince, has } from './core/events.js';
 import { goToDepth, goToPlace } from './core/stairs.js';
 import { beginPlace, depthOf } from './core/room.js';
 import { SEED_MAX } from './core/rng.js';
@@ -114,14 +115,14 @@ function tryStep(dir) {
   if (app.fall) return; // nothing is taken while the hero lies fallen
   if (!settled()) { app.queued = dir; return; }
   const before = app.state;
-  let to = before.hero, struck = false;
+  let to = before.hero;
   if (dir === 'wait') app.state = wait(app.state); // standing still, one turn (D-084)
   else if (dir.pour !== undefined) app.state = pour(app.state, dir.pour); // a flask from the bag, one turn (D-247)
   else {
     const next = step(app.state, dir);
     const [dx, dy] = DIRS[dir], foe = enemyAt(app.state, app.state.hero.x + dx, app.state.hero.y + dy);
     to = { x: before.hero.x + dx, y: before.hero.y + dy };
-    if (foe) { app.hit = { enemy: foe, ...flashFor() }; sound.hit(!!before.held); struck = true; } // the hit's sound (D-258)
+    if (foe) app.hit = { enemy: foe, ...flashFor() };
     if (foe && before.held) app.jab = { dx, dy, start: performance.now() }; // the knife's stab (D-253)
     else if (next.turn === app.state.turn) nudgeToward(dir); // a bump, or a torch the dark lantern can't light (D-122)
     app.state = next;
@@ -129,11 +130,8 @@ function tryStep(dir) {
   app.state = byItself(before, app.state);
   if (app.settings.flasks === 'self') app.state = pourByItself(before, app.state);
   const { state } = app, fell = state.fell !== before.fell;
-  if (fell || state.health < before.health) {
-    app.bitten = flashFor();
-    const bite = biteSound(state, fell);
-    if (bite) sound[bite](struck); // a moment after the hit, when there was one (D-259)
-  }
+  if (fell || state.health < before.health) app.bitten = flashFor();
+  hear(eventsSince(before, state));
   if (fell) fallDown(state.fell);
   const went = !fell && state.place !== before.place;
   if (went && !still()) { // the hero walks onto the stairs as the old room fades (D-135)
@@ -142,7 +140,6 @@ function tryStep(dir) {
   } else if (went || (still() && !fell)) { snap(state.hero); if (went) foeShown = new Map(); }
   else if (!fell) followFoes(before.enemies, state.enemies);
   if (went) keepDeepest();
-  if (!fell && (went || state.hero.x !== before.hero.x || state.hero.y !== before.hero.y)) sound.footstep(); // a tile walked (D-255)
   // Experience earned shows as it rises over the hero; after stairs, once the new room shows (D-245)
   if (state.xp > before.xp) app.gain = { n: state.xp - before.xp, at: app.travel?.mid ?? performance.now() };
 }
@@ -202,15 +199,20 @@ function holdAt(p) {
   app.walk = { px: p[0], py: p[1], tx: Math.floor((p[0] + cam.x) / TILE), ty: Math.floor((p[1] + cam.y) / TILE), stopped: walk?.stopped || false };
 }
 
-// The lantern set to By itself follows the daylight as the hero comes and goes (D-210),
-// and ticks as it switches (D-257)
-function byItself(before, after) {
-  const s = app.settings.lantern === 'self' ? followDaylight(before, after) : after;
-  if (s.lit !== after.lit) sound.lantern(s.lit);
-  return s;
+// § hear: the sounds of an action's events (events.js, D-267): the hit's (D-258), the
+// lantern's tick (D-257), a bite a moment after the hit, when there was one (D-259),
+// and a tile walked, unless the hero fell (D-255)
+function hear(events) {
+  const hit = events.find((e) => e.type === 'hit'), bite = biteSound(events);
+  if (hit) sound.hit(!!hit.held);
+  for (const e of events) if (e.type === 'lantern') sound.lantern(e.lit);
+  if (bite) sound[bite](!!hit);
+  if (has(events, 'step') && !has(events, 'fall')) sound.footstep();
 }
+// The lantern set to By itself follows the daylight as the hero comes and goes (D-210)
+const byItself = (before, after) => (app.settings.lantern === 'self' ? followDaylight(before, after) : after);
 // § switch: the lantern button and the L key, free at any time in play (D-080, D-081); it ticks (D-257)
-const switchIt = () => { if (app.screen === 'play') { app.state = switchLantern(app.state); sound.lantern(app.state.lit); } };
+const switchIt = () => { if (app.screen === 'play') { const before = app.state; app.state = switchLantern(before); hear(eventsSince(before, app.state)); } };
 const lanternButton = createLanternButton(hud, { onSwitch: switchIt });
 const pauseButton = createPauseButton(hud, { onPause: () => screens.pause() });
 const mapButton = createMapButton(hud, { onMap: () => screens.toggleMap() });
@@ -248,6 +250,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   set: (s) => { // a new place shows at once, with no slide (Go to depth)
     const went = s.place !== app.state.place;
     app.state = byItself(app.state, s);
+    hear(eventsSince(s, app.state)); // the lantern by itself ticks
     if (went) { snap(app.state.hero); foeShown = new Map(); }
   },
   reset: () => { // the room the hero is in, as it began

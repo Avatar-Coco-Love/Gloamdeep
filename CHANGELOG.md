@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.60 (2026-10-23)
+- Behind the scenes, nothing changes on screen or in sound. Each turn now writes a short list of what happened: a step, a hit, a bite, a fall, the lantern switched, a room entered or found, a level reached, an item taken, a herb eaten, a flask poured, a torch lit. The sounds now play from this list, and later Records, quests and feats will read it too.
+- Decisions: D-267.
+
 ## 0.2.59 (2026-10-23)
 - Behind the scenes, nothing changes on screen. A journey saved by an older version of the game is now brought up to date when you continue it, one small numbered step at a time, instead of being lost. Saves the game can't read are still dropped quietly.
 - Decisions: D-266.
