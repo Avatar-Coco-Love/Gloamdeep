@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.55, the hit's sound.** A soft "dmp" per hit, a
+  tick on top with the knife (D-258). Sound board:
+  https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU (republished).
 - **2026-10-23, 0.2.54, the lantern's tick.** A soft, low "tok" at every
   lantern switch, higher for on, lower for off (D-257). Sound board:
   https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU
