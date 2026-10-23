@@ -2,6 +2,10 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.72', date: '2026-10-23', title: 'Earned looks and gathering', lines: [
+    "Ideas recorded: looks and unique things earned in play with their own currency, never bought; calm or intense play chosen by where you go; mining, fishing, farming and harvesting for later. Nothing in the game changes.",
+    "Decisions: D-280, D-281, D-282.",
+  ] },
   { v: '0.2.71', date: '2026-10-23', title: 'Decisions archived', lines: [
     "Decisions D-270 to D-278 moved, unchanged, to an archive file. Nothing in the game changes.",
     "Decisions: D-279.",

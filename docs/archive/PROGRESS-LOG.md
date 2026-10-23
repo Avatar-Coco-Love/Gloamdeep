@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.69, the trim.** Six lantern trims, the cap and base,
+  picked after the eyes (D-277). [Playtest](https://claude.ai/artifact/57na2nhmHvSR3afiiq9Sbo).
 - **2026-10-23, 0.2.68, the eyes.** Six eye colours, picked on faces
   close up, after the cloak (D-276). [Playtest](https://claude.ai/artifact/VPDZio1UKVBeZS9phXxBhP).
 - **2026-10-23, 0.2.67, the cloak.** Six cloak colours; a new profile

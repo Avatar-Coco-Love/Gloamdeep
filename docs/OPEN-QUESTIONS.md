@@ -97,3 +97,11 @@ built on each turn's events (D-267); or never.
 **Q-054 · May a name hold a space or digits?** (any time)
 Names are A to Z only for now (D-272). A space would allow "OLD TOM",
 digits "COCO2". The owner is unsure and wants it kept for later.
+
+**Q-055 · The play-earned currency** (before the first unlock, D-280)
+What it is called, how it is earned (depths, finds, deeds, gathering),
+what it buys first (looks, unique things) and where it is spent.
+
+**Q-056 · A region's name and difficulty on entering** (with a second
+region, D-281) Whether the name shows on screen when you enter, with a
+difficulty rating, and how the rating looks (stars, skulls, words).

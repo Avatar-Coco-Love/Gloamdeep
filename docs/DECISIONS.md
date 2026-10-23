@@ -96,3 +96,20 @@ same map players see. Details are Q-042.
 **D-279 · 2026-10-23 · Built to grow's second decisions are archived**
 (owner's pick, as D-274) D-270 to D-278 moved unchanged to
 `archive/DECISIONS-GROWING-2.md`. They stay in force.
+
+**D-280 · 2026-10-23 · Play to earn, never pay** (the owner's idea and
+pick) More looks and unique things will come, unlocked by playing, never
+by paying: no pay to win, no pay to earn. They cost a separate currency
+earned only in play, not experience, so looking good never costs
+strength. Its name, how it is earned and what it buys are Q-055.
+
+**D-281 · 2026-10-23 · The world is the dial** (owner's pick) Players
+choose a calm or an intense game by where they go, with no mode setting:
+calmer things near the surface and home, danger deeper. Some surface
+places are hard too. Showing a region's name and a difficulty rating on
+entering is an idea for later (Q-056).
+
+**D-282 · 2026-10-23 · Gathering, later** (the owner's wish) Mining,
+fishing, farming and harvesting are all wanted, built one at a time much
+later. Mining works like Stardew Valley's: ore deposits to break, but a
+room's outer walls can't be destroyed. Each gets its own decisions.
