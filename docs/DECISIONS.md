@@ -173,3 +173,11 @@ board: a page with one button per game sound, built with
 `node tools/soundboard.js <scratchpad>/sounds.html` from the game's own
 sound code. Its link goes in the chat, the PR body and the log entry,
 republished to the same link each time.
+
+**D-257 · 2026-10-23 · The lantern's tick** (owner's picks)
+The second sound: a soft, low "tok" each time the lantern goes on or
+off, a little higher for on (1200 Hz) and lower for off (850 Hz), about
+as loud as the footstep (D-255). It plays at every switch: by hand (the
+button or L) and By itself at the daylight's edge (D-210). Picked from a
+preview of three; the first pick, higher and louder, was too loud and
+sharp, so three softer ones followed and the owner took the middle one.

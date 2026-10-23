@@ -19,6 +19,8 @@ const VERSION = read('src/core/version.js').match(/'([^']+)'/)[1];
 const SOUNDS = [
   { label: 'One footstep', play: 'later(0, () => sound.footstep())' },
   { label: 'A walk, 8 steps', play: 'for (let i = 0; i < 8; i++) later(i * 250, () => sound.footstep())' },
+  { label: 'Lantern on', play: 'later(0, () => sound.lantern(true))' },
+  { label: 'Lantern off', play: 'later(0, () => sound.lantern(false))' },
 ];
 
 const out = process.argv[2];
