@@ -4,13 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.61 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.62 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**G4 Behaviours as data** (D-263): creatures' ways of acting (chases,
-shuns light) as data in the registry. Claude proposes 2 or 3 options
-first. Read `src/core/enemies.js` and `registry.js`.
+**J1 The Journal, its Records tab** (D-262): Claude proposes 2 or 3
+options with a mock-up first. Read D-262 and `src/core/profile.js`.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -53,7 +52,7 @@ Built to grow (D-261 to D-263; order may change)
 - [x] G1 Old saves upgraded, 0.2.59
 - [x] G2 Events, 0.2.60
 - [x] G3 Profiles, 0.2.61
-- [ ] G4 behaviours as data
+- [x] G4 Behaviours as data, 0.2.62
 - [ ] J1 The Journal, its Records tab (D-262)
 - [ ] P1 to P6 (D-268): slot screen, name, cloak, eyes, lantern trim, clothes
 
@@ -66,10 +65,10 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.59, old saves upgraded.** Numbered steps bring an
-  old save up to today's shape (D-266). Nothing visible.
 - **2026-10-23, 0.2.60, what happened.** Each turn writes a list of
   events on the state; the sounds play from it (D-267). Nothing visible.
 - **2026-10-23, 0.2.61, profiles.** Up to 3 profiles on a device, each
   with a name, a look, Records and its own journey; the first is used
   for now (D-268). Nothing visible.
+- **2026-10-23, 0.2.62, creatures' ways.** Each creature names its ways
+  (chases, shuns light); the turn rules read them (D-269). Nothing visible.

@@ -33,7 +33,8 @@ this page and a decision disagree, the decision wins.
 
 ## Creatures
 - **Rat:** chases once it notices the hero (D-126, D-226).
-- **Gloamling:** shuns light (D-240).
+- **Gloamling:** chases, and shuns light (D-240).
+- **Chases, Shuns light:** the ways creatures have so far (D-269).
 
 ## Menus and tools
 - **Journal:** one book with tabs: Records first, later quests, a
@@ -49,6 +50,6 @@ this page and a decision disagree, the decision wins.
 - **Profile:** one person's save on a device, in one of 3 slots: a
   name, a look, Records and their own journey (D-268).
 - **Slot:** one of the 3 places for a profile; empty or in use (D-268).
-- **Behaviour:** a reusable way a creature acts, set in its registry
-  entry.
+- **Behaviour, way:** a reusable way a creature acts, named in its
+  registry entry's `ways`, defined in `src/core/behaviours.js` (D-269).
 - **Registry:** the one list of all content (TECH.md, D-048).
