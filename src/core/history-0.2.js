@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.55', date: '2026-10-23', title: "The hit's sound", lines: [
+    "Hitting a creature makes a sound: a soft, low \"dmp\". With the knife held, a small tick rides on top. Each hit varies a little in pitch and loudness, so a fight doesn't sound like a machine. Only with Sound: On.",
+    "The sound board has Lantern hit, Knife hit and A fight, 3 knife hits.",
+    "Decisions: D-258.",
+  ] },
   { v: '0.2.54', date: '2026-10-23', title: "The lantern's tick", lines: [
     "The lantern ticks as it goes on or off: a soft, low \"tok\", a little higher for on and lower for off, so you can tell which by ear. It ticks whether you switch it yourself or it switches by itself at the daylight's edge. Only with Sound: On.",
     "The sound board has Lantern on and Lantern off.",

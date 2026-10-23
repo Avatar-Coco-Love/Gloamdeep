@@ -181,3 +181,12 @@ as loud as the footstep (D-255). It plays at every switch: by hand (the
 button or L) and By itself at the daylight's edge (D-210). Picked from a
 preview of three; the first pick, higher and louder, was too loud and
 sharp, so three softer ones followed and the owner took the middle one.
+
+**D-258 · 2026-10-23 · The hit's sound** (owner's picks)
+The third sound: each time the hero hits a creature, a soft, low "dmp",
+a falling tone (110 to 60 Hz) under muffled noise, quieter than the
+footstep's peak. With the knife held (D-252), a small tick like the
+lantern's (D-257) rides on top. Each hit varies a little, pitch by up
+to a tenth and loudness from 70% to full, like the steps (D-255).
+Picked from four moments (hit, bite, pour, pick up), then from three
+hits: the softer one.

@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-22, 0.2.52, version history.** Settings lists every
+  version; tap one for its changelog lines, word for word (D-254).
+  Playtest: https://claude.ai/artifact/YQBk7PAQV34MafuCGYZHnx
 - **2026-10-22, 0.2.51, the knife's stab.** A knife hit darts the hero
   half a tile toward the creature and back in 0.1 s (D-253).
   Playtest: https://claude.ai/artifact/632zAB2bfQSFZr7EXDT8kc

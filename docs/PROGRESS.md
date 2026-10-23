@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.54 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.55 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
@@ -44,7 +44,7 @@ The Seed Explorer (D-214, before step 50)
 - [x] 41 First gear: a knife in the first cave, held, hits for 2, 0.2.50 (D-252)
 - [x] 41b The knife's stab, a quick jab, 0.2.51 (D-253)
 - [x] Version history in Settings, 0.2.52 (D-254, the owner's wish)
-- [x] S1, S2 Sounds: a footstep, the lantern's tick, 0.2.53, 0.2.54
+- [x] S1 to S3 Sounds: a footstep, the lantern's tick, a hit, 0.2.53 to 0.2.55
 
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 
@@ -59,9 +59,6 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-22, 0.2.52, version history.** Settings lists every
-  version; tap one for its changelog lines, word for word (D-254).
-  Playtest: https://claude.ai/artifact/YQBk7PAQV34MafuCGYZHnx
 - **2026-10-23, 0.2.53, the first sound.** A soft footstep, no two
   alike; Sound starts Off (D-255). Sound board (D-256):
   https://claude.ai/artifact/MfSRBdghmo5Tx5sW3JLbcs
@@ -70,3 +67,6 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   lantern switch, higher for on, lower for off (D-257). Sound board:
   https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU
   Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P
+- **2026-10-23, 0.2.55, the hit's sound.** A soft "dmp" per hit, a
+  tick on top with the knife (D-258). Sound board and playtest at the
+  0.2.54 links above, republished.

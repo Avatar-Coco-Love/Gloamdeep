@@ -21,6 +21,9 @@ const SOUNDS = [
   { label: 'A walk, 8 steps', play: 'for (let i = 0; i < 8; i++) later(i * 250, () => sound.footstep())' },
   { label: 'Lantern on', play: 'later(0, () => sound.lantern(true))' },
   { label: 'Lantern off', play: 'later(0, () => sound.lantern(false))' },
+  { label: 'Lantern hit', play: 'later(0, () => sound.hit(false))' },
+  { label: 'Knife hit', play: 'later(0, () => sound.hit(true))' },
+  { label: 'A fight, 3 knife hits', play: 'for (let i = 0; i < 3; i++) later(i * 350, () => sound.hit(true))' },
 ];
 
 const out = process.argv[2];
