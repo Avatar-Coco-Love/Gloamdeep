@@ -26,9 +26,9 @@
 // opens the name pad (D-272): letters typed, tapped or picked, Del, and OK makes the profile;
 // Esc goes back to the slot screen with nothing made. Rename, then a profile's box, opens the
 // pad on its name; OK keeps the new name, Esc the old (D-273). Cancel, Esc or P stop picking.
-// After the name, a new profile chooses its cloak, then its eyes; Look, then a box, changes them
-// later (P3, P4). Arrows, swipes or a tap pick one, OK goes on, and Back goes back a screen; Esc
-// or P on the eyes leave a profile's old look as it was.
+// After the name, a new profile chooses its cloak, then its eyes, then its lantern's trim; Look,
+// then a box, changes them later (P3 to P5). Arrows, swipes or a tap pick one, OK goes on, and
+// Back goes back a screen; Esc or P on the eyes or trim leave a profile's old look as it was.
 // Split from main.js (D-235): `app` holds what the screens share with play and drawing.
 import { depthOf, areaAt } from '../core/room.js';
 import { lineAt, pauseTop } from '../render/menu.js';
@@ -41,7 +41,7 @@ import { nextPage, howtoWords, HOWTO_LINES } from '../core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from '../core/seedpad.js';
 import { NAME_PAD, typeLetter, moveName } from '../core/namepad.js';
 import { nameKeyAt } from '../render/namepad.js';
-import { CLOAKS, CLOAK_PAD, CLOAK_IDS, moveCloak, cloakOf, EYES, EYES_PAD, EYE_IDS, moveEyes, eyesOf } from '../core/looks.js';
+import { CLOAKS, CLOAK_PAD, CLOAK_IDS, moveCloak, cloakOf, EYES, EYES_PAD, EYE_IDS, moveEyes, eyesOf, TRIMS, TRIM_PAD, TRIM_IDS, moveTrim, trimOf } from '../core/looks.js';
 import { cloakKeyAt } from '../render/cloak.js';
 import { titleMenu, PAUSE_MENU, SURE_MENU, SURE_NOTE, SURE_HEADING, DROP_NOTE, settingsMenu, moveChoice } from '../core/menu.js';
 import { saveSettings, nextControl, controlsText, nextMotion, motionText, seedText, lanternText, nextLantern, flasksText, nextFlasks, soundText, nextSound } from '../core/settings.js';
@@ -77,7 +77,7 @@ export function createScreens(app, ui) {
   const menuOf = (sc) => (sc === 'title' ? titleMenu(app.saved) : sc === 'paused' ? PAUSE_MENU : sc === 'sure' || sc === 'drop' ? SURE_MENU
     : settingsMenu(app.settings, reduceMotion.matches, app.pageFrom === 'paused' ? app.journeySeed : null));
   const exploring = () => app.screen === 'explore' || (app.screen === 'seed' && app.padFrom === 'explore');
-  const onTitle = () => ['slots', 'name', 'cloak', 'eyes', 'drop', 'title', 'sure'].includes(app.screen) || exploring() || (!['play', 'paused', 'map', 'bag'].includes(app.screen) && app.pageFrom === 'title');
+  const onTitle = () => ['slots', 'name', 'cloak', 'eyes', 'trim', 'drop', 'title', 'sure'].includes(app.screen) || exploring() || (!['play', 'paused', 'map', 'bag'].includes(app.screen) && app.pageFrom === 'title');
   const menuTop = () => (app.screen === 'drop' ? askTop : onTitle() ? titleTop(menuOf(app.screen).length) : pauseTop(menuOf(app.screen).length, app.screen === 'settings'));
   const settingsWords = () => `Settings. ${menuOf('settings').slice(0, -2).map((l) => l.text).join('. ')}. Pick one to change it. Version history. Back.`;
   function show(next, at = 0) {
@@ -91,7 +91,7 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
-      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords() : next === 'name' ? nameWords() : next === 'cloak' ? cloakWords() : next === 'eyes' ? eyesWords()
+      : next === 'journal' ? journalWords(inPlay(app.profiles).records) : next === 'slots' ? slotsWords() : next === 'name' ? nameWords() : next === 'cloak' ? cloakWords() : next === 'eyes' ? eyesWords() : next === 'trim' ? trimWords()
       : next === 'drop' ? `Delete ${slotName(app.profiles.slots[app.dropping], app.dropping)}? ${DROP_NOTE} Yes or No.`
       : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }
@@ -174,6 +174,7 @@ export function createScreens(app, ui) {
     app.naming = i; app.cloakNew = fresh;
     app.cloak = fresh ? CLOAK_IDS[0] : cloakOf(app.profiles.slots[i]);
     app.eyes = fresh ? EYE_IDS[0] : eyesOf(app.profiles.slots[i]);
+    app.trim = fresh ? TRIM_IDS[0] : trimOf(app.profiles.slots[i]);
     show('cloak', CLOAK_IDS.indexOf(app.cloak));
   }
   function closeCloak() {
@@ -192,8 +193,8 @@ export function createScreens(app, ui) {
     else if (id === 'back') closeCloak();
     else show('eyes', EYE_IDS.indexOf(app.eyes));
   }
-  // § eyes (P4): after the cloak, the same shape. OK makes a new profile and opens the title,
-  // or keeps a profile's new look; Back returns to the cloak with both choices kept.
+  // § eyes (P4): after the cloak, the same shape. OK goes on to the trim (P5); Back returns to
+  // the cloak with the choices kept.
   const eyesWords = () => `Choose your eyes. ${EYES[app.eyes].name} picked. ${EYE_IDS.map((id) => EYES[id].name).join(', ')}. Arrows choose, then OK.`;
   const backToCloak = () => show('cloak', CLOAK_PAD.findIndex((k) => k.id === 'ok'));
   function moveToEyes(i) {
@@ -202,14 +203,31 @@ export function createScreens(app, ui) {
     if (EYES[id]) { app.eyes = id; spoken.textContent = `${EYES[id].name} eyes`; } else spoken.textContent = id === 'ok' ? 'OK' : 'Back';
   }
   function pressEyes(i, tapped = false) {
-    const id = EYES_PAD[i].id, look = { cloak: app.cloak, eyes: app.eyes };
+    const id = EYES_PAD[i].id;
     if (EYES[id]) { moveToEyes(i); if (!tapped) moveToEyes(EYES_PAD.findIndex((k) => k.id === 'ok')); }
     else if (id === 'back') backToCloak();
-    else if (app.cloakNew) { ui.useSlot(app.naming, app.entry, look); show('title'); }
-    else { ui.lookSlot(app.naming, look); closeCloak(); }
+    else show('trim', TRIM_IDS.indexOf(app.trim));
   }
   // Esc or P: a new profile goes back to its cloak; a profile's Look ends with nothing changed
   const escEyes = () => (app.cloakNew ? backToCloak() : closeCloak());
+  // § trim (P5): after the eyes, the same shape. OK makes a new profile and opens the title,
+  // or keeps a profile's new look; Back returns to the eyes with the choices kept.
+  const trimWords = () => `Choose a trim. ${TRIMS[app.trim].name} picked. ${TRIM_IDS.map((id) => TRIMS[id].name).join(', ')}. Arrows choose, then OK.`;
+  const backToEyes = () => show('eyes', EYES_PAD.findIndex((k) => k.id === 'ok'));
+  function moveToTrim(i) {
+    app.chosen = i;
+    const id = TRIM_PAD[i].id;
+    if (TRIMS[id]) { app.trim = id; spoken.textContent = `${TRIMS[id].name} trim`; } else spoken.textContent = id === 'ok' ? 'OK' : 'Back';
+  }
+  function pressTrim(i, tapped = false) {
+    const id = TRIM_PAD[i].id, look = { cloak: app.cloak, eyes: app.eyes, trim: app.trim };
+    if (TRIMS[id]) { moveToTrim(i); if (!tapped) moveToTrim(TRIM_PAD.findIndex((k) => k.id === 'ok')); }
+    else if (id === 'back') backToEyes();
+    else if (app.cloakNew) { ui.useSlot(app.naming, app.entry, look); show('title'); }
+    else { ui.lookSlot(app.naming, look); closeCloak(); }
+  }
+  // Esc or P: a new profile goes back to its eyes; a profile's Look ends with nothing changed
+  const escTrim = () => (app.cloakNew ? backToEyes() : closeCloak());
   // After the question: back to the slot screen, the flame on the slot asked about
   function closeDrop(yes) {
     if (yes) ui.dropSlot(app.dropping);
@@ -311,6 +329,7 @@ export function createScreens(app, ui) {
     else if (app.screen === 'name') closeName();
     else if (app.screen === 'cloak') closeCloak();
     else if (app.screen === 'eyes') escEyes();
+    else if (app.screen === 'trim') escTrim();
     else if (app.screen === 'slots' && app.picking) { app.picking = null; spoken.textContent = slotsWords(); } // Cancel
     else if (app.screen === 'slots' && linesNow().some((l) => l.id === 'back')) titleAt('profiles');
   }
@@ -379,6 +398,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'name') { pressName(NAME_PAD[i].id); return; }
     if (app.screen === 'cloak') { pressCloak(i); return; }
     if (app.screen === 'eyes') { pressEyes(i); return; }
+    if (app.screen === 'trim') { pressTrim(i); return; }
     if (app.screen === 'bag') { pourChosen(); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
     if (app.screen === 'history') { if (i < HISTORY.length) openVersion(i); else closeHistory(); return; }
@@ -411,6 +431,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'name') { app.chosen = moveName(app.chosen, dir); return; }
     if (app.screen === 'cloak') { moveToCloak(moveCloak(app.chosen, dir)); return; }
     if (app.screen === 'eyes') { moveToEyes(moveEyes(app.chosen, dir)); return; }
+    if (app.screen === 'trim') { moveToTrim(moveTrim(app.chosen, dir)); return; }
     if (app.screen === 'bag') { if (dir === 'left' || dir === 'right') pickSlot(Math.min(BAG_SLOTS - 1, Math.max(0, app.chosen + (dir === 'left' ? -1 : 1)))); return; }
     if (app.screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else app.chosen = moveChoice(app.chosen, dir, HOWTO_LINES.length); return; }
     if (app.screen === 'journal') return; // one tab for now, and only Back to pick
@@ -452,6 +473,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'name') { const k = nameKeyAt(px, py); if (k >= 0) { app.chosen = k; choose(k); } return; }
     if (app.screen === 'cloak') { const k = cloakKeyAt(px, py); if (k >= 0) pressCloak(k, true); return; }
     if (app.screen === 'eyes') { const k = cloakKeyAt(px, py); if (k >= 0) pressEyes(k, true); return; }
+    if (app.screen === 'trim') { const k = cloakKeyAt(px, py); if (k >= 0) pressTrim(k, true); return; }
     if (app.screen === 'history') {
       const at = historyAt(py, app.scroll, app.rows.length);
       if (at === 'back') closeHistory();

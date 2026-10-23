@@ -168,3 +168,19 @@ Profiles made before keep bone eyes. Claude's calls, may change: the
 heading words, the cloak screen's heroes wearing the eyes picked, Back on
 the eyes putting the flame on the cloak screen's OK, and Esc on a new
 profile's eyes going back to the cloak.
+
+**D-277 · 2026-10-23 · The lantern's trim** (P5, owner's picks from a
+mock-up; builds D-268) The trim is the lantern's cap and base, the two
+pixels that were brass; the black outline, the flame and its light stay
+the same for everyone. Six trims, each a light cap and a dark base shade
+in `src/core/looks.js`: brass (the study's, first), iron, copper, silver,
+verdigris and blackened; gold, red and violet are kept out, as they look
+like the flame, enemies or stairs, and bronze was left out. A new profile
+picks its trim after its eyes, on Choose a trim: the cloak screen's shape,
+each box the lantern hand close up in the cloak and eyes just picked. OK
+makes the profile; Back returns to the eyes with the choices kept. Look
+opens the cloak, the eyes, then the trim; OK on the trim keeps all three,
+and Esc there keeps the old look. Profiles made before keep brass.
+Claude's calls, may change: the shades, the heading words, the close-up
+at 5×, the cloak screen's heroes carrying the trim picked, and Esc on a
+new profile's trim going back to the eyes.

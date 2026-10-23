@@ -2,8 +2,9 @@
 // Choose a cloak, the six heroes three to a row, each 2× on a patch of lit crypt floor in its
 // cloak, the picked one framed in gold; then OK and Back. The arrows' choice is the picked
 // hero, or the flame on OK or Back. The eyes screen (P4) comes next and has the same shape:
-// Choose your eyes, each box the hero's head at 4×, in the cloak just picked.
-import { CLOAK_PAD, EYES_PAD, CLOAK_COLS } from '../core/looks.js';
+// Choose your eyes, each box the hero's head at 4×, in the cloak just picked. Then the trim
+// screen (P5): Choose a trim, each box the lantern hand at 5×, in the cloak and eyes picked.
+import { CLOAK_PAD, EYES_PAD, TRIM_PAD, CLOAK_COLS } from '../core/looks.js';
 import { W, SCREEN_H } from './screen.js';
 import { drawText, textWidth, FONT_H } from './font.js';
 import { drawHeading, drawMarker } from './menu.js';
@@ -70,12 +71,12 @@ function drawLooks(c, heading, pad, drawBox, picked, chosen, t, still) {
   });
 }
 
-// picked, the cloak framed in gold; eyes: the eyes the heroes wear; chosen: the key the flame
+// picked, the cloak framed in gold; eyes, trim: what the heroes wear; chosen: the key the flame
 // is on; still: reduced motion
-export function drawCloaks(c, picked, eyes, chosen, t, still) {
+export function drawCloaks(c, picked, eyes, trim, chosen, t, still) {
   drawLooks(c, 'Choose a cloak', CLOAK_PAD, (k, x, y) => {
     c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x + 13, y + 36, 16, 3); c.fillRect(x + 15, y + 39, 12, 1); // its shadow, 2×
-    c.drawImage(heroIn(k.id, eyes), x + 5, y + 5, 32, 32);
+    c.drawImage(heroIn(k.id, eyes, trim), x + 5, y + 5, 32, 32);
   }, picked, chosen, t, still);
 }
 
@@ -85,5 +86,15 @@ const HEAD = { x: 3, y: 1, w: 10, h: 8 };
 export function drawEyes(c, cloak, picked, chosen, t, still) {
   drawLooks(c, 'Choose your eyes', EYES_PAD, (k, x, y) => {
     c.drawImage(heroIn(cloak, k.id), HEAD.x, HEAD.y, HEAD.w, HEAD.h, x + 1, y + 8, HEAD.w * 4, HEAD.h * 4);
+  }, picked, chosen, t, still);
+}
+
+// The lantern hand: the sprite's pixels 9 to 15 across and 7 to 12 down, the lantern held out
+// from the cloak, at 5× so the cap and base show
+const HAND = { x: 9, y: 7, w: 7, h: 6 }, HAND_SCALE = 5;
+// cloak, eyes: the ones just picked; picked, the trim framed in gold
+export function drawTrims(c, cloak, eyes, picked, chosen, t, still) {
+  drawLooks(c, 'Choose a trim', TRIM_PAD, (k, x, y) => {
+    c.drawImage(heroIn(cloak, eyes, k.id), HAND.x, HAND.y, HAND.w, HAND.h, x + 3, y + 9, HAND.w * HAND_SCALE, HAND.h * HAND_SCALE);
   }, picked, chosen, t, still);
 }

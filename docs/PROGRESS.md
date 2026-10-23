@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.68 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.69 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**P5 The lantern's trim** (D-268, archived; D-276): its colour, the
-light unchanged. Offer options, with a mock-up.
+**P6 Clothes** (D-268, archived; D-277): the clothing type, the last
+part of a profile's look. Offer options, with a mock-up.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -51,7 +51,8 @@ Stage 0.2's steps are all built. The stash chest comes with the home base.
 Built to grow (D-261 to D-263; order may change)
 - [x] G1 to G4, J1, P1: old saves to the slot screen, 0.2.59 to 0.2.64
 - [x] P2 to P4 The name pad, rename, the cloak, the eyes, 0.2.65 to 0.2.68
-- [ ] P5 to P6 (D-268): lantern trim, clothes
+- [x] P5 The lantern's trim, 0.2.69 (D-277)
+- [ ] P6 (D-268): clothes
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -62,9 +63,9 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.66, rename.** Rename above Delete; a box opens the
-  name pad on its name (D-273). D-261 to D-269 archived (D-274). [Playtest](https://claude.ai/artifact/QAdcPa2VKL9HkbvJK5sHv3).
 - **2026-10-23, 0.2.67, the cloak.** Six cloak colours; a new profile
   picks one after its name, Look changes it (D-275). [Playtest](https://claude.ai/artifact/HDCVWysaw11b1sBwCotW4e).
 - **2026-10-23, 0.2.68, the eyes.** Six eye colours, picked on faces
   close up, after the cloak (D-276). [Playtest](https://claude.ai/artifact/VPDZio1UKVBeZS9phXxBhP).
+- **2026-10-23, 0.2.69, the trim.** Six lantern trims, the cap and base,
+  picked after the eyes (D-277). [Playtest](https://claude.ai/artifact/57na2nhmHvSR3afiiq9Sbo).

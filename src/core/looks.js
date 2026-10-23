@@ -1,8 +1,8 @@
-// § looks: what a profile's hero can wear (D-268). For now the cloak's colour and the eyes'
-// colour, each from a set of six that fit the palette and clash with nothing that already
-// means something (P3, P4). Each cloak is its four shades, light to deepest, as the hero
-// sprite's C, c, B and b; each eye colour is the sprite's e. registry.js gathers these
-// tables. Plain data, no drawing.
+// § looks: what a profile's hero can wear (D-268). For now the cloak's colour, the eyes'
+// colour and the lantern's trim, each from a set of six that fit the palette and clash with
+// nothing that already means something (P3 to P5). Each cloak is its four shades, light to
+// deepest, as the hero sprite's C, c, B and b; each eye colour is the sprite's e; each trim
+// is the sprite's T and t. registry.js gathers these tables. Plain data, no drawing.
 import { moveOn } from './seedpad.js';
 
 export const CLOAKS = {
@@ -33,8 +33,24 @@ export const EYE_IDS = Object.keys(EYES);
 export const DEFAULT_EYES = 'bone';
 export const eyesOf = (p) => (EYES[p?.look?.eyes] ? p.look.eyes : DEFAULT_EYES);
 
+// § trims: the lantern's metal, its cap (light) and its base (dark); the flame and its light
+// stay the same for everyone (D-268, P5). Gold, red and violet are kept out, as they look like
+// the flame, enemies or stairs.
+export const TRIMS = {
+  brass: { id: 'brass', kind: 'trim', name: 'Brass', shades: ['#e8d5a0', '#a8642c'] }, // the study's
+  iron: { id: 'iron', kind: 'trim', name: 'Iron', shades: ['#9aa6b4', '#4a5262'] },
+  copper: { id: 'copper', kind: 'trim', name: 'Copper', shades: ['#e8a07a', '#8a4630'] },
+  silver: { id: 'silver', kind: 'trim', name: 'Silver', shades: ['#e4e8ee', '#7a8494'] },
+  verdigris: { id: 'verdigris', kind: 'trim', name: 'Verdigris', shades: ['#9cd4b8', '#3c6e5a'] },
+  blackened: { id: 'blackened', kind: 'trim', name: 'Blackened', shades: ['#6b7686', '#22262f'] },
+};
+export const TRIM_IDS = Object.keys(TRIMS);
+// A profile's trim: the one it chose, or brass when it has none (profiles from before P5)
+export const DEFAULT_TRIM = 'brass';
+export const trimOf = (p) => (TRIMS[p?.look?.trim] ? p.look.trim : DEFAULT_TRIM);
+
 // § look screens: the six choices three to a row, then OK and Back, each on its own row;
-// walked as the seed pad's keys are. The cloak screen and the eyes screen share the shape.
+// walked as the seed pad's keys are. The cloak, eyes and trim screens share the shape.
 export const CLOAK_COLS = 3;
 const lookPad = (ids) => [
   ...ids.map((id, i) => ({ id, row: Math.floor(i / CLOAK_COLS), col: i % CLOAK_COLS, span: 1 })),
@@ -43,5 +59,7 @@ const lookPad = (ids) => [
 ];
 export const CLOAK_PAD = lookPad(CLOAK_IDS);
 export const EYES_PAD = lookPad(EYE_IDS);
+export const TRIM_PAD = lookPad(TRIM_IDS);
 export const moveCloak = (i, dir) => moveOn(CLOAK_PAD, i, dir);
 export const moveEyes = (i, dir) => moveOn(EYES_PAD, i, dir);
+export const moveTrim = (i, dir) => moveOn(TRIM_PAD, i, dir);

@@ -244,7 +244,7 @@ function newJourney() {
   savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
 }
 // § slots (D-271): picking a slot plays as its profile, a new one in an empty slot, with its own journey;
-// a new one takes the name typed on the name pad (D-272) and the cloak and eyes chosen after it (P3, P4)
+// a new one takes the name typed on the name pad (D-272) and the cloak, eyes and trim chosen after it (P3 to P5)
 function useSlot(i, name = '', look = {}) {
   app.profiles = usingSlot(app.profiles, i, name, look); saveProfiles(app.profiles);
   loadInto(i); savedState = app.state; freshView();

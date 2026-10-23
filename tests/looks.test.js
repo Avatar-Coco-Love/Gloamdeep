@@ -1,8 +1,8 @@
-// § looks: the cloak's colours and the cloak screen (P3), the eyes and their screen (P4)
+// § looks: the cloak's colours and the cloak screen (P3), the eyes and their screen (P4), the trim (P5)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { CLOAKS, CLOAK_IDS, CLOAK_PAD, DEFAULT_CLOAK, cloakOf, moveCloak, EYES, EYE_IDS, EYES_PAD, DEFAULT_EYES, eyesOf, moveEyes } from '../src/core/looks.js';
-import { CLOAKS as REGISTERED, EYES as REGISTERED_EYES, get } from '../src/core/registry.js';
+import { CLOAKS, CLOAK_IDS, CLOAK_PAD, DEFAULT_CLOAK, cloakOf, moveCloak, EYES, EYE_IDS, EYES_PAD, DEFAULT_EYES, eyesOf, moveEyes, TRIMS, TRIM_IDS, TRIM_PAD, DEFAULT_TRIM, trimOf, moveTrim } from '../src/core/looks.js';
+import { CLOAKS as REGISTERED, EYES as REGISTERED_EYES, TRIMS as REGISTERED_TRIMS, get } from '../src/core/registry.js';
 
 test('six cloaks, teal first, each with four shades; the registry has them', () => {
   assert.deepEqual(CLOAK_IDS, ['teal', 'moss', 'heather', 'rust', 'indigo', 'sand']);
@@ -61,4 +61,35 @@ test('the eyes screen has the cloak screen\'s shape, and the arrows walk it the 
   assert.equal(moveEyes(at('ice'), 'down'), at('silver'));
   assert.equal(moveEyes(at('silver'), 'down'), at('ok'));
   assert.equal(moveEyes(at('ok'), 'down'), at('back'));
+});
+
+test('six trims, brass first, each a cap and a base shade; the registry has them; none kept out', () => {
+  assert.deepEqual(TRIM_IDS, ['brass', 'iron', 'copper', 'silver', 'verdigris', 'blackened']);
+  assert.equal(REGISTERED_TRIMS, TRIMS);
+  assert.deepEqual(TRIMS.brass.shades, ['#e8d5a0', '#a8642c']); // the study's
+  for (const t of Object.values(TRIMS)) {
+    assert.equal(t.kind, 'trim');
+    assert.equal(t.shades.length, 2, t.id);
+    for (const s of t.shades) {
+      assert.match(s, /^#[0-9a-f]{6}$/, t.id);
+      assert.ok(!['#e8786a', '#ffd66b', '#f39a3b', '#a58ce0', '#0e0c16'].includes(s), t.id); // enemies, flame, stairs, outline
+    }
+  }
+});
+
+test('a profile from before P5, or with an unknown trim, has brass', () => {
+  assert.equal(DEFAULT_TRIM, 'brass');
+  assert.equal(trimOf({ look: { cloak: 'rust', eyes: 'sky' } }), 'brass');
+  assert.equal(trimOf({ look: { trim: 'gold' } }), 'brass');
+  assert.equal(trimOf(undefined), 'brass');
+  assert.equal(trimOf({ look: { trim: 'verdigris' } }), 'verdigris');
+});
+
+test('the trim screen has the cloak screen\'s shape, and the arrows walk it the same', () => {
+  assert.deepEqual(TRIM_PAD.map(({ row, col, span }) => [row, col, span]), CLOAK_PAD.map(({ row, col, span }) => [row, col, span]));
+  const at = (id) => TRIM_PAD.findIndex((k) => k.id === id);
+  assert.equal(moveTrim(at('brass'), 'right'), at('iron'));
+  assert.equal(moveTrim(at('iron'), 'down'), at('verdigris'));
+  assert.equal(moveTrim(at('verdigris'), 'down'), at('ok'));
+  assert.equal(moveTrim(at('ok'), 'down'), at('back'));
 });
