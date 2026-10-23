@@ -126,3 +126,9 @@ Achievements will come, built on Records: a record can have its own set,
 reached at higher and higher numbers, such as many tiers of steps
 walked. Not every record needs a set. Finishing one can give a reward.
 The tiers, the rewards and where they show are Q-057.
+
+**D-285 · 2026-10-23 · Flasks poured in Records** (the owner's picks) The
+Journal's Records gain a sixth line, Flasks poured, at the foot under
+Steps: every flask poured into the lantern, by hand or by itself (D-249),
+on all the profile's journeys, from 0. Dev jumps stop it counting, as the
+others.

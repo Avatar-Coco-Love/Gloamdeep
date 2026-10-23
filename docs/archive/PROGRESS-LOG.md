@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.71, the archive.** D-270 to D-278 moved unchanged
+  to `archive/DECISIONS-GROWING-2.md` (D-279). Nothing visible.
 - **2026-10-23, 0.2.70, the clothes.** Cloak, Belted, Short or Tattered,
   picked after the trim (D-278). [Playtest](https://claude.ai/artifact/5knwWmjZEqV3oLQNYp3V8m).
 - **2026-10-23, 0.2.69, the trim.** Six lantern trims, the cap and base,

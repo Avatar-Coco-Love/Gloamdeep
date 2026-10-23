@@ -16,7 +16,7 @@ test('at the start: three slots, the first in use, unnamed, with no look and no 
   const ps = newProfiles();
   assert.equal(ps.slots.length, SLOTS);
   assert.equal(SLOTS, 3);
-  assert.deepEqual(playing(ps), { name: '', look: {}, records: { deepest: 0, beaten: 0, falls: 0, found: 0, steps: 0 } });
+  assert.deepEqual(playing(ps), { name: '', look: {}, records: { deepest: 0, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0 } });
   assert.deepEqual(ps.slots.slice(1), [null, null]);
 });
 
@@ -76,12 +76,17 @@ test("each slot's journey has its own place; the first is where the one journey 
 
 test('a first-format profile list comes up with no counts yet, its deepest kept (D-270)', () => {
   const old = { format: 1, profiles: { current: 0, slots: [{ name: '', look: {}, records: { deepest: 4 } }, null, null] } };
-  assert.deepEqual(playing(unpackProfiles(old)).records, { deepest: 4, beaten: 0, falls: 0, found: 0, steps: 0 });
+  assert.deepEqual(playing(unpackProfiles(old)).records, { deepest: 4, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0 });
 });
 
 test('a second-format profile list comes up with no steps yet, its counts kept (D-283)', () => {
   const old = { format: 2, profiles: { current: 0, slots: [{ name: 'Coco', look: {}, records: { deepest: 2, beaten: 5, falls: 1, found: 9 } }, null, null] } };
-  assert.deepEqual(playing(unpackProfiles(old)).records, { deepest: 2, beaten: 5, falls: 1, found: 9, steps: 0 });
+  assert.deepEqual(playing(unpackProfiles(old)).records, { deepest: 2, beaten: 5, falls: 1, found: 9, steps: 0, poured: 0 });
+});
+
+test('a third-format profile list comes up with no flasks poured yet, its counts kept (D-285)', () => {
+  const old = { format: 3, profiles: { current: 0, slots: [{ name: 'Coco', look: {}, records: { deepest: 2, beaten: 5, falls: 1, found: 9, steps: 300 } }, null, null] } };
+  assert.deepEqual(playing(unpackProfiles(old)).records, { deepest: 2, beaten: 5, falls: 1, found: 9, steps: 300, poured: 0 });
 });
 
 // § slots: the slot screen's rules (D-271)

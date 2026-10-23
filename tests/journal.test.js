@@ -7,22 +7,22 @@ import { newProfile } from '../src/core/profile.js';
 import { journalAt } from '../src/render/journal.js';
 import { BACK_Y } from '../src/render/history.js';
 
-const records = { deepest: 3, beaten: 12, falls: 4, found: 27, steps: 1843 };
+const records = { deepest: 3, beaten: 12, falls: 4, found: 27, steps: 1843, poured: 6 };
 
 test('Records is the one tab for now', () => {
   assert.deepEqual(TABS.map((t) => t.text), ['Records']);
 });
 
-test('the Records tab shows the deepest depth, creatures beaten, falls, rooms found and steps (D-283)', () => {
-  assert.deepEqual(recordRows(records).map((r) => [r.text, r.value]), [['Deepest', 'depth 3'], ['Beaten', '12'], ['Falls', '4'], ['Rooms found', '27'], ['Steps', '1843']]);
-  assert.equal(journalWords(records), 'Journal, Records tab. Deepest, depth 3. Beaten, 12. Falls, 4. Rooms found, 27. Steps, 1843. Back.');
+test('the Records tab shows the deepest depth, creatures beaten, falls, rooms found, steps and flasks poured (D-283, D-285)', () => {
+  assert.deepEqual(recordRows(records).map((r) => [r.text, r.value]), [['Deepest', 'depth 3'], ['Beaten', '12'], ['Falls', '4'], ['Rooms found', '27'], ['Steps', '1843'], ['Flasks poured', '6']]);
+  assert.equal(journalWords(records), 'Journal, Records tab. Deepest, depth 3. Beaten, 12. Falls, 4. Rooms found, 27. Steps, 1843. Flasks poured, 6. Back.');
 });
 
-test('the counts rise with each beat, fall, found and step event, on any journey', () => {
+test('the counts rise with each beat, fall, found, step and pour event, on any journey', () => {
   const r = newProfile().records;
-  const after = counted(r, [{ type: 'hit', id: 'rat' }, { type: 'beat', id: 'rat' }, { type: 'found', place: 'second' }, { type: 'fall' }, { type: 'step' }]);
-  assert.deepEqual(after, { deepest: 0, beaten: 1, falls: 1, found: 1, steps: 1 });
-  assert.deepEqual(r, { deepest: 0, beaten: 0, falls: 0, found: 0, steps: 0 }); // the old one left as it was
+  const after = counted(r, [{ type: 'hit', id: 'rat' }, { type: 'beat', id: 'rat' }, { type: 'found', place: 'second' }, { type: 'fall' }, { type: 'step' }, { type: 'pour', id: 'flask', by: 'hand' }, { type: 'pour', id: 'flask', by: 'self' }]);
+  assert.deepEqual(after, { deepest: 0, beaten: 1, falls: 1, found: 1, steps: 1, poured: 2 });
+  assert.deepEqual(r, { deepest: 0, beaten: 0, falls: 0, found: 0, steps: 0, poured: 0 }); // the old one left as it was
 });
 
 test('nothing counted is the same Records, and a dev jump stops the counting (D-232)', () => {
