@@ -4,27 +4,26 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.63 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.64 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**P1 The slot screen** (D-268): pick, start, delete profiles. Ask
-Q-051 first, then 2 or 3 options with a mock-up.
+**P2 The name** (D-268): type a profile's name, up to 12 letters. Ask
+Q-053 first, then 2 or 3 options with a mock-up.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
 - The starting region's name (Q-045), any time.
 - When creatures should show their next move (Q-049), any time.
-- What a profile's slot shows (Q-051), before P1.
+- Whether a profile's name or look may change later (Q-053), before P2.
 - Play data: kept on the device or sent (Q-052), near 1.0.
 - What a level gives (Q-050), before levels matter.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
-- Add the setup script line from the 0.2.1 PR to the cloud environment,
-  so each conversation starts on the latest `main`.
+- Add the 0.2.1 PR's setup script line to the cloud environment.
 
 ## Build plan: stage 0.3, the world (D-168, order approved; may change)
-Steps 1 to 30 are done; the list is in `archive/PROGRESS-LOG.md`. Tick
-a step when merged and add its version.
+Steps 1 to 30 are done (`archive/PROGRESS-LOG.md`). Tick a step when
+merged, with its version.
 
 - [x] 31 to 33, 0.1.27 to 0.2.1 · 42 The starting region, 0.2.6
 The main menu (D-177 to D-181; step order proposed, may change)
@@ -50,23 +49,22 @@ The Seed Explorer (D-214, before step 50)
 
 Stage 0.2's steps are all built. The stash chest comes with the home base.
 Built to grow (D-261 to D-263; order may change)
-- [x] G1 to G4 Old saves, events, profiles, behaviours, 0.2.59 to 0.2.62
-- [x] J1 The Journal, its Records tab, 0.2.63
-- [ ] P1 to P6 (D-268): slot screen, name, cloak, eyes, lantern trim, clothes
+- [x] G1 to G4, J1, P1: old saves to the slot screen, 0.2.59 to 0.2.64
+- [ ] P2 to P6 (D-268): name, cloak, eyes, lantern trim, clothes
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
-Ideas for later (and the owner's wish list in `RESEARCH.md`): painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
+Ideas for later (and the owner's wish list in `RESEARCH.md`): a slot's hero and play time (D-271); painting rooms and saving them to a file (D-214); a Depth Meter to find or craft (the owner's idea); polish the outside art, and many generated looks for cave mouths (the owner's wish); menu themes, a changing or moving title background and hero (D-181); landmarks, NPC houses, special items, a second region,
 lit rooms glowing ahead, swimming (Q-039); the lantern by itself at
 low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
-(D-159); more kinds of place (D-152, D-163); dev God mode (D-154); the
+(D-159); more places (D-152, D-163); dev God mode (D-154); the
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.61, profiles.** Up to 3 profiles on a device, each
-  with a name, a look, Records and its own journey; the first is used
-  for now (D-268). Nothing visible.
 - **2026-10-23, 0.2.62, creatures' ways.** Each creature names its ways
   (chases, shuns light); the turn rules read them (D-269). Nothing visible.
 - **2026-10-23, 0.2.63, the Journal.** On the title and pause menus, one
   tab, Records: deepest, beaten, falls, rooms (D-270). [Playtest](https://claude.ai/artifact/KxD3DHXVpUK2wRTVzECJgo).
+- **2026-10-23, 0.2.64, the slot screen.** The game opens on Profiles:
+  3 boxes to pick, start or delete a profile; Profiles on the title
+  goes back (D-271). [Playtest](https://claude.ai/artifact/3fpshzULgSpmFvxTM6iRew).

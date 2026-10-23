@@ -51,6 +51,8 @@ this page and a decision disagree, the decision wins.
 - **Profile:** one person's save on a device, in one of 3 slots: a
   name, a look, Records and their own journey (D-268).
 - **Slot:** one of the 3 places for a profile; empty or in use (D-268).
+- **Slot screen, Profiles:** where the game opens, to pick, start or
+  delete a profile (D-271).
 - **Behaviour, way:** a reusable way a creature acts, named in its
   registry entry's `ways`, defined in `src/core/behaviours.js` (D-269).
 - **Registry:** the one list of all content (TECH.md, D-048).

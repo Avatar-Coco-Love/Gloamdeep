@@ -13,6 +13,7 @@ import { drawSeedPad } from './seedpad.js';
 import { drawHowTo } from './howto.js';
 import { drawHistory } from './history.js';
 import { drawJournal } from './journal.js';
+import { drawSlots, drawAsk } from './slots.js';
 import { drawMap } from './map.js';
 import { drawBag } from './bag.js';
 import { jabAt } from './jab.js';
@@ -29,8 +30,8 @@ import { daylight, darkNow } from '../core/daytime.js';
 import { shownSeed, canGoBack } from '../core/explorer.js';
 import { mouthLight } from '../core/mouth.js';
 import { cameraAt } from '../core/camera.js';
-import { playing } from '../core/profile.js';
-import { PAUSE_MENU, SURE_MENU, SURE_HEADING, SURE_NOTE } from '../core/menu.js';
+import { playing, slotName } from '../core/profile.js';
+import { PAUSE_MENU, SURE_MENU, SURE_HEADING, SURE_NOTE, DROP_NOTE } from '../core/menu.js';
 import { doorways } from '../core/openings.js';
 
 export const FADE_MS = 200; // each way, taking stairs (D-135)
@@ -63,6 +64,8 @@ export function createFrame(app, ui) {
     else if (screen === 'seed') { drawTitle(ctx, [], 0, t, still()); drawSeedPad(ctx, app.entry, app.chosen, t, still()); }
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still()); }
     else if (screen === 'history') { drawTitle(ctx, [], 0, t, still()); drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still()); }
+    else if (screen === 'slots') drawSlots(ctx, app.profiles, app.chosen, app.deleting, app.slotsBack && app.profiles.current !== null, t, still());
+    else if (screen === 'drop') drawAsk(ctx, slotName(app.profiles.slots[app.dropping], app.dropping), SURE_MENU, app.chosen, DROP_NOTE, t, still());
     else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
     else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null);

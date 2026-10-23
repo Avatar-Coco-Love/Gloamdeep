@@ -48,3 +48,7 @@ export function loadJourney(slot = 0) {
 export function saveJourney(state, jumped, slot = 0) {
   try { localStorage.setItem(journeyKey(slot), journeyText(state, jumped)); } catch { /* not kept */ }
 }
+// A deleted profile's journey goes with it (D-271)
+export function dropJourney(slot) {
+  try { localStorage.removeItem(journeyKey(slot)); } catch { /* not kept */ }
+}
