@@ -139,3 +139,10 @@ Flasks poured: every torch the hero lights, on all the profile's
 journeys, from 0. Each lighting counts, also a torch lit again after a
 fall or "Reset room" puts it back unlit, as the hero can't yet put a
 torch out to light it again. Dev jumps stop it counting, as the others.
+
+**D-287 · 2026-10-23 · The hero in a Profiles box** (the owner's picks;
+builds D-271) Each profile's box on the slot screen shows its hero 1×,
+in the profile's look (D-275 to D-278), on a small square of lit crypt
+floor with its shadow, at the box's left; the name, Deepest and the
+slot's number stay, the name and Deepest moved right to make room. An
+Empty box has no hero. Play time in the box is still to come.

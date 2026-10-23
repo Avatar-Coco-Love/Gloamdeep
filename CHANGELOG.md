@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.76 (2026-10-23)
+- Each Profiles box shows that profile's hero, in its cloak, eyes, trim and clothes, on a small lit patch of crypt floor at the box's left, with the name and Deepest beside it. Empty boxes stay as they were.
+- Decisions: D-287.
+
 ## 0.2.75 (2026-10-23)
 - The Journal's Records show a seventh line, Torches lit, under Flasks poured: every time you light a torch, on all your journeys. A torch lit again after a fall or "Reset room" counts again. It counts from 0 from now on, also for profiles made before this.
 - Decisions: D-286.
