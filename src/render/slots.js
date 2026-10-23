@@ -1,6 +1,6 @@
 // § slots: the slot screen (D-271), a dark page of its own like the Journal's. The
 // heading Profiles, then a framed box for each of the 3 slots: a profile's hero in its look
-// on a small lit patch of crypt floor, then its name and its deepest depth, or Empty (D-287). Rename, Look (P3) and Delete below them (D-273), and Back at the foot
+// on a small lit patch of crypt floor, then its name and its deepest depth, or Empty (D-287). Rename, Change look (P3, D-289) and Delete below them (D-273), and Back at the foot
 // when the screen was opened from the title menu. While renaming or deleting, the heading
 // asks which, and that line reads Cancel. The question after Delete, Delete …?, is
 // drawn here too, with its note and Yes and No.
@@ -20,11 +20,11 @@ const TAP_PAD = 8; // game pixels above and below a line that still pick it; the
 const HEADING_Y = 26; // the heading's line top, one line above it, as the Journal's
 const ASK_TOP = 140; // the question's Yes, with No under it
 
-// The lines under the boxes: Rename, Look and Delete (the one being done reads Cancel), and Back
+// The lines under the boxes: Rename, Change look and Delete (the one being done reads Cancel), and Back
 // when there is somewhere to go back to. picking: null, 'rename', 'look' or 'delete'
 export const slotLines = (picking, back) => [
   { id: 'rename', text: picking === 'rename' ? 'Cancel' : 'Rename' },
-  { id: 'look', text: picking === 'look' ? 'Cancel' : 'Look' },
+  { id: 'look', text: picking === 'look' ? 'Cancel' : 'Change look' },
   { id: 'delete', text: picking === 'delete' ? 'Cancel' : 'Delete' },
   ...(back ? [{ id: 'back', text: 'Back' }] : []),
 ];

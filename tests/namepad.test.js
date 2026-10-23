@@ -14,8 +14,8 @@ test('letters type in capitals up to 12, Del takes the last, others are skipped'
   assert.equal(typeLetter('ABCDEFGHIJKL', 'M').length, NAME_MAX);
 });
 
-test('the pad holds A to Z, Del and OK', () => {
-  assert.equal(NAME_PAD.length, 28);
+test('the pad holds A to Z, Del, OK and Back (D-288)', () => {
+  assert.equal(NAME_PAD.length, 29);
   assert.equal(NAME_PAD.filter((k) => /^[A-Z]$/.test(k.id)).length, 26);
 });
 
@@ -28,5 +28,8 @@ test('arrows walk the grid and stop at its edges', () => {
   assert.equal(moveName(at('Y'), 'down'), at('ok'));
   assert.equal(moveName(at('V'), 'down'), at('del'));
   assert.equal(moveName(at('ok'), 'up'), at('Y'));
-  assert.equal(moveName(at('ok'), 'down'), at('ok'));
+  assert.equal(moveName(at('ok'), 'down'), at('back'));
+  assert.equal(moveName(at('del'), 'down'), at('back'));
+  assert.equal(moveName(at('back'), 'up'), at('del'));
+  assert.equal(moveName(at('back'), 'down'), at('back'));
 });

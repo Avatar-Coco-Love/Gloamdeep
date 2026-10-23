@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.77', date: '2026-10-23', title: 'Back on the name pad', lines: [
+    "The name pad (Name your profile, and Rename profile) has a Back key on its own row under Del and OK, so a phone can leave it too. It goes back to Profiles with nothing made, or with the old name kept, as Esc does.",
+    "On the Profiles screen, Look now reads Change look.",
+    "Decisions: D-288, D-289.",
+  ] },
   { v: '0.2.76', date: '2026-10-23', title: "A hero in each Profiles box", lines: [
     "Each Profiles box shows that profile's hero, in its cloak, eyes, trim and clothes, on a small lit patch of crypt floor at the box's left, with the name and Deepest beside it. Empty boxes stay as they were.",
     "Decisions: D-287.",

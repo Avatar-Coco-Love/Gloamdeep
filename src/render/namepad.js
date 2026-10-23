@@ -1,6 +1,6 @@
 // § name pad: the page for naming a new profile (D-272) or renaming one (D-273), dark like
 // the slot screen's. The heading Name your profile (or Rename profile), the letters typed so far with a cursor, then the keys
-// on a 7-column grid; the chosen key gold with the menu's flame.
+// on a 7-column grid, Back last (D-288); the chosen key gold with the menu's flame.
 import { NAME_PAD, NAME_ROWS, NAME_COLS, NAME_MAX } from '../core/namepad.js';
 import { W, SCREEN_H } from './screen.js';
 import { drawText, textWidth, FONT_H } from './font.js';

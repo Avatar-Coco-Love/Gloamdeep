@@ -155,14 +155,15 @@ export function createScreens(app, ui) {
     else if (id === 'back') titleAt('profiles');
   }
   // § name pad (D-272): OK makes the profile with the letters typed (none keeps it unnamed,
-  // Claude's call) and opens the title; Esc goes back to the slot screen with nothing made.
+  // Claude's call) and opens the title; Back or Esc goes back to the slot screen with nothing made.
   // Renaming (D-273) opens on the name kept; OK keeps the new one (none: unnamed again) and
-  // goes back to the slot screen; Esc leaves the old name.
+  // goes back to the slot screen; Back or Esc leaves the old name (D-288).
   const nameWords = () => (app.renaming ? `Rename profile. ${app.entry || 'nothing typed'}. Type up to 12 letters, then OK.` : 'Name your profile. Type up to 12 letters, then OK.');
   function openName(i, renaming) { app.naming = i; app.renaming = renaming; app.entry = renaming ? app.profiles.slots[i].name : ''; show('name'); }
   function closeName() { app.picking = null; show('slots', app.naming); }
   function pressName(id) {
-    if (id === 'ok' && app.renaming) { ui.renameSlot(app.naming, app.entry); closeName(); }
+    if (id === 'back') closeName();
+    else if (id === 'ok' && app.renaming) { ui.renameSlot(app.naming, app.entry); closeName(); }
     else if (id === 'ok') openCloak(app.naming, true);
     else { app.entry = typeLetter(app.entry, id); spoken.textContent = app.entry || 'nothing typed'; }
   }
