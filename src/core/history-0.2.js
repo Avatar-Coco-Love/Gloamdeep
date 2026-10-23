@@ -2,6 +2,10 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.74', date: '2026-10-23', title: 'Flasks poured in Records', lines: [
+    "The Journal's Records show a sixth line, Flasks poured, under Steps: every flask of oil poured into the lantern, by your hand or by itself, on all your journeys. It counts from 0 from now on, also for profiles made before this.",
+    "Decisions: D-285.",
+  ] },
   { v: '0.2.73', date: '2026-10-23', title: 'Steps in Records', lines: [
     "The Journal's Records show a fifth line, Steps: every tile you have walked onto, on all your journeys. It counts from 0 from now on, also for profiles made before this.",
     "The idea of achievements is recorded: each thing Records counts can have its own achievements at higher and higher numbers, such as many tiers of steps, some with rewards. Nothing else in the game changes.",

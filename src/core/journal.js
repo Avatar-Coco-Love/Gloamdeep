@@ -9,6 +9,7 @@ export const recordRows = (r) => [
   { text: 'Falls', value: String(r.falls) },
   { text: 'Rooms found', value: String(r.found) },
   { text: 'Steps', value: String(r.steps) },
+  { text: 'Flasks poured', value: String(r.poured) },
 ];
 // The words for the screen reader
 export const journalWords = (r) => `Journal, Records tab. ${recordRows(r).map((row) => `${row.text}, ${row.value}`).join('. ')}. Back.`;
