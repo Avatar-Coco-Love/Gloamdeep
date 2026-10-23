@@ -8,8 +8,8 @@ go to the top of `archive/PROGRESS-LOG.md`.
 world of 0.3 (D-168, D-237)
 
 ## Next up
-**P5 The lantern's trim** (D-268, archived; D-275, D-276): its colour,
-the light unchanged. Offer 2 or 3 options, with a mock-up.
+**P5 The lantern's trim** (D-268, archived; D-276): its colour, the
+light unchanged. Offer options, with a mock-up.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -66,5 +66,5 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   name pad on its name (D-273). D-261 to D-269 archived (D-274). [Playtest](https://claude.ai/artifact/QAdcPa2VKL9HkbvJK5sHv3).
 - **2026-10-23, 0.2.67, the cloak.** Six cloak colours; a new profile
   picks one after its name, Look changes it (D-275). [Playtest](https://claude.ai/artifact/HDCVWysaw11b1sBwCotW4e).
-- **2026-10-23, 0.2.68, the eyes.** Six eye colours on Choose your eyes,
-  faces close up, after the cloak; Look opens both (D-276). [Playtest](https://claude.ai/artifact/VPDZio1UKVBeZS9phXxBhP).
+- **2026-10-23, 0.2.68, the eyes.** Six eye colours, picked on faces
+  close up, after the cloak (D-276). [Playtest](https://claude.ai/artifact/VPDZio1UKVBeZS9phXxBhP).
