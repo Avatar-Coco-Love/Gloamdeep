@@ -4,7 +4,7 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.56 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.57 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
@@ -59,13 +59,12 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.54, the lantern's tick.** A soft, low "tok" at every
-  lantern switch, higher for on, lower for off (D-257). Sound board:
-  https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU
-  Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P
 - **2026-10-23, 0.2.55, the hit's sound.** A soft "dmp" per hit, a
-  tick on top with the knife (D-258). Sound board and playtest at the
-  0.2.54 links above, republished.
+  tick on top with the knife (D-258). Sound board:
+  https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU (republished).
 - **2026-10-23, 0.2.56, a rat's bite.** Two low, dry snaps of teeth,
   after the hit in the same turn; the gloamling is silent (D-259).
-  Sound board and playtest at the 0.2.54 links above, republished.
+  Sound board at the 0.2.55 link above, republished.
+- **2026-10-23, 0.2.57, a quieter title.** The "Deepest: depth N" line
+  is off the title menu; the record is still kept, for a stats page
+  later (D-260). Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P

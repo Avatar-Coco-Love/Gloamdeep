@@ -29,7 +29,6 @@ import { nextPage, howtoWords, HOWTO_LINES } from '../core/howto.js';
 import { PAD, typeKey, entrySeed, moveKey } from '../core/seedpad.js';
 import { titleMenu, PAUSE_MENU, SURE_MENU, SURE_NOTE, SURE_HEADING, settingsMenu, moveChoice } from '../core/menu.js';
 import { saveSettings, nextControl, controlsText, nextMotion, motionText, seedText, lanternText, nextLantern, flasksText, nextFlasks, soundText, nextSound } from '../core/settings.js';
-import { recordText } from '../core/record.js';
 import { floorPlan, wholeSurface, roomsFound, fitView, panView, zoomView, floorsShown, turnFrom, stairsNear, stairsIn, centreView } from '../core/map.js';
 import { setMap, inBox, turnAt, barAt, VIEW, EXPLORE_VIEW } from '../render/map.js';
 import { startSeeds, shownSeed, addSeed, backSeed, explorerWorld } from '../core/explorer.js';
@@ -72,7 +71,7 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
-      : next === 'title' ? [WORDS[app.saved ? 'saved' : 'title'], app.deepest && `${recordText(app.deepest)}.`].filter(Boolean).join(' ') : WORDS[next];
+      : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }
   const backTo = (id) => () => show(app.pageFrom, menuOf(app.pageFrom).findIndex((l) => l.id === id));
   const closeSettings = backTo('settings'), closeHowTo = backTo('howto');

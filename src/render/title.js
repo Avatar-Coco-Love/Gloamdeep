@@ -43,7 +43,7 @@ function paint() {
 
 const lights = [{ ...LANTERN, x: 0, y: 0, r: 0 }]; // reused every frame (TECH.md)
 // menu: [{ text }]; chosen: its index; still: prefers-reduced-motion; heading: a page's name (Settings);
-// note: a grey line in the strip under the menu, the deepest depth (D-232)
+// note: a grey line in the strip under the menu (the Are you sure page's)
 export function drawTitle(c, menu, chosen, t, still, heading = null, note = null) {
   if (!floor) paint();
   c.fillStyle = K; c.fillRect(0, 0, W, SCREEN_H);

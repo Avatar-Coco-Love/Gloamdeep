@@ -114,7 +114,7 @@ flask as before; the second sits anywhere open by the same rules (at
 least 5 steps in, 3 tiles from the stairs, out of the torch's light), and
 the rest of a seed's room doesn't change.
 
-**D-232 · 2026-10-21 · Deepest depth kept** (step 35, owner's picks;
+**D-232 · 2026-10-21 · Deepest depth kept** *Superseded in part by D-260 (2026-10-23): the line is off the title screen; the record is still kept.* (step 35, owner's picks;
 builds D-021) The deepest depth the hero has walked to is kept on this
 device for good, across journeys. It shows first on the title screen, a
 grey line under the menu ("Deepest: depth 7"), hidden until the hero has

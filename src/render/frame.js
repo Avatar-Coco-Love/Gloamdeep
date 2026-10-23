@@ -24,7 +24,6 @@ import { glowsIn } from '../core/stairs.js';
 import { depthOf } from '../core/room.js';
 import { shownLine } from '../core/lines.js';
 import { levelOf } from '../core/xp.js';
-import { recordText } from '../core/record.js';
 import { daylight, darkNow } from '../core/daytime.js';
 import { shownSeed, canGoBack } from '../core/explorer.js';
 import { mouthLight } from '../core/mouth.js';
@@ -63,7 +62,7 @@ export function createFrame(app, ui) {
     else if (screen === 'howto') { drawTitle(ctx, [], 0, t, still()); drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still()); }
     else if (screen === 'history') { drawTitle(ctx, [], 0, t, still()); drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still()); }
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
-    else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null, screen === 'title' ? recordText(app.deepest) : null);
+    else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null);
   }
 
   function draw(t) {

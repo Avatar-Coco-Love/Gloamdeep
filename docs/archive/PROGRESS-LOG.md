@@ -2,6 +2,10 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.54, the lantern's tick.** A soft, low "tok" at every
+  lantern switch, higher for on, lower for off (D-257). Sound board:
+  https://claude.ai/artifact/F1gBVRcXUYKycXbYZh3geU
+  Playtest: https://claude.ai/artifact/8LcjSoy1wMiphH5LHa7o8P
 - **2026-10-23, 0.2.53, the first sound.** A soft footstep, no two
   alike; Sound starts Off (D-255). Sound board (D-256):
   https://claude.ai/artifact/MfSRBdghmo5Tx5sW3JLbcs

@@ -199,3 +199,8 @@ like the hit. The sound is the creature's own, in the registry: the
 gloamling's bite is silent until it gets one. Picked over the first
 three bites ("not very natural or rat-like"), three rat-like ones, then
 four variations on the teeth: the lower, drier one.
+
+**D-260 · 2026-10-23 · No deepest line on the title** (the owner's
+wish; supersedes D-232 in part) The "Deepest: depth N" line under the
+title menu, and its spoken words, are gone. The deepest depth is still
+kept on the device, as before, for a stats page later.
