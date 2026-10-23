@@ -24,6 +24,8 @@ const SOUNDS = [
   { label: 'Lantern hit', play: 'later(0, () => sound.hit(false))' },
   { label: 'Knife hit', play: 'later(0, () => sound.hit(true))' },
   { label: 'A fight, 3 knife hits', play: 'for (let i = 0; i < 3; i++) later(i * 350, () => sound.hit(true))' },
+  { label: 'A rat bites', play: 'later(0, () => sound.teeth(false))' },
+  { label: 'Knife hit, then a rat bites', play: 'later(0, () => { sound.hit(true); sound.teeth(true); })' },
 ];
 
 const out = process.argv[2];

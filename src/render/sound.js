@@ -1,6 +1,7 @@
 // § sound: the game's sounds, made in code with Web Audio (TECH.md), no audio files.
 // The first is the footstep (D-255): a soft tap each time the hero moves a tile;
-// then the lantern's tick, on or off (D-257), and the hit on a creature (D-258).
+// then the lantern's tick, on or off (D-257), the hit on a creature (D-258) and
+// a rat's bite, of teeth (D-259).
 // A browser plays sound only after a tap, click or key, so the sound maker starts
 // on the first one; until then, and with Sound: Off, nothing plays.
 import { rng } from '../core/rng.js';
@@ -18,6 +19,13 @@ const HIT = {
   knife: { freq: 1000, ring: 3, gain: 0.06, attack: 0.002, end: 0.035, from: 0.3 },
   pitch: 0.1, quiet: 0.7,
 };
+// A bite of teeth: two low, dry snaps and a hint of breath, a moment after the hero's own
+// hit when both come in one turn. Each varies a little, like the hit (hertz, seconds)
+const TEETH = {
+  snap: { freq: 700, ring: 3, gain: 0.07, attack: 0.002, end: 0.018, from: 0.35 }, snaps: [0, 0.04],
+  breath: { freq: 600, sweepTo: 250, gain: 0.03, attack: 0.008, end: 0.08, from: 0.7 }, breathAt: 0.06,
+  afterHit: 0.18,
+};
 const NOISE_S = 1; // the noise's length, in seconds
 const SEED = 255; // the noise and the steps' variety, the same on every visit
 const between = (r, lo, hi) => lo + r() * (hi - lo);
@@ -26,6 +34,7 @@ export function createSound(isOn) {
   let ac = null, noise = null;
   const vary = rng(SEED + 1); // each step's slice, pitch and loudness
   const varyHit = rng(SEED + 2); // each hit's pitch and loudness
+  const varyBite = rng(SEED + 3); // each bite's pitch and loudness
   // § start: on the first tap, click or key, the sound maker and its noise are made once
   function start() {
     if (!ac) {
@@ -51,12 +60,13 @@ export function createSound(isOn) {
     return g;
   }
   // A slice of the noise, from `from` seconds in, through one filter
-  function slice(t, { type, freq, ring = 1, gain, attack, end, from, rate = 1 }) {
+  function slice(t, { type, freq, sweepTo, ring = 1, gain, attack, end, from, rate = 1 }) {
     const src = ac.createBufferSource(), filter = ac.createBiquadFilter();
     src.buffer = noise;
     src.playbackRate.value = rate;
     filter.type = type;
-    filter.frequency.value = freq;
+    filter.frequency.setValueAtTime(freq, t);
+    if (sweepTo) filter.frequency.exponentialRampToValueAtTime(sweepTo, t + end);
     filter.Q.value = ring;
     src.connect(filter).connect(envelope(t, gain, attack, end)).connect(ac.destination);
     src.start(t, from, end);
@@ -93,5 +103,14 @@ export function createSound(isOn) {
     slice(t, { type: 'lowpass', ...dull, freq: dull.freq * p, gain: dull.gain * loud });
     if (knife) slice(t, { type: 'bandpass', ...HIT.knife, freq: HIT.knife.freq * p, gain: HIT.knife.gain * loud });
   }
-  return { footstep, lantern, hit };
+  // § teeth: a rat's bite; `afterHit` when the hero hit something this same turn
+  function teeth(afterHit) {
+    if (!ready()) return;
+    const t = ac.currentTime + (afterHit ? TEETH.afterHit : 0);
+    const p = between(varyBite, 1 - HIT.pitch, 1 + HIT.pitch), loud = between(varyBite, HIT.quiet, 1);
+    const { snap, breath } = TEETH;
+    for (const d of TEETH.snaps) slice(t + d, { type: 'bandpass', ...snap, freq: snap.freq * p, gain: snap.gain * loud, from: snap.from + d });
+    slice(t + TEETH.breathAt, { type: 'lowpass', ...breath, freq: breath.freq * p, sweepTo: breath.sweepTo * p, gain: breath.gain * loud });
+  }
+  return { footstep, lantern, hit, teeth };
 }

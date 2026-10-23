@@ -190,3 +190,12 @@ lantern's (D-257) rides on top. Each hit varies a little, pitch by up
 to a tenth and loudness from 70% to full, like the steps (D-255).
 Picked from four moments (hit, bite, pour, pick up), then from three
 hits: the softer one.
+
+**D-259 · 2026-10-23 · A rat's bite** (owner's picks)
+The fourth sound: when a rat bites the hero, two low, dry snaps of
+teeth (700 Hz, 0.04 s apart) and a hint of breath. Hit and bitten in
+one turn, the bite comes 0.18 s after the hit (D-258). Each bite varies
+like the hit. The sound is the creature's own, in the registry: the
+gloamling's bite is silent until it gets one. Picked over the first
+three bites ("not very natural or rat-like"), three rat-like ones, then
+four variations on the teeth: the lower, drier one.
