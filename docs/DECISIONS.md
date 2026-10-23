@@ -184,3 +184,18 @@ and Esc there keeps the old look. Profiles made before keep brass.
 Claude's calls, may change: the shades, the heading words, the close-up
 at 5×, the cloak screen's heroes carrying the trim picked, and Esc on a
 new profile's trim going back to the eyes.
+
+**D-278 · 2026-10-23 · The clothes** (P6, owner's picks from a mock-up;
+builds D-268) The clothing type is the shape of what the hero wears; its
+colours stay the cloak's. Four, in `src/core/looks.js`: Cloak (the study's,
+hem to the floor, first), Belted (a belt at the waist, the trim's base
+with its cap as the buckle), Short (to the knee, dark legs and boots
+below) and Tattered (the hem torn into rags); Mantle and Strap were left
+out. A new profile picks its clothes after its trim, on Choose your
+clothes: the cloak screen's shape with its four heroes two to a row, in
+the cloak, eyes and trim just picked. OK makes the profile; Back returns
+to the trim. Look opens the cloak, eyes, trim, then clothes; OK on the
+clothes keeps all four. Profiles made before wear the Cloak. Claude's
+calls, may change: the pixels, the names, the heading words, the other
+screens' heroes wearing the clothes picked, and a bite's flash keeping
+their shape.

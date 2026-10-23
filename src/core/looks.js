@@ -1,8 +1,9 @@
-// § looks: what a profile's hero can wear (D-268). For now the cloak's colour, the eyes'
-// colour and the lantern's trim, each from a set of six that fit the palette and clash with
-// nothing that already means something (P3 to P5). Each cloak is its four shades, light to
-// deepest, as the hero sprite's C, c, B and b; each eye colour is the sprite's e; each trim
-// is the sprite's T and t. registry.js gathers these tables. Plain data, no drawing.
+// § looks: what a profile's hero can wear (D-268): the cloak's colour, the eyes' colour and
+// the lantern's trim, each from a set of six that fit the palette and clash with nothing that
+// already means something (P3 to P5), and the clothes, four shapes of cloak (P6). Each cloak
+// is its four shades, light to deepest, as the hero sprite's C, c, B and b; each eye colour is
+// the sprite's e; each trim is the sprite's T and t; each clothes' pixels are in sprites.js.
+// registry.js gathers these tables. Plain data, no drawing.
 import { moveOn } from './seedpad.js';
 
 export const CLOAKS = {
@@ -49,17 +50,32 @@ export const TRIM_IDS = Object.keys(TRIMS);
 export const DEFAULT_TRIM = 'brass';
 export const trimOf = (p) => (TRIMS[p?.look?.trim] ? p.look.trim : DEFAULT_TRIM);
 
-// § look screens: the six choices three to a row, then OK and Back, each on its own row;
-// walked as the seed pad's keys are. The cloak, eyes and trim screens share the shape.
+// § clothes: the shape of what the hero wears (P6); its colours are the cloak's, and the belt
+// is the lantern's trim. The long cloak first, as every profile wore it before.
+export const CLOTHES = {
+  cloak: { id: 'cloak', kind: 'clothes', name: 'Cloak' }, // the study's, hem to the floor
+  belted: { id: 'belted', kind: 'clothes', name: 'Belted' }, // cinched at the waist, a buckle
+  short: { id: 'short', kind: 'clothes', name: 'Short' }, // to the knee, legs and boots below
+  tattered: { id: 'tattered', kind: 'clothes', name: 'Tattered' }, // the hem torn into rags
+};
+export const CLOTHES_IDS = Object.keys(CLOTHES);
+// A profile's clothes: the ones it chose, or the cloak when it has none (profiles from before P6)
+export const DEFAULT_CLOTHES = 'cloak';
+export const clothesOf = (p) => (CLOTHES[p?.look?.clothes] ? p.look.clothes : DEFAULT_CLOTHES);
+
+// § look screens: the choices three to a row (the clothes two), then OK and Back, each on its
+// own row; walked as the seed pad's keys are. The cloak, eyes and trim screens share the shape.
 export const CLOAK_COLS = 3;
-const lookPad = (ids) => [
-  ...ids.map((id, i) => ({ id, row: Math.floor(i / CLOAK_COLS), col: i % CLOAK_COLS, span: 1 })),
-  { id: 'ok', row: 2, col: 0, span: CLOAK_COLS },
-  { id: 'back', row: 3, col: 0, span: CLOAK_COLS },
+const lookPad = (ids, cols = CLOAK_COLS) => [
+  ...ids.map((id, i) => ({ id, row: Math.floor(i / cols), col: i % cols, span: 1 })),
+  { id: 'ok', row: 2, col: 0, span: cols },
+  { id: 'back', row: 3, col: 0, span: cols },
 ];
 export const CLOAK_PAD = lookPad(CLOAK_IDS);
 export const EYES_PAD = lookPad(EYE_IDS);
 export const TRIM_PAD = lookPad(TRIM_IDS);
+export const CLOTHES_PAD = lookPad(CLOTHES_IDS, 2);
 export const moveCloak = (i, dir) => moveOn(CLOAK_PAD, i, dir);
 export const moveEyes = (i, dir) => moveOn(EYES_PAD, i, dir);
 export const moveTrim = (i, dir) => moveOn(TRIM_PAD, i, dir);
+export const moveClothes = (i, dir) => moveOn(CLOTHES_PAD, i, dir);

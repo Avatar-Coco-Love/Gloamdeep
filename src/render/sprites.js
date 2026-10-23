@@ -2,6 +2,7 @@
 // colour; symmetric ones store the left half and mirror it (style study 1,
 // lines 121–176, ART-DIRECTION.md "Sprites").
 import { CLOAKS, EYES, TRIMS } from '../core/registry.js';
+import { DEFAULT_CLOTHES } from '../core/looks.js';
 
 const PAL = {
   k: '#0e0c16', w: '#efe6cc', C: '#a6e0e4', c: '#58a8b4', B: '#2f6a7c', b: '#1c3e4e',
@@ -18,6 +19,15 @@ const HERO = { mirror: true, rows: [
   '...kccBB', '..kcccBB', '..kccBBB', '..kcBBBb', '..kcBBbB', '..kBBbbB', '...kkbkk', '....kk..'],
   extra: [[13, 7, 'k'], [12, 8, 'k'], [13, 8, 'T'], [14, 8, 'k'], [11, 9, 'k'], [12, 9, 'y'], [13, 9, 'w'], [14, 9, 'y'], [15, 9, 'k'],
     [11, 10, 'k'], [12, 10, 'Y'], [13, 10, 'y'], [14, 10, 'Y'], [15, 10, 'k'], [12, 11, 'k'], [13, 11, 't'], [14, 11, 'k']] };
+// § clothes: the rows each kind of clothes (P6) puts in place of the hero's, left halves, mirrored
+// as the hero's are. The belt is the trim's base with its cap for the buckle.
+const CLOTHES_ROWS = {
+  cloak: {},
+  belted: { 10: '..kttttT' },
+  short: { 12: '..kcBBbB', 13: '...kkkkk', 14: '....kdk.', 15: '....kk..' },
+  tattered: { 13: '..kBkbkB', 14: '..k.kbk.', 15: '' },
+};
+const dressed = (clothes) => ({ ...HERO, rows: HERO.rows.map((r, i) => (CLOTHES_ROWS[clothes] ?? {})[i] ?? r) });
 // § flask: the study's oil flask, a cork over a bottle of amber oil (study line 156, D-077)
 const FLASK = { mirror: true, rows: [
   '', '', '......kk', '.....kaa', '......kk', '......ko', '.....koo', '....kooo', '...kwooo', '...kwooo',
@@ -81,21 +91,22 @@ function mirrored(cv) {
 }
 const LEFT = {}, LEFT_FLASHES = {};
 for (const id of Object.keys(FLASHES)) { LEFT[id] = mirrored(SPRITES[id]); LEFT_FLASHES[id] = mirrored(FLASHES[id]); }
-const BITTEN = spriteCanvas(HERO, PAL.p);
-// § looks: the hero in a cloak, eyes and trim (P3 to P5), its four cloak shades, its eye colour
-// and the lantern's cap and base swapped; the outline and the flame stay. Each is made once, the first time it is worn or shown.
-// The profile in play's is worn wherever the hero is drawn.
-const HEROES = {};
-export function heroIn(cloak, eyes, trim) {
-  const key = `${cloak}/${eyes}/${trim}`;
+// § looks: the hero in a cloak, eyes, trim and clothes (P3 to P6), its four cloak shades, its eye
+// colour and the lantern's cap and base swapped, its rows dressed; the outline and the flame stay.
+// Each is made once, the first time it is worn or shown. The profile in play's is worn wherever
+// the hero is drawn, and its bitten flash keeps the clothes' shape.
+const HEROES = {}, BITTEN = {};
+export function heroIn(cloak, eyes, trim, clothes = DEFAULT_CLOTHES) {
+  const key = `${cloak}/${eyes}/${trim}/${clothes}`;
   if (!HEROES[key]) {
     const [C, c, B, b] = (CLOAKS[cloak] ?? CLOAKS.teal).shades, e = (EYES[eyes] ?? EYES.bone).colour, [T, t] = (TRIMS[trim] ?? TRIMS.brass).shades;
-    HEROES[key] = spriteCanvas(HERO, null, { ...PAL, C, c, B, b, e, T, t });
+    HEROES[key] = spriteCanvas(dressed(clothes), null, { ...PAL, C, c, B, b, e, T, t });
   }
   return HEROES[key];
 }
-let worn = SPRITES.hero;
-export function wearLook(cloak, eyes, trim) { worn = heroIn(cloak, eyes, trim); }
+const bittenIn = (clothes) => (BITTEN[clothes] ??= spriteCanvas(dressed(clothes), PAL.p));
+let worn = SPRITES.hero, wornBitten = bittenIn(DEFAULT_CLOTHES);
+export function wearLook(cloak, eyes, trim, clothes) { worn = heroIn(cloak, eyes, trim, clothes); wornBitten = bittenIn(clothes); }
 
 // § shadow: a small dark oval under a sprite (study line 345)
 export function drawShadow(c, x, y, w) {
@@ -109,7 +120,7 @@ const LYING_DROP = 3; // pixels the fallen hero sits lower, on the floor
 // `bitten`: flashing red just after a bite (D-118). `lying`: fallen, turned
 // a quarter over onto the floor, a whole turn so the pixels stay crisp (D-234).
 export function drawHero(c, x, y, bitten = false, lying = false) {
-  const sprite = bitten ? BITTEN : worn;
+  const sprite = bitten ? wornBitten : worn;
   drawShadow(c, x, y, lying ? 12 : 8);
   if (!lying) { c.drawImage(sprite, x, y - 2); return; }
   c.save();

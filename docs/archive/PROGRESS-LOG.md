@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.67, the cloak.** Six cloak colours; a new profile
+  picks one after its name, Look changes it (D-275). [Playtest](https://claude.ai/artifact/HDCVWysaw11b1sBwCotW4e).
 - **2026-10-23, 0.2.66, rename.** Rename above Delete; a box opens the
   name pad on its name (D-273). D-261 to D-269 archived (D-274). [Playtest](https://claude.ai/artifact/QAdcPa2VKL9HkbvJK5sHv3).
 - **2026-10-23, 0.2.65, the name.** An Empty slot asks for a name on a

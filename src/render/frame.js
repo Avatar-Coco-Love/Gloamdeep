@@ -15,7 +15,7 @@ import { drawHowTo } from './howto.js';
 import { drawHistory } from './history.js';
 import { drawJournal } from './journal.js';
 import { drawSlots, drawAsk } from './slots.js';
-import { drawCloaks, drawEyes, drawTrims } from './cloak.js';
+import { drawCloaks, drawEyes, drawTrims, drawClothes } from './cloak.js';
 import { drawMap } from './map.js';
 import { drawBag } from './bag.js';
 import { jabAt } from './jab.js';
@@ -33,7 +33,7 @@ import { shownSeed, canGoBack } from '../core/explorer.js';
 import { mouthLight } from '../core/mouth.js';
 import { cameraAt } from '../core/camera.js';
 import { playing, slotName } from '../core/profile.js';
-import { cloakOf, eyesOf, trimOf } from '../core/looks.js';
+import { cloakOf, eyesOf, trimOf, clothesOf } from '../core/looks.js';
 import { PAUSE_MENU, SURE_MENU, SURE_HEADING, SURE_NOTE, DROP_NOTE } from '../core/menu.js';
 import { doorways } from '../core/openings.js';
 
@@ -69,9 +69,10 @@ export function createFrame(app, ui) {
     else if (screen === 'history') { drawTitle(ctx, [], 0, t, still()); drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still()); }
     else if (screen === 'slots') drawSlots(ctx, app.profiles, app.chosen, app.picking, app.slotsBack && app.profiles.current !== null, t, still());
     else if (screen === 'name') drawNamePad(ctx, app.entry, app.chosen, t, still(), app.renaming ? 'Rename profile' : undefined);
-    else if (screen === 'cloak') drawCloaks(ctx, app.cloak, app.eyes, app.trim, app.chosen, t, still());
+    else if (screen === 'cloak') drawCloaks(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'eyes') drawEyes(ctx, app.cloak, app.eyes, app.chosen, t, still());
-    else if (screen === 'trim') drawTrims(ctx, app.cloak, app.eyes, app.trim, app.chosen, t, still());
+    else if (screen === 'trim') drawTrims(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
+    else if (screen === 'clothes') drawClothes(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'drop') drawAsk(ctx, slotName(app.profiles.slots[app.dropping], app.dropping), SURE_MENU, app.chosen, DROP_NOTE, t, still());
     else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, t, still());
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
@@ -81,7 +82,7 @@ export function createFrame(app, ui) {
   function draw(t) {
     hudCtx.fillStyle = '#0e0c16'; hudCtx.fillRect(0, 0, hud.width, hud.height); // the strip stays empty on the title
     const p = playing(app.profiles);
-    wearLook(cloakOf(p), eyesOf(p), trimOf(p)); // the profile in play's look, on the title and in play (P3 to P5)
+    wearLook(cloakOf(p), eyesOf(p), trimOf(p), clothesOf(p)); // the profile in play's look, on the title and in play (P3 to P6)
     if (screens.onTitle()) { onTitleScreens(t); return; }
     const { state, shown, nudge, hit, jab, bitten, travel, fall, walk } = app;
     const s = travel?.from || fall?.from || state;

@@ -2,6 +2,12 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.70', date: '2026-10-23', title: 'Clothes for each profile', lines: [
+    "A new profile now chooses its clothes after its trim: Choose your clothes shows four heroes, two to a row, in the cloak, eyes and trim just picked: Cloak (as before), Belted, Short or Tattered. The belt and its buckle take the lantern's trim. OK makes the profile; Back returns to the trim.",
+    "Look on the slot screen now opens the cloak, the eyes, the trim, then the clothes; OK on the clothes keeps all four, and Esc after the cloak keeps the old look. The cloak screen's heroes wear the clothes picked, and the red flash of a bite keeps their shape.",
+    "Profiles made before this keep the long cloak, as before.",
+    "Decisions: D-278.",
+  ] },
   { v: '0.2.69', date: '2026-10-23', title: 'A trim for each lantern', lines: [
     "A new profile now chooses its lantern's trim after its eyes: Choose a trim shows the lantern hand close up, with a brass, iron, copper, silver, verdigris or blackened cap and base. The flame and its light stay the same. OK makes the profile; Back returns to the eyes.",
     "Look on the slot screen now opens the cloak, then the eyes, then the trim; OK on the trim keeps all three, and Esc on the eyes or trim keeps the old look. The cloak screen's heroes carry the trim picked.",

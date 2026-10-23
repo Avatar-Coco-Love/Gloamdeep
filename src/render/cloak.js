@@ -4,7 +4,8 @@
 // hero, or the flame on OK or Back. The eyes screen (P4) comes next and has the same shape:
 // Choose your eyes, each box the hero's head at 4×, in the cloak just picked. Then the trim
 // screen (P5): Choose a trim, each box the lantern hand at 5×, in the cloak and eyes picked.
-import { CLOAK_PAD, EYES_PAD, TRIM_PAD, CLOAK_COLS } from '../core/looks.js';
+// Last the clothes (P6): Choose your clothes, the four heroes two to a row, as on the cloak screen.
+import { CLOAK_PAD, EYES_PAD, TRIM_PAD, CLOTHES_PAD } from '../core/looks.js';
 import { W, SCREEN_H } from './screen.js';
 import { drawText, textWidth, FONT_H } from './font.js';
 import { drawHeading, drawMarker } from './menu.js';
@@ -13,21 +14,23 @@ import { heroIn } from './sprites.js';
 const K = '#0e0c16', GOLD = '#ffd66b', GREY = '#9790a4', DIM = '#4a4458';
 const HEADING_Y = 26; // as the slot screen's
 const BOX_W = 42, BOX_H = 48, GAP = 4, ROW_GAP = 52; // a hero's framed box; boxes' spacing
-const LEFT = Math.floor((W - CLOAK_COLS * BOX_W - (CLOAK_COLS - 1) * GAP) / 2), TOP = 40;
+const TOP = 40;
 const LINE_Y = [156, 172]; // OK, then Back
 const TAP_PAD = 3; // game pixels around a box or line that still pick it
 
-const boxX = (k) => LEFT + k.col * (BOX_W + GAP), boxY = (k) => TOP + k.row * ROW_GAP;
-const isLine = (k) => k.span === CLOAK_COLS;
+const isLine = (k) => k.id === 'ok' || k.id === 'back';
+const colsOf = (pad) => pad.find(isLine).span; // OK spans the row of boxes
+const leftOf = (pad) => Math.floor((W - colsOf(pad) * BOX_W - (colsOf(pad) - 1) * GAP) / 2); // the boxes centred
+const boxX = (k, pad) => leftOf(pad) + k.col * (BOX_W + GAP), boxY = (k) => TOP + k.row * ROW_GAP;
 const lineText = (k) => (k.id === 'ok' ? 'OK' : 'Back');
 const lineY = (k) => LINE_Y[k.row - 2];
 
-// The key under a tap at x, y in game pixels, as its index in CLOAK_PAD (or EYES_PAD, the
-// same shape), or -1
-export function cloakKeyAt(x, y) {
-  return CLOAK_PAD.findIndex((k) => (isLine(k)
+// The key under a tap at x, y in game pixels, as its index in pad (CLOAK_PAD, or EYES_PAD and
+// TRIM_PAD, the same shape, or CLOTHES_PAD), or -1
+export function cloakKeyAt(x, y, pad = CLOAK_PAD) {
+  return pad.findIndex((k) => (isLine(k)
     ? y >= lineY(k) - TAP_PAD - 4 && y < lineY(k) + FONT_H + TAP_PAD + 4
-    : x >= boxX(k) - TAP_PAD && x < boxX(k) + BOX_W + TAP_PAD && y >= boxY(k) - TAP_PAD && y < boxY(k) + BOX_H + TAP_PAD));
+    : x >= boxX(k, pad) - TAP_PAD && x < boxX(k, pad) + BOX_W + TAP_PAD && y >= boxY(k) - TAP_PAD && y < boxY(k) + BOX_H + TAP_PAD));
 }
 
 // § ground: the crypt floor under each hero, lit by its lantern; painted once (TECH.md)
@@ -64,20 +67,23 @@ function drawLooks(c, heading, pad, drawBox, picked, chosen, t, still) {
       if (i === chosen) drawMarker(c, x - 7, y + 1, t, still);
       return;
     }
-    const x = boxX(k), y = boxY(k);
+    const x = boxX(k, pad), y = boxY(k);
     c.drawImage(ground, x + 1, y + 1);
     drawBox(k, x, y);
     frame(c, x, y, BOX_W, BOX_H, k.id === picked ? GOLD : DIM);
   });
 }
 
-// picked, the cloak framed in gold; eyes, trim: what the heroes wear; chosen: the key the flame
-// is on; still: reduced motion
-export function drawCloaks(c, picked, eyes, trim, chosen, t, still) {
-  drawLooks(c, 'Choose a cloak', CLOAK_PAD, (k, x, y) => {
-    c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x + 13, y + 36, 16, 3); c.fillRect(x + 15, y + 39, 12, 1); // its shadow, 2×
-    c.drawImage(heroIn(k.id, eyes, trim), x + 5, y + 5, 32, 32);
-  }, picked, chosen, t, still);
+// A whole hero 2× in its box, on its shadow
+function drawWhole(c, hero, x, y) {
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x + 13, y + 36, 16, 3); c.fillRect(x + 15, y + 39, 12, 1); // its shadow, 2×
+  c.drawImage(hero, x + 5, y + 5, 32, 32);
+}
+
+// picked, the cloak framed in gold; eyes, trim, clothes: what the heroes wear; chosen: the key
+// the flame is on; still: reduced motion
+export function drawCloaks(c, picked, eyes, trim, clothes, chosen, t, still) {
+  drawLooks(c, 'Choose a cloak', CLOAK_PAD, (k, x, y) => drawWhole(c, heroIn(k.id, eyes, trim, clothes), x, y), picked, chosen, t, still);
 }
 
 // The head: the sprite's pixels 3 to 12 across and 1 to 8 down, the hood and eyes, not the lantern
@@ -92,9 +98,14 @@ export function drawEyes(c, cloak, picked, chosen, t, still) {
 // The lantern hand: the sprite's pixels 9 to 15 across and 7 to 12 down, the lantern held out
 // from the cloak, at 5× so the cap and base show
 const HAND = { x: 9, y: 7, w: 7, h: 6 }, HAND_SCALE = 5;
-// cloak, eyes: the ones just picked; picked, the trim framed in gold
-export function drawTrims(c, cloak, eyes, picked, chosen, t, still) {
+// cloak, eyes, clothes: the ones picked; picked, the trim framed in gold
+export function drawTrims(c, cloak, eyes, picked, clothes, chosen, t, still) {
   drawLooks(c, 'Choose a trim', TRIM_PAD, (k, x, y) => {
-    c.drawImage(heroIn(cloak, eyes, k.id), HAND.x, HAND.y, HAND.w, HAND.h, x + 3, y + 9, HAND.w * HAND_SCALE, HAND.h * HAND_SCALE);
+    c.drawImage(heroIn(cloak, eyes, k.id, clothes), HAND.x, HAND.y, HAND.w, HAND.h, x + 3, y + 9, HAND.w * HAND_SCALE, HAND.h * HAND_SCALE);
   }, picked, chosen, t, still);
+}
+
+// cloak, eyes, trim: the ones just picked; picked, the clothes framed in gold
+export function drawClothes(c, cloak, eyes, trim, picked, chosen, t, still) {
+  drawLooks(c, 'Choose your clothes', CLOTHES_PAD, (k, x, y) => drawWhole(c, heroIn(cloak, eyes, trim, k.id), x, y), picked, chosen, t, still);
 }
