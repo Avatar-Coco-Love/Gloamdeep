@@ -5,11 +5,12 @@ import { TILES } from './tiles.js';
 import { ITEMS } from './items.js';
 import { LIGHTS } from './lights.js';
 import { ENEMIES } from './enemies.js';
-import { CLOAKS as LOOK_CLOAKS } from './looks.js';
+import { CLOAKS as LOOK_CLOAKS, EYES as LOOK_EYES } from './looks.js';
 
 const KINDS = [TILES, ITEMS, LIGHTS, ENEMIES]; // later: NPCs, from its own file
-// What a hero can wear (P3): not things in the world, so not in ALL or the dev spawn tool
+// What a hero can wear (P3, P4): not things in the world, so not in ALL or the dev spawn tool
 export const CLOAKS = LOOK_CLOAKS;
+export const EYES = LOOK_EYES;
 
 export const ALL = KINDS.flatMap((table) => Object.values(table));
 const BY_ID = new Map(ALL.map((e) => [e.id, e]));

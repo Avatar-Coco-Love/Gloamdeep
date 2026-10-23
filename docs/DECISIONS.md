@@ -154,3 +154,17 @@ wear teal; their look was already kept, so the save's shape needs no
 upgrade. Claude's calls, may change: the heading words, "Change whose
 look?" while picking, a new profile starting on teal, and Enter on a
 hero moving the flame to OK.
+
+**D-276 · 2026-10-23 · The eyes** (P4, owner's picks from a mock-up;
+builds D-268) A profile's eyes come in six colours, bone (the study's,
+first), ice, moss, sky, silver and brown, in `src/core/looks.js`;
+pink-red, gold, violet and black are kept out, as they look like enemies,
+the lantern or stairs, or vanish in the hood. A new profile picks its eyes
+after its cloak, on Choose your eyes: the cloak screen's shape, each box
+the hero's head at 4× in the cloak just picked. OK makes the profile; Back
+returns to the cloak with both choices kept. Look opens the cloak, then
+the eyes; OK on the eyes keeps both, and Esc there keeps the old look.
+Profiles made before keep bone eyes. Claude's calls, may change: the
+heading words, the cloak screen's heroes wearing the eyes picked, Back on
+the eyes putting the flame on the cloak screen's OK, and Esc on a new
+profile's eyes going back to the cloak.
