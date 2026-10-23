@@ -19,6 +19,7 @@ Pick the next step with the owner from Ideas for later.
 - What a level gives (Q-050), before levels matter.
 - The play-earned currency (Q-055), before the first unlock.
 - A region's name and rating (Q-056), with a second region.
+- Achievements' tiers and rewards (Q-057), before the first one.
 - A bestiary: is there one, and does how to fight live there (Q-047)?
 - Add the 0.2.1 PR's setup script line to the cloud environment.
 
@@ -71,4 +72,4 @@ rat fleeing; a floor torch; trees, weather, sun and moon (Q-034, Q-035).
   currency (D-280), the world as the dial (D-281), gathering later
   (D-282). Nothing visible.
 - **2026-10-23, 0.2.73, steps.** Records gain Steps, every tile walked
-  onto (D-283). [Playtest](https://claude.ai/artifact/P5tV7uspZMMMHmH1gK4VXv).
+  onto (D-283); achievements in tiers, later (D-284). [Playtest](https://claude.ai/artifact/P5tV7uspZMMMHmH1gK4VXv).
