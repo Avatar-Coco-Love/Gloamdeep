@@ -21,7 +21,8 @@ items: collectables, craftables, weapons and more. Where they stand:
   first footstep (D-255) sounds a little like mining; judge it again
   once music and other sounds play with it.
 - Looks and gathering (2026-10-23): many more looks and unique things,
-  earned in play, never bought (D-280); calm and intense play chosen by
+  earned in play, never bought, such as zebra, cow-spot or camo
+  cloaks (D-280); calm and intense play chosen by
   where you go (D-281); mining, fishing, farming and harvesting, with
   Stardew Valley's ore deposits and walls that stay (D-282).
 - A stats page (2026-10-23): all sorts of facts about how you've played,

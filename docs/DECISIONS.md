@@ -101,7 +101,9 @@ same map players see. Details are Q-042.
 pick) More looks and unique things will come, unlocked by playing, never
 by paying: no pay to win, no pay to earn. They cost a separate currency
 earned only in play, not experience, so looking good never costs
-strength. Its name, how it is earned and what it buys are Q-055.
+strength. Among them, fun and unique patterns on the cloak, such as
+zebra stripes, cow spots or camo (added 2026-10-23). Its name, how it is
+earned and what it buys are Q-055.
 
 **D-281 · 2026-10-23 · The world is the dial** (owner's pick) Players
 choose a calm or an intense game by where they go, with no mode setting:
