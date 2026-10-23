@@ -171,3 +171,15 @@ creatures beaten, falls and rooms found, counted from each turn's events
 (D-267) on all the profile's journeys, from 0 for the counts. As for the
 deepest depth, a journey with a dev jump doesn't count (D-232; Claude's
 call, may change). Only Back can be picked for now.
+
+**D-271 · 2026-10-23 · The slot screen** (P1, owner's picks; answers
+Q-051) The game opens on the slot screen, Profiles: a framed box for each
+of the 3 slots with the profile's name and "Deepest" and its depth, or
+Empty (mock-up B). An unnamed profile shows as Profile 1, 2 or 3. Picking
+a box plays as that profile and opens the title; an empty slot gets a
+new, unnamed profile. Delete, then a box, asks "Delete …? Lost for
+good." with Yes and No, No picked, and takes its journey too. A Profiles
+line on the title, after Settings, opens the slot screen again, with
+Back. The hero's look and play time in the box come later (the owner's
+wish). Claude's words, may change: "Delete which?" while deleting, and
+Cancel in place of Delete.

@@ -14,8 +14,8 @@ import { reach, setOil } from './core/oil.js';
 import { createTextLine } from './render/textline.js';
 import { loadSettings, swipesWalk, tapsWalk, stillMotion } from './core/settings.js';
 import { deeper, counted } from './core/record.js';
-import { loadProfiles, saveProfiles, playing, withRecords } from './core/profile.js';
-import { loadJourney, saveJourney } from './core/save.js';
+import { loadProfiles, saveProfiles, playing, withRecords, usingSlot, withoutSlot } from './core/profile.js';
+import { loadJourney, saveJourney, dropJourney } from './core/save.js';
 import { remember, rememberAll, forget } from './core/fog.js';
 import { inDaylight, passTime } from './core/daytime.js';
 import { lanternFrom } from './core/sight.js';
@@ -42,11 +42,12 @@ const randomSeed = () => Math.floor(Math.random() * SEED_MAX) + 1; // the Seed E
 const app = {
   settings: loadSettings(), // kept on this device (D-189)
   journeySeed: 0, state: null,
-  // Who plays: the profiles on this device, the first in use until the slot screen (D-268)
+  // Who plays: the profiles on this device (D-268), the one in use picked on the slot screen (D-271)
   profiles: loadProfiles(),
   jumped: false, // a dev jump stops this journey counting towards the deepest depth (D-232)
-  // screen: 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore', 'history' or 'journal'
-  screen: 'title', chosen: 0,
+  // screen: 'slots', 'drop', 'title', 'play', 'paused', 'settings', 'seed', 'howto', 'map', 'bag', 'explore', 'history' or 'journal'
+  screen: 'slots', chosen: 0,
+  deleting: false, dropping: 0, slotsBack: false, // the slot screen: Delete picked, the slot asked about, Back shown (D-271)
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
   entry: '', // the digits typed on the seed pad
@@ -62,11 +63,15 @@ const newWorld = () => {
   app.journeySeed = app.settings.seed || randomSeed();
   return makeWorld('first', app.journeySeed);
 };
-// The journey saved on this device comes back as it was, ready for Continue (D-238)
-const kept = loadJourney(app.profiles.current);
-app.saved = !!kept;
-if (kept) { app.state = kept.state; app.jumped = kept.jumped; app.journeySeed = kept.state.seed; }
-else app.state = newWorld();
+// The profile's saved journey comes back as it was, ready for Continue (D-238); with none
+// in use, or none saved, a new world waits unsaved
+function loadInto(slot) {
+  const kept = slot === null ? null : loadJourney(slot);
+  app.saved = !!kept;
+  if (kept) { app.state = kept.state; app.jumped = kept.jumped; app.journeySeed = kept.state.seed; }
+  else { app.state = newWorld(); app.jumped = false; }
+}
+loadInto(app.profiles.current);
 const sound = createSound(() => app.settings.sound === 'on'); // D-255
 // Saved after every turn, or any change, once the journey has begun (D-238)
 let savedState = app.state;
@@ -225,17 +230,32 @@ const pauseButton = createPauseButton(hud, { onPause: () => screens.pause() });
 const mapButton = createMapButton(hud, { onMap: () => screens.toggleMap() });
 const bagButton = createBagButton(hud, { onBag: () => screens.toggleBag() });
 
-// § journey: New journey starts in a new world (D-187)
-function newJourney() {
-  app.state = newWorld(); app.jumped = false;
+// The hero and room shown afresh, with nothing moving, after the state is replaced
+function freshView() {
   snap(app.state.hero);
   app.queued = app.nudge = app.hit = app.jab = app.bitten = app.travel = app.fall = app.gain = null; foeShown = new Map();
   frame.redraw(); rememberedAt = rememberedSeen = null;
+}
+// § journey: New journey starts in a new world (D-187)
+function newJourney() {
+  app.state = newWorld(); app.jumped = false;
+  freshView();
   savedState = null; keepJourney(); // saved at once, so Continue is there before a first turn
+}
+// § slots (D-271): picking a slot plays as its profile, a new one in an empty slot, with its own journey
+function useSlot(i) {
+  app.profiles = usingSlot(app.profiles, i); saveProfiles(app.profiles);
+  loadInto(i); savedState = app.state; freshView();
+}
+// Deleting a profile drops its journey too; if it was in use, the next in use takes over
+function dropSlot(i) {
+  const was = app.profiles.current;
+  app.profiles = withoutSlot(app.profiles, i); saveProfiles(app.profiles); dropJourney(i);
+  if (app.profiles.current !== was) { loadInto(app.profiles.current); savedState = app.state; freshView(); }
 }
 const stage = document.getElementById('stage');
 const screens = createScreens(app, {
-  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed,
+  spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, dropSlot,
   pour: (slot) => tryStep({ pour: slot }),
   dev: () => dev, input: () => input, mapMoves: () => mapMoves, // made below
 });
@@ -273,7 +293,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   camera: () => app.cam,
 }, hud);
 const frame = createFrame(app, { ctx, hudCtx, hud, canvas, textLine, spoken, lanternButton, dev, screens, still, foeAt });
-screens.show('title');
+screens.openSlots(false); // the game opens on the slot screen (D-271)
 
 // § memory: once the hero stands still on a tile, the tiles their lantern
 // reaches are remembered (D-059). Again after a dev change to the memory or oil,

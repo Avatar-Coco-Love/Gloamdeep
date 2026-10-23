@@ -87,14 +87,13 @@ some won't. When and where does it show, and how does it look?
 Levels only show for now. Each could add a heart, more damage, a skill
 (D-027), or something else; maybe some levels give more than others.
 
-**Q-051 · What does a profile's slot show?** (before the slot screen)
-Hollow Knight shows the place and play time; Celeste the name and
-deaths. Ideas: the name, the deepest depth, play time, the hero in their
-look. And may a profile be renamed or its look changed later?
-
 **Q-052 · Play data: kept on the device, or sent?** (near 1.0)
 Telemetry sends how people play (falls, depths, journey length) to a
 small service, with an opt-in switch in Settings and a privacy note.
 Options: keep it on the device, with a dev button to save it as a file
 for playtesters (Claude's pick for now); opt-in telemetry near release,
 built on each turn's events (D-267); or never.
+
+**Q-053 · May a profile's name or look change later?** (before P2)
+Once a profile is named (P2) and dressed (P3 to P6), could it be renamed,
+or its cloak, eyes, lantern trim and clothes changed, and from where?

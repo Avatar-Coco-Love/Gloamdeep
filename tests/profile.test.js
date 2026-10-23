@@ -1,13 +1,13 @@
 // § profile: who plays on this device, three slots (D-268)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { SLOTS, FORMAT, UPGRADES, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles } from '../src/core/profile.js';
-import { journeyKey, loadJourney, saveJourney } from '../src/core/save.js';
+import { SLOTS, FORMAT, UPGRADES, newProfile, newProfiles, unpackProfiles, packProfiles, playing, withDeepest, loadProfiles, saveProfiles, slotName, usingSlot, withoutSlot } from '../src/core/profile.js';
+import { journeyKey, loadJourney, saveJourney, dropJourney } from '../src/core/save.js';
 import { makeWorld } from '../src/core/turn.js';
 
 // A localStorage made of a plain object, for one test
 function withStorage(kept, fn) {
-  globalThis.localStorage = { getItem: (k) => kept[k] ?? null, setItem: (k, v) => { kept[k] = String(v); } };
+  globalThis.localStorage = { getItem: (k) => kept[k] ?? null, setItem: (k, v) => { kept[k] = String(v); }, removeItem: (k) => { delete kept[k]; } };
   try { fn(); } finally { delete globalThis.localStorage; }
 }
 
@@ -76,4 +76,41 @@ test("each slot's journey has its own place; the first is where the one journey 
 test('a first-format profile list comes up with no counts yet, its deepest kept (D-270)', () => {
   const old = { format: 1, profiles: { current: 0, slots: [{ name: '', look: {}, records: { deepest: 4 } }, null, null] } };
   assert.deepEqual(playing(unpackProfiles(old)).records, { deepest: 4, beaten: 0, falls: 0, found: 0 });
+});
+
+// § slots: the slot screen's rules (D-271)
+test('an unnamed profile shows as Profile and its slot number; a named one by its name', () => {
+  assert.equal(slotName(newProfile(), 1), 'Profile 2');
+  assert.equal(slotName({ ...newProfile(), name: 'Coco' }, 0), 'Coco');
+});
+
+test('picking an empty slot makes a new profile there and plays as it; a used one is kept', () => {
+  const ps = newProfiles(4);
+  const two = usingSlot(ps, 1);
+  assert.equal(two.current, 1);
+  assert.deepEqual(two.slots[1], newProfile());
+  assert.equal(two.slots[0], ps.slots[0]);
+  assert.equal(usingSlot(two, 0).slots[1], two.slots[1]); // back to the first, the second stays
+});
+
+test('deleting a slot empties it; the next profile in use takes over, or none is in use', () => {
+  const ps = usingSlot(usingSlot(newProfiles(4), 2), 0); // slots 1 and 3 in use, the first playing
+  assert.deepEqual(withoutSlot(ps, 2), { current: 0, slots: [ps.slots[0], null, null] });
+  const after = withoutSlot(ps, 0);
+  assert.equal(after.current, 2);
+  const none = withoutSlot(after, 2);
+  assert.deepEqual(none, { current: null, slots: [null, null, null] });
+  assert.deepEqual(unpackProfiles(packProfiles(none)), none); // kept and read back, no old record brought back
+  assert.equal(unpackProfiles(packProfiles({ current: null, slots: ps.slots })), null); // none in use only when all are empty
+});
+
+test('a deleted profile\'s journey goes with it, and the others stay', () => {
+  const kept = {};
+  withStorage(kept, () => {
+    const s = makeWorld('first', 7);
+    saveJourney(s, false, 0); saveJourney(s, false, 1);
+    dropJourney(1);
+    assert.equal(loadJourney(1), null);
+    assert.ok(loadJourney(0));
+  });
 });

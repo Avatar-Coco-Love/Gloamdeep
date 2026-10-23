@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.61, profiles.** Up to 3 profiles on a device, each
+  with a name, a look, Records and its own journey; the first is used
+  for now (D-268). Nothing visible.
 - **2026-10-23, 0.2.60, what happened.** Each turn writes a list of
   events on the state; the sounds play from it (D-267). Nothing visible.
 - **2026-10-23, 0.2.59, old saves upgraded.** Numbered steps bring an

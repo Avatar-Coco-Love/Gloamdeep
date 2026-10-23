@@ -1,7 +1,7 @@
 // § profile: who plays on this device (D-268). Three slots, each empty or one
 // person's profile: a name, a look and Records. Each profile's journey is saved
 // apart, in its own place (save.js), so a turn rewrites only the one in play.
-// Until the slot screen comes, the first slot is the one in use. Plain data, no drawing.
+// The slot screen picks the one in use (D-271); with every slot empty, none is. Plain data, no drawing.
 
 export const SLOTS = 3;
 // A new profile: no name or look chosen yet, no Records. Records: the deepest depth,
@@ -29,7 +29,7 @@ export function unpackProfiles(kept) {
   for (let f = kept.format; f < FORMAT; f++) ps = UPGRADES[f](ps);
   const { current, slots } = ps ?? {};
   if (!Array.isArray(slots) || slots.length !== SLOTS || !slots.every((p) => p === null || isProfile(p))) return null;
-  return Number.isInteger(current) && slots[current] ? ps : null;
+  return (Number.isInteger(current) && slots[current]) || (current === null && slots.every((p) => p === null)) ? ps : null;
 }
 export const packProfiles = (profiles) => ({ format: FORMAT, profiles });
 
@@ -40,6 +40,17 @@ export const withPlaying = (ps, p) => ({ ...ps, slots: ps.slots.map((q, i) => (i
 export const withDeepest = (ps, deepest) => withRecords(ps, { ...playing(ps).records, deepest });
 // The profiles with the Records of the profile in play replaced
 export const withRecords = (ps, records) => withPlaying(ps, { ...playing(ps), records });
+
+// § slots: the slot screen's rules (D-271). An unnamed profile shows as Profile and its slot's number.
+export const slotName = (p, i) => p.name || `Profile ${i + 1}`;
+// The profiles with slot i in use; an empty slot gets a new, unnamed profile
+export const usingSlot = (ps, i) => ({ current: i, slots: ps.slots.map((p, j) => (j === i ? p ?? newProfile() : p)) });
+// The profiles with slot i emptied; if it was in use, the first slot still in use takes over, or none
+export function withoutSlot(ps, i) {
+  const slots = ps.slots.map((p, j) => (j === i ? null : p));
+  const first = slots.findIndex((p) => p), current = ps.current !== i ? ps.current : first >= 0 ? first : null;
+  return { current, slots };
+}
 
 // § storage: localStorage, wrapped (TECH.md); with storage blocked it lasts until the page closes.
 // The first time, the record kept before profiles (record.js, D-232) moves into the first slot.

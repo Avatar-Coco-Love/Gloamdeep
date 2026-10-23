@@ -2,6 +2,12 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.64', date: '2026-10-23', title: 'Profiles to pick', lines: [
+    "The game now opens on a Profiles screen with three slots. Each used slot shows its profile's name and deepest depth; an unnamed profile shows as Profile 1, 2 or 3. Pick one to play as that profile, with its own journey and Records. Picking an empty slot makes a new profile there.",
+    "Delete, then a slot, asks \"Delete \u2026? Lost for good.\" with No picked; Yes removes the profile and its journey. A Profiles line on the title screen, after Settings, goes back to the slots.",
+    "Plans: a new open question, whether a profile's name or look may change later (Q-053).",
+    "Decisions: D-271. Questions closed: Q-051. Questions opened: Q-053.",
+  ] },
   { v: '0.2.63', date: '2026-10-23', title: 'The Journal', lines: [
     "A Journal now opens from the title screen, under New journey, and from the pause menu, under Resume. It has one tab for now, Records: your deepest depth, the creatures you have beaten, your falls and the rooms you have found, counted across all your journeys from now on.",
     "Your deepest depth carries over. The other counts start at 0. A journey where a dev tool jumped to a depth doesn't count, as for the deepest depth.",

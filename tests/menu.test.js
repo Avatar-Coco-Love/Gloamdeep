@@ -7,13 +7,13 @@ import { lineAt, pauseTop, LINE_GAP } from '../src/render/menu.js';
 import { SCREEN_H, W } from '../src/render/screen.js';
 import { textWidth } from '../src/render/font.js';
 
-test('the title menu offers New journey first, then Journal (D-270), How to play, Settings, and the Seed Explorer last (D-214)', () => {
-  assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'journal', 'howto', 'settings', 'explore']);
+test('the title menu offers New journey first, then Journal (D-270), How to play, Settings, Profiles (D-271), and the Seed Explorer last (D-214)', () => {
+  assert.deepEqual(TITLE_MENU.map((l) => l.id), ['new', 'journal', 'howto', 'settings', 'profiles', 'explore']);
 });
 
 test('Continue shows, first, only while a journey is saved (D-178, D-238)', () => {
-  assert.deepEqual(titleMenu(false).map((l) => l.id), ['new', 'journal', 'howto', 'settings', 'explore']);
-  assert.deepEqual(titleMenu(true).map((l) => l.id), ['continue', 'new', 'journal', 'howto', 'settings', 'explore']);
+  assert.deepEqual(titleMenu(false).map((l) => l.id), ['new', 'journal', 'howto', 'settings', 'profiles', 'explore']);
+  assert.deepEqual(titleMenu(true).map((l) => l.id), ['continue', 'new', 'journal', 'howto', 'settings', 'profiles', 'explore']);
 });
 
 test('Start over? asks Yes or No, and its words fit the picture (D-238)', () => {
