@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.72, earned looks.** Looks earned with a play-only
+  currency (D-280), the world as the dial (D-281), gathering later
+  (D-282). Nothing visible.
 - **2026-10-23, 0.2.71, the archive.** D-270 to D-278 moved unchanged
   to `archive/DECISIONS-GROWING-2.md` (D-279). Nothing visible.
 - **2026-10-23, 0.2.70, the clothes.** Cloak, Belted, Short or Tattered,

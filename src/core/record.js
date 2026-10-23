@@ -10,8 +10,8 @@ export const deeper = (record, depth, jumped = false) => (!jumped && depth > rec
 export const recordText = (record) => (record > 0 ? `Deepest: depth ${record}` : null);
 
 // § counts: the Records after an action's events: a creature beaten, a fall, a room found, a step (D-283),
-// a flask poured, by hand or by itself (D-285)
-const COUNTED = { beat: 'beaten', fall: 'falls', found: 'found', step: 'steps', pour: 'poured' };
+// a flask poured, by hand or by itself (D-285), a torch lit, each time (D-286)
+const COUNTED = { beat: 'beaten', fall: 'falls', found: 'found', step: 'steps', pour: 'poured', torch: 'torches' };
 export function counted(records, events, jumped = false) {
   if (jumped || !events.some((e) => COUNTED[e.type])) return records;
   const next = { ...records };
