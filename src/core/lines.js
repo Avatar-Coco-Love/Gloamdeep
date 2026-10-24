@@ -20,6 +20,7 @@ export const LINES = {
   flaskPour: { text: 'You pour a flask.', warn: false }, // poured by itself (D-249)
   flaskFull: { text: "You can't carry more flasks.", warn: false }, // a full stack (D-250)
   knifeTake: { text: 'You take the knife.', warn: false }, // into the held slot (D-252)
+  flaskMake: { text: 'You make an oil flask.', warn: false }, // 3 oilcaps crafted (D-299)
   oilcapFull: { text: "You can't carry more oilcaps.", warn: false }, // a full stack (D-250, D-296)
   // Lines with `texts` take turns: each saying the next, then back to the first (D-297)
   oilcapTake: { texts: ['You grab the oilcap.', 'You pluck an oilcap from the floor.', 'The oilcap comes up with a soft pop.'], warn: false },

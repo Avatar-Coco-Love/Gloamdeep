@@ -2,7 +2,7 @@
 // input/screens.js and the drawing in render/frame.js (D-235); `app` holds
 // what the three share.
 import { VERSION } from './core/version.js';
-import { makeWorld, step, wait, pour, look, pourByItself, switchLantern, followDaylight, toward, DIRS, maxHealth } from './core/turn.js';
+import { makeWorld, step, wait, pour, craft, look, pourByItself, switchLantern, followDaylight, toward, DIRS, maxHealth } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt, biteSound } from './core/enemies.js';
 import { eventsSince, has } from './core/events.js';
@@ -148,6 +148,7 @@ function tryStep(dir) {
   let to = before.hero;
   if (dir === 'wait') app.state = wait(app.state); // standing still, one turn (D-084)
   else if (dir.pour !== undefined) app.state = pour(app.state, dir.pour); // a flask from the bag, one turn (D-247)
+  else if (dir.craft !== undefined) app.state = craft(app.state, dir.craft); // a flask from 3 oilcaps, one turn (D-299)
   else {
     const next = step(app.state, dir);
     const [dx, dy] = DIRS[dir], foe = enemyAt(app.state, app.state.hero.x + dx, app.state.hero.y + dy);
@@ -280,7 +281,7 @@ function dropSlot(i) {
 const stage = document.getElementById('stage');
 const screens = createScreens(app, {
   spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, renameSlot, lookSlot, dropSlot,
-  pour: (slot) => tryStep({ pour: slot }),
+  pour: (slot) => tryStep({ pour: slot }), craft: (slot) => tryStep({ craft: slot }),
   lookAt: (slot) => { app.state = look(app.state, slot); }, // an oilcap's line, free (D-297)
   dev: () => dev, input: () => input, mapMoves: () => mapMoves, // made below
 });

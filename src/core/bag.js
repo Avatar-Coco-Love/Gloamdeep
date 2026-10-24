@@ -16,12 +16,12 @@ export function bagAdd(bag, id) {
 // Whether item `id`'s stack is at the limit
 export const stackFull = (bag, id) => bag.some((s) => s.id === id && s.n >= STACK_MAX);
 
-// The bag with one taken from slot i; an emptied slot is gone, and the ones
-// after it move up
-export function bagTake(bag, i) {
+// The bag with n (one unless said) taken from slot i; an emptied slot is
+// gone, and the ones after it move up
+export function bagTake(bag, i, n = 1) {
   const s = bag[i];
   if (!s) return bag;
-  return s.n > 1 ? bag.map((o, j) => (j === i ? { ...o, n: o.n - 1 } : o)) : bag.filter((o, j) => j !== i);
+  return s.n > n ? bag.map((o, j) => (j === i ? { ...o, n: o.n - n } : o)) : bag.filter((o, j) => j !== i);
 }
 
 // A state from a save older than the bag gets an empty one, and one older

@@ -31,7 +31,9 @@ this page and a decision disagree, the decision wins.
 - **Flask:** oil to pour into the lantern, from the bag (D-247, D-249).
 - **Bag:** what the hero carries, in stacks of up to 3 (D-247, D-250).
 - **Oilcap:** an amber mushroom, the first resource, one in every
-  generated room; 3 will craft an oil flask (D-296).
+  generated room; 3 make an oil flask (D-296, D-299).
+- **Craft, Make:** turning things in the bag into another; Make is its
+  button in the bag (D-299).
 - **Gear, held:** what the hero holds in hand, first the knife (D-252).
 
 ## Creatures
