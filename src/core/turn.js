@@ -17,6 +17,7 @@ import { offEdge, walkOff } from './openings.js';
 import { XP_FOE, gain, discover, foundAfterFall, levelOf } from './xp.js';
 import { bagAdd, bagTake, stackFull } from './bag.js';
 import { note, fresh } from './events.js';
+import { noteTaken, regrow } from './regrow.js';
 
 // § directions: four only, no diagonals (D-042)
 export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -34,7 +35,7 @@ export const maxHealth = (state) => HERO_HEALTH + (state.hearts ?? 0);
 // `seed` sets every generated depth (D-148).
 export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null, events: [], told: {} };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, taken: [], lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null, events: [], told: {} };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -59,7 +60,7 @@ function beginAll(seed) {
 function away(begun, here, seen) {
   const out = {};
   for (const [id, p] of Object.entries(begun)) {
-    if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: p.items || [], seen: seen[id] || blankMemory(p.room) };
+    if (id !== here) out[id] = { room: p.room, lights: p.lights, enemies: p.enemies, items: p.items || [], taken: [], seen: seen[id] || blankMemory(p.room) };
   }
   return out;
 }
@@ -96,15 +97,17 @@ export function step(state, dir) {
 // line; at full health it stays on the floor (D-155, D-156). A weapon goes
 // into an empty hand with its line (D-252); with one held it stays for now,
 // as only one knife lies in the world. Taken is a `take` event, a herb eaten an `eat`.
+// Either way it goes on the room's taken list, to grow back (regrow.js, D-306).
 function pickUp(state, found) {
-  const entry = get(found.id), items = state.items.filter((it) => it !== found), id = found.id;
-  if (entry.hold) return state.held ? state : note(say({ ...state, items, held: id }, entry.says), 'take', { id });
+  const entry = get(found.id), id = found.id;
+  const gone = { items: state.items.filter((it) => it !== found), taken: noteTaken(state, found).taken };
+  if (entry.hold) return state.held ? state : note(say({ ...state, ...gone, held: id }, entry.says), 'take', { id });
   if (entry.bag) {
     const bag = bagAdd(state.bag, id);
-    if (bag) return note(entry.says ? say({ ...state, items, bag }, entry.says) : { ...state, items, bag }, 'take', { id });
+    if (bag) return note(entry.says ? say({ ...state, ...gone, bag }, entry.says) : { ...state, ...gone, bag }, 'take', { id });
     return stackFull(state.bag, id) ? say(state, entry.full) : state;
   }
-  if (entry.heal && state.health < maxHealth(state)) return note(say({ ...state, items, health: Math.min(maxHealth(state), state.health + entry.heal) }, entry.says), 'eat', { id });
+  if (entry.heal && state.health < maxHealth(state)) return note(say({ ...state, ...gone, health: Math.min(maxHealth(state), state.health + entry.heal) }, entry.says), 'eat', { id });
   return state;
 }
 
@@ -223,7 +226,7 @@ function fall(state) {
   for (const [id, p] of Object.entries(state.elsewhere)) seen[id] = p.seen;
   for (const id of Object.keys(seen)) if (isGenerated(id)) delete seen[id];
   const { room, lights, enemies, items = [] } = begun[place];
-  const woke = { room, hero, lights, enemies, items, seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
+  const woke = { room, hero, lights, enemies, items, taken: [], seen: seen[place] || blankMemory(room), place, elsewhere: away(begun, place, seen) };
   const home = state.home.places ? { ...state.home, ...begun[place], hero, places: begun } : state.home;
   const { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn } = state;
   const fell = { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn, seed: state.seed, health: 0 };
@@ -311,14 +314,16 @@ const passTurn = (state) => fresh({ ...state, turn: state.turn + 1, oil: state.l
 // The end of a passed turn: the oil line, if one was crossed, a new room's
 // experience (D-245), the level line if a level was reached, which replaces
 // any other line (D-246), then the enemies' turn. Another room is an `enter`
-// event, a new one a `found` too, and a level reached a `level`.
+// event, a new one a `found` too, and a level reached a `level`. Last, what
+// was taken here and is due grows back out of sight, or anywhere in a room
+// just come into, as it grew while the hero was away (regrow.js, D-307).
 const endTurn = (before, after) => {
   const id = oilLine(before.oil, after.oil), place = after.place;
   let found = discover(before, id ? say(after, id) : after);
   if (place !== before.place) found = note(found, 'enter', { place });
   if (found.found.length > after.found.length) found = note(found, 'found', { place });
   const level = levelOf(found.xp);
-  return enemiesAct(level > levelOf(before.xp) ? note(say(found, 'levelUp', level), 'level', { n: level }) : found);
+  return regrow(enemiesAct(level > levelOf(before.xp) ? note(say(found, 'levelUp', level), 'level', { n: level }) : found), place !== before.place);
 };
 
 // § switch: the lantern on or off, whenever the player likes. It is free:
