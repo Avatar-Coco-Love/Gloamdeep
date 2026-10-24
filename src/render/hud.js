@@ -6,7 +6,7 @@ import { drawText, textWidth } from './font.js';
 // § status: the boxes in the strip, hearts left with the level after them,
 // depth middle, oil right; or stacked in the column at the room's left when
 // the strip is that narrow one (D-199): hearts, depth, oil, then the level
-// from the top, 2 pixels apart (D-246).
+// from the top, 2 pixels apart (D-246), all lower by a second row of hearts.
 export function drawStatus(c, { oil, health, max, depth, level }) {
   if (c.canvas.width === W) {
     drawHearts(c, health, max, 2, BOX_Y);
@@ -14,10 +14,11 @@ export function drawStatus(c, { oil, health, max, depth, level }) {
     drawDepth(c, depth, null, BOX_Y);
     drawOilBar(c, oil, W - BOX_W - 2, BOX_Y);
   } else {
+    const below = heartsH(max) - heartsH(ROW_HEARTS); // a second row of hearts pushes the rest down
     drawHearts(c, health, max, 2, 2);
-    drawDepth(c, depth, 2, 12);
-    drawOilBar(c, oil, 2, 25);
-    drawBox(c, `LV ${level}`, 2, 35);
+    drawDepth(c, depth, 2, 12 + below);
+    drawOilBar(c, oil, 2, 25 + below);
+    drawBox(c, `LV ${level}`, 2, 35 + below);
   }
 }
 
@@ -47,21 +48,23 @@ function drawOilBar(c, oil, bx, by) {
 // § hearts: the hero's health as small pixel hearts in the top left, in a
 // box like the oil bar's (D-116). A full heart is the hostile red with the
 // study's deeper red (PAL p, R) under it; an empty one is an empty oil segment's colour.
-const HEART = ['.x.x.', 'xxxxx', '.xxx.', '..x..'], HEART_W = 5;
-const heartsW = (max) => max * HEART_W + (max - 1) * GAP + 4;
+// Past 5, hearts bought (D-293) fill a second row below, up to 10.
+const HEART = ['.x.x.', 'xxxxx', '.xxx.', '..x..'], HEART_W = 5, ROW_HEARTS = 5;
+const heartsW = (max) => Math.min(max, ROW_HEARTS) * HEART_W + (Math.min(max, ROW_HEARTS) - 1) * GAP + 4;
+const heartsH = (max) => Math.ceil(max / ROW_HEARTS) * (HEART.length + GAP) - GAP + 4;
 function drawHearts(c, health, max, bx, by) {
-  const w = heartsW(max), h = HEART.length + 4;
+  const w = heartsW(max), h = heartsH(max);
   c.fillStyle = '#0e0c16'; c.fillRect(bx, by, w, h);
   c.fillStyle = '#2a2636';
   c.fillRect(bx, by, w, 1); c.fillRect(bx, by + h - 1, w, 1);
   c.fillRect(bx, by, 1, h); c.fillRect(bx + w - 1, by, 1, h);
   for (let i = 0; i < max; i++) {
-    const x0 = bx + 2 + i * (HEART_W + GAP), full = i < health;
+    const x0 = bx + 2 + (i % ROW_HEARTS) * (HEART_W + GAP), y0 = by + 2 + Math.floor(i / ROW_HEARTS) * (HEART.length + GAP), full = i < health;
     HEART.forEach((row, y) => [...row].forEach((ch, x) => {
       if (ch !== 'x') return;
       const low = y === HEART.length - 1 || HEART[y + 1][x] !== 'x'; // the heart's lower edge
       c.fillStyle = !full ? '#2a2636' : low ? '#c4473a' : '#e8786a';
-      c.fillRect(x0 + x, by + 2 + y, 1, 1);
+      c.fillRect(x0 + x, y0 + y, 1, 1);
     }));
   }
 }

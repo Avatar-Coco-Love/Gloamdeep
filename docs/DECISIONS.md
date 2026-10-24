@@ -177,3 +177,10 @@ one tile away from the hero, the mirror of its chase (D-128): the
 farther side first, else the other side, else it stays put. It bites
 only when it can't step away. It flees until it dies or the hero falls.
 The hit line becomes "The rat squeaks and flees."
+
+**D-293 · 2026-10-24 · Embers and the Growth tab** (the owner's picks;
+answers Q-050, builds D-246) Each level past the first gives 1 ember,
+including levels reached before this. Embers are spent in a new Journal
+tab, Growth, after Records, at any time. The first thing an ember buys
+is one more heart, up to 5 more (10 in all); it arrives full. Spent
+embers can't be taken back. Past 5, hearts fill a second row of 5.

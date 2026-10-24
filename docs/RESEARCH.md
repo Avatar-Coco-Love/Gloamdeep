@@ -30,6 +30,17 @@ items: collectables, craftables, weapons and more. Where they stand:
   the deepest depth first (D-260). Later quests, challenges,
   achievements, maybe leaderboards. Achievements in tiers on each
   record, with rewards (D-284).
+- Going deeper, and growing (2026-10-24): one loop, deeper → find →
+  craft and grow → deeper. Resources to find and things to craft;
+  experience to spend (embers, D-293), then abilities such as a double
+  jump over gaps and magic or elemental powers for big fights. Much more
+  variety in how the underground and the surface are made. Waystones to
+  wake for fast travel. A ship found to sail the ocean to another region.
+  New enemies, secrets and bosses. NPCs and groups, such as a secret cult
+  in a lit place underground that confronts you and talks first: your
+  choices set how they feel about you, with friendships as in Stardew
+  Valley, rumours, quests, vendors, a companion or two, and their
+  equipment to use when they allow it.
 
 ## The games
 **Hoplite** (phone, turn-based, hex grid; from the 2013 7-Day Roguelike)

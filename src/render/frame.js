@@ -23,7 +23,7 @@ import { drawMark, drawAlert, drawGain } from './walk.js';
 import { drawDoors } from './doors.js';
 import { LANTERN, LANTERN_AT } from '../core/light.js';
 import { reach } from '../core/oil.js';
-import { HERO_HEALTH } from '../core/turn.js';
+import { maxHealth } from '../core/turn.js';
 import { glowsIn } from '../core/stairs.js';
 import { depthOf } from '../core/room.js';
 import { shownLine } from '../core/lines.js';
@@ -74,7 +74,7 @@ export function createFrame(app, ui) {
     else if (screen === 'trim') drawTrims(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'clothes') drawClothes(ctx, app.cloak, app.eyes, app.trim, app.clothes, app.chosen, t, still());
     else if (screen === 'drop') drawAsk(ctx, slotName(app.profiles.slots[app.dropping], app.dropping), SURE_MENU, app.chosen, DROP_NOTE, t, still());
-    else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, playing(app.profiles).played, t, still());
+    else if (screen === 'journal') drawJournal(ctx, playing(app.profiles).records, playing(app.profiles).played, app.state, app.tab, app.chosen, t, still());
     else if (screen === 'sure') drawTitle(ctx, SURE_MENU, app.chosen, t, still(), SURE_HEADING, SURE_NOTE);
     else drawTitle(ctx, screens.menuOf(screen), app.chosen, t, still(), screen === 'settings' ? 'Settings' : null);
   }
@@ -145,7 +145,7 @@ export function createFrame(app, ui) {
       ctx.globalAlpha = 1;
     }
     // § strip: the hearts, depth and oil above the room or beside it, covering none of it (D-198, D-199)
-    drawStatus(hudCtx, { oil: s.oil, health: s.health, max: HERO_HEALTH, depth: depthOf(s.place), level: levelOf(s.xp ?? state.xp) }); // the fall's picture keeps no xp, and a fall keeps it all (D-245)
+    drawStatus(hudCtx, { oil: s.oil, health: s.health, max: maxHealth(state), depth: depthOf(s.place), level: levelOf(s.xp ?? state.xp) }); // the fall's picture keeps no xp, and a fall keeps it all (D-245)
     if (app.screen !== 'play' && app.screen !== 'bag') veil(hudCtx); // dimmed with the room under a menu; the bag leaves both in view (D-247)
     const line = fall?.from ? null : shownLine(state); // the fall's line once the hero wakes
     textLine.draw(ctx, line, t, still());
@@ -156,7 +156,7 @@ export function createFrame(app, ui) {
     else if (app.screen === 'seed') drawSeedPad(ctx, app.entry, app.chosen, t, still());
     else if (app.screen === 'howto') drawHowTo(ctx, app.page, app.settings.controls, app.chosen, t, still());
     else if (app.screen === 'history') drawHistory(ctx, app.rows, app.opened, app.scroll, app.chosen, t, still());
-    else if (app.screen === 'journal') drawJournal(ctx, playing(app.profiles).records, playing(app.profiles).played, t, still());
+    else if (app.screen === 'journal') drawJournal(ctx, playing(app.profiles).records, playing(app.profiles).played, app.state, app.tab, app.chosen, t, still());
     else if (app.screen === 'map') drawMap(ctx, app.view, t, still(), screens.turns());
     else if (app.screen === 'bag') drawBag(ctx, state.bag, app.chosen, SPRITES, app.bagOnTop, state.held);
     else dev.draw(ctx, state, cam);
