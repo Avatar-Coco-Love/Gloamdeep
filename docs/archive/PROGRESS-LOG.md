@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.87, the heartcap.** A bright red mushroom in about
+  half the rooms, into the bag with lines that take turns; tones, eating
+  and its potion come next (D-303, D-304). [Playtest](https://claude.ai/artifact/8jDdPYwcYT7k1Mu4yjBXZc).
 - **2026-10-24, 0.2.86, calmed when you leave.** A rat still fleeing as
   the hero leaves the room has stopped when they come back; it must notice
   them again (D-302, the owner's find). [Playtest](https://claude.ai/artifact/ErdiWgtG9byv2d9uHgisWp).

@@ -27,6 +27,8 @@ export const ITEMS = {
   oilcap: { id: 'oilcap', kind: 'item', name: 'Oilcap', bag: true, says: 'oilcapTake', look: 'oilcapLook', full: 'oilcapFull', tone: MUSHROOM_TONE, regrow: DAY_TURNS,
     craft: { into: 'flask', of: 3, says: 'flaskMake' } },
   // A bright red mushroom in about half the rooms (D-303), into the bag the
-  // oilcap's way, with its own lines and its own tones. Eating it and its potion come later.
-  heartcap: { id: 'heartcap', kind: 'item', name: 'Heartcap', bag: true, says: 'heartcapTake', look: 'heartcapLook', full: 'heartcapFull', tone: MUSHROOM_TONE, regrow: DAY_TURNS },
+  // oilcap's way, with its own lines and its own tones. Eat, in the bag, heals
+  // `heal` hearts with its `eats` line, never above full (D-308). Its potion comes later.
+  heartcap: { id: 'heartcap', kind: 'item', name: 'Heartcap', bag: true, says: 'heartcapTake', look: 'heartcapLook', full: 'heartcapFull', tone: MUSHROOM_TONE, regrow: DAY_TURNS,
+    heal: 1, eats: 'heartcapEat' },
 };

@@ -21,6 +21,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.90 (2026-10-24)
+- Heartcaps can now be eaten. Choose them in the bag and press Eat (or Enter or Space): one heals 1 heart and takes a turn, and the bag stays open so you can eat another. The line changes each time, such as "You eat a heartcap."
+- At full health Eat shows dim; pressing it says "You aren't hurt.", keeps the heartcap and takes no turn.
+- A healing potion made from heartcaps comes in a later step.
+- Decisions: D-308.
+
 ## 0.2.89 (2026-10-24)
 - Mushrooms, herbs and oil flasks you take now grow back where they lay, each on its own clock from the turn you took it: oilcaps, heartcaps and herbs after a day, 300 turns, and a flask after 3 days, 900 turns. The knife never does. A mushroom comes back with the tone it had.
 - Nothing appears before your eyes: a thing comes back only on a tile out of your light, with nothing standing or lying on it. Walking into a room, whatever grew while you were away is already there.

@@ -169,3 +169,12 @@ only on a tile out of the hero's light, with no hero, creature or item on it;
 in a room the hero has just walked into, what grew while they were away is
 already there. Things the dev tools placed grow back too. Things taken in an
 old save before this stay gone; a fall still begins every room anew.
+
+**D-308 · 2026-10-24 · Eating a heartcap** (step H3, the owner's picks,
+four of four recommended; builds D-303) Choosing heartcaps in the bag shows
+an Eat button where Pour and Make sit; Enter or Space does it too. Eating
+one heals 1 heart, never above full, and a turn passes, like a pour; the
+bag stays open, on the slot. Its lines take turns: "You eat a heartcap.",
+"The heartcap tastes of earth.", "Warmth spreads through you." At full
+health Eat shows dim; used, the heartcap stays, no turn passes and the line
+says "You aren't hurt."
