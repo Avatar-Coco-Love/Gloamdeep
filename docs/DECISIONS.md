@@ -108,3 +108,13 @@ flasks.", the oilcaps stay and no turn passes.
 D-279, by the 12 KB rule in `CLAUDE.md`) D-279 to D-298 moved unchanged to
 `archive/DECISIONS-GROWING-3.md` as this file would have passed 12 KB.
 They stay in force.
+
+**D-301 · 2026-10-24 · The rat flees or stands its ground** (the owner's
+picks; partly supersedes D-292) When a hit hurts a rat, a seeded coin
+toss, 1 in 2, picks one and it keeps to it. Fleeing, it steps away as in
+D-292 for 4 turns, then stops and has to notice the hero again (in light,
+along a clear line) before it comes back. Standing, it keeps coming and
+bites. The stand lines take turns (D-297): "The rat stands its ground.",
+"The rat squeaks and bares its teeth.", "The rat squeaks." On the turn it
+is hit, its stand line shows instead of the bite line (D-117); it still
+bites. ("The rat squeaks and stands its ground." was too wide for the line.)

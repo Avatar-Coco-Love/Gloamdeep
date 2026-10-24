@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.82, smooth.** Sliding goes by time, so slow phones
+  walk at full speed; fps on the dev line (D-294). [Playtest](https://claude.ai/artifact/MaPKsnaAHny71ZQZ1CNa9w).
 - **2026-10-24, 0.2.81, embers.** Each level past the first gives an
   ember; the Journal's Growth tab spends one on a heart, up to 10 (D-293). [Playtest](https://claude.ai/artifact/92rjxR4igmX3o4XMtDocgi).
 - **2026-10-24, 0.2.80, the rat flees.** A hurt rat steps a tile a turn

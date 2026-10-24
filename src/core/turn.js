@@ -1,7 +1,7 @@
 // § turn: the game state and the turn rules, as plain data (TECH.md,
 // "Turn rules are pure functions"). Nothing moves until the player acts (D-016).
 import { tileAt, beginPlace, isGenerated, PLACES } from './room.js';
-import { nextSeed } from './rng.js';
+import { nextSeed, rng, seedFor } from './rng.js';
 import { blankMemory } from './fog.js';
 import { OIL, burnOil } from './oil.js';
 import { get } from './registry.js';
@@ -112,7 +112,7 @@ function pickUp(state, found) {
 // or not (D-114). The bite line replaces any other said this turn (D-117).
 // A biting enemy has noticed the hero, even in the dark (D-157).
 // One that shuns light doesn't bite from a lit tile (D-240, its `bitesLit`).
-// One that flees when hurt bites only when it has no tile to flee to (D-292).
+// One fleeing bites only when it has no tile to flee to (D-292).
 // At 0 health the hero falls and wakes at the room's start (D-119).
 // Then the others come one tile closer (D-126 to D-129).
 // Each bite is a `bite` event, in the order they bite.
@@ -123,7 +123,8 @@ function enemiesAct(state) {
   if (!bites.length) return enemiesMove(state);
   const health = Math.max(0, state.health - bites.reduce((sum, e) => sum + get(e.id).bite, 0));
   const enemies = state.enemies.map((e) => (bites.includes(e) ? { ...e, chasing: true } : e));
-  let bitten = say({ ...state, health, enemies }, get(bites[0].id).bites);
+  const stood = state.line?.turn === state.turn && bites.some((e) => get(e.id).stands === state.line.id);
+  let bitten = stood ? { ...state, health, enemies } : say({ ...state, health, enemies }, get(bites[0].id).bites);
   for (const e of bites) bitten = note(bitten, 'bite', { id: e.id, hurt: get(e.id).bite });
   return health > 0 ? enemiesMove(bitten) : fall(bitten);
 }
@@ -138,7 +139,8 @@ function enemiesAct(state) {
 // How each acts comes from its ways (behaviours.js, D-269): one that shuns
 // light (D-240) notices along a clear line, lit or not, and never steps onto
 // a lit tile; caught in light, it backs away, into the dark if it can.
-// One that flees when hurt steps away from the hero instead (D-292).
+// One fleeing steps away from the hero instead (D-292), for its `flees`
+// turns; then it stops and has to notice them again (D-301).
 function enemiesMove(state) {
   let enemies = state.enemies;
   for (const e of state.enemies) {
@@ -151,7 +153,9 @@ function enemiesMove(state) {
     const now = { ...state, enemies };
     const to = (flees ? backAway(now, e) : runs ? fleeStep(now, e) : near ? e : chaseStep(now, e)) || e;
     const facing = to.x < e.x ? 'left' : to.x > e.x ? 'right' : e.facing;
-    enemies = enemies.map((o) => (o === e ? { ...e, x: to.x, y: to.y, ...(chasing && { chasing: true }), ...(facing && { facing }) } : o));
+    const moved = { ...e, x: to.x, y: to.y, ...(chasing && { chasing: true }), ...(facing && { facing }) };
+    if (runs) Object.assign(moved, e.flees > 1 ? { flees: e.flees - 1 } : { flees: 0, chasing: false });
+    enemies = enemies.map((o) => (o === e ? moved : o));
   }
   return enemies === state.enemies ? state : { ...state, enemies };
 }
@@ -175,8 +179,17 @@ function backAway(state, e) {
     far(next.filter((t) => away(t) > away(e) && free(state, e, t.x, t.y, true) && !litAt(unlit, t.x, t.y)));
 }
 
-// Whether enemy e flees: it flees when hurt, and has been (D-292)
-const fleeing = (e) => traits(get(e.id)).whenHurt === 'flee' && e.health < get(e.id).health;
+// Whether enemy e is fleeing: turns of fleeing left (D-292, D-301)
+const fleeing = (e) => e.flees > 0;
+
+// One that may flee when hurt tosses a seeded coin as the hit hurts it: it
+// flees for `fleeTurns` turns, or stands its ground and keeps coming (D-301)
+function fleeOrStand(state, enemies, foe) {
+  const t = traits(get(foe.id)), hurt = enemies.find((e) => e.x === foe.x && e.y === foe.y);
+  if (t.whenHurt !== 'flee' || !hurt) return { enemies, stands: false };
+  const flees = rng(seedFor(state.seed ^ state.turn, foe.x * 64 + foe.y))() < t.fleeChance;
+  return { enemies: flees ? enemies.map((e) => (e === hurt ? { ...e, flees: t.fleeTurns } : e)) : enemies, stands: !flees };
+}
 
 // The tile a fleeing enemy steps onto: chaseStep's mirror, away from the hero,
 // the farther side first, else the other side, else null: it stays (D-292)
@@ -219,16 +232,17 @@ function fall(state) {
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109),
 // or the weapon held, which hits for its own `hit` (D-252). It passes a turn
-// like a step, so oil burns (D-111). The foe's line is said, and an oil line
+// like a step, so oil burns (D-111). One that may flee flees or stands (D-301).
+// The foe's line is said, and an oil line
 // said on the same turn replaces it (D-112). A foe beaten is worth experience (D-245).
 // It is a `hit` event, and a foe beaten a `beat` too.
 export const LANTERN_HIT = 1; // two hits kill the rat (D-110)
 export const heroHit = (state) => (state.held && get(state.held)?.hit) || LANTERN_HIT;
 function attack(state, foe) {
-  const entry = get(foe.id), enemies = hitEnemy(state.enemies, foe, entry, heroHit(state));
-  const dead = enemies.length < state.enemies.length;
+  const entry = get(foe.id), hit = hitEnemy(state.enemies, foe, entry, heroHit(state));
+  const dead = hit.length < state.enemies.length, { enemies, stands } = fleeOrStand(state, hit, foe);
   const next = note(passTurn({ ...state, enemies }), 'hit', { id: foe.id, held: state.held });
-  return endTurn(state, say(dead ? note(gain(next, XP_FOE), 'beat', { id: foe.id }) : next, dead ? entry.die : entry.hurt));
+  return endTurn(state, say(dead ? note(gain(next, XP_FOE), 'beat', { id: foe.id }) : next, dead ? entry.die : stands ? entry.stands : entry.hurt));
 }
 
 // § light a torch: walking into the wall of an unlit torch, from the tile it

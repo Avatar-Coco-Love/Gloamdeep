@@ -37,7 +37,7 @@ this page and a decision disagree, the decision wins.
 - **Gear, held:** what the hero holds in hand, first the knife (D-252).
 
 ## Creatures
-- **Rat:** chases once it notices the hero (D-126, D-226), and flees once hurt (D-292).
+- **Rat:** chases once it notices the hero (D-126, D-226), and once hurt flees for 4 turns or stands its ground, on a coin toss (D-292, D-301).
 - **Gloamling:** chases, and shuns light (D-240).
 - **Chases, Shuns light:** the ways creatures have so far (D-269).
 

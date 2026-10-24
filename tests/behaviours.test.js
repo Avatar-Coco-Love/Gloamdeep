@@ -11,8 +11,8 @@ test('every creature names its ways, and every way exists', () => {
   }
 });
 
-test('a rat chases: it notices in light and steps into it, and flees once hurt (D-292)', () => {
-  assert.deepEqual(traits(get('rat')), { notices: 'inLight', moves: 'toward', intoLight: true, bitesLit: true, whenLit: null, whenHurt: 'flee' });
+test('a rat chases: it notices in light and steps into it, and may flee once hurt (D-292, D-301)', () => {
+  assert.deepEqual(traits(get('rat')), { notices: 'inLight', moves: 'toward', intoLight: true, bitesLit: true, whenLit: null, whenHurt: 'flee', fleeChance: 0.5, fleeTurns: 4 });
 });
 
 test('a gloamling chases and shuns light, the later way winning', () => {
