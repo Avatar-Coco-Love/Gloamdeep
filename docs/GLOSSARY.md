@@ -32,8 +32,9 @@ this page and a decision disagree, the decision wins.
 - **Bag:** what the hero carries, in stacks of up to 3 (D-247, D-250).
 - **Oilcap:** an amber mushroom, the first resource, one in every
   generated room; 3 make an oil flask (D-296, D-299).
-- **Heartcap:** a bright red mushroom in about half the rooms; it will
-  heal, eaten or made into a potion (D-303).
+- **Heartcap:** a bright red mushroom in about half the rooms; Eat, in the
+  bag, heals 1 heart (D-303, D-308); its potion comes later.
+- **Eat:** the bag's button for a heartcap (D-308).
 - **Tone:** a mushroom's own slight shift of colour (D-304, D-305).
 - **Grow back:** a picked thing returning after its time (D-306).
 - **Craft, Make:** turning things in the bag into another; Make is its

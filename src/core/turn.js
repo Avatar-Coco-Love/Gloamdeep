@@ -285,6 +285,17 @@ export function craft(state, i) {
   return endTurn(state, say({ ...passTurn(state), bag }, recipe.says));
 }
 
+// § eat: Eat on bag slot i eats one of its item, healing its `heal` hearts,
+// never above full, with its `eats` line; a turn passes, like a pour (D-308).
+// At full health it stays, "You aren't hurt." is said, free. An `eat` event.
+export function eat(state, i) {
+  const entry = state.bag[i] && get(state.bag[i].id);
+  if (!entry?.eats) return state;
+  if (state.health >= maxHealth(state)) return say(state, 'notHurt');
+  const next = note(say(passTurn(state), entry.eats), 'eat', { id: entry.id });
+  return endTurn(state, { ...next, bag: bagTake(state.bag, i), health: Math.min(maxHealth(next), next.health + entry.heal) });
+}
+
 // § look: choosing bag slot i says its item's `look` line, the next in turn
 // (D-297). Free: no turn passes. An item with none changes nothing.
 export function look(state, i) {

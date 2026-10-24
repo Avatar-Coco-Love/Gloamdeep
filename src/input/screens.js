@@ -13,6 +13,7 @@
 // pick a slot, Enter, Space or Pour pours the chosen flask, which closes it and takes the
 // turn; the button (a cross while it is open), I, Esc, P or a tap outside it closes it (D-247).
 // On oilcaps, Enter, Space or Make crafts a flask, a turn, and the bag stays open on it (D-299).
+// On heartcaps, Enter, Space or Eat eats one, a turn, and the bag stays open (D-308).
 // Continue goes back to the saved journey; New journey, while one is saved, asks
 // "Start over?" first, and No, Esc or P return to the title (D-238).
 // Version history in Settings opens the page of every version (D-254): Up and Down choose one,
@@ -75,7 +76,7 @@ const PAN = 8; // game pixels an arrow key scrolls the map
 const STAIRS_REACH = 8; // game pixels from found stairs' centre that a tap still picks them
 
 // `ui`: the spoken line, the buttons, and the dev tools, input and map moves, asked for
-// when used (they are made after the screens); `newJourney`, `randomSeed`, `pour(slot)`, `craft(slot)` and `lookAt(slot)` from main.js.
+// when used (they are made after the screens); `newJourney`, `randomSeed`, `pour(slot)`, `craft(slot)`, `eat(slot)` and `lookAt(slot)` from main.js.
 export function createScreens(app, ui) {
   const { spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion } = ui;
   const menuOf = (sc) => (sc === 'title' ? titleMenu(app.saved) : sc === 'paused' ? PAUSE_MENU : sc === 'sure' || sc === 'drop' ? SURE_MENU
@@ -318,16 +319,24 @@ export function createScreens(app, ui) {
 
   // § bag (D-247): opens on the first slot; no turn passes until a flask is poured
   const slotWords = (i) => { const s = app.state.bag[i]; return s ? `${get(s.id).name}, ${s.n}` : 'Empty'; };
-  const bagWords = () => `Bag. ${app.state.bag.length ? app.state.bag.map((s, i) => slotWords(i)).join('. ') : 'Empty'}. Left and Right choose, Enter pours or makes, I or Esc closes.`;
+  const bagWords = () => `Bag. ${app.state.bag.length ? app.state.bag.map((s, i) => slotWords(i)).join('. ') : 'Empty'}. Left and Right choose, Enter pours, makes or eats, I or Esc closes.`;
   function toggleBag() {
     if (app.screen === 'bag') show('play');
     else if (app.screen === 'play') { app.queued = null; app.bagOnTop = panelOnTop(app.state.hero.y * TILE - app.cam.y); show('bag'); }
   }
   function pickSlot(i) { app.chosen = i; spoken.textContent = slotWords(i); ui.lookAt(i); } // choosing says an item's look line (D-297)
-  // Enter, Space or the button: pours a flask, or makes one from oilcaps (D-299)
+  // Enter, Space or the button: pours a flask, makes one from oilcaps (D-299),
+  // or eats a heartcap, the bag staying open on what is left (D-308)
   function useChosen() {
     const s = app.state.bag[app.chosen], entry = s && get(s.id);
     if (entry?.oil) { show('play'); ui.pour(app.chosen); return; }
+    if (entry?.eats) {
+      ui.eat(app.chosen);
+      if (app.fall) { show('play'); return; } // a bite in that turn felled the hero
+      if (!app.state.bag[app.chosen]) app.chosen = Math.max(0, app.state.bag.length - 1); // the last one eaten
+      spoken.textContent = slotWords(app.chosen);
+      return;
+    }
     if (!entry?.craft || s.n < entry.craft.of) return; // dim: nothing happens
     const turn = app.state.turn;
     ui.craft(app.chosen);

@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.89 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.90 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-H3: eat a heartcap from the bag for a little healing (D-304). Propose how
-much it heals and how eating is chosen in the bag.
+H4: make a healing potion from heartcaps, with its own art (D-303).
+Propose how many heartcaps it takes, how much it heals, and its look.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -71,7 +71,7 @@ The heartcap (D-303, D-304, D-306; order approved)
 - [x] H1 The heartcap, a red mushroom in about half the rooms, into the bag, 0.2.87
 - [x] H2 Every mushroom a slightly different tone, 0.2.88 (D-305)
 - [x] H2b Things picked grow back: mushrooms, herbs, flasks, 0.2.89 (D-306, D-307)
-- [ ] H3 Eat a heartcap from the bag for a little healing
+- [x] H3 Eat a heartcap from the bag: 1 heart, a turn, 0.2.90 (D-308)
 - [ ] H4 Make a healing potion from heartcaps, with its own art
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
@@ -82,12 +82,12 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); cheaper lighting for phones, the look unchanged (D-294, D-295); workstations for some crafts (D-296); a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-24, 0.2.87, the heartcap.** A bright red mushroom in about
-  half the rooms, into the bag with lines that take turns; tones, eating
-  and its potion come next (D-303, D-304). [Playtest](https://claude.ai/artifact/8jDdPYwcYT7k1Mu4yjBXZc).
 - **2026-10-24, 0.2.88, mushroom tones.** Every oilcap and heartcap its
   own slight tone, up to 12° of hue and 7 of lightness, set by the seed;
   things picked will grow back next (D-305, D-306). [Playtest](https://claude.ai/artifact/9NhnMKg5FRq6ga9mvJCHNm).
 - **2026-10-24, 0.2.89, things grow back.** Mushrooms and herbs taken
   come back after 300 turns, a flask after 900, never the knife; only out
   of the hero's light, or already there on walking in (D-306, D-307). [Playtest](https://claude.ai/artifact/DdX9k9FJ3EJJTNWPRs6jKj).
+- **2026-10-24, 0.2.90, eating a heartcap.** Eat, in the bag, eats a
+  heartcap: 1 heart, a turn, the bag stays open, lines that take turns;
+  dim at full health, "You aren't hurt." (D-308). [Playtest](https://claude.ai/artifact/K6kCv4tKpJcHZgyVBvVnGp).
