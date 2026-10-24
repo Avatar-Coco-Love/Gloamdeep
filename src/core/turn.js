@@ -34,7 +34,7 @@ export const maxHealth = (state) => HERO_HEALTH + (state.hearts ?? 0);
 // `seed` sets every generated depth (D-148).
 export function makeState(room, start = FIRST_START, lights = [], enemies = [], items = [], seed = 1) {
   const home = { place: 'first', room, hero: { x: start.x, y: start.y }, lights, enemies, items };
-  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null, events: [] };
+  return { room, hero: home.hero, turn: 0, seed, seen: blankMemory(room), oil: OIL.start, lit: true, health: HERO_HEALTH, items, lights, enemies, line: null, place: 'first', elsewhere: {}, home, xp: 0, found: ['first'], bag: [], held: null, events: [], told: {} };
 }
 
 // § world: every place, the hero in the first one. The others wait in
@@ -91,7 +91,8 @@ export function step(state, dir) {
 }
 
 // § pick up: a flask goes into the bag, and stays on the floor when the bag
-// has no room (D-247), or with its full line when its stack is full (D-250). A herb heals, never above full, and is gone with its
+// has no room (D-247), or with its full line when its stack is full (D-250);
+// an oilcap the same, saying one of its lines as it goes in (D-296, D-297). A herb heals, never above full, and is gone with its
 // line; at full health it stays on the floor (D-155, D-156). A weapon goes
 // into an empty hand with its line (D-252); with one held it stays for now,
 // as only one knife lies in the world. Taken is a `take` event, a herb eaten an `eat`.
@@ -100,7 +101,7 @@ function pickUp(state, found) {
   if (entry.hold) return state.held ? state : note(say({ ...state, items, held: id }, entry.says), 'take', { id });
   if (entry.bag) {
     const bag = bagAdd(state.bag, id);
-    if (bag) return note({ ...state, items, bag }, 'take', { id });
+    if (bag) return note(entry.says ? say({ ...state, items, bag }, entry.says) : { ...state, items, bag }, 'take', { id });
     return stackFull(state.bag, id) ? say(state, entry.full) : state;
   }
   if (entry.heal && state.health < maxHealth(state)) return note(say({ ...state, items, health: Math.min(maxHealth(state), state.health + entry.heal) }, entry.says), 'eat', { id });
@@ -252,6 +253,13 @@ export function pour(state, i) {
   if (!entry?.oil) return state;
   const next = note(passTurn(state), 'pour', { id: state.bag[i].id, by: 'hand' });
   return endTurn(state, { ...next, bag: bagTake(state.bag, i), oil: Math.min(1, next.oil + entry.oil) });
+}
+
+// § look: choosing bag slot i says its item's `look` line, the next in turn
+// (D-297). Free: no turn passes. An item with none changes nothing.
+export function look(state, i) {
+  const entry = state.bag[i] && get(state.bag[i].id);
+  return entry?.look ? say(state, entry.look) : state;
 }
 
 // § pour by itself: with Flasks set to By itself (D-249), after a turn has

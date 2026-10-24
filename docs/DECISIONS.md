@@ -191,3 +191,27 @@ slide by time, not by frame: a tile in about 0.09 seconds on any device,
 the speed they had at 60 frames a second. The dev stats line starts with
 the frames drawn each second ("fps 60"). Cheaper lighting, the most work
 in each frame, is an idea for later.
+
+**D-295 · 2026-10-24 · Cheaper lighting keeps the look** (the owner's
+pick, builds D-294) Lighting stays as it is for now. When it is made
+cheaper, the picture must stay exactly the same, checked pixel by pixel.
+
+**D-296 · 2026-10-24 · The oilcap, the first resource** (the owner's
+picks) An amber mushroom, the Oilcap, lies in every generated room, one
+on any open tile nothing else took, picked last so the rest of each
+seed's room stays as it was. Walked onto, it goes into the bag as a flask
+does, in stacks of 3. Other kinds of mushroom will craft other things.
+The first craft comes next: 3 oilcaps make 1 oil flask, from the bag,
+anywhere for now; workstations for some crafts may come later.
+
+**D-297 · 2026-10-24 · Lines that take turns** (the owner's picks) An
+oilcap says a line as it is picked up, and choosing its slot in the bag
+says a hint, free. Each comes from a short list, said in turn, then from
+the first again: "You grab the oilcap.", "You pluck an oilcap from the
+floor.", "The oilcap comes up with a soft pop."; and "Three make an oil
+flask.", "It smells faintly of lamp oil.", "Its amber cap is slick with
+oil." The save keeps which comes next.
+
+**D-298 · 2026-10-24 · The bag sits above the text line** (the owner's
+pick) The bag panel, over the room's foot, moves up 13 pixels so the
+text line under the room stays in view while it is open.

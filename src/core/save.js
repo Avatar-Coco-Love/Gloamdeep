@@ -8,10 +8,11 @@ import { withBag } from './bag.js';
 // § upgrades: an older save is brought up to today's shape, one numbered step at a
 // time (D-266), instead of dropped. When the state's shape changes, raise FORMAT and
 // add the step from the old number to the new one; never edit a step once merged.
-export const FORMAT = 3;
+export const FORMAT = 4;
 export const UPGRADES = {
   1: (s) => withBag(withXp(s)), // 1 → 2: experience (D-245), the bag and the held item (D-247, D-252)
   2: (s) => ({ ...s, events: [] }), // 2 → 3: the turn's events, none yet (D-267)
+  3: (s) => ({ ...s, told: {} }), // 3 → 4: which line each list says next, all from the first (D-297)
 };
 // A save's state at today's shape, or null when no steps lead there (broken, or newer than this game)
 export function upgradeState(format, state) {

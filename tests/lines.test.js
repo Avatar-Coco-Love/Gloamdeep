@@ -52,8 +52,8 @@ test('a bump passes no turn and says nothing', () => {
 });
 
 test('every line can be drawn and fits the strip', () => {
-  for (const line of Object.values(LINES)) {
-    const text = line.text.replace('{n}', 99); // a number filled in, as the level (D-246)
+  for (const line of Object.values(LINES)) for (const said of line.texts || [line.text]) { // each of a list's lines (D-297)
+    const text = said.replace('{n}', 99); // a number filled in, as the level (D-246)
     assert.ok([...text].every(hasGlyph), text);
     assert.ok(textWidth(text) <= W - 4, text);
   }

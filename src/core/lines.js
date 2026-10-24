@@ -20,14 +20,25 @@ export const LINES = {
   flaskPour: { text: 'You pour a flask.', warn: false }, // poured by itself (D-249)
   flaskFull: { text: "You can't carry more flasks.", warn: false }, // a full stack (D-250)
   knifeTake: { text: 'You take the knife.', warn: false }, // into the held slot (D-252)
+  oilcapFull: { text: "You can't carry more oilcaps.", warn: false }, // a full stack (D-250, D-296)
+  // Lines with `texts` take turns: each saying the next, then back to the first (D-297)
+  oilcapTake: { texts: ['You grab the oilcap.', 'You pluck an oilcap from the floor.', 'The oilcap comes up with a soft pop.'], warn: false },
+  oilcapLook: { texts: ['Three make an oil flask.', 'It smells faintly of lamp oil.', 'Its amber cap is slick with oil.'], warn: false },
   levelUp: { text: 'You feel stronger. Level {n}.', warn: false }, // {n}, the new level (D-246)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
 const OIL_LOW = 0.2; // "under 20%", as in the study
 
 // § say: (state, id, n) → new state, the line said on this turn; n fills a
-// line's {n}, as the level does
-export const say = (state, id, n) => ({ ...state, line: n === undefined ? { id, turn: state.turn } : { id, turn: state.turn, n } });
+// line's {n}, as the level does. A line with `texts` says the one after the
+// last it said, kept in `state.told` (D-297).
+export function say(state, id, n) {
+  if (LINES[id]?.texts) {
+    const i = (state.told?.[id] ?? 0) % LINES[id].texts.length;
+    return { ...state, line: { id, turn: state.turn, i }, told: { ...state.told, [id]: i + 1 } };
+  }
+  return { ...state, line: n === undefined ? { id, turn: state.turn } : { id, turn: state.turn, n } };
+}
 
 // § shown: the line on screen now, or null once its turns are used up. A line
 // with {n} is filled once per saying, so the same saying stays the same object
@@ -36,6 +47,10 @@ const filled = new WeakMap();
 export function shownLine(state) {
   if (!state.line || state.turn - state.line.turn >= LINE_TURNS) return null;
   const entry = LINES[state.line.id];
+  if (entry.texts) {
+    if (!filled.has(state.line)) filled.set(state.line, { text: entry.texts[state.line.i ?? 0], warn: entry.warn });
+    return filled.get(state.line);
+  }
   if (state.line.n === undefined) return entry;
   if (!filled.has(state.line)) filled.set(state.line, { ...entry, text: entry.text.replace('{n}', state.line.n) });
   return filled.get(state.line);
