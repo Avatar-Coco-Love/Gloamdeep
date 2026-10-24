@@ -87,7 +87,8 @@ room's rat sits where the study's did, at 2,10.
 **D-107 · 2026-10-18 · The rat's line** (step 20)
 "The rat squeaks and holds its ground." The study's line began "You
 swing your lantern.", but the whole of it doesn't fit the text line, so
-it was cut to fit (owner's pick).
+it was cut to fit (owner's pick). *Partly superseded by D-292
+(2026-10-24): a rat the hit hurts says "The rat squeaks and flees."*
 
 **D-108 · 2026-10-18 · Spawning enemies** (step 20)
 The spawn tool has an Enemies group. An enemy goes on floor, off the

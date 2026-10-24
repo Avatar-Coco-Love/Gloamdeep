@@ -30,8 +30,16 @@ test('waiting next to the rat, it bites again', () => {
   assert.equal(wait(wait(at(3, 10))).health, 3);
 });
 
-test('a hit it survives is answered with a bite, which replaces the hit line', () => {
+test('a hit it survives sends it fleeing, without a bite (D-292)', () => {
   const n = step(at(3, 10), 'left');
+  assert.equal(n.health, 5);
+  assert.equal(n.line.id, 'ratHurt');
+});
+
+test('a hurt rat with nowhere to flee bites, and the bite line replaces the hit line (D-292)', () => {
+  const s = { ...at(2, 10), enemies: [{ id: 'rat', x: 1, y: 10, health: 2 }] }; // the wall at 0,10 behind it
+  const n = step(s, 'left');
+  assert.deepEqual(n.enemies.map(({ x, y, health }) => [x, y, health]), [[1, 10, 1]]);
   assert.equal(n.health, 4);
   assert.equal(n.line.id, 'ratBite');
 });

@@ -2,6 +2,10 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.80', date: '2026-10-24', title: 'The rat flees', lines: [
+    "A hurt rat now flees: after a lantern hit it says \"The rat squeaks and flees.\" and steps one tile away from you each turn, the farther side first, else the other side. It only bites when it has nowhere to run, and it never turns back. A knife still kills it in one stab.",
+    "Decisions: D-292.",
+  ] },
   { v: '0.2.79', date: '2026-10-23', title: 'Time played in Records', lines: [
     "The Journal's Records show an eighth line, Time played, under Torches lit: how long this profile has played, written as in its Profiles box, such as 1h 23m, or 23m under an hour.",
     "Decisions: D-291.",
