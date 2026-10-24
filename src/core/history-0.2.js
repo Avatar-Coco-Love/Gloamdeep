@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.84', date: '2026-10-24', title: 'The first craft', lines: [
+    "Oilcaps can now be crafted: choose 3 oilcaps in the bag and press Make, or Enter or Space, to turn them into an oil flask, with the line \"You make an oil flask.\" It takes a turn, like a pour, and the bag stays open on the new flask, ready to pour.",
+    "With fewer than 3 oilcaps, Make shows dim and does nothing. With 3 flasks already carried, it says \"You can't carry more flasks.\" and the oilcaps stay.",
+    "Decisions: D-299, D-300 (D-279 to D-298 moved to an archive file).",
+  ] },
   { v: '0.2.83', date: '2026-10-24', title: 'The oilcap', lines: [
     "Mushrooms called oilcaps now grow from the first cave down: one amber oilcap in every room, somewhere on the open floor. Walk onto one to put it in the bag, in stacks of 3, with a line that changes each time, such as \"You grab the oilcap.\"",
     "Choosing oilcaps in the bag gives a hint, such as \"Three make an oil flask.\", without passing a turn. Crafting them into a flask comes in the next step. The open bag sits a little higher, so the line under the room stays in view.",

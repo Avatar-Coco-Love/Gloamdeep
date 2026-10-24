@@ -15,6 +15,8 @@ export const ITEMS = {
   herb: { id: 'herb', kind: 'item', name: 'Healing herb', heal: 2, says: 'herbEat' },
   // The first resource (D-296): an amber mushroom, one in every generated room.
   // Walking onto it puts it in the bag with one of its `says` lines, in turn;
-  // choosing its slot in the bag says one of its `look` lines (D-297).
-  oilcap: { id: 'oilcap', kind: 'item', name: 'Oilcap', bag: true, says: 'oilcapTake', look: 'oilcapLook', full: 'oilcapFull' },
+  // choosing its slot in the bag says one of its `look` lines (D-297). Make,
+  // in the bag, turns `of` of them into one `into`, with its `says` line (D-299).
+  oilcap: { id: 'oilcap', kind: 'item', name: 'Oilcap', bag: true, says: 'oilcapTake', look: 'oilcapLook', full: 'oilcapFull',
+    craft: { into: 'flask', of: 3, says: 'flaskMake' } },
 };

@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.83 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.84 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-The first craft: 3 oilcaps make 1 oil flask, from the bag, anywhere
-(D-296). How it is shown and chosen in the bag is for the owner.
+The step after the first craft, chosen with the owner: for example a
+second kind of mushroom (D-296), workstations (D-296) or gathering (D-282).
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -64,7 +64,7 @@ Built to grow (D-261 to D-263; order may change)
 - [x] Embers and Growth: levels buy hearts, 0.2.81 (D-293)
 - [x] Smooth on slow devices, fps on the dev line, 0.2.82 (D-294)
 - [x] C1 The oilcap, the first resource, 0.2.83 (D-296 to D-298)
-- [ ] C2 The first craft: 3 oilcaps make an oil flask (D-296)
+- [x] C2 The first craft: Make turns 3 oilcaps into a flask, 0.2.84 (D-299)
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -74,10 +74,11 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); cheaper lighting for phones, the look unchanged (D-294, D-295); workstations for some crafts (D-296); a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-24, 0.2.81, embers.** Each level past the first gives an
-  ember; the Journal's Growth tab spends one on a heart, up to 10 (D-293). [Playtest](https://claude.ai/artifact/92rjxR4igmX3o4XMtDocgi).
 - **2026-10-24, 0.2.82, smooth.** Sliding goes by time, so slow phones
   walk at full speed; fps on the dev line (D-294). [Playtest](https://claude.ai/artifact/MaPKsnaAHny71ZQZ1CNa9w).
 - **2026-10-24, 0.2.83, the oilcap.** An amber mushroom in every room from
   the first cave down, into the bag with lines that take turns; the bag
   sits above the text line (D-295 to D-298). [Playtest](https://claude.ai/artifact/Ut64ZjkYy7pKps7AtMUDGi).
+- **2026-10-24, 0.2.84, the first craft.** Make, in the bag, turns 3
+  oilcaps into an oil flask, a turn; dim under 3; D-279 to D-298
+  archived (D-299, D-300). [Playtest](https://claude.ai/artifact/NK7JhtRG3YMBhcBSyznb1q).

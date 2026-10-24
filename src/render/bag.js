@@ -3,8 +3,9 @@
 // the panel would hide them. "BAG" in ember at its top, then the held slot
 // with "HELD" beside it, the weapon in hand (D-252), then the six slots in
 // a row, each an item's sprite with its count when more than one, the chosen
-// slot framed in gold. Under them the chosen item's name, and Pour on the
-// right for one that pours. No veil: the room shows above it.
+// slot framed in gold. Under them the chosen item's name, and on the right
+// Pour for one that pours, or Make for one that crafts, dim with too few
+// (D-299). No veil: the room shows above it.
 import { W, H } from './screen.js';
 import { drawText, textWidth } from './font.js';
 import { BAG_SLOTS } from '../core/bag.js';
@@ -17,15 +18,17 @@ const TOP_Y = 4; // the panel's top when it moves over the room's top
 // Whether the panel goes to the top: the hero's tile, `heroY` pixels down the screen, would be under it
 export const panelOnTop = (heroY) => heroY + 16 > PANEL.y - 4;
 const ROW_X = Math.floor((W - (BAG_SLOTS * SLOT + (BAG_SLOTS - 1) * SLOT_GAP)) / 2);
-const POUR = { text: 'POUR', w: textWidth('POUR') + 6, h: 11 };
-POUR.x = PANEL.x + PANEL.w - 4 - POUR.w;
+// The button for an item: Pour or Make, the same size, at the foot's right end
+const BUTTON = { w: Math.max(textWidth('POUR'), textWidth('MAKE')) + 6, h: 11 };
+BUTTON.x = PANEL.x + PANEL.w - 4 - BUTTON.w;
+const buttonText = (entry) => (entry.oil ? 'POUR' : entry.craft ? 'MAKE' : null);
 // The panel's rows from its top: the held slot's, the slots' row, and the name's line under it
 const rows = (top) => { const y = top ? TOP_Y : PANEL.y, held = y + 15, row = held + SLOT + 4; return { y, held, row, foot: row + SLOT + 6 }; };
 const HELD_X = Math.floor((W - SLOT) / 2), HELD = 'HELD';
 const slotX = (i) => ROW_X + i * (SLOT + SLOT_GAP);
-const TAP_PAD = 4; // game pixels around a slot or Pour that still pick it
+const TAP_PAD = 4; // game pixels around a slot or the button that still pick it
 
-// What a tap at x, y picks: { slot: i }, 'pour', or null; outside the panel, 'out'
+// What a tap at x, y picks: { slot: i }, 'act' (Pour or Make), or null; outside the panel, 'out'
 export function bagAt(x, y, top = false) {
   const p = rows(top);
   if (x < PANEL.x || x >= PANEL.x + PANEL.w || y < p.y || y >= p.y + PANEL.h) return 'out';
@@ -33,7 +36,7 @@ export function bagAt(x, y, top = false) {
     const i = Math.floor((x - ROW_X + SLOT_GAP / 2) / (SLOT + SLOT_GAP));
     return i >= 0 && i < BAG_SLOTS ? { slot: i } : null;
   }
-  if (y >= p.foot - 2 - TAP_PAD && x >= POUR.x - TAP_PAD) return 'pour';
+  if (y >= p.foot - 2 - TAP_PAD && x >= BUTTON.x - TAP_PAD) return 'act';
   return null;
 }
 
@@ -67,8 +70,10 @@ export function drawBag(c, bag, chosen, sprites, top = false, held = null) {
   const entry = bag[chosen] && get(bag[chosen].id);
   if (!entry) return;
   drawText(c, entry.name, x + 5, foot, GREY);
-  if (!entry.oil) return;
-  c.fillStyle = K; c.fillRect(POUR.x, foot - 2, POUR.w, POUR.h);
-  frame(c, POUR.x, foot - 2, POUR.w, POUR.h, EMBER);
-  drawText(c, POUR.text, POUR.x + 3, foot, GOLD);
+  const text = buttonText(entry);
+  if (!text) return;
+  const dim = entry.craft && bag[chosen].n < entry.craft.of;
+  c.fillStyle = K; c.fillRect(BUTTON.x, foot - 2, BUTTON.w, BUTTON.h);
+  frame(c, BUTTON.x, foot - 2, BUTTON.w, BUTTON.h, dim ? LINE : EMBER);
+  drawText(c, text, BUTTON.x + Math.floor((BUTTON.w - textWidth(text)) / 2), foot, dim ? GREY : GOLD);
 }

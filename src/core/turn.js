@@ -255,6 +255,19 @@ export function pour(state, i) {
   return endTurn(state, { ...next, bag: bagTake(state.bag, i), oil: Math.min(1, next.oil + entry.oil) });
 }
 
+// § craft: Make on bag slot i turns its item's `craft.of` into one
+// `craft.into`, which goes on its stack or in a slot at the end, and passes a
+// turn, like a pour, with its line (D-299). With too few, nothing happens;
+// with no room for what it makes, its `full` line is said, free, and the bag
+// stays as it was.
+export function craft(state, i) {
+  const s = state.bag[i], recipe = s && get(s.id).craft;
+  if (!recipe || s.n < recipe.of) return state;
+  const bag = bagAdd(bagTake(state.bag, i, recipe.of), recipe.into);
+  if (!bag) return say(state, get(recipe.into).full);
+  return endTurn(state, say({ ...passTurn(state), bag }, recipe.says));
+}
+
 // § look: choosing bag slot i says its item's `look` line, the next in turn
 // (D-297). Free: no turn passes. An item with none changes nothing.
 export function look(state, i) {

@@ -54,7 +54,7 @@ test('the panel fits the picture, and a tap picks a slot, Pour, or closes it', a
   const row = PANEL.y + 15 + 26 + 11; // under the held slot (D-252)
   const slots = Array.from({ length: 200 }, (_, x) => bagAt(x, row)).filter((a) => a && a.slot !== undefined).map((a) => a.slot);
   assert.deepEqual([...new Set(slots)], [0, 1, 2, 3, 4, 5]);
-  assert.equal(bagAt(PANEL.x + PANEL.w - 10, PANEL.y + PANEL.h - 8), 'pour');
+  assert.equal(bagAt(PANEL.x + PANEL.w - 10, PANEL.y + PANEL.h - 8), 'act');
 });
 
 test('the panel moves to the top when it would hide the hero', async () => {
