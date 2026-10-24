@@ -1,6 +1,6 @@
 // § cave: a generated room, round chambers joined by winding tunnels
 // (D-147, D-162) or a digger's burrows (D-165), from one seed (D-148), with a torch by the stairs up, a flask and
-// a rat guarding it (D-149), a herb (D-155) and an oilcap (D-296). Plain data, no drawing. Same seed, same room.
+// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 
 // § sizes: about 1.5 screens, 17 × 20, bigger than the screen, so the camera
@@ -13,6 +13,8 @@ const CAVES = [5, 10], CAVE_R = [1.3, 3], CAVE_GAP = 4;
 // At least this many open tiles, 45 in an 11 × 13 room (D-147)
 const MIN_OPEN = 107;
 const TRIES = 200;
+// The share of rooms with a heartcap (D-303)
+export const HEARTCAP_ODDS = 0.5;
 
 // (seed, shape, ways) → { map, start, lights, enemies, items }, or null if no
 // try worked. The shape is 'chambers', 'burrows' (D-165) or 'halls' (D-228). `ways.doors` are
@@ -168,7 +170,12 @@ function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'r
   // § oilcap: one on any open tile nothing else took (D-296). Picked last, so
   // the rest of a seed's room stays as it was; none when no tile is free.
   const caps = open.filter((f) => !taken.some((t) => same(t, f)));
-  if (caps.length) { const at = pick(r, caps); items.push({ id: 'oilcap', x: at.x, y: at.y }); }
+  if (caps.length) { const at = pick(r, caps); items.push({ id: 'oilcap', x: at.x, y: at.y }); taken.push(at); }
+
+  // § heartcap: in about 1 in 2 rooms, on any open tile nothing else took
+  // (D-303). Picked after the oilcap, so the rest of a seed's room stays as it was.
+  const hearts = open.filter((f) => !taken.some((t) => same(t, f)));
+  if (r() < HEARTCAP_ODDS && hearts.length) { const at = pick(r, hearts); items.push({ id: 'heartcap', x: at.x, y: at.y }); }
 
   return {
     map: g.map((row) => row.join('')),

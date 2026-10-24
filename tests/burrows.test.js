@@ -29,7 +29,7 @@ test('every seed gives a burrow, the same each time, with the usual contents', (
     assert.equal(count(b.map, '>'), 1);
     assert.ok(count(b.map, '.') + 2 >= 107, `seed ${seed} is too small`);
     makeRoom(b.map); // every letter known, every row 17 wide
-    assert.deepEqual(b.items.map((it) => it.id), ['flask', 'herb', 'oilcap']);
+    assert.deepEqual(b.items.map((it) => it.id).filter((id) => id !== 'heartcap'), ['flask', 'herb', 'oilcap']); // a heartcap in some (D-303)
     assert.equal(b.enemies.length, 1);
   }
 });

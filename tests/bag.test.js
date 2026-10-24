@@ -34,8 +34,8 @@ test('taking one lowers the count; the last empties the slot and the rest move u
   assert.equal(bagTake(bag, 4), bag);
 });
 
-test('the flask and the oilcap go in the bag', () => {
-  assert.deepEqual(byKind('item').filter((e) => e.bag).map((e) => e.id), ['flask', 'oilcap']); // (D-296)
+test('the flask and the mushrooms go in the bag', () => {
+  assert.deepEqual(byKind('item').filter((e) => e.bag).map((e) => e.id), ['flask', 'oilcap', 'heartcap']); // (D-296, D-303)
 });
 
 test('the bag is kept in the save, and an older save gets an empty one', () => {

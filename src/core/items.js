@@ -19,4 +19,7 @@ export const ITEMS = {
   // in the bag, turns `of` of them into one `into`, with its `says` line (D-299).
   oilcap: { id: 'oilcap', kind: 'item', name: 'Oilcap', bag: true, says: 'oilcapTake', look: 'oilcapLook', full: 'oilcapFull',
     craft: { into: 'flask', of: 3, says: 'flaskMake' } },
+  // A bright red mushroom in about half the rooms (D-303), into the bag the
+  // oilcap's way, with its own lines. Eating it and its potion come later.
+  heartcap: { id: 'heartcap', kind: 'item', name: 'Heartcap', bag: true, says: 'heartcapTake', look: 'heartcapLook', full: 'heartcapFull' },
 };

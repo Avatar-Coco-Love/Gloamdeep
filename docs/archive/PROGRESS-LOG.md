@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.84, the first craft.** Make, in the bag, turns 3
+  oilcaps into an oil flask, a turn; dim under 3; D-279 to D-298
+  archived (D-299, D-300). [Playtest](https://claude.ai/artifact/NK7JhtRG3YMBhcBSyznb1q).
 - **2026-10-24, 0.2.83, the oilcap.** An amber mushroom in every room from
   the first cave down, into the bag with lines that take turns; the bag
   sits above the text line (D-295 to D-298). [Playtest](https://claude.ai/artifact/Ut64ZjkYy7pKps7AtMUDGi).

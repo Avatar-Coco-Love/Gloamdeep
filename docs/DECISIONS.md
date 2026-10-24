@@ -124,3 +124,22 @@ owner's find and pick) A room left waits as it was (D-019), but a rat
 still fleeing in it stops: back in the room, it stays put until it notices
 the hero again, as after its 4 turns (D-301). Fleeing stops by turns only,
 not by distance or out of light.
+
+**D-303 · 2026-10-24 · The heartcap, a healing mushroom** (the owner's
+picks; builds D-296) The second kind of mushroom, the Heartcap: bright red
+(`#d8483c`, shade `#8c2430`) with pale spots, a round dome on a short pale
+stem. It lies in about 1 in 2 generated rooms, on an open tile nothing else
+took, picked after the oilcap so the rest of each seed's room stays as it
+was. Walked onto, it goes into the bag as the oilcap does, in stacks of 3,
+saying "You can't carry more heartcaps." over a full stack. Its lines take
+turns (D-297): "You pick a heartcap.", "The heartcap comes up whole.", "A
+heartcap, warm in your hand."; and "It might mend a wound.", "Its red cap
+is spotted white.", "It feels faintly warm." It heals, in two later steps:
+eaten from the bag it heals a little; Make turns several into a healing
+potion, with its own art, that heals more. Amounts are chosen then.
+
+**D-304 · 2026-10-24 · Every mushroom a slightly different tone** (the
+owner's idea) Each mushroom, oilcaps and heartcaps alike, gets a slight but
+noticeable shift in colour tone, so no two look exactly the same, even
+within one seed's world. It is its own step, after the heartcap; then
+eating a heartcap, then its potion.
