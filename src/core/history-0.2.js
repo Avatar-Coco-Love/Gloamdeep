@@ -2,6 +2,12 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.89', date: '2026-10-24', title: 'Things grow back', lines: [
+    "Mushrooms, herbs and oil flasks you take now grow back where they lay, each on its own clock from the turn you took it: oilcaps, heartcaps and herbs after a day, 300 turns, and a flask after 3 days, 900 turns. The knife never does. A mushroom comes back with the tone it had.",
+    "Nothing appears before your eyes: a thing comes back only on a tile out of your light, with nothing standing or lying on it. Walking into a room, whatever grew while you were away is already there.",
+    "Things taken in an old save before this version stay gone.",
+    "Decisions: D-306, D-307.",
+  ] },
   { v: '0.2.88', date: '2026-10-24', title: 'Mushroom tones', lines: [
     "Every oilcap and heartcap now has its own slight tone: some caps a little more golden or brown, some heartcaps a little more orange or plum, a little lighter or darker. The same seed always gives the same mushrooms the same tones.",
     "Rooms an old save already reached keep their mushrooms' plain colour.",

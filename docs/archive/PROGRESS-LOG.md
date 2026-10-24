@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.86, calmed when you leave.** A rat still fleeing as
+  the hero leaves the room has stopped when they come back; it must notice
+  them again (D-302, the owner's find). [Playtest](https://claude.ai/artifact/ErdiWgtG9byv2d9uHgisWp).
 - **2026-10-24, 0.2.85, flee or fight.** A hurt rat tosses a coin: flees
   for 4 turns, then must notice the hero again, or stands its ground with
   lines that take turns (D-301). [Playtest](https://claude.ai/artifact/YQ1ARU4AMWJXEQWMg9GVo1).

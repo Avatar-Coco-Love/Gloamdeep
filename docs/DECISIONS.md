@@ -160,3 +160,12 @@ heartcaps and herbs come back after a day, 300 turns (D-217); an oil flask
 after 3 days, 900 turns. The one knife doesn't. Mining's deposits (D-282)
 and later collectables get their own rules when they are built. It is its
 own step, H2b, right after H2; then eating a heartcap, then its potion.
+
+**D-307 · 2026-10-24 · How a room remembers what was taken** (the owner's
+picks, three of three recommended; builds D-306, step H2b) Each room keeps a
+taken list beside its items: the thing as it lay, its tile and tone, and the
+turn it was taken. When its clock runs out it comes back just as it was, but
+only on a tile out of the hero's light, with no hero, creature or item on it;
+in a room the hero has just walked into, what grew while they were away is
+already there. Things the dev tools placed grow back too. Things taken in an
+old save before this stay gone; a fall still begins every room anew.
