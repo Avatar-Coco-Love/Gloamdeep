@@ -21,6 +21,10 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.86 (2026-10-24)
+- A rat still fleeing when you leave a room has calmed down when you come back. It stays put until it notices you again, as it does after its 4 turns, instead of running again on your return.
+- Decisions: D-302.
+
 ## 0.2.85 (2026-10-24)
 - A hurt rat now tosses a coin: half the time it flees, as before, and half the time it stands its ground and keeps biting, with a line that changes each time, such as "The rat squeaks and bares its teeth."
 - A fleeing rat runs for 4 turns, then stops. It comes back only once it sees you again, in the light with nothing in between, so it no longer hides in the far corner for good.

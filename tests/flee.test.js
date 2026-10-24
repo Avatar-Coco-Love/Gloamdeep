@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeRoom, FIRST_ROOM, FIRST_LIGHTS } from '../src/core/room.js';
 import { makeState, wait, FIRST_START } from '../src/core/turn.js';
+import { goToDepth } from '../src/core/stairs.js';
 
 const room = makeRoom(FIRST_ROOM);
 const with_ = (hero, enemies) => ({ ...makeState(room, FIRST_START, FIRST_LIGHTS, []), hero, enemies });
@@ -39,4 +40,17 @@ test('after 4 turns it stops, and comes back only once it notices the hero again
   assert.deepEqual(spots(dark), spots(s), 'unseen in the dark, it stays');
   const lit = wait({ ...s, enemies: [{ ...s.enemies[0], x: 5, y: 9 }] });
   assert.deepEqual(spots(lit), [[5, 10]], 'lit, along a clear line, it comes again');
+});
+
+test('a rat still fleeing when the hero leaves has calmed when they come back (D-302)', () => {
+  const s = with_({ x: 5, y: 11 }, [{ id: 'rat', x: 5, y: 9, health: 1, chasing: true, flees: 3 }]);
+  const back = goToDepth(goToDepth(s, 1), 0);
+  assert.deepEqual(back.enemies, [{ id: 'rat', x: 5, y: 9, health: 1, chasing: false, flees: 0 }]);
+  const dark = wait({ ...back, hero: { x: 5, y: 11 }, lit: false, lights: [] });
+  assert.deepEqual(spots(dark), [[5, 9]], 'it no longer runs, and stays until it notices them');
+});
+
+test('a chasing rat that is not fleeing still chases when the hero comes back', () => {
+  const s = with_({ x: 5, y: 11 }, [{ id: 'rat', x: 5, y: 7, chasing: true }]);
+  assert.equal(goToDepth(goToDepth(s, 1), 0).enemies[0].chasing, true);
 });
