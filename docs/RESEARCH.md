@@ -83,6 +83,21 @@ town only decoration: a home base should do something.
 - **Crafting and a home town**: craft from things you find (mushrooms,
   moss, oil; the Depth Meter could be crafted), and rescued NPCs move to
   the home base and give it a real use.
+- **Many enemies from a few building blocks** (2026-10-24, from a talk
+  about bosses): mix a handful of parts instead of hand-making each
+  enemy: how it moves (chases, keeps away, burrows), how it attacks
+  (close, a line, an area, a delayed blast), how it meets light (shuns
+  it like the gloamling, seeks it, eats it, can only be hit when lit) and
+  one trait (splits, armoured in front, heals others). Each mix is one
+  registry entry; keep only the mixes with one clear job (Hoplite).
+- **Bosses in phases that test what you know**: each phase asks for
+  something learned in normal play, such as braziers, oil, switching the
+  lantern off, or pushing a foe into water. For example, a boss that feeds
+  on light: hidden until lit, then healing from lit braziers and draining
+  oil, then rising water that snuffs light. Each phase can be beaten more
+  than one way. To balance: show its moves (Q-049); count turns per phase
+  against damage and oil; give it fixed rules, using the seeded RNG; test
+  phases with the dev tools, perhaps a script that plays them many times.
 
 ## Ideas shown, not picked (2026-10-21)
 - A shrine or lit brazier on some floors where you pick one boon.
