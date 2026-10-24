@@ -9,11 +9,14 @@ export const BEHAVIOURS = {
   // It never steps onto a lit tile, backs out of light into the dark, and doesn't
   // bite while lit. It sees the hero along a clear line, lit or not (D-240, D-241, D-243).
   shunsLight: { id: 'shunsLight', name: 'Shuns light', notices: 'anyLine', intoLight: false, bitesLit: false, whenLit: 'backAway' },
+  // Once hurt, it steps a tile a turn away from the hero until it dies or they
+  // fall, and bites only when it can't step away (D-292).
+  fleesHurt: { id: 'fleesHurt', name: 'Flees when hurt', whenHurt: 'flee' },
 };
 
 // § traits: (entry) → how the creature acts, its ways merged. With no way it
-// never notices or moves, steps into light, and bites lit or not.
-const BASE = { notices: null, moves: null, intoLight: true, bitesLit: true, whenLit: null };
+// never notices or moves, steps into light, bites lit or not, and never flees.
+const BASE = { notices: null, moves: null, intoLight: true, bitesLit: true, whenLit: null, whenHurt: null };
 export function traits(entry) {
   return Object.assign({ ...BASE }, ...(entry.ways ?? []).map((w) => {
     const { id, name, ...way } = BEHAVIOURS[w];

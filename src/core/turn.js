@@ -109,11 +109,14 @@ function pickUp(state, found) {
 // or not (D-114). The bite line replaces any other said this turn (D-117).
 // A biting enemy has noticed the hero, even in the dark (D-157).
 // One that shuns light doesn't bite from a lit tile (D-240, its `bitesLit`).
+// One that flees when hurt bites only when it has no tile to flee to (D-292).
 // At 0 health the hero falls and wakes at the room's start (D-119).
 // Then the others come one tile closer (D-126 to D-129).
 // Each bite is a `bite` event, in the order they bite.
 function enemiesAct(state) {
-  const bites = biters(state.enemies, state.hero).filter((e) => traits(get(e.id)).bitesLit || !litAt(state, e.x, e.y));
+  const bites = biters(state.enemies, state.hero)
+    .filter((e) => traits(get(e.id)).bitesLit || !litAt(state, e.x, e.y))
+    .filter((e) => !fleeing(e) || !fleeStep(state, e));
   if (!bites.length) return enemiesMove(state);
   const health = Math.max(0, state.health - bites.reduce((sum, e) => sum + get(e.id).bite, 0));
   const enemies = state.enemies.map((e) => (bites.includes(e) ? { ...e, chasing: true } : e));
@@ -132,17 +135,18 @@ function enemiesAct(state) {
 // How each acts comes from its ways (behaviours.js, D-269): one that shuns
 // light (D-240) notices along a clear line, lit or not, and never steps onto
 // a lit tile; caught in light, it backs away, into the dark if it can.
+// One that flees when hurt steps away from the hero instead (D-292).
 function enemiesMove(state) {
   let enemies = state.enemies;
   for (const e of state.enemies) {
     const t = traits(get(e.id)), lit = litAt(state, e.x, e.y);
     const sees = t.notices === 'anyLine' || (t.notices === 'inLight' && lit);
     const chasing = e.chasing || (sees && clearLine(state.room, e, state.hero));
-    const flees = lit && t.whenLit === 'backAway';
-    if (!(chasing && t.moves) && !flees) continue;
+    const flees = lit && t.whenLit === 'backAway', runs = fleeing(e);
+    if (!(chasing && t.moves) && !flees && !runs) continue;
     const near = Math.abs(e.x - state.hero.x) + Math.abs(e.y - state.hero.y) === 1;
     const now = { ...state, enemies };
-    const to = (flees ? backAway(now, e) : near ? e : chaseStep(now, e)) || e;
+    const to = (flees ? backAway(now, e) : runs ? fleeStep(now, e) : near ? e : chaseStep(now, e)) || e;
     const facing = to.x < e.x ? 'left' : to.x > e.x ? 'right' : e.facing;
     enemies = enemies.map((o) => (o === e ? { ...e, x: to.x, y: to.y, ...(chasing && { chasing: true }), ...(facing && { facing }) } : o));
   }
@@ -168,10 +172,17 @@ function backAway(state, e) {
     far(next.filter((t) => away(t) > away(e) && free(state, e, t.x, t.y, true) && !litAt(unlit, t.x, t.y)));
 }
 
+// Whether enemy e flees: it flees when hurt, and has been (D-292)
+const fleeing = (e) => traits(get(e.id)).whenHurt === 'flee' && e.health < get(e.id).health;
+
+// The tile a fleeing enemy steps onto: chaseStep's mirror, away from the hero,
+// the farther side first, else the other side, else null: it stays (D-292)
+const fleeStep = (state, e) => chaseStep(state, e, -1);
+
 // The tile enemy e steps onto, or null when both ways toward the hero are
-// blocked (see `free`).
-function chaseStep(state, e) {
-  const dx = state.hero.x - e.x, dy = state.hero.y - e.y;
+// blocked (see `free`). With `sign` -1 it steps away from them instead.
+function chaseStep(state, e, sign = 1) {
+  const dx = sign * (state.hero.x - e.x), dy = sign * (state.hero.y - e.y);
   const across = dx ? [Math.sign(dx), 0] : null, down = dy ? [0, Math.sign(dy)] : null;
   const ways = Math.abs(dx) >= Math.abs(dy) ? [across, down] : [down, across];
   for (const w of ways) {

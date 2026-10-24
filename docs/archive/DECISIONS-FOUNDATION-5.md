@@ -86,7 +86,8 @@ have a clear line to the hero, no wall between.*
 
 **D-127 · 2026-10-18 · Once noticed, it keeps coming** (step 24, owner's pick)
 A rat that has noticed the hero keeps chasing until it dies or the hero
-falls (D-119 puts it back as it began), lantern off or not.
+falls (D-119 puts it back as it began), lantern off or not. *Partly
+superseded by D-292 (2026-10-24): once hurt, a rat flees instead.*
 
 **D-128 · 2026-10-18 · How the rat walks** (step 24, owner's pick,
 supersedes part of D-114) After each

@@ -28,13 +28,16 @@ test('the first hit passes a turn, burns oil and hurts the rat', () => {
   assert.deepEqual(n.hero, { x: 3, y: 10 }, 'the hero stays put');
   assert.equal(n.turn, 1);
   assert.ok(n.oil < s.oil);
-  assert.equal(enemyAt(n, 2, 10).health, 1);
+  assert.equal(enemyAt(n, 1, 10).health, 1, 'hurt, it flees a tile (D-292)');
+  assert.equal(shownLine(n).text, 'The rat squeaks and flees.');
 });
 
 test('the second hit kills the rat, and it is gone', () => {
-  const n = step(step(nextToRat(), 'left'), 'left');
-  assert.equal(n.turn, 2);
+  const s = { ...nextToRat(), enemies: [{ id: 'rat', x: 2, y: 10, health: 1, chasing: true }] };
+  const n = step(s, 'left');
+  assert.equal(n.turn, 1);
   assert.equal(enemyAt(n, 2, 10), undefined);
+  assert.equal(n.enemies.length, 0);
   assert.equal(shownLine(n).text, 'The rat squeaks and falls still.');
   assert.deepEqual(step(n, 'left').hero, { x: 2, y: 10 }, 'its tile is free to walk on');
 });
@@ -51,9 +54,9 @@ test('an oil line said on the same turn as the kill replaces the kill line', () 
 
 test('each rat keeps its own health', () => {
   const s = spawn(nextToRat(), 'rat', 4, 10); // one right of the hero
-  const n = step(step(s, 'left'), 'right');
-  assert.equal(enemyAt(n, 2, 10).health, 1);
-  assert.equal(enemyAt(n, 4, 10).health, 1);
+  const n = step(step(s, 'left'), 'right'); // each flees a tile when hit (D-292)
+  assert.equal(enemyAt(n, 1, 10).health, 1);
+  assert.equal(enemyAt(n, 5, 10).health, 1);
 });
 
 test('a rat can be spawned on floor, not on walls, the hero, items or another enemy', () => {

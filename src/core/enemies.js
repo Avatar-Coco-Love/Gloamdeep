@@ -6,8 +6,9 @@
 // acts, from behaviours.js (D-269).
 export const ENEMIES = {
   // Two lantern hits kill it (D-109, D-110); it bites for 1 when next to the hero (D-114)
-  // and chases them once it notices them (D-126). Its bite sounds of teeth (D-259).
-  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, ways: ['chases'], hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite', sound: 'teeth' },
+  // and chases them once it notices them (D-126). Once hurt, it flees (D-292).
+  // Its bite sounds of teeth (D-259).
+  rat: { id: 'rat', kind: 'enemy', name: 'Rat', health: 2, bite: 1, ways: ['chases', 'fleesHurt'], hurt: 'ratHurt', die: 'ratDie', bites: 'ratBite', sound: 'teeth' },
   // It chases, and shuns light (D-240).
   gloamling: { id: 'gloamling', kind: 'enemy', name: 'Gloamling', health: 2, bite: 1, ways: ['chases', 'shunsLight'], hurt: 'gloamlingHurt', die: 'gloamlingDie', bites: 'gloamlingBite' },
 };

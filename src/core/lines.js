@@ -5,7 +5,7 @@
 export const LINES = {
   oilLow: { text: 'The flame is getting low.', warn: false },
   oilEmpty: { text: 'The lantern gutters to an ember.', warn: true }, // a warning, in amber (D-097)
-  ratHurt: { text: 'The rat squeaks and holds its ground.', warn: false }, // the study's line, cut to fit (D-107)
+  ratHurt: { text: 'The rat squeaks and flees.', warn: false }, // hurt, it flees (D-292; was the study's line, D-107)
   ratDie: { text: 'The rat squeaks and falls still.', warn: false }, // (D-112)
   ratBite: { text: 'The rat bites you.', warn: false }, // (D-117)
   gloamlingHurt: { text: 'The gloamling hisses at you.', warn: false }, // (D-240)

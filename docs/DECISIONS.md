@@ -169,3 +169,11 @@ Profiles made before it start from 0.
 D-290) The Journal's Records gain an eighth line, Time played, at the foot
 under Torches lit: the profile's play time (D-290), written as in its
 Profiles box ("1h 23m", or "23m" under an hour).
+
+**D-292 · 2026-10-24 · The rat flees** (the owner's picks; partly
+supersedes D-107 and D-127) A rat flees once it is hurt, at 1 health
+after a lantern hit; a knife still kills it in one. Each turn it steps
+one tile away from the hero, the mirror of its chase (D-128): the
+farther side first, else the other side, else it stays put. It bites
+only when it can't step away. It flees until it dies or the hero falls.
+The hit line becomes "The rat squeaks and flees."
