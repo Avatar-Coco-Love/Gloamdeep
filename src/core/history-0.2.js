@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.88', date: '2026-10-24', title: 'Mushroom tones', lines: [
+    "Every oilcap and heartcap now has its own slight tone: some caps a little more golden or brown, some heartcaps a little more orange or plum, a little lighter or darker. The same seed always gives the same mushrooms the same tones.",
+    "Rooms an old save already reached keep their mushrooms' plain colour.",
+    "Decisions: D-305, D-306.",
+  ] },
   { v: '0.2.87', date: '2026-10-24', title: 'The heartcap', lines: [
     "Heartcaps now grow in about half the rooms from the first cave down: a bright red mushroom with pale spots, a round cap on a short stem. Walk onto one to put it in the bag, in stacks of 3, with a line that changes each time, such as \"You pick a heartcap.\" Choosing it in the bag says a hint, such as \"It might mend a wound.\"",
     "Eating a heartcap, and making a healing potion from several, come in later steps.",

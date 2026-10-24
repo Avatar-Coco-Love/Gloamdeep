@@ -1,7 +1,8 @@
 // § cave: a generated room, round chambers joined by winding tunnels
 // (D-147, D-162) or a digger's burrows (D-165), from one seed (D-148), with a torch by the stairs up, a flask and
-// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303). Plain data, no drawing. Same seed, same room.
+// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303), each mushroom its own tone (D-305). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
+import { toned } from './tones.js';
 
 // § sizes: about 1.5 screens, 17 × 20, bigger than the screen, so the camera
 // follows the hero (D-195). The chambers (D-162): how many, their half-widths
@@ -27,7 +28,7 @@ export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, 
   const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
   for (let i = 0; i < TRIES; i++) {
     const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats, second, knife);
-    if (room) return room;
+    if (room) return { ...room, items: toned(seed, room.items) }; // each mushroom its own tone (D-305)
   }
   return null;
 }

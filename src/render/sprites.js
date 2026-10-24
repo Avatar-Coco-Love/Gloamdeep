@@ -41,14 +41,14 @@ const HERB = { mirror: false, rows: [
   '.kgggk.kGk.kgggk', '..kgGGkkGkkGGgk.', '...kkGGkGkGGkk..', '.....kkGGGkk....', '.......kGk......', '.......kkk......'] };
 
 // § oilcap: an amber mushroom cap, light spots and a dark rim on one side,
-// on a short pale stem (D-296)
-const OILCAP = { mirror: false, rows: [
+// on a short pale stem (D-296). `toned`: the cap's letters, shifted per mushroom (D-305).
+const OILCAP = { mirror: false, toned: 'oO', rows: [
   '', '', '', '', '......kkkk......', '....kkoooOkk....', '...koaooooOOk...', '..kooooaoooOOk..', '..koaooooooaOk..',
   '..kkkkkkkkkkkk..', '......kwak......', '......kwak......', '......kwak......', '.....kwwaak.....', '.....kkkkkk.....'] };
 
 // § heartcap: a round bright red dome with pale spots and a dark side, on
 // a short pale stem (D-303)
-const HEARTCAP = { mirror: false, rows: [
+const HEARTCAP = { mirror: false, toned: 'rR', rows: [
   '', '', '', '.....kkkkkk.....', '....krrwrrrk....', '...krrrrrwRRk...', '...kwrrrrrrRk...', '..krrrwrrrrRRk..', '..krrrrrrwrRRk..',
   '..kkkkkkkkkkkk..', '......kwak......', '......kwak......', '.....kwwak......', '.....kwwaak.....', '.....kkkkkk.....'] };
 
@@ -93,6 +93,28 @@ function spriteCanvas(def, flash = null, pal = PAL) {
 }
 
 export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), oilcap: spriteCanvas(OILCAP), heartcap: spriteCanvas(HEARTCAP), knife: spriteCanvas(KNIFE), rat: spriteCanvas(RAT), gloamling: spriteCanvas(GLOAMLING) }; // keyed by registry id
+const DEFS = { oilcap: OILCAP, heartcap: HEARTCAP };
+// § tones: a mushroom with its cap's colours shifted by its tone, hue in degrees and
+// lightness in points (D-305); the spots, stem and outline stay. Each made once.
+function shifted(hex, hue, light) {
+  const n = parseInt(hex.slice(1), 16), r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
+  const hi = Math.max(r, g, b), lo = Math.min(r, g, b), l = (hi + lo) / 2, d = hi - lo;
+  const sat = d ? d / (1 - Math.abs(2 * l - 1)) : 0;
+  const h = !d ? 0 : hi === r ? ((g - b) / d + 6) % 6 : hi === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return `hsl(${(h * 60 + hue + 360) % 360} ${sat * 100}% ${Math.max(0, Math.min(100, l * 100 + light))}%)`;
+}
+const TONED = {};
+function spriteOf(it) {
+  const def = DEFS[it.id];
+  if (!it.tone || !def?.toned) return SPRITES[it.id];
+  const key = `${it.id}/${it.tone.hue}/${it.tone.light}`;
+  if (!TONED[key]) {
+    const pal = { ...PAL };
+    for (const ch of def.toned) pal[ch] = shifted(PAL[ch], it.tone.hue, it.tone.light);
+    TONED[key] = spriteCanvas(def, null, pal);
+  }
+  return TONED[key];
+}
 const FLASHES = { rat: spriteCanvas(RAT, '#ffffff'), gloamling: spriteCanvas(GLOAMLING, '#ffffff') };
 // § facing left: an enemy's sprite mirrored, for one that walked left (D-158)
 function mirrored(cv) {
@@ -145,12 +167,13 @@ export function drawHero(c, x, y, bitten = false, lying = false) {
 
 // § items: each item 2 pixels up from its tile, on its shadow. An item bobs
 // 1 pixel every 0.7 s, each row in its own beat; still with reduced motion (study line 379, D-077).
+// A mushroom is drawn in its own tone (D-305).
 export function drawItems(c, items, t, still) {
   for (const it of items) {
     const x = it.x * 16, y = it.y * 16;
     const bob = still ? 0 : Math.floor(t / 700 + it.y) % 2;
     drawShadow(c, x, y, 8);
-    c.drawImage(SPRITES[it.id], x, y - 2 - bob);
+    c.drawImage(spriteOf(it), x, y - 2 - bob);
   }
 }
 

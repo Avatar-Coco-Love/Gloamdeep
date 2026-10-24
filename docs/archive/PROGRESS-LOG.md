@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.85, flee or fight.** A hurt rat tosses a coin: flees
+  for 4 turns, then must notice the hero again, or stands its ground with
+  lines that take turns (D-301). [Playtest](https://claude.ai/artifact/YQ1ARU4AMWJXEQWMg9GVo1).
 - **2026-10-24, 0.2.84, the first craft.** Make, in the bag, turns 3
   oilcaps into an oil flask, a turn; dim under 3; D-279 to D-298
   archived (D-299, D-300). [Playtest](https://claude.ai/artifact/NK7JhtRG3YMBhcBSyznb1q).
