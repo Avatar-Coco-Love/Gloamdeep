@@ -83,10 +83,6 @@ The owner liked creatures showing what they will do next, as in Hoplite
 and Into the Breach (`RESEARCH.md`), but some situations may use it and
 some won't. When and where does it show, and how does it look?
 
-**Q-050 · What does a level give?** (before levels matter, D-246)
-Levels only show for now. Each could add a heart, more damage, a skill
-(D-027), or something else; maybe some levels give more than others.
-
 **Q-052 · Play data: kept on the device, or sent?** (near 1.0)
 Telemetry sends how people play (falls, depths, journey length) to a
 small service, with an opt-in switch in Settings and a privacy note.

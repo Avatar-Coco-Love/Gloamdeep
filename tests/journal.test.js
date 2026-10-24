@@ -1,16 +1,23 @@
 // § journal: one book with tabs, Records first (J1, D-262, D-270)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { TABS, recordRows, journalWords } from '../src/core/journal.js';
+import { TABS, recordRows, journalWords, growthRows, growthWords } from '../src/core/journal.js';
 import { counted } from '../src/core/record.js';
 import { newProfile } from '../src/core/profile.js';
-import { journalAt } from '../src/render/journal.js';
+import { journalAt, ADD_Y } from '../src/render/journal.js';
 import { BACK_Y } from '../src/render/history.js';
 
 const records = { deepest: 3, beaten: 12, falls: 4, found: 27, steps: 1843, poured: 6, torches: 2 };
 
-test('Records is the one tab for now', () => {
-  assert.deepEqual(TABS.map((t) => t.text), ['Records']);
+test('Records is the first tab, Growth the second (D-293)', () => {
+  assert.deepEqual(TABS.map((t) => t.text), ['Records', 'Growth']);
+});
+
+test('the Growth tab shows the embers left and the hearts in all, then Add a heart (D-293)', () => {
+  const s = { xp: 30, hearts: 1, health: 6 }; // level 3: two embers, one spent
+  assert.deepEqual(growthRows(s).map((r) => [r.text, r.value]), [['Embers', '1'], ['Hearts', '6 of 10']]);
+  assert.equal(growthWords(s), 'Journal, Growth tab. Embers, 1. Hearts, 6 of 10. Add a heart, 1 ember. Back.');
+  assert.equal(growthWords({ xp: 0, health: 5 }), 'Journal, Growth tab. Embers, 0. Hearts, 5 of 10. Add a heart, 1 ember, not now. Back.');
 });
 
 test('the Records tab shows the deepest depth, creatures beaten, falls, rooms found, steps, flasks poured, torches lit and time played (D-283, D-285, D-286, D-291)', () => {
@@ -32,6 +39,13 @@ test('nothing counted is the same Records, and a dev jump stops the counting (D-
 });
 
 test('a tap on Back, or near it, goes back; elsewhere does nothing', () => {
-  assert.equal(journalAt(BACK_Y + 2), 'back');
-  assert.equal(journalAt(60), null);
+  assert.equal(journalAt(80, BACK_Y + 2), 'back');
+  assert.equal(journalAt(80, 60), null);
+});
+
+test('a tap on a tab turns to it, and on Growth a tap on Add a heart picks it (D-293)', () => {
+  assert.equal(journalAt(16, 24), 'records');
+  assert.equal(journalAt(60, 24), 'growth');
+  assert.equal(journalAt(20, ADD_Y + 2, 'growth'), 'heart');
+  assert.equal(journalAt(20, ADD_Y + 2, 'records'), null);
 });

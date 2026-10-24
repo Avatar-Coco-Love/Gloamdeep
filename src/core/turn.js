@@ -24,8 +24,10 @@ export const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 // The hero starts where style study 1 put them (study line 277).
 export const FIRST_START = PLACES.first.start;
 
-// The hero's health: 5, and a rat's bite takes 1 (D-115).
+// The hero's health: 5, and a rat's bite takes 1 (D-115). Hearts bought with
+// embers add to it (growth.js, D-293).
 export const HERO_HEALTH = 5;
+export const maxHealth = (state) => HERO_HEALTH + (state.hearts ?? 0);
 
 // `home` is where the hero wakes after a fall: the room as it started (D-119).
 // One room on its own, as tests use it; makeWorld adds the other places.
@@ -101,7 +103,7 @@ function pickUp(state, found) {
     if (bag) return note({ ...state, items, bag }, 'take', { id });
     return stackFull(state.bag, id) ? say(state, entry.full) : state;
   }
-  if (entry.heal && state.health < HERO_HEALTH) return note(say({ ...state, items, health: Math.min(HERO_HEALTH, state.health + entry.heal) }, entry.says), 'eat', { id });
+  if (entry.heal && state.health < maxHealth(state)) return note(say({ ...state, items, health: Math.min(maxHealth(state), state.health + entry.heal) }, entry.says), 'eat', { id });
   return state;
 }
 
@@ -211,7 +213,7 @@ function fall(state) {
   const home = state.home.places ? { ...state.home, ...begun[place], hero, places: begun } : state.home;
   const { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn } = state;
   const fell = { room: r, place: at, hero: h, lights: l, enemies: e, items: i, seen: m, oil, lit, turn, seed: state.seed, health: 0 };
-  return note(say({ ...state, ...woke, home, seed, fell, health: HERO_HEALTH, oil: OIL.start, found: foundAfterFall(state.found) }, 'fall'), 'fall');
+  return note(say({ ...state, ...woke, home, seed, fell, health: maxHealth(state), oil: OIL.start, found: foundAfterFall(state.found) }, 'fall'), 'fall');
 }
 
 // § attack: the hero swings the lantern at the foe and stays put (D-109),

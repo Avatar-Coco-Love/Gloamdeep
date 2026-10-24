@@ -2,7 +2,7 @@
 // input/screens.js and the drawing in render/frame.js (D-235); `app` holds
 // what the three share.
 import { VERSION } from './core/version.js';
-import { makeWorld, step, wait, pour, pourByItself, switchLantern, followDaylight, toward, DIRS, HERO_HEALTH } from './core/turn.js';
+import { makeWorld, step, wait, pour, pourByItself, switchLantern, followDaylight, toward, DIRS, maxHealth } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt, biteSound } from './core/enemies.js';
 import { eventsSince, has } from './core/events.js';
@@ -50,6 +50,7 @@ const app = {
   picking: null, dropping: 0, slotsBack: false, // the slot screen: Rename or Delete picked (D-273), the slot asked about, Back shown (D-271)
   pageFrom: 'title', // the menu Settings or How to play was opened from
   page: 'touch', // How to play's page
+  tab: 'records', // the Journal's open tab: Records or Growth (D-293)
   entry: '', // the digits typed on the seed pad, or the letters on the name pad
   naming: 0, renaming: false, // the slot the name pad names: an empty one (D-272), or a profile renamed (D-273)
   padFrom: 'settings', // the screen the seed pad was opened from: Settings or the Explorer
@@ -307,7 +308,7 @@ const dev = createDev(stage, canvas, { // on for everyone (D-086)
   },
   forget: () => forget(app.state),
   setOil: (oil) => setOil(app.state, oil),
-  heal: () => ({ ...app.state, health: HERO_HEALTH }),
+  heal: () => ({ ...app.state, health: maxHealth(app.state) }),
   passTime: (turns) => passTime(app.state, turns), // the clock only (D-217)
   goTo: (depth) => { app.jumped = true; return goToDepth(app.state, depth); }, // depth 0 is the crypt (D-212)
   goOutside: () => goToPlace(app.state, 'woods'), // the woods, on the surface too (D-209)

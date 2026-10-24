@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.81 (2026-10-24)
+- Levels now give something: each level past the first gives 1 ember, also for levels already reached. A new Journal tab, Growth, after Records, shows your embers and your hearts. Add a heart spends an ember on one more heart, up to 10 in all; it arrives full, and it can't be taken back. Past 5, hearts fill a second row.
+- The owner's new ideas are in the wish list: resources and crafting, abilities, more varied places, waystones, a ship, NPCs, a cult to talk to, quests and companions.
+- Decisions: D-293. Questions closed: Q-050.
+
 ## 0.2.80 (2026-10-24)
 - A hurt rat now flees: after a lantern hit it says "The rat squeaks and flees." and steps one tile away from you each turn, the farther side first, else the other side. It only bites when it has nowhere to run, and it never turns back. A knife still kills it in one stab.
 - Decisions: D-292.

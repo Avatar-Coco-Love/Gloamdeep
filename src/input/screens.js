@@ -17,8 +17,10 @@
 // Version history in Settings opens the page of every version (D-254): Up and Down choose one,
 // Enter, Space, Right or a tap on its row opens or closes it (Left closes it), swipes and
 // Page Up and Page Down scroll a page; Back, Esc or P return to Settings.
-// Journal, on the title and the pause menu, opens its page (D-270); Enter, Space, a tap on
-// Back, Esc or P return to the menu it was opened from.
+// Journal, on the title and the pause menu, opens its page on Records (D-270); Left and
+// Right or a tap on a tab turn to Records or Growth (D-293). On Growth, Up and Down choose
+// Add a heart or Back, and Enter, Space or a tap on Add a heart spends an ember on one.
+// Enter or Space on Back, a tap on Back, Esc or P return to the menu it was opened from.
 // The game opens on the slot screen (D-271): Up and Down or a tap pick a slot's box, which
 // plays as that profile (a new one in an empty slot) and opens the title. Delete, then a box,
 // asks "Delete …? Lost for good." with No picked; No, Esc or P go back. Profiles on the title
@@ -52,7 +54,8 @@ import { BAG_SLOTS } from '../core/bag.js';
 import { get } from '../core/registry.js';
 import { playing as inPlay, SLOTS, slotName, playedText } from '../core/profile.js';
 import { slotLines, slotsAt, slotsHeading, askTop } from '../render/slots.js';
-import { journalWords } from '../core/journal.js';
+import { journalWords, growthWords } from '../core/journal.js';
+import { addHeart } from '../core/growth.js';
 import { journalAt } from '../render/journal.js';
 import { bagAt, panelOnTop } from '../render/bag.js';
 import { TILE } from '../render/screen.js';
@@ -91,12 +94,26 @@ export function createScreens(app, ui) {
     app.spokenLine = null;
     spoken.textContent = next === 'settings' ? settingsWords() : next === 'seed' ? (app.padFrom === 'explore' ? EXPLORE_PAD_WORDS : SEED_WORDS)
       : next === 'howto' ? howtoWords(app.page, app.settings.controls) : next === 'bag' ? bagWords() : next === 'history' ? HISTORY_WORDS
-      : next === 'journal' ? journalWords(inPlay(app.profiles).records, inPlay(app.profiles).played) : next === 'slots' ? slotsWords() : next === 'name' ? nameWords() : next === 'cloak' ? cloakWords() : next === 'eyes' ? eyesWords() : next === 'trim' ? trimWords() : next === 'clothes' ? clothesWords()
+      : next === 'journal' ? journalPageWords() : next === 'slots' ? slotsWords() : next === 'name' ? nameWords() : next === 'cloak' ? cloakWords() : next === 'eyes' ? eyesWords() : next === 'trim' ? trimWords() : next === 'clothes' ? clothesWords()
       : next === 'drop' ? `Delete ${slotName(app.profiles.slots[app.dropping], app.dropping)}? ${DROP_NOTE} Yes or No.`
       : next === 'title' ? WORDS[app.saved ? 'saved' : 'title'] : WORDS[next];
   }
   const backTo = (id) => () => show(app.pageFrom, menuOf(app.pageFrom).findIndex((l) => l.id === id));
   const closeSettings = backTo('settings'), closeHowTo = backTo('howto'), closeJournal = backTo('journal');
+  // § journal: its tabs (D-270, D-293). It opens on Records; Growth opens on Back.
+  const journalPageWords = () => (app.tab === 'growth' ? growthWords(app.state) : journalWords(inPlay(app.profiles).records, inPlay(app.profiles).played));
+  function openJournal() { app.tab = 'records'; show('journal'); }
+  function turnTab(id) {
+    if (id === app.tab) return;
+    app.tab = id; app.chosen = 1;
+    spoken.textContent = journalPageWords();
+  }
+  function buyHeart() {
+    const s = addHeart(app.state);
+    if (s === app.state) return;
+    app.state = s;
+    spoken.textContent = journalPageWords();
+  }
   function openHowTo() { app.page = ui.input().kind(); show('howto'); }
   function flipPage(back = false) { app.page = nextPage(app.page, back); spoken.textContent = howtoWords(app.page, app.settings.controls); }
 
@@ -423,7 +440,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'bag') { pourChosen(); return; }
     if (app.screen === 'howto') { if (HOWTO_LINES[i] === 'page') flipPage(); else closeHowTo(); return; }
     if (app.screen === 'history') { if (i < HISTORY.length) openVersion(i); else closeHistory(); return; }
-    if (app.screen === 'journal') { closeJournal(); return; }
+    if (app.screen === 'journal') { if (app.tab === 'growth' && i === 0) buyHeart(); else closeJournal(); return; }
     if (app.screen === 'slots') { chooseSlot(i); return; }
     if (app.screen === 'drop') { closeDrop(id === 'yes'); return; }
     if (id === 'profiles') openSlots(true);
@@ -433,7 +450,7 @@ export function createScreens(app, ui) {
     else if (id === 'resume' || id === 'continue') show('play');
     else if (id === 'title') show('title');
     else if (id === 'settings') show('settings');
-    else if (id === 'journal') show('journal');
+    else if (id === 'journal') openJournal();
     else if (id === 'howto') openHowTo();
     else if (id === 'explore') openExplorer();
     else if (id === 'controls') changeControls();
@@ -456,7 +473,11 @@ export function createScreens(app, ui) {
     if (app.screen === 'clothes') { moveToClothes(moveClothes(app.chosen, dir)); return; }
     if (app.screen === 'bag') { if (dir === 'left' || dir === 'right') pickSlot(Math.min(BAG_SLOTS - 1, Math.max(0, app.chosen + (dir === 'left' ? -1 : 1)))); return; }
     if (app.screen === 'howto') { if (dir === 'left' || dir === 'right') flipPage(dir === 'left'); else app.chosen = moveChoice(app.chosen, dir, HOWTO_LINES.length); return; }
-    if (app.screen === 'journal') return; // one tab for now, and only Back to pick
+    if (app.screen === 'journal') {
+      if (dir === 'left' || dir === 'right') turnTab(dir === 'left' ? 'records' : 'growth');
+      else if (app.tab === 'growth') app.chosen = moveChoice(app.chosen, dir, 2);
+      return;
+    }
     if (app.screen === 'slots') { app.chosen = moveChoice(app.chosen, dir, SLOTS + linesNow().length); return; }
     if (app.screen === 'history') {
       if (dir === 'left' || dir === 'right') openVersion(app.chosen, dir === 'right');
@@ -504,7 +525,13 @@ export function createScreens(app, ui) {
       else if (at) pickVersion(app.rows[at.row].i);
       return;
     }
-    if (app.screen === 'journal') { if (journalAt(py) === 'back') closeJournal(); return; }
+    if (app.screen === 'journal') {
+      const at = journalAt(px, py, app.tab);
+      if (at === 'back') closeJournal();
+      else if (at === 'heart') { app.chosen = 0; buyHeart(); }
+      else if (at) turnTab(at);
+      return;
+    }
     if (app.screen === 'slots') {
       const at = slotsAt(py, linesNow()), i = typeof at === 'number' ? at : SLOTS + linesNow().findIndex((l) => l.id === at);
       if (at !== null) { app.chosen = i; chooseSlot(i); }

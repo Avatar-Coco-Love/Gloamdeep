@@ -4,11 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.80 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.81 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-Pick the next step with the owner from Ideas for later.
+The next thing embers buy, or the first resource and craft (the owner's
+loop: deeper → find → craft and grow → deeper, `RESEARCH.md`).
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -16,7 +17,6 @@ Pick the next step with the owner from Ideas for later.
 - When creatures should show their next move (Q-049), any time.
 - A space or digits in names (Q-054), any time.
 - Play data: kept on the device or sent (Q-052), near 1.0.
-- What a level gives (Q-050), before levels matter.
 - The play-earned currency (Q-055), before the first unlock.
 - A region's name and rating (Q-056), with a second region.
 - Achievements' tiers and rewards (Q-057), before the first one.
@@ -61,6 +61,7 @@ Built to grow (D-261 to D-263; order may change)
 - [x] A slot's play time in its Profiles box, 0.2.78 (D-290)
 - [x] R4 Time played in Records, 0.2.79 (D-291)
 - [x] The rat flees once hurt, 0.2.80 (D-292)
+- [x] Embers and Growth: levels buy hearts, 0.2.81 (D-293)
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -70,9 +71,9 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-23, 0.2.78, play time.** Each Profiles box shows its play
-  time, only time in a journey, as 1h 23m or 23m (D-290). [Playtest](https://claude.ai/artifact/UqWcPCy6MuqwQHct5aAhaE).
 - **2026-10-23, 0.2.79, time played.** Records gain Time played, under
   Torches lit, as 1h 23m or 23m (D-291). [Playtest](https://claude.ai/artifact/KGtaAo8MSMVjwrUAuRxAt8).
 - **2026-10-24, 0.2.80, the rat flees.** A hurt rat steps a tile a turn
   away and bites only when cornered; it never turns back (D-292). [Playtest](https://claude.ai/artifact/F34BqFr4TtShQNCFH27ZVF).
+- **2026-10-24, 0.2.81, embers.** Each level past the first gives an
+  ember; the Journal's Growth tab spends one on a heart, up to 10 (D-293). [Playtest](https://claude.ai/artifact/92rjxR4igmX3o4XMtDocgi).

@@ -24,7 +24,8 @@ this page and a decision disagree, the decision wins.
   (5 to 7), Dungeon (8 on) (D-233).
 
 ## The hero
-- **Hearts:** the hero's health, 5 (D-115). **LV:** the level (D-246).
+- **Hearts:** the hero's health, 5, and up to 5 more bought (D-115, D-293). **LV:** the level (D-246).
+- **Embers:** 1 for each level past the first, spent in Growth (D-293).
 - **Experience:** 1 per creature beaten and per new room (D-245).
 - **Lantern, oil:** the light the hero carries and what it burns.
 - **Flask:** oil to pour into the lantern, from the bag (D-247, D-249).
@@ -37,8 +38,9 @@ this page and a decision disagree, the decision wins.
 - **Chases, Shuns light:** the ways creatures have so far (D-269).
 
 ## Menus and tools
-- **Journal:** one book with tabs: Records first, later quests, a
-  bestiary and feats (D-262).
+- **Journal:** one book with tabs: Records first, then Growth, later
+  quests, a bestiary and feats (D-262, D-293).
+- **Growth:** the Journal's tab for spending embers (D-293).
 - **Records:** the Journal's facts about how you've played: deepest,
   beaten, falls, rooms found, steps, flasks poured, torches lit, time played
   (D-262, D-270, D-283, D-285, D-286, D-291).

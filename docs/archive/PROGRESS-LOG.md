@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.78, play time.** Each Profiles box shows its play
+  time, only time in a journey, as 1h 23m or 23m (D-290). [Playtest](https://claude.ai/artifact/UqWcPCy6MuqwQHct5aAhaE).
 - **2026-10-23, 0.2.77, back on the name pad.** The name pad has a
   Back key; Look reads Change look (D-288, D-289). [Playtest](https://claude.ai/artifact/3Q7sBzGBDpWKqDZPTRwFEd).
 - **2026-10-23, 0.2.76, a hero in each box.** Each Profiles box shows
