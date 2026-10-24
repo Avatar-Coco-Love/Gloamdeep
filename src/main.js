@@ -2,7 +2,7 @@
 // input/screens.js and the drawing in render/frame.js (D-235); `app` holds
 // what the three share.
 import { VERSION } from './core/version.js';
-import { makeWorld, step, wait, pour, pourByItself, switchLantern, followDaylight, toward, DIRS, maxHealth } from './core/turn.js';
+import { makeWorld, step, wait, pour, look, pourByItself, switchLantern, followDaylight, toward, DIRS, maxHealth } from './core/turn.js';
 import { resetRoom } from './core/spawn.js';
 import { enemyAt, biteSound } from './core/enemies.js';
 import { eventsSince, has } from './core/events.js';
@@ -281,6 +281,7 @@ const stage = document.getElementById('stage');
 const screens = createScreens(app, {
   spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion, newJourney, randomSeed, useSlot, renameSlot, lookSlot, dropSlot,
   pour: (slot) => tryStep({ pour: slot }),
+  lookAt: (slot) => { app.state = look(app.state, slot); }, // an oilcap's line, free (D-297)
   dev: () => dev, input: () => input, mapMoves: () => mapMoves, // made below
 });
 // In play the Controls switch can turn swipes off (D-189); off the room, the screens take them

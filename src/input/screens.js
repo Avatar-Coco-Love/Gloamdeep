@@ -74,7 +74,7 @@ const PAN = 8; // game pixels an arrow key scrolls the map
 const STAIRS_REACH = 8; // game pixels from found stairs' centre that a tap still picks them
 
 // `ui`: the spoken line, the buttons, and the dev tools, input and map moves, asked for
-// when used (they are made after the screens); `newJourney`, `randomSeed` and `pour(slot)` from main.js.
+// when used (they are made after the screens); `newJourney`, `randomSeed`, `pour(slot)` and `lookAt(slot)` from main.js.
 export function createScreens(app, ui) {
   const { spoken, lanternButton, pauseButton, mapButton, bagButton, reduceMotion } = ui;
   const menuOf = (sc) => (sc === 'title' ? titleMenu(app.saved) : sc === 'paused' ? PAUSE_MENU : sc === 'sure' || sc === 'drop' ? SURE_MENU
@@ -322,7 +322,7 @@ export function createScreens(app, ui) {
     if (app.screen === 'bag') show('play');
     else if (app.screen === 'play') { app.queued = null; app.bagOnTop = panelOnTop(app.state.hero.y * TILE - app.cam.y); show('bag'); }
   }
-  function pickSlot(i) { app.chosen = i; spoken.textContent = slotWords(i); }
+  function pickSlot(i) { app.chosen = i; spoken.textContent = slotWords(i); ui.lookAt(i); } // choosing says an item's look line (D-297)
   function pourChosen() {
     const s = app.state.bag[app.chosen];
     if (!s || !get(s.id).oil) return;

@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.83', date: '2026-10-24', title: 'The oilcap', lines: [
+    "Mushrooms called oilcaps now grow from the first cave down: one amber oilcap in every room, somewhere on the open floor. Walk onto one to put it in the bag, in stacks of 3, with a line that changes each time, such as \"You grab the oilcap.\"",
+    "Choosing oilcaps in the bag gives a hint, such as \"Three make an oil flask.\", without passing a turn. Crafting them into a flask comes in the next step. The open bag sits a little higher, so the line under the room stays in view.",
+    "Decisions: D-295 to D-298.",
+  ] },
   { v: '0.2.82', date: '2026-10-24', title: 'Smooth on slow devices', lines: [
     "On a slow phone the hero and creatures now slide as fast as on a quick one, so walking no longer slows down when the game draws fewer frames, such as with many things placed in a room.",
     "The dev line at the bottom starts with fps, the frames drawn each second: 60 is smooth, under 30 feels choppy.",

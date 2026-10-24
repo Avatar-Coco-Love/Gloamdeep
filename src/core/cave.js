@@ -1,6 +1,6 @@
 // § cave: a generated room, round chambers joined by winding tunnels
 // (D-147, D-162) or a digger's burrows (D-165), from one seed (D-148), with a torch by the stairs up, a flask and
-// a rat guarding it (D-149), and a herb (D-155). Plain data, no drawing. Same seed, same room.
+// a rat guarding it (D-149), a herb (D-155) and an oilcap (D-296). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 
 // § sizes: about 1.5 screens, 17 × 20, bigger than the screen, so the camera
@@ -162,8 +162,13 @@ function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'r
   if (knife) {
     const free = open.filter((f) => !taken.some((t) => same(t, f))), far5 = free.filter((f) => far.get(key(f)) >= 5);
     const at = (far5.length || free.length) && pick(r, far5.length ? far5 : free);
-    if (at) items.push({ id: 'knife', x: at.x, y: at.y });
+    if (at) { items.push({ id: 'knife', x: at.x, y: at.y }); taken.push(at); }
   }
+
+  // § oilcap: one on any open tile nothing else took (D-296). Picked last, so
+  // the rest of a seed's room stays as it was; none when no tile is free.
+  const caps = open.filter((f) => !taken.some((t) => same(t, f)));
+  if (caps.length) { const at = pick(r, caps); items.push({ id: 'oilcap', x: at.x, y: at.y }); }
 
   return {
     map: g.map((row) => row.join('')),

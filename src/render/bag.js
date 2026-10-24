@@ -5,14 +5,14 @@
 // a row, each an item's sprite with its count when more than one, the chosen
 // slot framed in gold. Under them the chosen item's name, and Pour on the
 // right for one that pours. No veil: the room shows above it.
-import { W, SCREEN_H } from './screen.js';
+import { W, H } from './screen.js';
 import { drawText, textWidth } from './font.js';
 import { BAG_SLOTS } from '../core/bag.js';
 import { get } from '../core/registry.js';
 
 const K = '#0e0c16', LINE = '#2a2636', EMBER = '#f39a3b', GOLD = '#ffd66b', GREY = '#9790a4', CORE = '#fff5d6';
 const SLOT = 22, SLOT_GAP = 3;
-export const PANEL = { x: 8, w: W - 16, h: 86, y: SCREEN_H - 4 - 86 };
+export const PANEL = { x: 8, w: W - 16, h: 86, y: H - 4 - 86 }; // above the text line, so its lines show (D-298)
 const TOP_Y = 4; // the panel's top when it moves over the room's top
 // Whether the panel goes to the top: the hero's tile, `heroY` pixels down the screen, would be under it
 export const panelOnTop = (heroY) => heroY + 16 > PANEL.y - 4;

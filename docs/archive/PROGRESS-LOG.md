@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.80, the rat flees.** A hurt rat steps a tile a turn
+  away and bites only when cornered; it never turns back (D-292). [Playtest](https://claude.ai/artifact/F34BqFr4TtShQNCFH27ZVF).
 - **2026-10-23, 0.2.79, time played.** Records gain Time played, under
   Torches lit, as 1h 23m or 23m (D-291). [Playtest](https://claude.ai/artifact/KGtaAo8MSMVjwrUAuRxAt8).
 - **2026-10-23, 0.2.78, play time.** Each Profiles box shows its play
