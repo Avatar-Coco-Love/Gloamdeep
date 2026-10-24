@@ -102,6 +102,13 @@ export function createDev(stage, canvas, game, hud) {
 
   // § draw: called each frame after the game is drawn
   let text = '';
+  // § fps: frames drawn each second, counted over half a second (D-294)
+  let fps = 0, frames = 0, since = null;
+  function countFrame(now) {
+    if (since === null) since = now;
+    frames++;
+    if (now - since >= 500) { fps = Math.round((frames * 1000) / (now - since)); frames = 0; since = now; }
+  }
   return {
     hide,
     armed: () => tools.picked() !== null,
@@ -117,6 +124,7 @@ export function createDev(stage, canvas, game, hud) {
       return true;
     },
     draw(ctx, state, cam) {
+      countFrame(performance.now());
       if (opts.grid) drawGrid(ctx, cam);
       if (opts.coords && pointed) {
         ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip(); // off the text strip
@@ -126,7 +134,7 @@ export function createDev(stage, canvas, game, hud) {
       tools.sync(state);
       // § stats: always on; a second line for the pick and the pointed tile (D-088)
       const h = state.hero, picked = tools.picked();
-      let next = `turn ${state.turn} · day ${state.turn % DAY_TURNS}/${DAY_TURNS} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · xp ${state.xp} · hero ${h.x},${h.y} · depth ${depthOf(state.place)} · seed ${state.seed}`;
+      let next = `fps ${fps} · turn ${state.turn} · day ${state.turn % DAY_TURNS}/${DAY_TURNS} · oil ${Math.round(state.oil * 100)}% · ${state.lit ? 'lit' : 'dark'} · health ${state.health} · xp ${state.xp} · hero ${h.x},${h.y} · depth ${depthOf(state.place)} · seed ${state.seed}`;
       const more = [];
       if (picked) more.push(`placing ${picked.name}`);
       if (opts.coords && pointed) {

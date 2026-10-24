@@ -184,3 +184,10 @@ including levels reached before this. Embers are spent in a new Journal
 tab, Growth, after Records, at any time. The first thing an ember buys
 is one more heart, up to 5 more (10 in all); it arrives full. Spent
 embers can't be taken back. Past 5, hearts fill a second row of 5.
+
+**D-294 · 2026-10-24 · Smooth on slow devices** (the owner's picks, after
+a playtest with 30 to 50 knives placed felt slow) The hero and creatures
+slide by time, not by frame: a tile in about 0.09 seconds on any device,
+the speed they had at 60 frames a second. The dev stats line starts with
+the frames drawn each second ("fps 60"). Cheaper lighting, the most work
+in each frame, is an idea for later.

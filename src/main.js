@@ -112,8 +112,10 @@ const textLine = createTextLine();
 const spoken = document.getElementById('line'); // the same words for screen readers
 
 // § moving: the hero slides to its new tile (D-043); one step or wait waits in line
-// so a quick second tap or key is not lost.
-const SLIDE = 0.18; // tiles per frame, as in the study
+// so a quick second tap or key is not lost. The slide goes by time, not by frame,
+// so a slow device walks as fast as a quick one (D-294).
+const SLIDE = 0.18 * 60 / 1000; // tiles per millisecond: the study's 0.18 a frame, at 60 frames a second
+const MAX_SLIDE_MS = 100; // a longer gap between frames (a hidden page) slides as this much
 const HOLD_STEP_MS = 250; // a held finger walks about 4 steps a second (D-044)
 let lastHeldStep = 0;
 Object.assign(app, {
@@ -337,9 +339,12 @@ function rememberHere() {
 }
 
 // § loop: move the shown hero and enemies toward the real ones, take a waiting step, then draw
-function approach(from, to) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE); }
+function approach(from, to, dt) { return from + Math.sign(to - from) * Math.min(Math.abs(to - from), SLIDE * dt); }
+let lastUpdate = null;
 function update(t) {
   const { travel, fall, shown } = app;
+  const dt = lastUpdate === null ? 0 : Math.min(t - lastUpdate, MAX_SLIDE_MS);
+  lastUpdate = t;
   // § stairs: until the fade's middle the old room is shown, then the new one at once (D-135)
   if (travel && t >= travel.mid && travel.from) { travel.from = null; snap(app.state.hero); foeShown = new Map(); }
   if (travel && t >= travel.end) app.travel = null;
@@ -347,9 +352,9 @@ function update(t) {
   if (fall && t >= fall.mid && fall.from) { fall.from = null; snap(app.state.hero); foeShown = new Map(); }
   if (fall && t >= fall.end) app.fall = null;
   const s = app.travel?.from || app.fall?.from || app.state;
-  shown.x = approach(shown.x, s.hero.x);
-  shown.y = approach(shown.y, s.hero.y);
-  for (const e of s.enemies) { const p = foeAt(e); p.x = approach(p.x, e.x); p.y = approach(p.y, e.y); }
+  shown.x = approach(shown.x, s.hero.x, dt);
+  shown.y = approach(shown.y, s.hero.y, dt);
+  for (const e of s.enemies) { const p = foeAt(e); p.x = approach(p.x, e.x, dt); p.y = approach(p.y, e.y, dt); }
   holdAt(input.held());
   if (settled() && app.screen === 'play') { // paused, no turn is taken
     rememberHere();

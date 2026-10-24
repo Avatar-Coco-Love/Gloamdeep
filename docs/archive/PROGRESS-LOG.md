@@ -2,6 +2,8 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-23, 0.2.79, time played.** Records gain Time played, under
+  Torches lit, as 1h 23m or 23m (D-291). [Playtest](https://claude.ai/artifact/KGtaAo8MSMVjwrUAuRxAt8).
 - **2026-10-23, 0.2.78, play time.** Each Profiles box shows its play
   time, only time in a journey, as 1h 23m or 23m (D-290). [Playtest](https://claude.ai/artifact/UqWcPCy6MuqwQHct5aAhaE).
 - **2026-10-23, 0.2.77, back on the name pad.** The name pad has a
