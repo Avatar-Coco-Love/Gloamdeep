@@ -75,7 +75,7 @@ The heartcap (D-303, D-304, D-306; order approved)
 - [x] H4 Make a healing potion: 3 heartcaps, Drink heals 4, 0.2.91 (D-309)
 - [x] Ideas: enemies from building blocks, bosses in phases, 0.2.92
 The first ore deposit, then the stash chest, then a light-seeking creature (D-311)
-- [x] O1 Deposits: 3 veined rocks in each Cave room, 0.2.93
+- [x] O1 Deposits: 3 boulders in each Cave room, 0.2.93
 - [ ] O2 Three bumps break one; a stone into the bag
 - [ ] O3 A broken deposit grows back after 900 turns
 - [ ] The stash chest
@@ -97,5 +97,5 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
   what you know, with balancing notes; nothing in the game changes.
 - **2026-10-24, 0.2.93, the first ore deposit.** Ideas picked: a deposit,
   the stash chest, a light-seeking creature. Each Cave room, depths 2 to 4,
-  holds 3 veined rock deposits: solid, light passes over, the map outlines
+  holds 3 boulder deposits: solid, light passes over, the map outlines
   them (D-311). D-299 to D-309 archived (D-310). [Playtest](https://claude.ai/artifact/7m9zAvmXPaEmfey1gzjkFK).

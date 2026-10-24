@@ -104,8 +104,9 @@ They stay in force.
 
 **D-311 · 2026-10-24 · The first ore deposit** (the owner's picks, all
 recommended; builds D-282) Next come the first ore deposit, then the stash
-chest, then a creature drawn to light. A deposit is a lump of grey rock
-streaked with pale veins (look B of three). Each room of the Cave area,
+chest, then a creature drawn to light. A deposit is a round boulder of grey
+rock with one seam (look A of three; changed after the playtest: B, veined
+rock, looked like it held iron → A). Each room of the Cave area,
 depths 2 to 4, holds 3, off the edge and never cutting a room in two;
 clusters may come later, when something needs much more stone. It is a
 new kind of tile, solid, but light passes over it, and the map outlines it

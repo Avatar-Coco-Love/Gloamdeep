@@ -145,7 +145,7 @@ export const sidesOf = (id, seed) => ({ ...(PLACES[id]?.sides || (isGenerated(id
 // starts at (D-165), moved up one (D-212): grey rock chambers, then earth burrows from depth 5,
 // then the dungeon's halls from depth 8, the crypt's bricks deeper and bluer (D-228, D-229).
 // A later kind adds a line further down. `area` is its name on the map (D-233),
-// `deposits` how many deposits each of its rooms holds (D-310).
+// `deposits` how many deposits each of its rooms holds (D-311).
 const KINDS = [
   { from: 2, shape: 'chambers', look: 'rock', area: 'CAVE', deposits: 3 },
   { from: 5, shape: 'burrows', look: 'earth', area: 'WARREN' },

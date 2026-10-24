@@ -1,6 +1,6 @@
 // § cave: a generated room, round chambers joined by winding tunnels
 // (D-147, D-162) or a digger's burrows (D-165), from one seed (D-148), with a torch by the stairs up, a flask and
-// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303), each mushroom its own tone (D-305), and deposits when asked (D-310). Plain data, no drawing. Same seed, same room.
+// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303), each mushroom its own tone (D-305), and deposits when asked (D-311). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 import { toned } from './tones.js';
 
@@ -22,7 +22,7 @@ export const HEARTCAP_ODDS = 0.5;
 // openings to carve at the edges, as { dir, at } (region.js, D-201).
 // `ways.rats` is how many rats the room holds (D-231), and `ways.second` the
 // kind of creature that takes the extra ones' place (a gloamling, D-240), and
-// `ways.knife` whether the knife lies there (D-252), and `ways.deposits` how many deposits (D-310). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
+// `ways.knife` whether the knife lies there (D-252), and `ways.deposits` how many deposits (D-311). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
 // floors line up (D-202); true lets the room pick, null leaves them out.
 export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1, second = 'rat', knife = false, deposits = 0 } = {}) {
   const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
@@ -188,7 +188,7 @@ function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'r
 }
 
 // § deposits: `count` deposits on open floor, off the edge, where nothing lies,
-// stands or starts (D-310). Each one must leave every open tile reachable, so a
+// stands or starts (D-311). Each one must leave every open tile reachable, so a
 // deposit never cuts the room in two; one that can't fit is left out. Placed
 // after everything else, so the rest of a seed's room stays as it was.
 function withDeposits(r, room, count) {

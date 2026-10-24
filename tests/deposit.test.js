@@ -1,5 +1,5 @@
-// § deposit: three veined rocks in each Cave room, depths 2 to 4, solid but
-// letting light over them, never cutting a room in two (D-310)
+// § deposit: three boulders in each Cave room, depths 2 to 4, solid but
+// letting light over them, never cutting a room in two (D-311)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { placeFor, makeRoom, tileAt, FIRST_ROOM, withTile } from '../src/core/room.js';

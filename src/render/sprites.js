@@ -11,7 +11,7 @@ const PAL = {
   T: '#e8d5a0', t: '#a8642c', // the lantern's trim, cap and base (P5)
   g: '#6fb04e', G: '#3c6e3a', // moss (ART-DIRECTION.md palette)
   r: '#d8483c', R: '#8c2430', // the heartcap's bright red, light and shade (D-303)
-  H: '#6a7489', L: '#555e73', M: '#4b5468', D: '#434b5d', x: '#262a35', v: '#b9ab88', // grey rock's face, lit top to seam, and a vein (D-310)
+  H: '#6a7489', L: '#555e73', M: '#4b5468', D: '#434b5d', x: '#262a35', // grey rock's face, lit top to seam (D-311)
 };
 
 // § hero: the study's hero, with the lantern held out to its right (D-042, D-056).
@@ -53,11 +53,11 @@ const HEARTCAP = { mirror: false, toned: 'rR', rows: [
   '', '', '', '.....kkkkkk.....', '....krrwrrrk....', '...krrrrrwRRk...', '...kwrrrrrrRk...', '..krrrwrrrrRRk..', '..krrrrrrwrRRk..',
   '..kkkkkkkkkkkk..', '......kwak......', '......kwak......', '.....kwwak......', '.....kwwaak.....', '.....kkkkkk.....'] };
 
-// § deposit: a lump of grey rock streaked with pale veins, lit on top, darker to
-// the lower right (style B of the deposit mock-up, D-310)
+// § deposit: a round boulder of grey rock with one seam, lit on top, darker to
+// the lower right (look A of the deposit mock-up, D-311)
 const DEPOSIT = { mirror: false, rows: [
-  '', '', '', '', '......kkkk......', '....kkHHLLkk....', '...kHHLLLLMMk...', '..kHLwvLLLMMMk..', '..kLLLvLLMwMDk..',
-  '.kLLLLLvMMvMDDk.', '.kMwLLLLMMMvDDk.', '.kMvMMMMMwMDDDk.', '..kDMMMMMvDDDk..', '...kkDDDDDDkk...', '.....kkkkkk.....'] };
+  '', '', '', '', '......kkkk......', '....kkHHLLkk....', '...kHHLLLLMMk...', '..kHLLLLLLMMMk..', '..kLLLLxLMMMDk..',
+  '.kLLLLxLMMMMDDk.', '.kMLLLLxMMMDDDk.', '.kMMMMMxMMDDDDk.', '..kDMMMMMDDDDk..', '...kkDDDDDDkk...', '.....kkkkkk.....'] };
 
 // § potion: a round red bottle under a cork, a pale glass neck and a light
 // gleam on its left (D-309, look A of three)
@@ -163,7 +163,7 @@ export function drawShadow(c, x, y, w) {
   c.fillRect(x + 9 - w / 2, y + 16, w - 2, 1);
 }
 
-// § deposit: drawn on its tile 2 pixels up, on a wide shadow, as items are (D-310)
+// § deposit: drawn on its tile 2 pixels up, on a wide shadow, as items are (D-311)
 export function drawDeposit(c, tx, ty) {
   const x = tx * 16, y = ty * 16 - 2;
   drawShadow(c, x, y, 12);

@@ -22,7 +22,7 @@ Entry format:
 ```
 
 ## 0.2.93 (2026-10-24)
-- Each room of the Cave area, depths 2 to 4, now holds 3 deposits: lumps of grey rock streaked with pale veins. They block your way like a wall, but your light passes over them, and the map outlines them.
+- Each room of the Cave area, depths 2 to 4, now holds 3 deposits: round boulders of grey rock, each with one seam. They block your way like a wall, but your light passes over them, and the map outlines them.
 - Deposits never cut a room in two, and they stay off the room's edges and clear of anything lying or standing there. Bumping one does nothing yet; mining comes next.
 - Decisions: D-310, D-311.
 
