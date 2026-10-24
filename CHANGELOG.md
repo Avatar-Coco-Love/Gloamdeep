@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.82 (2026-10-24)
+- On a slow phone the hero and creatures now slide as fast as on a quick one, so walking no longer slows down when the game draws fewer frames, such as with many things placed in a room.
+- The dev line at the bottom starts with fps, the frames drawn each second: 60 is smooth, under 30 feels choppy.
+- Decisions: D-294.
+
 ## 0.2.81 (2026-10-24)
 - Levels now give something: each level past the first gives 1 ember, also for levels already reached. A new Journal tab, Growth, after Records, shows your embers and your hearts. Add a heart spends an ember on one more heart, up to 10 in all; it arrives full, and it can't be taken back. Past 5, hearts fill a second row.
 - The owner's new ideas are in the wish list: resources and crafting, abilities, more varied places, waystones, a ship, NPCs, a cult to talk to, quests and companions.

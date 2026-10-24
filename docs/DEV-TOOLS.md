@@ -27,7 +27,7 @@ tools to be chosen together later.
   all words in the pixel font (D-200). Code: `src/dev/pixeltext.js`.
 - Sideways, the wrench stands left of the picture's top, and the stats
   line keeps to the space left of the room (D-199).
-- Stats line, bottom left: turn, oil %, lit or dark, hero tile, then the
+- Stats line, bottom left: frames a second (fps, D-294), turn, oil %, lit or dark, hero tile, then the
   spawn pick and pointed tile (D-088). New state joins it as it arrives:
   health, depth, and the seed (D-150).
 - PC keys: ` the panel; G, C, R the View switches (D-090).
