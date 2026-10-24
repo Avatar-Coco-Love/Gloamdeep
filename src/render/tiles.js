@@ -6,6 +6,7 @@ import { stairsFacing } from '../core/stairs.js';
 import { TILE as T } from './screen.js';
 import { drawRock } from './rock.js';
 import { drawWoods, drawTree } from './woods.js';
+import { drawDeposit } from './sprites.js';
 
 const px = (c, x, y, col) => { c.fillStyle = col; c.fillRect(x, y, 1, 1); };
 // The dungeon (D-228) is the crypt drawn deeper and bluer: each colour's red,
@@ -116,6 +117,8 @@ const DRAW = {
   wall: drawWall, floor: drawFloor, outcrop: drawWall,
   tree: (c, room, x, y) => { drawFloor(c, room, x, y); drawTree(c, room, x, y); },
   caveMouth: (c, room, x, y) => { c.fillStyle = '#0c0b12'; c.fillRect(x * T, y * T, T, T); },
+  // On the rock's own floor in a cave (D-310); a deposit spawned elsewhere stands on that room's floor
+  deposit: (c, room, x, y) => { if (!['rock', 'earth', 'woods'].includes(room.look)) drawFloor(c, room, x, y); drawDeposit(c, x, y); },
   stairsDown: (c, room, x, y) => drawSteps(c, room, x, y, false),
   stairsUp: (c, room, x, y) => drawSteps(c, room, x, y, true),
 };

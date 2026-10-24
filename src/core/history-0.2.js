@@ -2,6 +2,11 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.93', date: '2026-10-24', title: 'The first ore deposit', lines: [
+    "Each room of the Cave area, depths 2 to 4, now holds 3 deposits: round boulders of grey rock, each with one seam. They block your way like a wall, but your light passes over them, and the map outlines them.",
+    "Deposits never cut a room in two, and they stay off the room's edges and clear of anything lying or standing there. Bumping one does nothing yet; mining comes next.",
+    "Decisions: D-310, D-311.",
+  ] },
   { v: '0.2.92', date: '2026-10-24', title: 'Ideas: enemies and bosses', lines: [
     "Ideas recorded: many enemies mixed from a few building blocks (how they move, attack and meet light), and bosses in phases that test what you already know, with notes on balancing them. Nothing in the game changes.",
     "Decisions: none.",

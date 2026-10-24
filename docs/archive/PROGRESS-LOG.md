@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.90, eating a heartcap.** Eat, in the bag, eats a
+  heartcap: 1 heart, a turn, the bag stays open, lines that take turns;
+  dim at full health, "You aren't hurt." (D-308). [Playtest](https://claude.ai/artifact/K6kCv4tKpJcHZgyVBvVnGp).
 - **2026-10-24, 0.2.89, things grow back.** Mushrooms and herbs taken
   come back after 300 turns, a flask after 900, never the knife; only out
   of the hero's light, or already there on walking in (D-306, D-307). [Playtest](https://claude.ai/artifact/DdX9k9FJ3EJJTNWPRs6jKj).

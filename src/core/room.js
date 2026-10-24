@@ -133,8 +133,8 @@ export const isGenerated = (id) => !PLACES[id];
 export function placeFor(id, seed = 1) {
   if (PLACES[id]?.make) return { ...PLACES[id], ...PLACES[id].make(seedFor(seed, PLACES[id].depth), seed) };
   if (PLACES[id]) return { ...PLACES[id], ...scatter(PLACES[id], seedAt(seed, PLACES[id].depth) + (PLACES[id].slot || 0)), map: withGap(id, PLACES[id].map, seed) };
-  const depth = depthOf(id), { shape, look } = kindAt(depth), cell = cellOf(seed, id, depth);
-  return { ...((cell && generateRoom(cell.seed, shape, { ...cell, rats: ratsAt(depth), second: gloamlingRooms(seed, depth).includes(id) ? 'gloamling' : 'rat', knife: id === placeAt(KNIFE_DEPTH) })) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
+  const depth = depthOf(id), { shape, look, deposits = 0 } = kindAt(depth), cell = cellOf(seed, id, depth);
+  return { ...((cell && generateRoom(cell.seed, shape, { ...cell, rats: ratsAt(depth), second: gloamlingRooms(seed, depth).includes(id) ? 'gloamling' : 'rat', knife: id === placeAt(KNIFE_DEPTH), deposits })) || PLACES[DEEPER]), depth, look, sides: cell?.sides || {} };
 }
 
 // The room beyond each edge of a place with openings, by direction (D-197,
@@ -144,9 +144,10 @@ export const sidesOf = (id, seed) => ({ ...(PLACES[id]?.sides || (isGenerated(id
 // § kinds: the kind of place at each generated depth, from the depth it
 // starts at (D-165), moved up one (D-212): grey rock chambers, then earth burrows from depth 5,
 // then the dungeon's halls from depth 8, the crypt's bricks deeper and bluer (D-228, D-229).
-// A later kind adds a line further down. `area` is its name on the map (D-233).
+// A later kind adds a line further down. `area` is its name on the map (D-233),
+// `deposits` how many deposits each of its rooms holds (D-311).
 const KINDS = [
-  { from: 2, shape: 'chambers', look: 'rock', area: 'CAVE' },
+  { from: 2, shape: 'chambers', look: 'rock', area: 'CAVE', deposits: 3 },
   { from: 5, shape: 'burrows', look: 'earth', area: 'WARREN' },
   { from: 8, shape: 'halls', look: 'dungeon', area: 'DUNGEON' },
 ];

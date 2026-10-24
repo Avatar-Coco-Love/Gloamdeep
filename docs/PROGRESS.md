@@ -4,12 +4,12 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.92 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.93 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-The heartcap steps are done. Propose 2 or 3 next steps from "Ideas for
-later" and `RESEARCH.md` for the owner to pick.
+O2: three bumps break a deposit, a turn each, and a plain stone goes into
+the bag (D-311). Propose the stone's look, its name and its lines first.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -74,6 +74,12 @@ The heartcap (D-303, D-304, D-306; order approved)
 - [x] H3 Eat a heartcap from the bag: 1 heart, a turn, 0.2.90 (D-308)
 - [x] H4 Make a healing potion: 3 heartcaps, Drink heals 4, 0.2.91 (D-309)
 - [x] Ideas: enemies from building blocks, bosses in phases, 0.2.92
+The first ore deposit, then the stash chest, then a light-seeking creature (D-311)
+- [x] O1 Deposits: 3 boulders in each Cave room, 0.2.93
+- [ ] O2 Three bumps break one; a stone into the bag
+- [ ] O3 A broken deposit grows back after 900 turns
+- [ ] The stash chest
+- [ ] A creature drawn to light
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -83,12 +89,13 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); cheaper lighting for phones, the look unchanged (D-294, D-295); workstations for some crafts (D-296); a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-24, 0.2.90, eating a heartcap.** Eat, in the bag, eats a
-  heartcap: 1 heart, a turn, the bag stays open, lines that take turns;
-  dim at full health, "You aren't hurt." (D-308). [Playtest](https://claude.ai/artifact/K6kCv4tKpJcHZgyVBvVnGp).
 - **2026-10-24, 0.2.91, the healing potion.** Make, beside Eat (or C),
   turns 3 heartcaps into a round red potion, a turn; Drink heals 4 hearts,
   never above full, with lines that take turns (D-309). [Playtest](https://claude.ai/artifact/U8nSWct6uQo79HQDNah1fe).
 - **2026-10-24, 0.2.92, ideas: enemies and bosses.** In `RESEARCH.md`:
   enemies mixed from a few building blocks, and bosses in phases that test
   what you know, with balancing notes; nothing in the game changes.
+- **2026-10-24, 0.2.93, the first ore deposit.** Ideas picked: a deposit,
+  the stash chest, a light-seeking creature. Each Cave room, depths 2 to 4,
+  holds 3 boulder deposits: solid, light passes over, the map outlines
+  them (D-311). D-299 to D-309 archived (D-310). [Playtest](https://claude.ai/artifact/7m9zAvmXPaEmfey1gzjkFK).
