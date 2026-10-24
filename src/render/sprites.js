@@ -11,6 +11,7 @@ const PAL = {
   T: '#e8d5a0', t: '#a8642c', // the lantern's trim, cap and base (P5)
   g: '#6fb04e', G: '#3c6e3a', // moss (ART-DIRECTION.md palette)
   r: '#d8483c', R: '#8c2430', // the heartcap's bright red, light and shade (D-303)
+  H: '#6a7489', L: '#555e73', M: '#4b5468', D: '#434b5d', x: '#262a35', v: '#b9ab88', // grey rock's face, lit top to seam, and a vein (D-310)
 };
 
 // § hero: the study's hero, with the lantern held out to its right (D-042, D-056).
@@ -51,6 +52,12 @@ const OILCAP = { mirror: false, toned: 'oO', rows: [
 const HEARTCAP = { mirror: false, toned: 'rR', rows: [
   '', '', '', '.....kkkkkk.....', '....krrwrrrk....', '...krrrrrwRRk...', '...kwrrrrrrRk...', '..krrrwrrrrRRk..', '..krrrrrrwrRRk..',
   '..kkkkkkkkkkkk..', '......kwak......', '......kwak......', '.....kwwak......', '.....kwwaak.....', '.....kkkkkk.....'] };
+
+// § deposit: a lump of grey rock streaked with pale veins, lit on top, darker to
+// the lower right (style B of the deposit mock-up, D-310)
+const DEPOSIT = { mirror: false, rows: [
+  '', '', '', '', '......kkkk......', '....kkHHLLkk....', '...kHHLLLLMMk...', '..kHLwvLLLMMMk..', '..kLLLvLLMwMDk..',
+  '.kLLLLLvMMvMDDk.', '.kMwLLLLMMMvDDk.', '.kMvMMMMMwMDDDk.', '..kDMMMMMvDDDk..', '...kkDDDDDDkk...', '.....kkkkkk.....'] };
 
 // § potion: a round red bottle under a cork, a pale glass neck and a light
 // gleam on its left (D-309, look A of three)
@@ -98,7 +105,7 @@ function spriteCanvas(def, flash = null, pal = PAL) {
   return cv;
 }
 
-export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), oilcap: spriteCanvas(OILCAP), heartcap: spriteCanvas(HEARTCAP), potion: spriteCanvas(POTION), knife: spriteCanvas(KNIFE), rat: spriteCanvas(RAT), gloamling: spriteCanvas(GLOAMLING) }; // keyed by registry id
+export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), oilcap: spriteCanvas(OILCAP), heartcap: spriteCanvas(HEARTCAP), potion: spriteCanvas(POTION), knife: spriteCanvas(KNIFE), deposit: spriteCanvas(DEPOSIT), rat: spriteCanvas(RAT), gloamling: spriteCanvas(GLOAMLING) }; // keyed by registry id
 const DEFS = { oilcap: OILCAP, heartcap: HEARTCAP };
 // § tones: a mushroom with its cap's colours shifted by its tone, hue in degrees and
 // lightness in points (D-305); the spots, stem and outline stay. Each made once.
@@ -154,6 +161,13 @@ export function drawShadow(c, x, y, w) {
   c.fillStyle = 'rgba(0,0,0,.35)';
   c.fillRect(x + 8 - w / 2, y + 14, w, 2);
   c.fillRect(x + 9 - w / 2, y + 16, w - 2, 1);
+}
+
+// § deposit: drawn on its tile 2 pixels up, on a wide shadow, as items are (D-310)
+export function drawDeposit(c, tx, ty) {
+  const x = tx * 16, y = ty * 16 - 2;
+  drawShadow(c, x, y, 12);
+  c.drawImage(SPRITES.deposit, x, y);
 }
 
 const LYING_DROP = 3; // pixels the fallen hero sits lower, on the floor

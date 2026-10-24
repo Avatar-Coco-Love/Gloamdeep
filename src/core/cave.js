@@ -1,6 +1,6 @@
 // § cave: a generated room, round chambers joined by winding tunnels
 // (D-147, D-162) or a digger's burrows (D-165), from one seed (D-148), with a torch by the stairs up, a flask and
-// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303), each mushroom its own tone (D-305). Plain data, no drawing. Same seed, same room.
+// a rat guarding it (D-149), a herb (D-155), an oilcap (D-296) and, in about half the rooms, a heartcap (D-303), each mushroom its own tone (D-305), and deposits when asked (D-310). Plain data, no drawing. Same seed, same room.
 import { rng, int, pick } from './rng.js';
 import { toned } from './tones.js';
 
@@ -22,13 +22,13 @@ export const HEARTCAP_ODDS = 0.5;
 // openings to carve at the edges, as { dir, at } (region.js, D-201).
 // `ways.rats` is how many rats the room holds (D-231), and `ways.second` the
 // kind of creature that takes the extra ones' place (a gloamling, D-240), and
-// `ways.knife` whether the knife lies there (D-252). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
+// `ways.knife` whether the knife lies there (D-252), and `ways.deposits` how many deposits (D-310). `ways.up` and `ways.down` are where the stairs must be, as { x, y }, so
 // floors line up (D-202); true lets the room pick, null leaves them out.
-export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1, second = 'rat', knife = false } = {}) {
+export function generateRoom(seed, shape = 'chambers', { doors = [], up = true, down = true, rats = 1, second = 'rat', knife = false, deposits = 0 } = {}) {
   const r = rng(seed), carve = SHAPES[shape], dig = shape === 'halls' ? lane : tunnel;
   for (let i = 0; i < TRIES; i++) {
     const g = carve(r), room = g && fill(r, openStairs(r, openDoors(r, g, doors, dig), up, down, dig), up, down, rats, second, knife);
-    if (room) return { ...room, items: toned(seed, room.items) }; // each mushroom its own tone (D-305)
+    if (room) return { ...room, map: deposits ? withDeposits(r, room, deposits) : room.map, items: toned(seed, room.items) }; // each mushroom its own tone (D-305)
   }
   return null;
 }
@@ -185,6 +185,37 @@ function finds(r, g, floors, far, up, down, torch, doors, count = 1, second = 'r
     items,
     enemies,
   };
+}
+
+// § deposits: `count` deposits on open floor, off the edge, where nothing lies,
+// stands or starts (D-310). Each one must leave every open tile reachable, so a
+// deposit never cuts the room in two; one that can't fit is left out. Placed
+// after everything else, so the rest of a seed's room stays as it was.
+function withDeposits(r, room, count) {
+  const g = room.map.map((row) => [...row]), things = [room.start, ...room.items, ...room.enemies];
+  const walkable = (t) => g[t.y]?.[t.x] !== undefined && g[t.y][t.x] !== '#' && g[t.y][t.x] !== 'O';
+  const all = tilesWhere(g, (x, y) => walkable({ x, y }));
+  const joined = () => {
+    const open = all.filter(walkable), seen = new Set([key(open[0])]), queue = [open[0]];
+    while (queue.length) {
+      const t = queue.shift();
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const n = { x: t.x + dx, y: t.y + dy };
+        if (walkable(n) && !seen.has(key(n))) { seen.add(key(n)); queue.push(n); }
+      }
+    }
+    return seen.size === open.length;
+  };
+  for (let i = 0; i < count; i++) {
+    const spots = all.filter((t) => g[t.y][t.x] === '.' && !onEdge(t) && !things.some((o) => same(o, t)));
+    while (spots.length) {
+      const at = spots.splice(int(r, 0, spots.length - 1), 1)[0];
+      g[at.y][at.x] = 'O';
+      if (joined()) break;
+      g[at.y][at.x] = '.';
+    }
+  }
+  return g.map((row) => row.join(''));
 }
 
 // § chambers: 5 to 10 roundish chambers, their middles well apart (D-162)

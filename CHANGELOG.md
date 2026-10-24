@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.93 (2026-10-24)
+- Each room of the Cave area, depths 2 to 4, now holds 3 deposits: lumps of grey rock streaked with pale veins. They block your way like a wall, but your light passes over them, and the map outlines them.
+- Deposits never cut a room in two, and they stay off the room's edges and clear of anything lying or standing there. Bumping one does nothing yet; mining comes next.
+- Decisions: D-310, D-311.
+
 ## 0.2.92 (2026-10-24)
 - Ideas recorded: many enemies mixed from a few building blocks (how they move, attack and meet light), and bosses in phases that test what you already know, with notes on balancing them. Nothing in the game changes.
 - Decisions: none.
