@@ -20,7 +20,7 @@ test('the extra rat sits by the usual rules and leaves the rest of the room as i
   for (const seed of SEEDS) for (const shape of ['chambers', 'burrows', 'halls']) {
     const one = generateRoom(seed, shape), two = generateRoom(seed, shape, { rats: 2 });
     assert.deepEqual(two.map, one.map);
-    const before = (items) => items.filter((it) => it.id !== 'oilcap'); // the oilcap is picked after the rats (D-296)
+    const before = (items) => items.filter((it) => it.id !== 'oilcap' && it.id !== 'heartcap'); // the mushrooms are picked after the rats (D-296, D-303)
     assert.deepEqual(before(two.items), before(one.items));
     assert.deepEqual(two.enemies[0], one.enemies[0]);
     const [rat, extra] = two.enemies, stairs = [...where(two.map, '<'), ...where(two.map, '>')];

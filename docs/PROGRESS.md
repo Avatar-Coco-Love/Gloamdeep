@@ -4,12 +4,13 @@
 holds one item, and the log keeps only the last 3 entries. Older entries
 go to the top of `archive/PROGRESS-LOG.md`.
 
-**Version:** 0.2.86 · **Stage:** 0.2, the last steps (36 to 41), in the
+**Version:** 0.2.87 · **Stage:** 0.2, the last steps (36 to 41), in the
 world of 0.3 (D-168, D-237)
 
 ## Next up
-The step after the first craft, chosen with the owner: for example a
-second kind of mushroom (D-296), workstations (D-296) or gathering (D-282).
+H2: every mushroom, oilcaps and heartcaps, a slightly different tone,
+each one its own, even within one seed's world (D-304). Show the owner
+how strong a shift looks before building.
 
 ## Waiting on the owner
 - Play 0.2.17 sideways: should the room fill the whole screen (Q-048)?
@@ -67,6 +68,11 @@ Built to grow (D-261 to D-263; order may change)
 - [x] C2 The first craft: Make turns 3 oilcaps into a flask, 0.2.84 (D-299)
 - [x] Flee or fight: a hurt rat's coin toss, fleeing wears off, 0.2.85 (D-301, the owner's wish)
 - [x] A fleeing rat calms when the hero leaves the room, 0.2.86 (D-302, the owner's find)
+The heartcap (D-303, D-304; order approved)
+- [x] H1 The heartcap, a red mushroom in about half the rooms, into the bag, 0.2.87
+- [ ] H2 Every mushroom a slightly different tone (D-304)
+- [ ] H3 Eat a heartcap from the bag for a little healing
+- [ ] H4 Make a healing potion from heartcaps, with its own art
 
 - [x] U1, U2 UI and dev tools: sideways, the dev drawer, 0.2.17, 0.2.18
 
@@ -76,12 +82,12 @@ low oil (D-210); music and more sounds (`RESEARCH.md`); scarcer light deeper
 (D-159); more places (D-152, D-163); dev God mode (D-154); cheaper lighting for phones, the look unchanged (D-294, D-295); workstations for some crafts (D-296); a floor torch; trees, weather, sun and moon (Q-034, Q-035).
 
 ## Log (last 3)
-- **2026-10-24, 0.2.84, the first craft.** Make, in the bag, turns 3
-  oilcaps into an oil flask, a turn; dim under 3; D-279 to D-298
-  archived (D-299, D-300). [Playtest](https://claude.ai/artifact/NK7JhtRG3YMBhcBSyznb1q).
 - **2026-10-24, 0.2.85, flee or fight.** A hurt rat tosses a coin: flees
   for 4 turns, then must notice the hero again, or stands its ground with
   lines that take turns (D-301). [Playtest](https://claude.ai/artifact/YQ1ARU4AMWJXEQWMg9GVo1).
 - **2026-10-24, 0.2.86, calmed when you leave.** A rat still fleeing as
   the hero leaves the room has stopped when they come back; it must notice
   them again (D-302, the owner's find). [Playtest](https://claude.ai/artifact/ErdiWgtG9byv2d9uHgisWp).
+- **2026-10-24, 0.2.87, the heartcap.** A bright red mushroom in about
+  half the rooms, into the bag with lines that take turns; tones, eating
+  and its potion come next (D-303, D-304). [Playtest](https://claude.ai/artifact/8jDdPYwcYT7k1Mu4yjBXZc).

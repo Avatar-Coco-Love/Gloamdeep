@@ -98,7 +98,7 @@ test('stairs up and their torch, and stairs down, each in one room; each room ha
     assert.equal(all.includes('<'), !!c.up);
     assert.equal(all.includes('>'), !!c.down);
     assert.equal(p.lights.length, c.up ? 1 : 0);
-    assert.deepEqual(p.items.map((it) => it.id), c.up ? ['flask', 'herb', 'knife', 'oilcap'] : ['flask', 'herb', 'oilcap']); // an oilcap in each (D-296) // the knife by the stairs up (D-252)
+    assert.deepEqual(p.items.map((it) => it.id).filter((id) => id !== 'heartcap'), c.up ? ['flask', 'herb', 'knife', 'oilcap'] : ['flask', 'herb', 'oilcap']); // an oilcap in each (D-296) // the knife by the stairs up (D-252)
     assert.deepEqual(p.enemies.map((e) => e.id), ['rat']);
   }
 });

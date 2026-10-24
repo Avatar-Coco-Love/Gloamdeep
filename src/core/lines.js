@@ -24,9 +24,12 @@ export const LINES = {
   knifeTake: { text: 'You take the knife.', warn: false }, // into the held slot (D-252)
   flaskMake: { text: 'You make an oil flask.', warn: false }, // 3 oilcaps crafted (D-299)
   oilcapFull: { text: "You can't carry more oilcaps.", warn: false }, // a full stack (D-250, D-296)
+  heartcapFull: { text: "You can't carry more heartcaps.", warn: false }, // a full stack (D-250, D-303)
   // Lines with `texts` take turns: each saying the next, then back to the first (D-297)
   oilcapTake: { texts: ['You grab the oilcap.', 'You pluck an oilcap from the floor.', 'The oilcap comes up with a soft pop.'], warn: false },
   oilcapLook: { texts: ['Three make an oil flask.', 'It smells faintly of lamp oil.', 'Its amber cap is slick with oil.'], warn: false },
+  heartcapTake: { texts: ['You pick a heartcap.', 'The heartcap comes up whole.', 'A heartcap, warm in your hand.'], warn: false }, // (D-303)
+  heartcapLook: { texts: ['It might mend a wound.', 'Its red cap is spotted white.', 'It feels faintly warm.'], warn: false },
   levelUp: { text: 'You feel stronger. Level {n}.', warn: false }, // {n}, the new level (D-246)
 };
 export const LINE_TURNS = 5; // turns a line stays before it fades (D-095)
