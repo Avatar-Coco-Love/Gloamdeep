@@ -5,7 +5,8 @@
 // a row, each an item's sprite with its count when more than one, the chosen
 // slot framed in gold. Under them the chosen item's name, and on the right
 // Pour for one that pours, Make for one that crafts, dim with too few
-// (D-299), or Eat for one that heals, dim at full health (D-308). No veil: the room shows above it.
+// (D-299), or Eat (Drink for a potion) for one that heals, dim at full health
+// (D-308); heartcaps both make and heal, so Make sits left of Eat (D-309). No veil: the room shows above it.
 import { W, H } from './screen.js';
 import { drawText, textWidth } from './font.js';
 import { BAG_SLOTS } from '../core/bag.js';
@@ -18,25 +19,31 @@ const TOP_Y = 4; // the panel's top when it moves over the room's top
 // Whether the panel goes to the top: the hero's tile, `heroY` pixels down the screen, would be under it
 export const panelOnTop = (heroY) => heroY + 16 > PANEL.y - 4;
 const ROW_X = Math.floor((W - (BAG_SLOTS * SLOT + (BAG_SLOTS - 1) * SLOT_GAP)) / 2);
-// The button for an item: Pour, Make or Eat, the same size, at the foot's right end
-const BUTTON = { w: Math.max(textWidth('POUR'), textWidth('MAKE'), textWidth('EAT')) + 6, h: 11 };
+// The button for an item: Pour, Make, Eat or Drink, the same size, at the foot's right end;
+// Make, for an item that also heals, just left of it
+const BUTTON = { w: Math.max(textWidth('POUR'), textWidth('MAKE'), textWidth('EAT'), textWidth('DRINK')) + 6, h: 11 };
 BUTTON.x = PANEL.x + PANEL.w - 4 - BUTTON.w;
-const buttonText = (entry) => (entry.oil ? 'POUR' : entry.craft ? 'MAKE' : entry.eats ? 'EAT' : null);
+const MAKE_X = BUTTON.x - 4 - BUTTON.w;
+const buttonText = (entry) => (entry.oil ? 'POUR' : entry.eats ? entry.verb ?? 'EAT' : entry.craft ? 'MAKE' : null);
+// Whether an item shows Make beside its Eat
+export const twoButtons = (entry) => !!(entry?.craft && entry.eats);
 // The panel's rows from its top: the held slot's, the slots' row, and the name's line under it
 const rows = (top) => { const y = top ? TOP_Y : PANEL.y, held = y + 15, row = held + SLOT + 4; return { y, held, row, foot: row + SLOT + 6 }; };
 const HELD_X = Math.floor((W - SLOT) / 2), HELD = 'HELD';
 const slotX = (i) => ROW_X + i * (SLOT + SLOT_GAP);
 const TAP_PAD = 4; // game pixels around a slot or the button that still pick it
 
-// What a tap at x, y picks: { slot: i }, 'act' (Pour, Make or Eat), or null; outside the panel, 'out'
-export function bagAt(x, y, top = false) {
+// What a tap at x, y picks: { slot: i }, 'act' (Pour, Make, Eat or Drink), 'make' (Make beside
+// Eat, when `two`), or null; outside the panel, 'out'
+export function bagAt(x, y, top = false, two = false) {
   const p = rows(top);
   if (x < PANEL.x || x >= PANEL.x + PANEL.w || y < p.y || y >= p.y + PANEL.h) return 'out';
   if (y >= p.row - TAP_PAD && y < p.row + SLOT + TAP_PAD) {
     const i = Math.floor((x - ROW_X + SLOT_GAP / 2) / (SLOT + SLOT_GAP));
     return i >= 0 && i < BAG_SLOTS ? { slot: i } : null;
   }
-  if (y >= p.foot - 2 - TAP_PAD && x >= BUTTON.x - TAP_PAD) return 'act';
+  if (y >= p.foot - 2 - TAP_PAD && x >= BUTTON.x - (two ? 2 : TAP_PAD)) return 'act';
+  if (two && y >= p.foot - 2 - TAP_PAD && x >= MAKE_X - TAP_PAD) return 'make';
   return null;
 }
 
@@ -72,8 +79,13 @@ export function drawBag(c, bag, chosen, sprites, top = false, held = null, full 
   drawText(c, entry.name, x + 5, foot, GREY);
   const text = buttonText(entry);
   if (!text) return;
-  const dim = (entry.craft && bag[chosen].n < entry.craft.of) || (entry.eats && full);
-  c.fillStyle = K; c.fillRect(BUTTON.x, foot - 2, BUTTON.w, BUTTON.h);
-  frame(c, BUTTON.x, foot - 2, BUTTON.w, BUTTON.h, dim ? LINE : EMBER);
-  drawText(c, text, BUTTON.x + Math.floor((BUTTON.w - textWidth(text)) / 2), foot, dim ? GREY : GOLD);
+  const few = entry.craft && bag[chosen].n < entry.craft.of;
+  button(c, BUTTON.x, foot, text, entry.eats ? full : few);
+  if (twoButtons(entry)) button(c, MAKE_X, foot, 'MAKE', few);
+}
+
+function button(c, bx, foot, text, dim) {
+  c.fillStyle = K; c.fillRect(bx, foot - 2, BUTTON.w, BUTTON.h);
+  frame(c, bx, foot - 2, BUTTON.w, BUTTON.h, dim ? LINE : EMBER);
+  drawText(c, text, bx + Math.floor((BUTTON.w - textWidth(text)) / 2), foot, dim ? GREY : GOLD);
 }

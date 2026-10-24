@@ -15,7 +15,7 @@
 //   found { place }      a room never stood in before (D-245)
 //   level { n }          level n reached (D-246)
 //   take { id }          an item went into the bag or the hand
-//   eat { id }           a herb was eaten, or a heartcap from the bag (D-308)
+//   eat { id }           a herb was eaten, or a heartcap or potion from the bag (D-308, D-309)
 //   pour { id, by }      a flask was poured, by 'hand' or by 'self' (D-249)
 //   torch                a torch was lit (D-121)
 

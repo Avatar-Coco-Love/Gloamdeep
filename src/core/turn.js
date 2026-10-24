@@ -287,6 +287,7 @@ export function craft(state, i) {
 
 // § eat: Eat on bag slot i eats one of its item, healing its `heal` hearts,
 // never above full, with its `eats` line; a turn passes, like a pour (D-308).
+// A potion is drunk this way, for 4 hearts (D-309).
 // At full health it stays, "You aren't hurt." is said, free. An `eat` event.
 export function eat(state, i) {
   const entry = state.bag[i] && get(state.bag[i].id);

@@ -21,6 +21,12 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.91 (2026-10-24)
+- Three heartcaps now make a Healing potion, a round red bottle with a cork. Choose heartcaps in the bag and press Make, beside Eat (or C on a keyboard): it takes a turn and says "You make a healing potion." Enter or Space still eats one.
+- Choose the potion and press Drink (or Enter or Space) to heal 4 hearts, never above full, in one turn. The line changes each time, such as "You drink a healing potion." At full health Drink shows dim and says "You aren't hurt."
+- Potions stack to 3, like flasks; with 3 carried, Make says "You can't carry more potions." and keeps the heartcaps.
+- Decisions: D-309.
+
 ## 0.2.90 (2026-10-24)
 - Heartcaps can now be eaten. Choose them in the bag and press Eat (or Enter or Space): one heals 1 heart and takes a turn, and the bag stays open so you can eat another. The line changes each time, such as "You eat a heartcap."
 - At full health Eat shows dim; pressing it says "You aren't hurt.", keeps the heartcap and takes no turn.

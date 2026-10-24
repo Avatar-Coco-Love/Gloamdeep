@@ -13,7 +13,8 @@
 // pick a slot, Enter, Space or Pour pours the chosen flask, which closes it and takes the
 // turn; the button (a cross while it is open), I, Esc, P or a tap outside it closes it (D-247).
 // On oilcaps, Enter, Space or Make crafts a flask, a turn, and the bag stays open on it (D-299).
-// On heartcaps, Enter, Space or Eat eats one, a turn, and the bag stays open (D-308).
+// On heartcaps, Enter, Space or Eat eats one, a turn, and the bag stays open (D-308); C or
+// Make beside it makes a healing potion from 3, and Drink, on one, drinks it (D-309).
 // Continue goes back to the saved journey; New journey, while one is saved, asks
 // "Start over?" first, and No, Esc or P return to the title (D-238).
 // Version history in Settings opens the page of every version (D-254): Up and Down choose one,
@@ -59,7 +60,7 @@ import { slotLines, slotsAt, slotsHeading, askTop } from '../render/slots.js';
 import { journalWords, growthWords } from '../core/journal.js';
 import { addHeart } from '../core/growth.js';
 import { journalAt } from '../render/journal.js';
-import { bagAt, panelOnTop } from '../render/bag.js';
+import { bagAt, panelOnTop, twoButtons } from '../render/bag.js';
 import { TILE } from '../render/screen.js';
 
 const WORDS = {
@@ -319,18 +320,20 @@ export function createScreens(app, ui) {
 
   // § bag (D-247): opens on the first slot; no turn passes until a flask is poured
   const slotWords = (i) => { const s = app.state.bag[i]; return s ? `${get(s.id).name}, ${s.n}` : 'Empty'; };
-  const bagWords = () => `Bag. ${app.state.bag.length ? app.state.bag.map((s, i) => slotWords(i)).join('. ') : 'Empty'}. Left and Right choose, Enter pours, makes or eats, I or Esc closes.`;
+  const bagWords = () => `Bag. ${app.state.bag.length ? app.state.bag.map((s, i) => slotWords(i)).join('. ') : 'Empty'}. Left and Right choose, Enter pours, makes, eats or drinks, C makes, I or Esc closes.`;
   function toggleBag() {
     if (app.screen === 'bag') show('play');
     else if (app.screen === 'play') { app.queued = null; app.bagOnTop = panelOnTop(app.state.hero.y * TILE - app.cam.y); show('bag'); }
   }
   function pickSlot(i) { app.chosen = i; spoken.textContent = slotWords(i); ui.lookAt(i); } // choosing says an item's look line (D-297)
   // Enter, Space or the button: pours a flask, makes one from oilcaps (D-299),
-  // or eats a heartcap, the bag staying open on what is left (D-308)
-  function useChosen() {
+  // or eats a heartcap or drinks a potion, the bag staying open on what is left (D-308, D-309).
+  // `make`: C or the Make beside Eat, which makes a potion from heartcaps (D-309)
+  function useChosen(make = false) {
     const s = app.state.bag[app.chosen], entry = s && get(s.id);
+    if (make && !entry?.craft) return;
     if (entry?.oil) { show('play'); ui.pour(app.chosen); return; }
-    if (entry?.eats) {
+    if (entry?.eats && !make) {
       ui.eat(app.chosen);
       if (app.fall) { show('play'); return; } // a bite in that turn felled the hero
       if (!app.state.bag[app.chosen]) app.chosen = Math.max(0, app.state.bag.length - 1); // the last one eaten
@@ -424,8 +427,9 @@ export function createScreens(app, ui) {
     } else { app.entry = typeKey(app.entry, id); spoken.textContent = app.entry || 'nothing typed'; }
   }
   // Digits and Backspace type on the seed pad from a keyboard; the flame moves to OK, so Enter keeps it
-  // In the Explorer, R reseeds, T types a seed and B goes back (D-214)
+  // In the Explorer, R reseeds, T types a seed and B goes back (D-214); in the bag, C makes (D-309)
   const onType = (key) => {
+    if (app.screen === 'bag' && key === 'c') { useChosen(true); return true; }
     if (app.screen === 'explore') {
       const id = { r: 'reseed', t: 'type', b: 'back' }[key];
       if (id) pressBar(id);
@@ -522,9 +526,9 @@ export function createScreens(app, ui) {
     }
     if (app.screen === 'bag') {
       if (held) return;
-      const at = bagAt(px, py, app.bagOnTop);
+      const s = app.state.bag[app.chosen], at = bagAt(px, py, app.bagOnTop, twoButtons(s && get(s.id)));
       if (at === 'out') show('play');
-      else if (at === 'act') useChosen();
+      else if (at === 'act' || at === 'make') useChosen(at === 'make');
       else if (at) pickSlot(at.slot);
       return;
     }

@@ -28,5 +28,5 @@ test('the oil flask is an item worth 45% of a tank', () => {
   assert.equal(flask.kind, 'item');
   assert.equal(flask.name, 'Oil flask');
   assert.equal(flask.oil, 0.45);
-  assert.deepEqual(byKind('item'), [flask, get('knife'), get('herb'), get('oilcap'), get('heartcap')]);
+  assert.deepEqual(byKind('item'), [flask, get('knife'), get('herb'), get('oilcap'), get('heartcap'), get('potion')]);
 });

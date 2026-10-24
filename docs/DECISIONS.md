@@ -178,3 +178,15 @@ bag stays open, on the slot. Its lines take turns: "You eat a heartcap.",
 "The heartcap tastes of earth.", "Warmth spreads through you." At full
 health Eat shows dim; used, the heartcap stays, no turn passes and the line
 says "You aren't hurt."
+
+**D-309 · 2026-10-24 · The healing potion** (step H4, the owner's picks,
+five of five recommended; builds D-303, D-308) Make turns 3 heartcaps into
+1 Healing potion, a turn, like the flask (D-299): "You make a healing
+potion.", or with 3 potions carried "You can't carry more potions.", free.
+On heartcaps Make sits left of Eat, each dim on its own; Enter or Space
+eats, C makes. A potion is drunk from the bag with Drink, healing 4 hearts,
+never above full, a turn; its lines take turns: "You drink a healing
+potion.", "The potion warms you through.", "Your wounds close." At full
+health Drink shows dim and says "You aren't hurt." Its look: a round red
+bottle under a cork, a pale glass neck (look A of three). It is only made,
+never found.
