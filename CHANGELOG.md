@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.85 (2026-10-24)
+- A hurt rat now tosses a coin: half the time it flees, as before, and half the time it stands its ground and keeps biting, with a line that changes each time, such as "The rat squeaks and bares its teeth."
+- A fleeing rat runs for 4 turns, then stops. It comes back only once it sees you again, in the light with nothing in between, so it no longer hides in the far corner for good.
+- Decisions: D-301.
+
 ## 0.2.84 (2026-10-24)
 - Oilcaps can now be crafted: choose 3 oilcaps in the bag and press Make, or Enter or Space, to turn them into an oil flask, with the line "You make an oil flask." It takes a turn, like a pour, and the bag stays open on the new flask, ready to pour.
 - With fewer than 3 oilcaps, Make shows dim and does nothing. With 3 flasks already carried, it says "You can't carry more flasks." and the oilcaps stay.

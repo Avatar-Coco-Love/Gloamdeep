@@ -6,6 +6,8 @@ export const LINES = {
   oilLow: { text: 'The flame is getting low.', warn: false },
   oilEmpty: { text: 'The lantern gutters to an ember.', warn: true }, // a warning, in amber (D-097)
   ratHurt: { text: 'The rat squeaks and flees.', warn: false }, // hurt, it flees (D-292; was the study's line, D-107)
+  // Hurt, it stands its ground: the lines take turns (D-297, D-301)
+  ratStands: { texts: ['The rat stands its ground.', 'The rat squeaks and bares its teeth.', 'The rat squeaks.'], warn: false },
   ratDie: { text: 'The rat squeaks and falls still.', warn: false }, // (D-112)
   ratBite: { text: 'The rat bites you.', warn: false }, // (D-117)
   gloamlingHurt: { text: 'The gloamling hisses at you.', warn: false }, // (D-240)

@@ -9,9 +9,10 @@ export const BEHAVIOURS = {
   // It never steps onto a lit tile, backs out of light into the dark, and doesn't
   // bite while lit. It sees the hero along a clear line, lit or not (D-240, D-241, D-243).
   shunsLight: { id: 'shunsLight', name: 'Shuns light', notices: 'anyLine', intoLight: false, bitesLit: false, whenLit: 'backAway' },
-  // Once hurt, it steps a tile a turn away from the hero until it dies or they
-  // fall, and bites only when it can't step away (D-292).
-  fleesHurt: { id: 'fleesHurt', name: 'Flees when hurt', whenHurt: 'flee' },
+  // Once hurt, a coin toss: 1 in 2 it steps a tile a turn away from the hero for
+  // 4 turns, biting only when it can't step away (D-292), then stops and has to
+  // notice them again; else it stands its ground and keeps coming (D-301).
+  fleesHurt: { id: 'fleesHurt', name: 'Flees when hurt', whenHurt: 'flee', fleeChance: 0.5, fleeTurns: 4 },
 };
 
 // § traits: (entry) → how the creature acts, its ways merged. With no way it
