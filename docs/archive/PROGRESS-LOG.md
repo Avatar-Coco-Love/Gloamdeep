@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.88, mushroom tones.** Every oilcap and heartcap its
+  own slight tone, up to 12° of hue and 7 of lightness, set by the seed;
+  things picked will grow back next (D-305, D-306). [Playtest](https://claude.ai/artifact/9NhnMKg5FRq6ga9mvJCHNm).
 - **2026-10-24, 0.2.87, the heartcap.** A bright red mushroom in about
   half the rooms, into the bag with lines that take turns; tones, eating
   and its potion come next (D-303, D-304). [Playtest](https://claude.ai/artifact/8jDdPYwcYT7k1Mu4yjBXZc).

@@ -12,7 +12,7 @@ const HOLD_MS = 250; // a still finger held this long keeps stepping
 
 // onDir(dir, how) for keys and swipes, how being 'swipe' for a swipe (the Controls switch, D-189); onPoint(x, y) for taps and holds, in game pixels;
 // onLantern() for the L key; onWait() for Space, which repeats while held, like the arrows;
-// onChoose() for Enter; onPause() for Esc and P; onMap() for M; onBag() for I; onFloor(way) for < and > or Page Up and Page Down; onType(key) for digits and Backspace (the seed pad, D-191), R, T and B (the Seed Explorer, D-214) and letters (the name pad, D-272; P, M, I, L and WASD act as usual when it is shut),
+// onChoose() for Enter; onPause() for Esc and P; onMap() for M; onBag() for I; onFloor(way) for < and > or Page Up and Page Down; onType(key) for digits and Backspace (the seed pad, D-191), R, T and B (the Seed Explorer, D-214), C (the bag's Make, D-309) and letters (the name pad, D-272; P, M, I, L and WASD act as usual when it is shut),
 // which returns true when it used the key.
 // held() gives the point of a finger held still, so the loop keeps stepping toward it;
 // kind() the way of playing last used: 'touch', 'mouse' or 'keyboard' (How to play opens on it, D-193).

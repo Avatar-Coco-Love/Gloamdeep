@@ -52,6 +52,12 @@ const HEARTCAP = { mirror: false, toned: 'rR', rows: [
   '', '', '', '.....kkkkkk.....', '....krrwrrrk....', '...krrrrrwRRk...', '...kwrrrrrrRk...', '..krrrwrrrrRRk..', '..krrrrrrwrRRk..',
   '..kkkkkkkkkkkk..', '......kwak......', '......kwak......', '.....kwwak......', '.....kwwaak.....', '.....kkkkkk.....'] };
 
+// § potion: a round red bottle under a cork, a pale glass neck and a light
+// gleam on its left (D-309, look A of three)
+const POTION = { mirror: true, rows: [
+  '', '', '......kk', '.....kaa', '......kk', '......kC', '....kkCr', '...kCrrr', '..kCwrrr', '..kwrrrr',
+  '..krrrrr', '..kRrrrr', '...kRRRr', '....kkkk'] };
+
 // § knife: a steel blade pointing up and right, a pale edge, a dark guard
 // and a brown grip (D-252)
 const KNIFE = { mirror: false, rows: [
@@ -92,7 +98,7 @@ function spriteCanvas(def, flash = null, pal = PAL) {
   return cv;
 }
 
-export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), oilcap: spriteCanvas(OILCAP), heartcap: spriteCanvas(HEARTCAP), knife: spriteCanvas(KNIFE), rat: spriteCanvas(RAT), gloamling: spriteCanvas(GLOAMLING) }; // keyed by registry id
+export const SPRITES = { hero: spriteCanvas(HERO), flask: spriteCanvas(FLASK), herb: spriteCanvas(HERB), oilcap: spriteCanvas(OILCAP), heartcap: spriteCanvas(HEARTCAP), potion: spriteCanvas(POTION), knife: spriteCanvas(KNIFE), rat: spriteCanvas(RAT), gloamling: spriteCanvas(GLOAMLING) }; // keyed by registry id
 const DEFS = { oilcap: OILCAP, heartcap: HEARTCAP };
 // § tones: a mushroom with its cap's colours shifted by its tone, hue in degrees and
 // lightness in points (D-305); the spots, stem and outline stay. Each made once.

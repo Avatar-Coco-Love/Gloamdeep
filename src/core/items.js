@@ -28,7 +28,11 @@ export const ITEMS = {
     craft: { into: 'flask', of: 3, says: 'flaskMake' } },
   // A bright red mushroom in about half the rooms (D-303), into the bag the
   // oilcap's way, with its own lines and its own tones. Eat, in the bag, heals
-  // `heal` hearts with its `eats` line, never above full (D-308). Its potion comes later.
+  // `heal` hearts with its `eats` line, never above full (D-308). Make turns
+  // 3 into a healing potion (D-309).
   heartcap: { id: 'heartcap', kind: 'item', name: 'Heartcap', bag: true, says: 'heartcapTake', look: 'heartcapLook', full: 'heartcapFull', tone: MUSHROOM_TONE, regrow: DAY_TURNS,
-    heal: 1, eats: 'heartcapEat' },
+    heal: 1, eats: 'heartcapEat', craft: { into: 'potion', of: 3, says: 'potionMake' } },
+  // Made from heartcaps, never found (D-309). Drunk from the bag the heartcap's
+  // way, its button saying `verb`, it heals 4 hearts, never above full.
+  potion: { id: 'potion', kind: 'item', name: 'Healing potion', bag: true, full: 'potionFull', heal: 4, eats: 'potionDrink', verb: 'DRINK' },
 };
