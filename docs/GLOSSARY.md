@@ -34,6 +34,8 @@ this page and a decision disagree, the decision wins.
   generated room; 3 make an oil flask (D-296, D-299).
 - **Heartcap:** a bright red mushroom in about half the rooms; it will
   heal, eaten or made into a potion (D-303).
+- **Tone:** a mushroom's own slight shift of colour (D-304, D-305).
+- **Grow back:** a picked thing returning after its time (D-306).
 - **Craft, Make:** turning things in the bag into another; Make is its
   button in the bag (D-299).
 - **Gear, held:** what the hero holds in hand, first the knife (D-252).

@@ -21,6 +21,11 @@ Entry format:
 - Decisions: D-008. Questions closed: Q-001.
 ```
 
+## 0.2.88 (2026-10-24)
+- Every oilcap and heartcap now has its own slight tone: some caps a little more golden or brown, some heartcaps a little more orange or plum, a little lighter or darker. The same seed always gives the same mushrooms the same tones.
+- Rooms an old save already reached keep their mushrooms' plain colour.
+- Decisions: D-305, D-306.
+
 ## 0.2.87 (2026-10-24)
 - Heartcaps now grow in about half the rooms from the first cave down: a bright red mushroom with pale spots, a round cap on a short stem. Walk onto one to put it in the bag, in stacks of 3, with a line that changes each time, such as "You pick a heartcap." Choosing it in the bag says a hint, such as "It might mend a wound."
 - Eating a heartcap, and making a healing potion from several, come in later steps.

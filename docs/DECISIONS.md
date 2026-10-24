@@ -143,3 +143,20 @@ owner's idea) Each mushroom, oilcaps and heartcaps alike, gets a slight but
 noticeable shift in colour tone, so no two look exactly the same, even
 within one seed's world. It is its own step, after the heartcap; then
 eating a heartcap, then its potion.
+
+**D-305 · 2026-10-24 · How strong a mushroom's tone is** (the owner's pick
+of three shown; builds D-304, step H2) Each oilcap and heartcap a room lays
+out shifts its cap's two colours by up to 12° of hue and 7 points of
+lightness, either way; the spots, stem and outline stay. The seed and the
+mushroom's tile set it, so a seed's mushrooms keep their tones and the rest
+of its rooms stay as they were. Mushrooms in rooms an old save already
+reached, and ones the dev tools place, keep the plain colour.
+
+**D-306 · 2026-10-24 · Things picked grow back** (the owner's wish and
+picks) Everything that can be collected comes back after enough in-game
+time, each kind by its own rule. Each thing has its own clock, from the
+turn it was taken; a room or floor needn't be cleared first. Oilcaps,
+heartcaps and herbs come back after a day, 300 turns (D-217); an oil flask
+after 3 days, 900 turns. The one knife doesn't. Mining's deposits (D-282)
+and later collectables get their own rules when they are built. It is its
+own step, H2b, right after H2; then eating a heartcap, then its potion.
