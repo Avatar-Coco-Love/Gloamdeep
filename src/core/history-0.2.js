@@ -2,6 +2,10 @@
 // line in CHANGELOG.md or its archive, word for word, without backticks (D-254);
 // tests/history.test.js checks every one. Plain data.
 export const HISTORY_02 = [
+  { v: '0.2.92', date: '2026-10-24', title: 'Ideas: enemies and bosses', lines: [
+    "Ideas recorded: many enemies mixed from a few building blocks (how they move, attack and meet light), and bosses in phases that test what you already know, with notes on balancing them. Nothing in the game changes.",
+    "Decisions: none.",
+  ] },
   { v: '0.2.91', date: '2026-10-24', title: 'The healing potion', lines: [
     "Three heartcaps now make a Healing potion, a round red bottle with a cork. Choose heartcaps in the bag and press Make, beside Eat (or C on a keyboard): it takes a turn and says \"You make a healing potion.\" Enter or Space still eats one.",
     "Choose the potion and press Drink (or Enter or Space) to heal 4 hearts, never above full, in one turn. The line changes each time, such as \"You drink a healing potion.\" At full health Drink shows dim and says \"You aren't hurt.\"",

@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.89, things grow back.** Mushrooms and herbs taken
+  come back after 300 turns, a flask after 900, never the knife; only out
+  of the hero's light, or already there on walking in (D-306, D-307). [Playtest](https://claude.ai/artifact/DdX9k9FJ3EJJTNWPRs6jKj).
 - **2026-10-24, 0.2.88, mushroom tones.** Every oilcap and heartcap its
   own slight tone, up to 12° of hue and 7 of lightness, set by the seed;
   things picked will grow back next (D-305, D-306). [Playtest](https://claude.ai/artifact/9NhnMKg5FRq6ga9mvJCHNm).
