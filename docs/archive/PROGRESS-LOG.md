@@ -2,6 +2,9 @@
 
 Entries moved out of `docs/PROGRESS.md`, newest first.
 
+- **2026-10-24, 0.2.83, the oilcap.** An amber mushroom in every room from
+  the first cave down, into the bag with lines that take turns; the bag
+  sits above the text line (D-295 to D-298). [Playtest](https://claude.ai/artifact/Ut64ZjkYy7pKps7AtMUDGi).
 - **2026-10-24, 0.2.82, smooth.** Sliding goes by time, so slow phones
   walk at full speed; fps on the dev line (D-294). [Playtest](https://claude.ai/artifact/MaPKsnaAHny71ZQZ1CNa9w).
 - **2026-10-24, 0.2.81, embers.** Each level past the first gives an

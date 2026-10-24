@@ -118,3 +118,9 @@ bites. The stand lines take turns (D-297): "The rat stands its ground.",
 "The rat squeaks and bares its teeth.", "The rat squeaks." On the turn it
 is hit, its stand line shows instead of the bite line (D-117); it still
 bites. ("The rat squeaks and stands its ground." was too wide for the line.)
+
+**D-302 · 2026-10-24 · A fleeing rat calms when the hero leaves** (the
+owner's find and pick) A room left waits as it was (D-019), but a rat
+still fleeing in it stops: back in the room, it stays put until it notices
+the hero again, as after its 4 turns (D-301). Fleeing stops by turns only,
+not by distance or out of light.

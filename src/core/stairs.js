@@ -33,9 +33,11 @@ export function goToPlace(state, to) {
 }
 
 // The state moved to place `to`, its room `there`, the hero at `spot`; the room left waits.
-// No weapon like the one held lies there (D-252).
+// No weapon like the one held lies there (D-252). An enemy still fleeing
+// calms as the hero leaves: it has to notice them again, as after its turns (D-302).
 export function arrive(state, to, there, spot) {
-  const here = { room: state.room, lights: state.lights, enemies: state.enemies, items: state.items, seen: state.seen };
+  const enemies = state.enemies.map((e) => (e.flees > 0 ? { ...e, flees: 0, chasing: false } : e));
+  const here = { room: state.room, lights: state.lights, enemies, items: state.items, seen: state.seen };
   const elsewhere = { ...state.elsewhere, [state.place]: here };
   delete elsewhere[to];
   const items = state.held ? there.items.filter((it) => it.id !== state.held) : there.items;
